@@ -1,0 +1,29 @@
+<alert class="alert alert-danger" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
+<div class="container-fluid">
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <a class="btn btn-info" ui-sref="cityCreate"><span class="glyphicon glyphicon-plus-sign"></span> Add new city</a>
+        </div>
+    </div>
+    <table class="table table-striped col-md-4">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Zipcode</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="record in records">
+
+                <td id="{{$index}}-name">{{record.name}}</td>
+                <td id="{{$index}}-zipcode">{{record.zipcode}}</td>
+                <td>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" ui-sref="cityEdit({cityId: record.id})"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteRecord(record.id)"><span class="glyphicon glyphicon-minus"></span> Remove</button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
