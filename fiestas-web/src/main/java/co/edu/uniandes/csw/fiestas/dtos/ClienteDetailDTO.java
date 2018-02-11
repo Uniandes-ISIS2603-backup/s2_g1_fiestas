@@ -7,14 +7,17 @@ import java.util.ArrayList;
  * los objetos JSON y las Entidades de la base de datos. Para conocer el
  * contenido de la ciudad vaya a la documentacion de {@link ClienteDTO}
  */
-public class ClienteDetailDTO extends ClienteDTO {
+public class ClienteDetailDTO extends ClienteDTO 
+{
     
     private ArrayList<EventoDTO> eventos;
 
     /**
      * Constructor por defecto
      */
-    public ClienteDetailDTO() {
+    public ClienteDetailDTO() 
+    {
+        
     }
 
     public ArrayList getEventos() {

@@ -11,14 +11,24 @@ import java.util.Date;
  *
  * @author df.nino10
  */
-public class HorarioDTO {
+public class HorarioDTO 
+{    
+    private long id;
     private Date fecha;
     private Date horaInicio;
     private Date horaFin;
     
     public HorarioDTO(){
     }
+       
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public Date getFecha() {
         return fecha;
     }
