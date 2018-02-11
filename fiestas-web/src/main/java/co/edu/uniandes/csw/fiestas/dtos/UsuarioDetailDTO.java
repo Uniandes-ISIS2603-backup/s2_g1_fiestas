@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author nm.hernandez10
  */
-public class UsuarioDetailDTO 
+public class UsuarioDetailDTO extends UsuarioDTO
 {
     private ArrayList<BlogDTO> blogs;
     

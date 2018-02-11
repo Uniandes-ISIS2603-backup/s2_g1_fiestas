@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author nm.hernandez10
  */
-public class ProveedorDetailDTO 
+public class ProveedorDetailDTO extends ProveedorDTO
 {
     private ArrayList<HorarioDTO> horarios;
     
