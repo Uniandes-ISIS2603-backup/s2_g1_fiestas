@@ -6,6 +6,32 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 /**
+ * ProductoDTO Objeto de transferencia de datos de la entidad de Producto. Los DTO contienen las
+ * representaciones de los JSON que se transfieren entre el cliente y el servidor.
+ * <p>
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "id": Integer,
+ *      "precio": Integer,
+ *      "descripcion": String,
+ *      "incluye": String
+ *      "personal": Integer
+ *   }
+ * </pre>
+ * Por ejemplo una entidad de Servicio se representa asi:<br>
+ * <p>
+ * <pre>
+ *
+ *   {
+ *      "id": 97971354,
+ *      "precio": 80,000,
+ *      "descripcion": Kit de comida para boda,
+ *      "incluye": Incluye pastel y demás
+ *      "personal": 4
+ *   }
+ *
+ * </pre>
  *
  * @author af.losada
  */

@@ -12,18 +12,18 @@ package co.edu.uniandes.csw.fiestas.dtos;
 public class ProductoDetailDTO extends ProductoDTO
 {
 
-ContratoDTO contrato;
-ServicioDTO servicio;
+private ContratoDTO contrato;
+private ServicioDTO servicio;
     
 /*
 Getters
 */
-ContratoDTO darContrato()
+private ContratoDTO darContrato()
 {
-return contrato;
+ return contrato;
 }
 
-ServicioDTO darServicio()
+public ServicioDTO darServicio()
 {
 return servicio;
 }
