@@ -7,7 +7,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 /**
- * ProductoDTO Objeto de transferencia de datos de la entidad de Producto. Los DTO contienen las
+ * TematicaDTO Objeto de transferencia de datos de la entidad de Tematica. Los DTO contienen las
  * representaciones de los JSON que se transfieren entre el cliente y el servidor.
  * <p>
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
@@ -18,7 +18,6 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *   }
  * </pre>
  * Por ejemplo una entidad de Servicio se representa asi:<br>
- * <p>
  * <pre>
  *
  *   {
@@ -36,14 +35,32 @@ public class TematicaDTO
     private long id;
     private String descripcion;
     
+    
+    /**
+     * Constructor por defecto
+     */
+    public TematicaDTO()
+    {
+        
+    }
+    
     /*
     Getters
     */
+    
+    /**
+     * 
+     * @return La descripción de la temática
+     */
     public String darDescripcion()
     {
         return descripcion;
     }
     
+    /**
+     * 
+     * @return La ID de la temática
+     */
     public long darID()
     {
         return id;
@@ -53,11 +70,20 @@ public class TematicaDTO
     Setters
     */
     
+    
+    /**
+     * 
+     * @param pID La nueva ID
+     */
     public void setID(long pID)
     {
         id = pID;
     }
     
+    /**
+     * 
+     * @param pDesc La nueva descripción de la temática
+     */
     public void setDescripcion(String pDesc)
     {
         descripcion = pDesc;
