@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.fiestas.resources;
 
-import co.edu.uniandes.csw.fiestas.dtos.CityDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
