@@ -6,6 +6,20 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 /**
+ *
+ * @author cm.amaya10
+ */
+public class PagoDTO {
+     private long id;
+     private Boolean realizado;
+     private String estado;
+     private String metodoDePago;
+     
+     
+     public PagoDTO(){
+         
+}
+
  * EventoDTO Objeto de transferencia de datos de Eventos.
  *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
@@ -48,9 +62,16 @@ public class PagoDTO {
     /**
      * @return El ID del evento
      */
+
     public Long getId() {
         return id;
     }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 
     /**
      * @param id El nuevo ID
@@ -62,9 +83,16 @@ public class PagoDTO {
     /**
      * @return boolean representando si el pago fue realizado
      */
+
     public Boolean getRealizado() {
         return realizado;
     }
+
+
+    public void setRealizado(Boolean realizado) {
+        this.realizado = realizado;
+    }
+    
 
     /**
      * @param realizado: boolean a asignar si se realizo el pago exitosamente.
@@ -76,9 +104,16 @@ public class PagoDTO {
     /**
      * @return Estado del proceso de pago
      */
+
     public String getEstado() {
         return estado;
     }
+
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 
     /**
      * Asigna el nuevo estado del proceso de pago
@@ -94,9 +129,14 @@ public class PagoDTO {
      *
      * @return metodo de pago usado en el pago
      */
+
     public String getMetodoPago() {
         return metodoDePago;
     }
+
+
+    public void setMetodoPago(String metodo) {
+        this.metodoDePago=metodo;
 
     /**
      * Asigna el metodo de pago al proceso
@@ -105,5 +145,6 @@ public class PagoDTO {
      */
     public void setMetodoPago(String metodo) {
         this.metodoDePago = metodo;
+
     }
 }
