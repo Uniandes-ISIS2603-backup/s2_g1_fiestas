@@ -9,7 +9,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
  * <pre>
  *   {
  *      "id": number,
- *      "nombre: string,
+ *      "nombre": string,
  *      "documento": string
  *      "telefono": number
  *      "correo": string
@@ -22,7 +22,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *
  *   {
  *      "id": 113742,
- *      "nombre: David,
+ *      "nombre": David,
  *      "documento": 201412734,
  *      "telefono": 3144683924,
  *      "correo": df.nino10@uniandes.edu.co,

@@ -16,7 +16,7 @@ import java.util.Date;
  *   {
  *      "id": number,
  *      "fecha: Date,
- *      "horaInicio": Date
+ *      "horaInicio": Date,
  *      "horaFin": Date
  *   }
  * </pre> Por ejemplo un cliente se representa asi:<br>
@@ -26,7 +26,7 @@ import java.util.Date;
  *   {
  *      "id": 112344,
  *      "fecha: 01/01/12,
- *      "horaInicio": 14:00
+ *      "horaInicio": 14:00,
  *      "horaFin": 20:00
  *   }
  *
