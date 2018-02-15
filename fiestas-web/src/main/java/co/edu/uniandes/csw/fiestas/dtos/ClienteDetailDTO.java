@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que extiende de {@link ClienteDTO} para manejar la transformacion entre
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class ClienteDetailDTO extends ClienteDTO 
 {
     
-    private ArrayList<EventoDTO> eventos;
+    private List<EventoDTO> eventos;
 
     /**
      * Constructor por defecto
@@ -20,11 +21,11 @@ public class ClienteDetailDTO extends ClienteDTO
         
     }
 
-    public ArrayList getEventos() {
+    public List getEventos() {
         return eventos;
     }
 
-    public void setClienteDTO(ArrayList<EventoDTO> eventos) {
+    public void setClienteDTO(List<EventoDTO> eventos) {
         this.eventos = eventos;
     }
 
