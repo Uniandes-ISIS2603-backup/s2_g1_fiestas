@@ -99,7 +99,7 @@ public class ProductoResource
      * </pre>
      * @param producto {@link ProductoDetailDTO} - El producto que se desea guardar.
      * @return JSON {@link ProductoDetailDTO}  - El producto guardada con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe El producto
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicException} - Error de lógica que se genera cuando ya existe El producto
      */
     @POST
     public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
@@ -122,11 +122,11 @@ public class ProductoResource
      * @param id Identificador de el producto que se desea actualizar.Este debe ser una cadena de dígitos.
      * @param producto {@link ProductoDetailDTO} El producto que se desea guardar.
      * @return JSON {@link ProductoDetailDTO} - El producto guardada.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera al no poder actualizar el productod porque ya existe uno con ese nombre.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera al no poder actualizar el productod porque ya existe uno con ese nombre.
      */
     @PUT
     @Path("{id: \\d+}")
-    public ProductoDetailDTO updateProducto(@PathParam("id") Long id, ProductoDetailDTO producto){
+    public ProductoDetailDTO updateProducto(@PathParam("id") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
         return producto;
     }
     

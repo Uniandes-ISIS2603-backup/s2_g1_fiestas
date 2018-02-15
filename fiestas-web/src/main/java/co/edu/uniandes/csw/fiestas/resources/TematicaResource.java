@@ -49,15 +49,15 @@ public class TematicaResource
     * 
     * <pre>Busca y devuelve todos las tematica que existen en la aplicacion.
     * 
-    * @return 
     * Codigos de respuesta:
     * <code style="color: mediumseagreen; background-color: #eaffe0;">
     * 200 OK Devuelve todas los productos de la aplicacion.</code> 
     * </pre>
+    * @param lista una lista de todas las tematicas
     * @return JSONArray {@link TematicaDetailDTO} - Las tematicas encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
     */ 
     @GET
-    public List<TematicaDetailDTO> getTematica(@PathParam("id") Long id,  List<TematicaDetailDTO> lista){
+    public List<TematicaDetailDTO> getTematica(List<TematicaDetailDTO> lista){
       return lista;
     }
    
@@ -100,9 +100,9 @@ public class TematicaResource
     * 412 Precodition Failed: Ya existe la tematica.
     * </code>
     * </pre>
-    * @param tematica {@link TematicaDetailDT} - La tematica que se desea guardar.
+    * @param tematica {@link TematicaDetailDTO} - La tematica que se desea guardar.
     * @return JSON {@link TematicaDetailDTO}  - La tematica guardado con el atributo id autogenerado.
-    * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la evento.
+    * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la evento.
     */ 
     @POST 
     public TematicaDetailDTO createTematica(TematicaDetailDTO tematica) throws BusinessLogicException{

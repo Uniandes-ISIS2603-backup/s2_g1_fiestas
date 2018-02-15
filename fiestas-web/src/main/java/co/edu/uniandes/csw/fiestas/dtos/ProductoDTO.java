@@ -20,7 +20,6 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *   }
  * </pre>
  * Por ejemplo una entidad de Servicio se representa asi:<br>
- * <p>
  * <pre>
  *
  *   {
