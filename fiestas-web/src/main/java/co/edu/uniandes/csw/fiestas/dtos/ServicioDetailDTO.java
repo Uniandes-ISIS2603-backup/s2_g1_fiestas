@@ -5,7 +5,8 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -17,25 +18,12 @@ public class ServicioDetailDTO extends ServicioDTO {
      */
     public ServicioDetailDTO() {
     }
-
-    /**
-     * Constructor para transformar un Entity a un DTO
-     *
-     * @param entity La entidad de ciudad a partir de la cual se construye el objeto
-     */
-    public ServicioDetailDTO(ServicioEntity entity) {
-        super(entity);
-    }
-
-    /**
-     * Transformar un DTO a un Entity
-     *
-     * @return  La entidad construida a partir del DTO.
-     */
-    @Override
-    public ServicioEntity toEntity() {
-        ServicioEntity servicioE = super.toEntity();
-        return servicioE;
+    
+    private ArrayList<ServicioDTO> proveedores;
+    
+    public ArrayList<ServicioDTO> getProveedores()
+    {
+        return proveedores;
     }
     
 }

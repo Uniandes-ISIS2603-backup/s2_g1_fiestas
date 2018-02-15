@@ -5,7 +5,8 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -19,25 +20,11 @@ public class ValoracionDetailDTO extends ValoracionDTO {
     public ValoracionDetailDTO() {
     }
 
-    /**
-     * Constructor para transformar un Entity a un DTO
-     *
-     * @param entity La entidad de ciudad a partir de la cual se construye el objeto
-     */
-    public ValoracionDetailDTO(ValoracionEntity entity) {
-        super(entity);
-    }
-
-    /**
-     * Transformar un DTO a un Entity
-     *
-     * @return  La entidad construida a partir del DTO.
-     */
-    @Override
-    public ValoracionEntity toEntity() {
-        ValoracionEntity valoracionE = super.toEntity();
-        return valoracionE;
-    }
-
+    private ArrayList<ValoracionDTO> eventos;
     
+    public ArrayList<ValoracionDTO> getEventos()
+    {
+        return eventos;
+    }
+
 }
