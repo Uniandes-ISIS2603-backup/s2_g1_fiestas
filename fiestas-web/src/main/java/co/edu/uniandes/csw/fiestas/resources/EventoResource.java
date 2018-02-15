@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,7 +23,7 @@ import javax.ws.rs.Produces;
  *
  * @author cm.amaya10
  */
-
+/*
  * <pre>Clase que implementa el recurso "eventos".
  * URL: /api/eventos
  * </pre>
@@ -39,20 +40,12 @@ import javax.ws.rs.Produces;
  * @author cm.amaya10
  */
 @Path("eventos")
-@Produces("application/jscoped
+@Produces("application/json")
+@Consumes("application/json")
+@RequestScoped
 public class EventoResource {
     
-    /**
-     * 
-     * @return 
-     */
-    @GET
-    public List<EventoDetailDTO> getEventos(){
-        return new ArrayList<EventoDetailDTO>();
-    }
-    
-
-    /**
+        /**
      * <h1>GET /eventos : Obtener todos los eventos.</h1>
      *
      * <pre>Busca y devuelve todos los eventos que existen en la aplicacion.
@@ -94,18 +87,7 @@ public class EventoResource {
         return null;
     }
     
-    @PUT
-    @Path("{id: \\d+}")
-    public EventoDetailDTO updateEvento(@PathParam("id") Long id){
-        return null;
-    }
-    
-    
-   @DELETE
-    @Path("{id: \\d+}")
-    public void deleteEvento(@PathParam("id") Long id){
-    }
-    
+       
 
     /**
      * <h1>POST /eventos : Crear un evento.</h1>

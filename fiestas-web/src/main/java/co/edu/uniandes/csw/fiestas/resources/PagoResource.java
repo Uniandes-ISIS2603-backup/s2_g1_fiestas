@@ -36,35 +36,13 @@ import javax.ws.rs.Produces;
  * @author cm.amaya10
  */
 
-@Path("eventos")
 @Path("pagos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class PagoResource {
     
-    @GET
-    public List<PagoDTO> getPagos(){
-        return new ArrayList<PagoDTO>();
-    }
-    
-     @GET
-    @Path("{id: \\d+}")
-     public PagoDTO getPago(@PathParam("id") Long id) {
-        return null;
-    }
-     
-    @POST
-    public PagoDTO createPago(PagoDTO pago){
-        return pago;
-    }
-    
-    @PUT
-    @Path("{id: \\d+}")
-     public PagoDTO updatePago(@PathParam("id") Long id){
-        return null;
-    }
-     
+         
         /**
      * <h1>GET /pagos : Obtener todos los pagos.</h1>
      * 
