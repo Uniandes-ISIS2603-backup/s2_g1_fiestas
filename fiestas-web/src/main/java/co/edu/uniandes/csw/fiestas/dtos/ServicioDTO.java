@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 
 /**
  *
@@ -22,13 +21,6 @@ public class ServicioDTO {
         
     }
     
-    public ServicioDTO(ServicioEntity servicio)
-    {
-        this.id = servicio.getId();
-        this.descripcion = servicio.getDescripcion();
-        this.tipo = servicio.getTipo();
-    }
-
     public long getId() {
         return id;
     }
@@ -53,13 +45,5 @@ public class ServicioDTO {
         this.tipo = tipo;
     }
     
-    public ServicioEntity toEntity()
-    {
-        ServicioEntity entity = new ServicioEntity();
-        entity.setId(this.id);
-        entity.setDescripcion(this.descripcion);
-        entity.setTipo(this.tipo);
-        return entity;
-    }
     
 }

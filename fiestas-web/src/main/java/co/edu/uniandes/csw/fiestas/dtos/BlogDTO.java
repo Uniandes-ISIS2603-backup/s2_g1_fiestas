@@ -10,6 +10,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
  * @author nm.hernandez10
  */
 class BlogDTO {
+    
+
      private long id;
      private String titulo;
      private String cuerpo;
