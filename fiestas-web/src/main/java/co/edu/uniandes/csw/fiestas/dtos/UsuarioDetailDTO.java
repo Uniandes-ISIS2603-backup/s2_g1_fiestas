@@ -12,7 +12,13 @@ import java.util.List;
  * 
  * <pre>
  *   {
- *      ...
+ *      "id": number,
+ *      "nombre": string,
+ *      "documento": string,
+ *      "telefono": number,
+ *      "correo": string,
+ *      "direccion": string,
+ *      "login": string
  *      "blogs": [{"id": number,
  *      "autor": String,
  *      "cuerpo": String,
@@ -28,7 +34,13 @@ import java.util.List;
  * <pre>
  * 
  *   {
- *       ...
+ *      "id": 7,
+ *      "nombre": "Nicolás Hernández",
+ *      "documento": "101010101",
+ *      "telefono": 3111234567,
+ *      "correo": "nicolashernandez@hotmail.com",
+ *      "direccion": "Calle 97 # 6-43",
+ *      "login": "nm.hernandez10",
  *      "blogs": [{"id": 1,
  *      "autor": "Laura",
  *      "cuerpo": "Que chevere la comida",
@@ -36,7 +48,7 @@ import java.util.List;
  *      "likes": 0
  *      },
  *      {
- * "id": 2,
+ *      "id": 2,
  *      "autor": "María",
  *      "cuerpo": "No me gustó el tema",
  *      "titulo": "Tema malo",
