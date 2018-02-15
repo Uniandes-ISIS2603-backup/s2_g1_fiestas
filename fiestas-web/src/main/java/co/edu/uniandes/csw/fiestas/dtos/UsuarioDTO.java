@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
 
 /**
  *
- * @author nm.hernandez10
+ * @author df.nino10
  */
 public class UsuarioDTO 
 {
