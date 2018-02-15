@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 
 /**
  * <pre>Clase que implementa el recurso "pagos".
+ * URL: /api/proveedores
  * URL: /api/pagos
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
@@ -41,6 +42,7 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class PagoResource {
     
+         
         /**
      * <h1>GET /pagos : Obtener todos los pagos.</h1>
      * 

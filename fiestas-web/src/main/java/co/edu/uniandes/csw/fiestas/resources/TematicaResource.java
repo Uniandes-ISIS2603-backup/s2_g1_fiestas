@@ -49,17 +49,16 @@ public class TematicaResource
     * 
     * <pre>Busca y devuelve todos las tematica que existen en la aplicacion.
     * 
-    * @return 
     * Codigos de respuesta:
     * <code style="color: mediumseagreen; background-color: #eaffe0;">
     * 200 OK Devuelve todas los productos de la aplicacion.</code> 
     * </pre>
+    * @param lista una lista de todas las tematicas
     * @return JSONArray {@link TematicaDetailDTO} - Las tematicas encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
-    */
-    
+    */ 
     @GET
-    public List<TematicaDetailDTO> getTematica(@PathParam("id") Long id){
-      return null;
+    public List<TematicaDetailDTO> getTematica(List<TematicaDetailDTO> lista){
+      return lista;
     }
    
     /**
@@ -72,16 +71,15 @@ public class TematicaResource
     * 200 OK Devuelve el tematica correspondiente al id.
     * </code> 
     * <code style="color: #c7254e; background-color: #f9f2f4;">
-    * 404 Not Found No existe un tematica con el id dado.
+    * 404 Not Found No existe una tematica con el id dado.
     * </code> 
     * </pre>
     * @param id Identificador del tematica que se esta buscando. Este debe ser una cadena de dígitos.
     * @return JSON {@link TematicaDetailDTO} - La temática buscada
     */
-    
     @GET
     @Path("{id: \\d+}")
-    public TematicaDetailDTO getTematica(){
+    public TematicaDetailDTO getTematica(@PathParam("id") Long id){
       return null;
     }
    
@@ -102,9 +100,9 @@ public class TematicaResource
     * 412 Precodition Failed: Ya existe la tematica.
     * </code>
     * </pre>
-    * @param tematica {@link TematicaDetailDT} - La ciudad que se desea guardar.
-    * @return JSON {@link TematicaDetailDTO}  - El evento guardado con el atributo id autogenerado.
-    * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la evento.
+    * @param tematica {@link TematicaDetailDTO} - La tematica que se desea guardar.
+    * @return JSON {@link TematicaDetailDTO}  - La tematica guardado con el atributo id autogenerado.
+    * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la evento.
     */ 
     @POST 
     public TematicaDetailDTO createTematica(TematicaDetailDTO tematica) throws BusinessLogicException{
@@ -128,7 +126,6 @@ public class TematicaResource
     * @param id Identificador de la tematica que se esta buscando. Este debe ser una cadena de dígitos.
     * @return JSON {@link TematicaDetailDTO} - La tematica buscada y actuaizada
     */
-    
     @PUT 
     @Path("{id: \\d+}")
     public TematicaDetailDTO updateTematica(@PathParam("id") Long id){
@@ -150,7 +147,6 @@ public class TematicaResource
     * </pre>
     * @param id Identificador de la tematica que se esta buscando. Este debe ser una cadena de dígitos.
     */
-    
     @DELETE
     @Path("{id: \\d+}")
     public void deleteTematica(@PathParam("id") Long id){

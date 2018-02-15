@@ -29,8 +29,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *   }
  *
  * </pre>
+ *
  * @author mc.gonzalez15
- * @author cm.amaya10
  */
 public class ContratoDTO {
     

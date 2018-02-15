@@ -32,6 +32,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
  */
 class BlogDTO {
     
+
     /**
      * Identificador del Blog
      */
