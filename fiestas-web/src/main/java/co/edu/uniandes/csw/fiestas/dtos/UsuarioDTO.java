@@ -22,7 +22,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *      "login": string
  *   }
  * </pre>
- * Por ejemplo un proveedor se representa asi:<br>
+ * Por ejemplo un usuario se representa asi:<br>
  * 
  * <pre>
  * 
