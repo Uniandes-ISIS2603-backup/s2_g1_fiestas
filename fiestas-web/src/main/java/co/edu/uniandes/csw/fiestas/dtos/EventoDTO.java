@@ -1,3 +1,5 @@
+package co.edu.uniandes.csw.fiestas.dtos;
+
 
 import java.util.Date;
 
