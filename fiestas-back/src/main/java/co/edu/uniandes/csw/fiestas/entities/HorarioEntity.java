@@ -7,11 +7,13 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
 
 /**
  *
  * @author df.nino10
  */
+@Entity
 public class HorarioEntity extends BaseEntity implements Serializable{
     private Date fecha;
     private Date horaInicio;
