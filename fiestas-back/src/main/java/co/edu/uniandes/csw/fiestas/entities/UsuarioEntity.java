@@ -13,7 +13,7 @@ import javax.persistence.Entity;
  * @author df.nino10
  */
 @Entity
-public class UsusarioEntity extends BaseEntity implements Serializable{
+public class UsuarioEntity extends BaseEntity implements Serializable{
     private String documento;
     private Integer telefono;
     private String correo;
