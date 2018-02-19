@@ -24,3 +24,4 @@ hs_err_pid*
 /fiestas-web/target/
 /target/
 /fiestas-back/target/
+/fiestas-back/nbproject/
