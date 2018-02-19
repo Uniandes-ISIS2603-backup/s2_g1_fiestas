@@ -6,25 +6,29 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 
 /**
  *
  * @author af.losada
  */
+@Entity 
 public class TematicaEntity  extends BaseEntity implements Serializable
 {
 
     /**
      * @return the descripcion
      */
-    public String getDescripcion() {
+    public String getDescripcion() 
+    {
         return descripcion;
     }
 
     /**
      * @param descripcion the descripcion to set
      */
-    public void setDescripcion(String descripcion) {
+    public void setDescripcion(String descripcion) 
+    {
         this.descripcion = descripcion;
     }
     private String descripcion;

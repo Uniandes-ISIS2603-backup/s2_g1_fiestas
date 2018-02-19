@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
-import javaxs.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
-import uk.co.jemos.podam.api.PodamFactoryImpl;.transaction.UserTransaction;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 import org.junit.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -124,7 +124,7 @@ public class TematicaPersistenceTest
         factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             TematicaEntity entity = factory.manufacturePojo(TematicaEntity.class);
-
+            
             em.persist(entity);
             data.add(entity);
         }

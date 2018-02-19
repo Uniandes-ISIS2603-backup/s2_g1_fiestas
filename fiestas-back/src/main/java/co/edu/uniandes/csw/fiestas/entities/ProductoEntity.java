@@ -6,11 +6,13 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 
 /**
- *
+ * 
  * @author af.losada
  */
+@Entity
 public class ProductoEntity extends BaseEntity implements Serializable
 {
     private Integer precio;
@@ -21,56 +23,64 @@ public class ProductoEntity extends BaseEntity implements Serializable
     /**
      * @return the precio
      */
-    public Integer getPrecio() {
+    public Integer getPrecio() 
+    {
         return precio;
     }
 
     /**
      * @param precio the precio to set
      */
-    public void setPrecio(Integer precio) {
+    public void setPrecio(Integer precio) 
+    {
         this.precio = precio;
     }
 
     /**
      * @return the descripcion
      */
-    public String getDescripcion() {
+    public String getDescripcion() 
+    {
         return descripcion;
     }
 
     /**
      * @param descripcion the descripcion to set
      */
-    public void setDescripcion(String descripcion) {
+    public void setDescripcion(String descripcion) 
+    {
         this.descripcion = descripcion;
     }
 
     /**
      * @return the incluye
      */
-    public String getIncluye() {
+    public String getIncluye() 
+    {
         return incluye;
     }
 
     /**
      * @param incluye the incluye to set
      */
-    public void setIncluye(String incluye) {
+    public void setIncluye(String incluye) 
+    {
         this.incluye = incluye;
     }
 
     /**
      * @return the personal
      */
-    public String getPersonal() {
+    public String getPersonal() 
+    {
         return personal;
     }
 
     /**
      * @param personal the personal to set
      */
-    public void setPersonal(String personal) {
+    public void setPersonal(String personal) 
+    {
         this.personal = personal;
     }  
 }

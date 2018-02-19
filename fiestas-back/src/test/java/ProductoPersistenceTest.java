@@ -1,8 +1,6 @@
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
-import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
-import co.edu.uniandes.csw.fiestas.persistence.TematicaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,7 +36,8 @@ public class ProductoPersistenceTest
      * dependencias.
      */
     @Deployment
-    public static JavaArchive createDeployment() {
+    public static JavaArchive createDeployment()
+    {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ProductoEntity.class.getPackage())
                 .addPackage(ProductoPersistence.class.getPackage())
@@ -56,7 +55,7 @@ public class ProductoPersistenceTest
      * Contexto de Persostencia que se va autilizar para acceder a la Base de
      * datos por fuera de los métodos que se están probando.
      */
-    @PersistenceContext 
+    @PersistenceContext
     private EntityManager em;
 
     /**
@@ -72,18 +71,26 @@ public class ProductoPersistenceTest
      *
      */
     @Before 
-    public void setUp() {
-        try {
+    public void setUp() 
+    {
+        try 
+        {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e)
+        {
             e.printStackTrace();
-            try {
+            try 
+            {
                 utx.rollback();
-            } catch (Exception e1) {
+            } 
+            catch (Exception e1) 
+            {
                 e1.printStackTrace();
             }
         }
@@ -92,9 +99,9 @@ public class ProductoPersistenceTest
     /**
      * Limpia las tablas que están implicadas en la prueba.
      *
-     *
      */
-    private void clearData() {
+    private void clearData() 
+    {
         em.createQuery("delete from ProductoEntity").executeUpdate();
     }
 
@@ -135,7 +142,7 @@ public class ProductoPersistenceTest
 
         ProductoEntity entity = em.find(ProductoEntity.class, result.getId());
 
-        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
         Assert.assertEquals(newEntity.getIncluye(), entity.getIncluye());
@@ -172,7 +179,8 @@ public class ProductoPersistenceTest
     public void getProductoTest() {
         ProductoEntity entity = data.get(0);
         ProductoEntity newEntity = productoPersistence.find(entity.getId());
-        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        
+        Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
         Assert.assertEquals(newEntity.getIncluye(), entity.getIncluye());
