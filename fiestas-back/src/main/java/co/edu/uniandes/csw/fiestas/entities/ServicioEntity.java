@@ -6,11 +6,13 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 
 /**
  *
  * @author ls.arias
  */
+@Entity 
 public class ServicioEntity extends BaseEntity implements Serializable{
     
     private String descripcion;

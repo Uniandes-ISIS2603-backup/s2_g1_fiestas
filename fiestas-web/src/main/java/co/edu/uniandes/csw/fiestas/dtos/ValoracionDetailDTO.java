@@ -5,11 +5,11 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- *
+ * Clase que extiende de {@link ValoracionDTO}
  * @author ls.arias
  */
 public class ValoracionDetailDTO extends ValoracionDTO {
@@ -20,11 +20,22 @@ public class ValoracionDetailDTO extends ValoracionDTO {
     public ValoracionDetailDTO() {
     }
 
-    private ArrayList<ValoracionDTO> eventos;
+    private List<ServicioDTO> servicios;
     
-    public ArrayList<ValoracionDTO> getEventos()
+    /**
+    * @return La lista de servicios.
+    */
+    public List<ServicioDTO> getServicios()
     {
-        return eventos;
+        return servicios;
+    }
+    
+    /**
+    * @param servicios nuevos servicios 
+    */
+    public void setServicios(List<ServicioDTO> servicios)
+    {
+        this.servicios = servicios;
     }
 
 }
