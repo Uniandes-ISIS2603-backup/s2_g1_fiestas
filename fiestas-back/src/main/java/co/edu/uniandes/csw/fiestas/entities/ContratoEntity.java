@@ -23,12 +23,9 @@ private int valor;
 /**
  * Condiciones del contrato
  */
-private String condiciones;
+private String tyc;
 
-/**
- * Terminos del contrato
- */
-private String terminos;
+
 
     public int getValor() {
         return valor;
@@ -38,21 +35,15 @@ private String terminos;
         this.valor = valor;
     }
 
-    public String getCondiciones() {
-        return condiciones;
+    public String getTyc() {
+        return tyc;
     }
 
-    public void setCondiciones(String condiciones) {
-        this.condiciones = condiciones;
+    public void setTyc(String tyc) {
+        this.tyc = tyc;
     }
 
-    public String getTerminos() {
-        return terminos;
-    }
-
-    public void setTerminos(String terminos) {
-        this.terminos = terminos;
-    }
+   
 
 
     
