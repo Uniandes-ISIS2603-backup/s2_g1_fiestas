@@ -1,6 +1,8 @@
+package co.edu.uniandes.csw.fiestas.test.persistence;
 
-import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
-import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
+
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,7 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author cm.amaya10
  */
 @RunWith(Arquillian.class)
-public class PagoPersistenceTest {
+public class EventoPersistenceTest {
 
     /**
      *
@@ -39,18 +41,18 @@ public class PagoPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(PagoEntity.class.getPackage())
-                .addPackage(PagoPersistence.class.getPackage())
+                .addPackage(EventoEntity.class.getPackage())
+                .addPackage(EventoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
     /**
-     * Inyección de la dependencia a la clase PagoPersistence cuyos métodos se
+     * Inyección de la dependencia a la clase EventoPersistence cuyos métodos se
      * van a probar.
      */
     @Inject
-    private PagoPersistence pagoPersistence;
+    private EventoPersistence eventoPersistence;
 
     /**
      * Contexto de Persistencia que se va autilizar para acceder a la Base de
@@ -91,13 +93,13 @@ public class PagoPersistenceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from PagoEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
     /**
      * Lista donde se guardaran las entidades creadas para las pruebas
      */
-    private List<PagoEntity> data = new ArrayList<PagoEntity>();
+    private List<EventoEntity> data = new ArrayList<EventoEntity>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -106,37 +108,38 @@ public class PagoPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            PagoEntity entidad = factory.manufacturePojo(PagoEntity.class);
+            EventoEntity entidad = factory.manufacturePojo(EventoEntity.class);
             em.persist(entidad);
             data.add(entidad);
         }
     }
 
     /**
-     * Prueba para crear un Pago
+     * Prueba para crear un Evento
      */
     @Test
-    public void createPagoTest() {
+    public void createEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        PagoEntity entidad = factory.manufacturePojo(PagoEntity.class);
-        PagoEntity creado = pagoPersistence.create(entidad);
+        EventoEntity entidad = factory.manufacturePojo(EventoEntity.class);
+        EventoEntity creado = eventoPersistence.create(entidad);
 
         Assert.assertNotNull(creado);
 
-        Assert.assertEquals(creado.getEstado(), entidad.getEstado());
-        Assert.assertEquals(creado.getMetodoDePago(), entidad.getMetodoDePago());
-        Assert.assertEquals(creado.getRealizado(), entidad.getRealizado());
+        Assert.assertEquals(creado.getLugar(), entidad.getLugar());
+        Assert.assertEquals(creado.getCelebrado(), entidad.getCelebrado());
+        Assert.assertEquals(creado.getInvitados(), entidad.getInvitados());
+        Assert.assertEquals(entidad.getFecha(), creado.getFecha());
     }
-
     /**
-     * Prueba para obtener la lista de pagos.
+     * Prueba para obtener la lista de eventos.
      */
-    public void getPagosTest() {
-        List<PagoEntity> lista = pagoPersistence.findAll();
+    @Test
+    public void getEventosTest() {
+        List<EventoEntity> lista = eventoPersistence.findAll();
         org.junit.Assert.assertEquals(data.size(), lista.size());
-        for (PagoEntity entidad : lista) {
+        for (EventoEntity entidad : lista) {
             boolean found = false;
-            for (PagoEntity entidad2 : data) {
+            for (EventoEntity entidad2 : data) {
                 if (entidad.getId().equals(entidad2.getId())) {
                     found = true;
                     break;
@@ -147,47 +150,51 @@ public class PagoPersistenceTest {
     }
 
     /**
-     * Prueba para obtener un pago especifico.
+     * Prueba para obtener un evento especifico.
      */
     @Test
-    public void getPagoTest() {
-        PagoEntity entidad = data.get(0);
-        PagoEntity encontrado = pagoPersistence.find(entidad.getId());
+    public void getEventoTest() {
+        EventoEntity entidad = data.get(0);
+        EventoEntity encontrado = eventoPersistence.find(entidad.getId());
         Assert.assertNotNull(encontrado);
-        Assert.assertEquals(entidad.getEstado(), encontrado.getEstado());
-        Assert.assertEquals(entidad.getMetodoDePago(), encontrado.getMetodoDePago());
-        Assert.assertEquals(entidad.getRealizado(), encontrado.getRealizado());
+        Assert.assertEquals(encontrado.getLugar(), entidad.getLugar());
+        Assert.assertEquals(encontrado.getCelebrado(), entidad.getCelebrado());
+        Assert.assertEquals(encontrado.getInvitados(), entidad.getInvitados());
+        Assert.assertEquals(entidad.getFecha(), encontrado.getFecha());
     }
-
-    /**
-     * Prueba para eliminar un pago especifico.
+    
+     /**
+     * Prueba para eliminar un evento especifico.
      */
     @Test
-    public void deletePagoTest() {
-        PagoEntity entidad = data.get(0);
-        pagoPersistence.delete(entidad.getId());
-        PagoEntity borrado = em.find(PagoEntity.class, entidad.getId());
-        Assert.assertNull(borrado);
+    public void deleteEventoTest() {
+      EventoEntity entidad = data.get(0);
+      eventoPersistence.delete(entidad.getId());
+      EventoEntity borrado =em.find(EventoEntity.class, entidad.getId());
+      Assert.assertNull(borrado);
+      
     }
-
-    /**
-     * Prueba para actualizar un horario
+    
+     /**
+     * Prueba para actualizar un evento.
      */
     @Test
-    public void updatePagoTest() {
-        PagoEntity entidad = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        PagoEntity nuevo = factory.manufacturePojo(PagoEntity.class);
-
-        nuevo.setId(entidad.getId());
-
-        pagoPersistence.update(nuevo);
-
-        PagoEntity actualizada = em.find(PagoEntity.class, entidad.getId());
-
-        Assert.assertEquals(nuevo.getEstado(), actualizada.getEstado());
-        Assert.assertEquals(nuevo.getMetodoDePago(), actualizada.getMetodoDePago());
-        Assert.assertEquals(nuevo.getRealizado(), actualizada.getRealizado());
-
+    public void updateEventoTest() {
+      EventoEntity entidad = data.get(0);
+      PodamFactory factory = new PodamFactoryImpl();
+      EventoEntity nuevo = factory.manufacturePojo(EventoEntity.class);
+      
+      nuevo.setId(entidad.getId());
+      
+      
+      eventoPersistence.update(nuevo);
+      EventoEntity actualizado =em.find(EventoEntity.class, entidad.getId());
+      
+              Assert.assertNotNull(actualizado);
+        Assert.assertEquals(actualizado.getLugar(), nuevo.getLugar());
+        Assert.assertEquals(actualizado.getCelebrado(), nuevo.getCelebrado());
+        Assert.assertEquals(actualizado.getInvitados(), nuevo.getInvitados());
+        Assert.assertEquals(nuevo.getFecha(), actualizado.getFecha());
+      
     }
 }
