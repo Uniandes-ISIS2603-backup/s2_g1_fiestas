@@ -1,0 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package co.edu.uniandes.csw.fiestas.persistence;
+
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author cm.amaya10
+ */
+@Stateless
+public class EventoPersistence {
+
+    @PersistenceContext(unitName = "FiestasPU")
+    protected EntityManager em;
+
+    public EventoEntity find(Long id) {
+        EventoEntity entity = em.find(EventoEntity.class, id);
+        return entity;
+    }
+
+    public List<EventoEntity> findAll() {
+        Query q = em.createQuery("select u from EventoEntity u");
+        return q.getResultList();
+    }
+
+    public EventoEntity create(EventoEntity entidad) {
+        em.persist(entidad);
+        return entidad;
+    }
+
+    public EventoEntity update(EventoEntity entidad) {
+        return em.merge(entidad);
+    }
+
+    public void delete(Long id) {
+        EventoEntity entity = em.find(EventoEntity.class, id);
+        em.remove(entity);
+    }
+}
