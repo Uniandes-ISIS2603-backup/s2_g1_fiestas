@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -14,33 +15,58 @@ import javax.persistence.Entity;
  * @author df.nino10
  */
 @Entity
-public class HorarioEntity extends BaseEntity implements Serializable{
+public class HorarioEntity extends BaseEntity implements Serializable
+{
     private Date fecha;
     private Date horaInicio;
     private Date horaFin;
 
-    public Date getFecha() {
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() 
+    {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha)
+    {
         this.fecha = fecha;
     }
 
+    /**
+     * @return the horaInicio
+     */
     public Date getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Date horaInicio) {
+    /**
+     * @param horaInicio the horaInicio to set
+     */
+    public void setHoraInicio(Date horaInicio) 
+    { 
         this.horaInicio = horaInicio;
     }
 
+    /**
+     * @return the horaFin
+     */
     public Date getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Date horaFin) {
+    /**
+     * @param horaFin the horaFin to set
+     */
+    public void setHoraFin(Date horaFin) 
+    {
         this.horaFin = horaFin;
     }
+    
+    
     
 }
