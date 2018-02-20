@@ -6,11 +6,12 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
-
+import javax.persistence.Entity;
 /**
  *
  * @author ls.arias
  */
+@Entity
 public class ValoracionEntity extends BaseEntity implements Serializable{
     
     private String comentario;
@@ -31,7 +32,7 @@ public class ValoracionEntity extends BaseEntity implements Serializable{
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
     }
+ 
     
-    
-    
+
 }
