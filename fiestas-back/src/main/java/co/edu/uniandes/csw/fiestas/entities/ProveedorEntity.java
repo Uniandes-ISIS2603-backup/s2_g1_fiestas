@@ -6,11 +6,13 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.beans.PropertyChangeSupport;
+import javax.persistence.Entity;
 
 /**
  *
  * @author nm.hernandez10
  */
+@Entity
 public class ProveedorEntity extends UsuarioEntity
 {
     private boolean penalizado;
