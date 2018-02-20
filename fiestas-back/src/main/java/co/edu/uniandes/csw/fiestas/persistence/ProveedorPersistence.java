@@ -29,7 +29,7 @@ public class ProveedorPersistence
     }
     public List<ProveedorEntity> findAll()
     {
-        Query q = em.createQuery("select u form ProveedorEntity u");
+        Query q = em.createQuery("select u from ProveedorEntity u");
         return q.getResultList();
     }
     

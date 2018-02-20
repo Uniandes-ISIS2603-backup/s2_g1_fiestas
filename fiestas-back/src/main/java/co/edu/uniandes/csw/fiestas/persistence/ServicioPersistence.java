@@ -29,7 +29,7 @@ public class ServicioPersistence {
      
       public List<ServicioEntity> findAll()
       {
-        Query q = em.createQuery("select u form ServicioEntity u");
+        Query q = em.createQuery("select u from ServicioEntity u");
         return q.getResultList();
       }
       

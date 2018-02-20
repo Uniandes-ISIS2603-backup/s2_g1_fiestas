@@ -217,7 +217,7 @@ public class TematicaPersistenceTest
         TematicaEntity resp = em.find(TematicaEntity.class, entity.getId());
 
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     

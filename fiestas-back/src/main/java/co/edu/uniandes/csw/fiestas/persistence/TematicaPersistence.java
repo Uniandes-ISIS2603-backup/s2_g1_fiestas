@@ -24,7 +24,7 @@ public class TematicaPersistence
 {
     private static final Logger LOGGER = Logger.getLogger(TematicaEntity.class.getName());
 
-    @PersistenceContext(unitName = "CompanyPU")
+    @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
 
     public TematicaEntity find(Long id) {

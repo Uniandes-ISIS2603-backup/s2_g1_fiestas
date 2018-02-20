@@ -28,7 +28,7 @@ public class UsuarioPersistence
     }
     public List<UsuarioEntity> findAll()
     {
-        Query q = em.createQuery("select u form UsuarioEntity u");
+        Query q = em.createQuery("select u from UsuarioEntity u");
         return q.getResultList();
     }
     

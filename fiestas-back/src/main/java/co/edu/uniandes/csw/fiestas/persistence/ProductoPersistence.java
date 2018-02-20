@@ -24,7 +24,7 @@ public class ProductoPersistence
 {
     private static final Logger LOGGER = Logger.getLogger(ProductoEntity.class.getName());
 
-    @PersistenceContext(unitName = "CompanyPU")
+    @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
 
     public ProductoEntity find(Long id) {
