@@ -7,10 +7,13 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *Entidad Evento
@@ -24,6 +27,7 @@ public class EventoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
     private Long id; /*ID del evento */
+    @Temporal(TemporalType.DATE)
     private Date fecha; /*Fecha del evento */
     private String descripcion; /*Descripcion del evento */
     private String celebrado; /*Nombre del celebrado del evento */
