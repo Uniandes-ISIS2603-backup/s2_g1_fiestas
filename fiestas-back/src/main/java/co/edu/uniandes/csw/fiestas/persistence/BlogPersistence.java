@@ -25,7 +25,7 @@ public class BlogPersistence {
     
    private static final Logger LOGGER = Logger.getLogger(BlogPersistence.class.getName());
    
-    @PersistenceContext(unitName = "BlogMC")
+    @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
     
     public BlogEntity find(Long id) {
