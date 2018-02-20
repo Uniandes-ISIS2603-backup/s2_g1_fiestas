@@ -220,13 +220,13 @@ public class ProveedorPersistenceTest
         ProveedorEntity resp = em.find(ProveedorEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getName(), resp.getName());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-        Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getContraseña(), entity.getContraseña());
-        Assert.assertEquals(newEntity.getCorreo(), entity.getCorreo());
-        Assert.assertEquals(newEntity.getLogin(), entity.getLogin());
-        Assert.assertEquals(newEntity.getTelefono(), entity.getTelefono());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDocumento(), resp.getDocumento());
+        Assert.assertEquals(newEntity.getDireccion(), resp.getDireccion());
+        Assert.assertEquals(newEntity.getContraseña(), resp.getContraseña());
+        Assert.assertEquals(newEntity.getCorreo(), resp.getCorreo());
+        Assert.assertEquals(newEntity.getLogin(), resp.getLogin());
+        Assert.assertEquals(newEntity.getTelefono(), resp.getTelefono());
     }
     
 }

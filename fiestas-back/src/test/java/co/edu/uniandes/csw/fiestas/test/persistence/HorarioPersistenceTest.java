@@ -212,8 +212,8 @@ public class HorarioPersistenceTest {
         HorarioEntity resp = em.find(HorarioEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
-        Assert.assertEquals(newEntity.getHoraInicio(), entity.getHoraInicio());
-        Assert.assertEquals(newEntity.getHoraFin(), entity.getHoraFin());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getHoraInicio(), resp.getHoraInicio());
+        Assert.assertEquals(newEntity.getHoraFin(), resp.getHoraFin());
     }
 }

@@ -202,9 +202,9 @@ public class ValoracionPersistenceTest {
         ValoracionEntity resp = em.find(ValoracionEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getName(), resp.getName());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-        Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
-        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getComentario(), resp.getComentario());
+        Assert.assertEquals(newEntity.getCalificacion(), resp.getCalificacion());
     }
     
 }

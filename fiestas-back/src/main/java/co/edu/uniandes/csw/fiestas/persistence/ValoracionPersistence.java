@@ -29,7 +29,7 @@ public class ValoracionPersistence {
      
       public List<ValoracionEntity> findAll()
       {
-        Query q = em.createQuery("select u form ValoracionEntity u");
+        Query q = em.createQuery("select u from ValoracionEntity u");
         return q.getResultList();
       }
       

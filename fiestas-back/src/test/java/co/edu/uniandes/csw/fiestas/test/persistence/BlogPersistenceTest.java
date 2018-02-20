@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -21,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -29,6 +31,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author mc.gonzalez15
  */
+@RunWith(Arquillian.class)
 public class BlogPersistenceTest {
     
    /**
@@ -52,7 +55,7 @@ public class BlogPersistenceTest {
      * se van a probar.
      */
     @Inject
-    private BlogPersistence BlogPersistence;
+    private BlogPersistence blogPersistence;
 
      /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
@@ -130,7 +133,7 @@ public class BlogPersistenceTest {
     public void createBlogTest() {
         PodamFactory factory = new PodamFactoryImpl();
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
-        BlogEntity result = BlogPersistence.create(newEntity);
+        BlogEntity result = blogPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
@@ -147,7 +150,7 @@ public class BlogPersistenceTest {
      */
     @Test
     public void getBlogsTest() {
-        List<BlogEntity> list = BlogPersistence.findAll();
+        List<BlogEntity> list = blogPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
         for (BlogEntity ent : list) {
             boolean found = false;
@@ -168,7 +171,7 @@ public class BlogPersistenceTest {
     @Test
     public void getBlogTest() {
         BlogEntity entity = data.get(0);
-        BlogEntity newEntity = BlogPersistence.find(entity.getId());
+        BlogEntity newEntity = blogPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getName(), newEntity.getName());
       
@@ -182,7 +185,7 @@ public class BlogPersistenceTest {
     @Test
     public void deleteBlogTest() {
         BlogEntity entity = data.get(0);
-        BlogPersistence.delete(entity.getId());
+        blogPersistence.delete(entity.getId());
         BlogEntity deleted = em.find(BlogEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
@@ -202,7 +205,7 @@ public class BlogPersistenceTest {
 
         newEntity.setId(entity.getId());
 
-        BlogPersistence.update(newEntity);
+        blogPersistence.update(newEntity);
 
         BlogEntity resp = em.find(BlogEntity.class, entity.getId());
 
