@@ -37,24 +37,21 @@ public class ContratoDTO {
 /**
  * Identificador del contrato
  */    
-private long id;
+private Long id;
 
 /**
  * Valor del contrato
  */
-private int valor;
+private Integer valor;
 
 /**
  * Condiciones del contrato
  */
-private String condiciones;
+private String tyc;
 
-/**
- * Terminos del contrato
- */
-private String terminos;
 
-     
+
+   
     /**
      * Método constructor
      */
@@ -66,7 +63,7 @@ private String terminos;
      * Retorna el valor del contrato
      * @return valor
      */
-    public int getValor() {
+    public Integer getValor() {
         return valor;
     }
 
@@ -74,42 +71,10 @@ private String terminos;
      * Asigna el valor del contrato
      * @param valor 
      */
-    public void setValor(int valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
-
-    /**
-     * Retorna las condiciones del contrato
-     * @return condiciones
-     */
-    public String getCondiciones() {
-        return condiciones;
-    }
-
-    /**
-     * Asigna las condiciones del contrato
-     * @param condiciones 
-     */
-    public void setCondiciones(String condiciones) {
-        this.condiciones = condiciones;
-    }
-
-    /**
-     * Retorna los terminos del contrato
-     * @return terminos
-     */
-    public String getTerminos() {
-        return terminos;
-    }
-
-    /**
-     * Asigna los terminos del contrato
-     * @param terminos 
-     */
-    public void setTerminos(String terminos) {
-        this.terminos = terminos;
-    }
-     
+    
     /**
      * Retorna el id del contrato
      * @return id
@@ -125,6 +90,15 @@ private String terminos;
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getTyc() {
+        return tyc;
+    }
+
+    public void setTyc(String tyc) {
+        this.tyc = tyc;
+    }
+     
     
     
 }
