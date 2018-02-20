@@ -1,13 +1,9 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
-import co.edu.uniandes.csw.fiestas.persistence.UsuarioPersistence;
+
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -18,28 +14,31 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
- * @author df.nino10
+ * @author nm.hernandez10
  */
+
 @RunWith(Arquillian.class)
-public class UsuarioPersistenceTest {
-    
-        /**
+public class ProveedorPersistenceTest
+{
+      /**
      *
      * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Usuario, el descriptor de la
+     * embebido. El jar contiene las clases de Proveedor, el descriptor de la
      * base de datos y el archivo benas.xml para resolver la inyección de
      * dependencias.
      */
@@ -47,18 +46,18 @@ public class UsuarioPersistenceTest {
     public static JavaArchive createDeployment() 
     {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(UsuarioEntity.class.getPackage())
-                .addPackage(UsuarioPersistence.class.getPackage())
+                .addPackage(ProveedorEntity.class.getPackage())
+                .addPackage(ProveedorPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
     /**
-     * Inyección de la dependencia a la clase UsuarioPersistence cuyos métodos
+     * Inyección de la dependencia a la clase ProveedorPersistence cuyos métodos
      * se van a probar.
      */
     @Inject
-    private UsuarioPersistence usuarioPersistence;
+    private ProveedorPersistence proveedorPersistence;
 
     /**
      * Contexto de Persostencia que se va autilizar para acceder a la Base de
@@ -103,13 +102,13 @@ public class UsuarioPersistenceTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
 
     /**
      *
      */
-    private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+    private List<ProveedorEntity> data = new ArrayList<ProveedorEntity>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -120,7 +119,7 @@ public class UsuarioPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);
 
             em.persist(entity);
             data.add(entity);
@@ -128,19 +127,19 @@ public class UsuarioPersistenceTest {
     }
 
     /**
-     * Prueba para crear un Usuario.
+     * Prueba para crear un Proveedor.
      *
      *
      */
     @Test
-    public void createUsuarioTest() {
+    public void createProveedorTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity result = usuarioPersistence.create(newEntity);
+        ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
+        ProveedorEntity result = proveedorPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
-        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
+        ProveedorEntity entity = em.find(ProveedorEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
@@ -152,17 +151,17 @@ public class UsuarioPersistenceTest {
     }
 
     /**
-     * Prueba para consultar la lista de Usuarios.
+     * Prueba para consultar la lista de Proveedores.
      *
      *
      */
     @Test
-    public void getUsuariosTest() {
-        List<UsuarioEntity> list = usuarioPersistence.findAll();
+    public void getProveedoresTest() {
+        List<ProveedorEntity> list = proveedorPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (UsuarioEntity ent : list) {
+        for (ProveedorEntity ent : list) {
             boolean found = false;
-            for (UsuarioEntity entity : data) {
+            for (ProveedorEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -172,14 +171,14 @@ public class UsuarioPersistenceTest {
     }
 
     /**
-     * Prueba para consultar un Usuario.
+     * Prueba para consultar un Proveedor.
      *
      *
      */
     @Test
-    public void getUsuarioTest() {
-        UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = usuarioPersistence.find(entity.getId());
+    public void getProveedorTest() {
+        ProveedorEntity entity = data.get(0);
+        ProveedorEntity newEntity = proveedorPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
@@ -191,34 +190,34 @@ public class UsuarioPersistenceTest {
     }
 
     /**
-     * Prueba para eliminar un Usuario.
+     * Prueba para eliminar un Proveedor.
      *
      *
      */
     @Test
-    public void deleteUsuarioTest() {
-        UsuarioEntity entity = data.get(0);
-        usuarioPersistence.delete(entity.getId());
-        UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
+    public void deleteProveedorTest() {
+        ProveedorEntity entity = data.get(0);
+        proveedorPersistence.delete(entity.getId());
+        ProveedorEntity deleted = em.find(ProveedorEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
     /**
-     * Prueba para actualizar un Usuario.
+     * Prueba para actualizar un Proveedor.
      *
      *
      */
     @Test
-    public void updateUsuarioTest() {
-        UsuarioEntity entity = data.get(0);
+    public void updateProveedorTest() {
+        ProveedorEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
 
         newEntity.setId(entity.getId());
 
-        usuarioPersistence.update(newEntity);
+        proveedorPersistence.update(newEntity);
 
-        UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
+        ProveedorEntity resp = em.find(ProveedorEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getName(), resp.getName());
         Assert.assertEquals(newEntity.getName(), entity.getName());
@@ -229,4 +228,5 @@ public class UsuarioPersistenceTest {
         Assert.assertEquals(newEntity.getLogin(), entity.getLogin());
         Assert.assertEquals(newEntity.getTelefono(), entity.getTelefono());
     }
+    
 }

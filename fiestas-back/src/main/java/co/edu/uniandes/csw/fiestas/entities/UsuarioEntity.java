@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Entity;
 
@@ -13,7 +14,8 @@ import javax.persistence.Entity;
  * @author df.nino10
  */
 @Entity
-public class UsuarioEntity extends BaseEntity implements Serializable{
+public class UsuarioEntity extends BaseEntity implements Serializable
+{
     private String documento;
     private Integer telefono;
     private String correo;
@@ -21,53 +23,96 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     private String login;
     private String contraseña;
 
+    /**
+     * @return the documento
+     */
     public String getDocumento() {
         return documento;
     }
 
-    public void setDocumento(String documento) {
+    /**
+     * @param documento the documento to set
+     */
+    public void setDocumento(String documento)
+    {
         this.documento = documento;
     }
 
-    public Integer getTelefono() {
+    /**
+     * @return the telefono
+     */
+    public Integer getTelefono() 
+    {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    /**
+     * @param telefono the telefono to set
+     */
+    public void setTelefono(Integer telefono) 
+    {
         this.telefono = telefono;
     }
 
+    /**
+     * @return the correo
+     */
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String correo) {
+    /**
+     * @param correo the correo to set
+     */
+    public void setCorreo(String correo) 
+    {
         this.correo = correo;
     }
 
-    public String getDireccion() {
+    /**
+     * @return the direccion
+     */
+    public String getDireccion()
+    {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
+    /**
+     * @param direccion the direccion to set
+     */
+    public void setDireccion(String direccion)
+    {
         this.direccion = direccion;
     }
 
+    /**
+     * @return the login
+     */
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(String login) 
+    {
         this.login = login;
     }
 
+    /**
+     * @return the contraseña
+     */
     public String getContraseña() {
         return contraseña;
     }
 
-    public void setContraseña(String contraseña) {
+    /**
+     * @param contraseña the contraseña to set
+     */
+    public void setContraseña(String contraseña) 
+    {
         this.contraseña = contraseña;
-    }
-
+    }  
     
 }

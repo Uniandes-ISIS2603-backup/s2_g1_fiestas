@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.persistence;
 
-import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,37 +14,37 @@ import javax.persistence.Query;
 
 /**
  *
- * @author df.nino10
+ * @author nm.hernandez10
  */
 @Stateless
-public class UsuarioPersistence
+public class ClientePersistence 
 {
     @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
     
-    public UsuarioEntity find(Long id)
+    public ClienteEntity find(Long id)
     {
-        return em.find(UsuarioEntity.class, id);        
+        return em.find(ClienteEntity.class, id);        
     }
-    public List<UsuarioEntity> findAll()
+    public List<ClienteEntity> findAll()
     {
-        Query q = em.createQuery("select u form UsuarioEntity u");
+        Query q = em.createQuery("select u form ClienteEntity u");
         return q.getResultList();
     }
     
-    public UsuarioEntity create (UsuarioEntity entity)
+    public ClienteEntity create (ClienteEntity entity)
     {
         em.persist(entity);
         return entity;
     }
     
-    public UsuarioEntity update (UsuarioEntity entity)
+    public ClienteEntity update (ClienteEntity entity)
     {
         return em.merge(entity);
     }
     
     public void delete (Long id){
-        UsuarioEntity entity = em.find(UsuarioEntity.class, id);
+        ClienteEntity entity = em.find(ClienteEntity.class, id);
         em.remove(entity);
     }
 }
