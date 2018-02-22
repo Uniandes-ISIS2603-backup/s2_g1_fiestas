@@ -92,7 +92,7 @@ public class HorarioDetailDTO extends HorarioDTO {
     }
 
      /**
-     * @param nueva lista de eventos.
+     * @param eventos La lista de eventos.
      */
     public void setEventos(List<EventoDTO> eventos) {
         this.eventos = eventos;
