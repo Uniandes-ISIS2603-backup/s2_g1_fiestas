@@ -92,13 +92,13 @@ public class BlogResource {
      * 412 Precodition Failed: Ya existe el Blog.
      * </code>
      * </pre>
-     * @param Blog {@link BlogDetailDT} - La ciudad que se desea guardar.
+     * @param blog {@link BlogDetailDT} - La ciudad que se desea guardar.
      * @return JSON {@link BlogDetailDTO}  - El Blog guardado con el atributo id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */
     @POST
-    public BlogDetailDTO createBlog(BlogDetailDTO Blog) throws BusinessLogicException {
-        return Blog;
+    public BlogDetailDTO createBlog(BlogDetailDTO blog) throws BusinessLogicException {
+        return blog;
     }
     
     @PUT
