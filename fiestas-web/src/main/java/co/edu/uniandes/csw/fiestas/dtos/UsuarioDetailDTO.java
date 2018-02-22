@@ -81,7 +81,7 @@ public class UsuarioDetailDTO extends UsuarioDTO
     }
     
     /**
-     * @param La nueva lista de blogs del usuario.
+     * @param blogs La nueva lista de blogs del usuario.
      */
     public void setBlogs(List<BlogDTO> blogs)
     {

@@ -41,7 +41,9 @@ public class BlogDetailDTO {
 
     /**
      * Asigna el usuario
+
      * @param usuario - Es el usuario dueño del Blog 
+
      */
     public void setUsuario(UsuarioDTO usuario) {
         this.usuario = usuario;
@@ -57,7 +59,9 @@ public class BlogDetailDTO {
 
     /**
      * Asigna el evento
+
      * @param evento - Es el evento del Blog 
+
      */
     public void setEvento(EventoDTO evento) {
         this.evento = evento;

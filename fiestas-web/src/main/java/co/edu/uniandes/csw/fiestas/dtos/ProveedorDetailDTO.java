@@ -88,7 +88,7 @@ public class ProveedorDetailDTO extends ProveedorDTO
     }
     
     /**
-     * @param La nueva lista de horarios.
+     * @param horarios La nueva lista de horarios.
      */
     public void setHorarios(List<HorarioDTO> horarios)
     {
@@ -103,7 +103,7 @@ public class ProveedorDetailDTO extends ProveedorDTO
     }
     
     /**
-     * @param El nuevo servicio del proveedor..
+     * @param servicio El nuevo servicio del proveedor..
      */
     public void setHorarios(ServicioDTO servicio)
     {

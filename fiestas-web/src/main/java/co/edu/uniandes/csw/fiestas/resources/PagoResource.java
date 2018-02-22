@@ -97,7 +97,7 @@ public class PagoResource {
      * 412 Precodition Failed: Ya existe el pago.
      * </code>
      * </pre>
-     * @param pago {@link PagoDetailDT} - La ciudad que se desea guardar.
+     * @param pago {@link PagoDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link PagoDetailDTO}  - El pago guardado con el atributo id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el pago.
      */   

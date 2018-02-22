@@ -76,7 +76,7 @@ public class ClienteResource {
         /**
      * <h1>POST /clientes : Crear un cliente.</h1>
      * 
-     * <pre>Cuerpo de petición: JSON {@link CityDetailDTO}.
+     * <pre>Cuerpo de petición: JSON {@link ClienteDetailDTO}.
      * 
      * Crea un nuevo cliente con la informacion que se recibe en el cuerpo 
      * de la petición y se regresa un objeto identico con un id auto-generado 
@@ -90,7 +90,7 @@ public class ClienteResource {
      * 412 Precodition Failed: Ya existe el cliente.
      * </code>
      * </pre>
-     * @param cliente {@link ClienteDetailDT} - La ciudad que se desea guardar.
+     * @param cliente {@link ClienteDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link ClienteDetailDTO}  - El cliente guardado con el atributo id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */

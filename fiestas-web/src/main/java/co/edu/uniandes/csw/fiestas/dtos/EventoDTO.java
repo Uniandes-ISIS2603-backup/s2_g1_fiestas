@@ -135,7 +135,7 @@ public class EventoDTO {
      /**
      * Asignacion del numeros de invitados
      *
-     * @param numero de invitados del evento
+     * @param numInvitados numero de invitados del evento
      */
     public void setInvitados(Integer numInvitados) {
         this.invitados = numInvitados;
