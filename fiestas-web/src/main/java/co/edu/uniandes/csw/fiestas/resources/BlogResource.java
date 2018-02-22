@@ -78,7 +78,7 @@ public class BlogResource {
         /**
      * <h1>POST /Blogs : Crear un Blog.</h1>
      * 
-     * <pre>Cuerpo de petición: JSON {@link CityDetailDTO}.
+     * <pre>Cuerpo de petición: JSON {@link BlogDetailDTO}.
      * 
      * Crea un nuevo Blog con la informacion que se recibe en el cuerpo 
      * de la petición y se regresa un objeto identico con un id auto-generado 
