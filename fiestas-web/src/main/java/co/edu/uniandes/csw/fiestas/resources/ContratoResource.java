@@ -78,7 +78,7 @@ public class ContratoResource {
         /**
      * <h1>POST /Contratos : Crear un Contrato.</h1>
      * 
-     * <pre>Cuerpo de petición: JSON {@link CityDetailDTO}.
+     * <pre>Cuerpo de petición: JSON {@link ContratoDetailDTO}.
      * 
      * Crea un nuevo Contrato con la informacion que se recibe en el cuerpo 
      * de la petición y se regresa un objeto identico con un id auto-generado 
@@ -92,7 +92,7 @@ public class ContratoResource {
      * 412 Precodition Failed: Ya existe el Contrato.
      * </code>
      * </pre>
-     * @param contrato {@link ContratoDetailDT} - La ciudad que se desea guardar.
+     * @param contrato {@link ContratoDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link ContratoDetailDTO}  - El Contrato guardado con el atributo id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */
