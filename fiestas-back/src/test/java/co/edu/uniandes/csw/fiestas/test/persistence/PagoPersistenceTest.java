@@ -127,7 +127,7 @@ public class PagoPersistenceTest {
 
         Assert.assertEquals(creado.getEstado(), entidad.getEstado());
         Assert.assertEquals(creado.getMetodoDePago(), entidad.getMetodoDePago());
-        Assert.assertEquals(creado.getRealizado(), entidad.getRealizado());
+        Assert.assertEquals(creado.isRealizado(), entidad.isRealizado());
     }
 
     /**
@@ -159,7 +159,7 @@ public class PagoPersistenceTest {
         Assert.assertNotNull(encontrado);
         Assert.assertEquals(entidad.getEstado(), encontrado.getEstado());
         Assert.assertEquals(entidad.getMetodoDePago(), encontrado.getMetodoDePago());
-        Assert.assertEquals(entidad.getRealizado(), encontrado.getRealizado());
+        Assert.assertEquals(entidad.isRealizado(), encontrado.isRealizado());
     }
 
     /**
@@ -190,7 +190,7 @@ public class PagoPersistenceTest {
 
         Assert.assertEquals(nuevo.getEstado(), actualizada.getEstado());
         Assert.assertEquals(nuevo.getMetodoDePago(), actualizada.getMetodoDePago());
-        Assert.assertEquals(nuevo.getRealizado(), actualizada.getRealizado());
+        Assert.assertEquals(nuevo.isRealizado(), actualizada.isRealizado());
 
     }
 }

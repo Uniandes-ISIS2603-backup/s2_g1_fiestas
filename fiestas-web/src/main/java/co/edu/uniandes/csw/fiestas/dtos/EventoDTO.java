@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import java.util.Date;
 
 
@@ -48,6 +49,41 @@ public class EventoDTO {
      */
     public EventoDTO() {
 
+    }
+    
+     /**
+     * Crea un objeto EventoDTO a partir de un objeto EventoEntity.
+     *
+     * @param entity Entidad EventoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     * 
+     */
+    public EventoDTO(EventoEntity entity){
+        if(entity!=null){
+            this.id=entity.getId();
+            this.celebrado=entity.getCelebrado();
+            this.fecha=entity.getFecha();
+            this.descripcion=entity.getCelebrado();
+            this.lugar=entity.getLugar();
+            this.invitados=entity.getInvitados();
+        }
+    }
+    
+     /**
+     * Convierte un objeto EventoDTO a EventoEntity.
+     *
+     * @return Nueva objeto EventoEntity.
+     * 
+     */
+    public EventoEntity toEntity(){
+        EventoEntity entity = new EventoEntity();
+        entity.setId(this.getId());
+        entity.setCelebrado(this.getCelebrado());
+        entity.setDescripcion(this.getDescripcion());
+        entity.setFecha(this.getFecha());
+        entity.setLugar(this.getLugar());
+        entity.setInvitados(this.getInvitados());
+        return entity;
     }
 
     /**
@@ -135,7 +171,7 @@ public class EventoDTO {
      /**
      * Asignacion del numeros de invitados
      *
-     * @param numero de invitados del evento
+     * @param numInvitados, numero de invitados del evento
      */
     public void setInvitados(Integer numInvitados) {
         this.invitados = numInvitados;

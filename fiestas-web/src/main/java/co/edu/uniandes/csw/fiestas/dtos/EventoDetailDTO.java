@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,6 +6,7 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import java.util.List;
 
 /**
@@ -26,6 +28,31 @@ public class EventoDetailDTO extends EventoDTO {
      */
     public EventoDetailDTO() {
 
+    }
+    
+        /**
+     * Crea un objeto EventoDetailDTO a partir de un objeto EventoEntity
+     * incluyendo los atributos de EventoDTO.
+     *
+     * @param entity Entidad EventoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */
+    public EventoDetailDTO(EventoEntity entity){
+        super(entity);
+    }
+    
+     /**
+     * Convierte un objeto EventoDetailDTO a EventoEntity incluyendo los
+     * atributos de EventoDTO.
+     *
+     * @return Nueva objeto EventoEntity.
+     *
+     */
+    @Override
+    public EventoEntity toEntity(){
+        EventoEntity entity = super.toEntity();
+        return entity;
     }
 
     /**
