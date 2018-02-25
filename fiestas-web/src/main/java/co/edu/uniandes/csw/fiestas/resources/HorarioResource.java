@@ -116,11 +116,12 @@ public class HorarioResource {
      * </code> 
      * </pre>
      * @param id Identificador del horario que se desea actualizar.Este debe ser una cadena de dígitos.
-     * JSON {@link HorarioDetailDTO} - El horario guardado
+     * @return JSON {@link HorarioDetailDTO} - El horario guardado
      */
     @PUT
     @Path("{id: \\d+}")
-    public HorarioDetailDTO updateHorario(@PathParam("id") Long id){
+    public HorarioDetailDTO updateHorario(@PathParam("id") Long id)
+    {
         return null;
     }
     

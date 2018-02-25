@@ -48,7 +48,7 @@ public class ContratoDetailDTO {
 
     /**
      * Asigna el proveedor
-     * @param proveedor 
+     * @param proveedor el nuevo proveedor
      */
     public void setProveedor(ProveedorDTO proveedor) {
         this.proveedor = proveedor;
@@ -64,7 +64,7 @@ public class ContratoDetailDTO {
 
     /**
      * Asigna el evento
-     * @param evento 
+     * @param evento el nuevo evento
      */
     public void setEvento(EventoDTO evento) {
         this.evento = evento;
@@ -80,9 +80,9 @@ public class ContratoDetailDTO {
 
     /**
      * Asigna la lista de productos del contrato
-     * @param productos 
+     * @param productos los nuevos productos
      */
-    public void setProductos(ArrayList<ProductoDTO> productos) {
+    public void setProductos(List<ProductoDTO> productos) {
         this.productos = productos;
     }
     

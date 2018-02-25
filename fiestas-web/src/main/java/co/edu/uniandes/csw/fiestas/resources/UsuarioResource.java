@@ -93,7 +93,7 @@ public class UsuarioResource {
      * 412 Precodition Failed: Ya existe el usuario.
      * </code>
      * </pre>
-     * @param usuario {@link UsuarioDetailDT} - La ciudad que se desea guardar.
+     * @param usuario {@link UsuarioDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link UsuarioDetailDTO}  - El usuario guardado con el atributo id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */

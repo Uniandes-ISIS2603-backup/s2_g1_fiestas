@@ -61,7 +61,7 @@ private String tyc;
      
     /**
      * Retorna el valor del contrato
-     * @return valor
+     * @return valor el valor actual
      */
     public Integer getValor() {
         return valor;
@@ -69,7 +69,7 @@ private String tyc;
 
     /**
      * Asigna el valor del contrato
-     * @param valor 
+     * @param valor el nuevo valor
      */
     public void setValor(Integer valor) {
         this.valor = valor;
@@ -77,7 +77,7 @@ private String tyc;
     
     /**
      * Retorna el id del contrato
-     * @return id
+     * @return id la id del contrato
      */
     public Long getId() {
         return id;
@@ -85,7 +85,7 @@ private String tyc;
 
     /**
      * Asigna el id del contrato
-     * @param id 
+     * @param id La nueva id
      */
     public void setId(Long id) {
         this.id = id;

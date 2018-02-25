@@ -52,7 +52,7 @@ public class HorarioDTO
     }
 
     /**
-     * @param el nuevo Id del horario
+     * @param id El nuevo Id del horario
      */
     public void setId(Long id) {
         this.id = id;
@@ -66,7 +66,7 @@ public class HorarioDTO
     }
 
     /**
-     * @param La nueva fecha del horario
+     * @param fecha La nueva fecha del horario
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
@@ -79,7 +79,7 @@ public class HorarioDTO
     }
 
      /**
-     * @param La nueva hora de inicio
+     * @param horaInicio La nueva hora de inicio
      */
     public void setHoraInicio(Date horaInicio) {
         this.horaInicio = horaInicio;
@@ -92,7 +92,7 @@ public class HorarioDTO
     }
 
     /**
-     * @param La nueva hora de fin 
+     * @param horaFin La nueva hora de fin 
      */
     public void setHoraFin(Date horaFin) {
         this.horaFin = horaFin;
