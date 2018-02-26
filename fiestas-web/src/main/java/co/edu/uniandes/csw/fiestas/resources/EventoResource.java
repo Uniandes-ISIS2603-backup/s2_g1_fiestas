@@ -133,7 +133,7 @@ public class EventoResource {
      * @return JSON {@link EventoDetailDTO} - El evento guardado con el atributo
      * id autogenerado.
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando ya existe la evento.
+     * Error de lógica que se genera cuando ya existe el evento.
      */
     @POST
     public EventoDetailDTO createEvento(EventoDetailDTO evento) throws BusinessLogicException {
