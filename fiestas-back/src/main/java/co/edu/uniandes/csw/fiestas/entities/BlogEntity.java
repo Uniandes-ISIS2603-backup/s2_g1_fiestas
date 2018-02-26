@@ -7,28 +7,36 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author mc.gonzalez15
  */
 @Entity
-public class BlogEntity extends BaseEntity implements Serializable{
-     
-     /**
-      * Titulo del Blog
-      */
-     private String titulo;
-     
-     /**
-      * Cuerpo del Blog 
-      */
-     private String cuerpo;
-     
-     /**
-      * Número de likes
-      */
-     private int likes;
+public class BlogEntity extends BaseEntity implements Serializable {
+
+    @ManyToOne
+    private UsuarioEntity usuario;
+
+    @OneToOne
+    private EventoEntity evento;
+
+    /**
+     * Titulo del Blog
+     */
+    private String titulo;
+
+    /**
+     * Cuerpo del Blog
+     */
+    private String cuerpo;
+
+    /**
+     * Número de likes
+     */
+    private int likes;
 
     public String getTitulo() {
         return titulo;
@@ -53,7 +61,21 @@ public class BlogEntity extends BaseEntity implements Serializable{
     public void setLikes(int likes) {
         this.likes = likes;
     }
-     
-     
-   
+
+    public UsuarioEntity getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioEntity usuario) {
+        this.usuario = usuario;
+    }
+
+    public EventoEntity getEvento() {
+        return evento;
+    }
+
+    public void setEvento(EventoEntity evento) {
+        this.evento = evento;
+    }
+
 }
