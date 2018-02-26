@@ -13,8 +13,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *   {
  *      "id": number,
  *      "valor": number,
- *      "terminos": string
- *      "condiciones": string
+ *      "tyc": string
+ *     
  *   }
  * </pre>
  * Por ejemplo una ciudad se representa asi:<br>
@@ -24,8 +24,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *   {
  *      "id": 12345,
  *      "valor": 1500000,
- *      "terminos": "Cancelaciones máximo 15 días antes. Reembolso máximo 80%",
- *      "condiciones": "No se devuelve dinero después de la fecha límite"
+ *      "tyc": "Cancelaciones máximo 15 días antes. Reembolso máximo 80%",
+ *      
  *   }
  *
  * </pre>

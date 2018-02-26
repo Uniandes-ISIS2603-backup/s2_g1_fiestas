@@ -90,7 +90,7 @@ public class ClienteResource {
      * </pre>
      * @param cliente {@link ClienteDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link ClienteDetailDTO}  - El cliente guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el cliente.
      */
     @POST
     public ClienteDetailDTO createCliente(ClienteDetailDTO cliente) throws BusinessLogicException {

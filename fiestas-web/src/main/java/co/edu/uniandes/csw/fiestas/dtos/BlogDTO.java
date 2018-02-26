@@ -1,7 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 /**
- * BlogDTO Objeto de transferencia de datos de Blogs. 
+ * BlogDTO Objeto de transferencia de datos de Blog. 
  * 
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
@@ -12,7 +12,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *      "likes": number
  *   }
  * </pre>
- * Por ejemplo un Blog se representa asi:<br>
+ * Por ejemplo un blog se representa asi:<br>
  * 
  * <pre>
  * 

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  *Clase que extiende de {@link ContratoDTO} para manejar la transformacion entre
  * los objetos JSON y las Entidades de la base de datos. Para conocer el
- * contenido de la ciudad vaya a la documentacion de {@link ContratoDTO}
+ * contenido del contrato vaya a la documentacion de {@link ContratoDTO}
  * @author mc.gonzalez15
  */
 public class ContratoDetailDTO {

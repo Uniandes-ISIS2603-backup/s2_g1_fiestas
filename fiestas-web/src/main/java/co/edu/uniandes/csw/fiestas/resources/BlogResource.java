@@ -17,11 +17,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
     /**
- * <pre>Clase que implementa el recurso "Blogs".
- * URL: /api/Blogs
+ * <pre>Clase que implementa el recurso "blogs".
+ * URL: /api/blogs
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
- * este recurso tiene la ruta "Blogs".</i>
+ * este recurso tiene la ruta "Blog".</i>
  *
  * <h2>Anotaciones </h2>
  * <pre>
@@ -31,21 +31,21 @@ import javax.ws.rs.Produces;
  * </pre>
  * @author mc.gonzalez15  
  */
-@Path("Blogs")
+@Path("Blog")
 @Produces("application/json")
 
 public class BlogResource {
 
     /**
-     * <h1>GET /Blogs : Obtener todos los Blogs.</h1>
+     * <h1>GET /Blogs : Obtener todos los blogs.</h1>
      * 
      * <pre>Busca y devuelve todos los Blogs que existen en la aplicacion.
      * 
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todas los Blogs de la aplicacion.</code> 
+     * 200 OK Devuelve todas los blogs de la aplicacion.</code> 
      * </pre>
-     * @return JSONArray {@link BlogDetailDTO} - Los Blogs encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
+     * @return JSONArray {@link BlogDetailDTO} - Los blogs encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
     public List<BlogDetailDTO> getBlogs() {
@@ -53,20 +53,20 @@ public class BlogResource {
     }
 
     /**
-     * <h1>GET /Blogs/{id} : Obtener Blog por id.</h1>
+     * <h1>GET /blogs/{id} : Obtener blog por id.</h1>
      * 
-     * <pre>Busca el Blog con el id asociado recibido en la URL y lo devuelve.
+     * <pre>Busca el blog con el id asociado recibido en la URL y lo devuelve.
      * 
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve el Blog correspondiente al id.
+     * 200 OK Devuelve el blog correspondiente al id.
      * </code> 
      * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found No existe un Blog con el id dado.
+     * 404 Not Found No existe un blog con el id dado.
      * </code> 
      * </pre>
-     * @param id Identificador del Blog que se esta buscando. Este debe ser una cadena de dígitos.
-     * @return JSON {@link BlogDetailDTO} - El Blog buscado
+     * @param id Identificador del blog que se esta buscando. Este debe ser una cadena de dígitos.
+     * @return JSON {@link BlogDetailDTO} - El blog buscado
      */
     @GET
     @Path("{id: \\d+}")
@@ -75,11 +75,11 @@ public class BlogResource {
     }
     
         /**
-     * <h1>POST /Blogs : Crear un Blog.</h1>
+     * <h1>POST /blogs : Crear un blog.</h1>
      * 
      * <pre>Cuerpo de petición: JSON {@link BlogDetailDTO}.
      * 
-     * Crea un nuevo Blog con la informacion que se recibe en el cuerpo 
+     * Crea un nuevo blog con la informacion que se recibe en el cuerpo 
      * de la petición y se regresa un objeto identico con un id auto-generado 
      * por la base de datos.
      * 
@@ -92,8 +92,8 @@ public class BlogResource {
      * </code>
      * </pre>
      * @param blog {@link BlogDetailDTO} - El blog que se desea guardar.
-     * @return JSON {@link BlogDetailDTO}  - El Blog guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @return JSON {@link BlogDetailDTO}  - El blog guardado con el atributo id autogenerado.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el blog.
      */
     @POST
     public BlogDetailDTO createBlog(BlogDetailDTO blog) throws BusinessLogicException {
