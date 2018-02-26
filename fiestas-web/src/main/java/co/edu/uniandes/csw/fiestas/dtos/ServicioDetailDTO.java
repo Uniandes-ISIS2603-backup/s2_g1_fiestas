@@ -14,8 +14,8 @@ import java.util.List;
  * <pre>
  *   {
  *      "id": number,
- *      "descripcion": string,
- *      "tipo": string,
+ *      "comentario": string,
+ *      "calificacion": string,
  *      "proveedores": [{"id": 1,
  *      "nombre": string,
  *      "documento": string,
@@ -33,8 +33,8 @@ import java.util.List;
  * 
  *   {
  *      "id": 524,
- *      "descripcion": "Servicio de catering",
- *      "tipo": "Comida",
+ *      "comentario": "Servicio de catering",
+ *      "calificacion": "Comida",
  *      "proveedores": [{"id": 123,
  *      "nombre": "Pepito Perez",
  *      "documento": "1254699749",

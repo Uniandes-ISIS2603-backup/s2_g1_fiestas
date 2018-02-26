@@ -11,6 +11,40 @@ import java.util.List;
 /**
  * Clase que extiende de {@link ValoracionDTO}
  * @author ls.arias
+ * 
+ * <pre>
+ *   {
+ *      "id": number,
+ *      "comentario": string,
+ *      "calificacion": number,
+ *      "servicios": [{"id": 1,
+ *      "descripcion": string,
+ *      "tipo": string,
+ *      },
+ *      ...
+ *      ]
+ *   }
+ * </pre>
+ * Por ejemplo el atributo extra en ServicioDetail se representa asi:<br>
+ * 
+ * <pre>
+ * 
+ *   {
+ *      "id": 524,
+ *      "comentario": "Muy buen servicio",
+ *      "calificacion": "4.8",
+ *      "servicios": [{"id": 123,
+ *      "descripcion": "Mago frances que sabe hacer figuras con globos",
+ *      "tipo": "entretenimiento",
+ *      },
+ *      {"id": 124,
+ *      "descripcion": "carrito de perros calientes",
+ *      "tipo": "comida",
+ *      ]
+ *   }
+ *
+ * </pre>
+ *
  */
 public class ValoracionDetailDTO extends ValoracionDTO {
     
