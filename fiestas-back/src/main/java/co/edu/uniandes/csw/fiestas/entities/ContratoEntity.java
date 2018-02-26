@@ -6,26 +6,34 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
  * @author mc.gonzalez15
  */
 @Entity
-public class ContratoEntity extends BaseEntity implements Serializable{
+public class ContratoEntity extends BaseEntity implements Serializable {
 
-/**
- * Valor del contrato
- */
-private int valor;
+    @ManyToOne
+    private EventoEntity evento;
 
-/**
- * Condiciones del contrato
- */
-private String tyc;
+    @ManyToOne
+    private ProveedorEntity proveedor;
 
+    @OneToMany
+    private List<ProductoEntity> producto;
 
+    /**
+     * Valor del contrato
+     */
+    private int valor;
+
+    /**
+     * Condiciones del contrato
+     */
+    private String tyc;
 
     public int getValor() {
         return valor;
@@ -43,9 +51,28 @@ private String tyc;
         this.tyc = tyc;
     }
 
-   
+    public EventoEntity getEvento() {
+        return evento;
+    }
 
+    public void setEvento(EventoEntity evento) {
+        this.evento = evento;
+    }
 
-    
-    
+    public ProveedorEntity getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(ProveedorEntity proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public List<ProductoEntity> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(List<ProductoEntity> producto) {
+        this.producto = producto;
+    }
+
 }
