@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import co.edu.uniandes.csw.fiestas.dtos.*;
@@ -99,7 +98,7 @@ public class ProductoResource
      * </pre>
      * @param producto {@link ProductoDetailDTO} - El producto que se desea guardar.
      * @return JSON {@link ProductoDetailDTO}  - El producto guardada con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicException} - Error de lógica que se genera cuando ya existe El producto
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe El producto
      */
     @POST
     public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
@@ -122,7 +121,7 @@ public class ProductoResource
      * @param id Identificador de el producto que se desea actualizar.Este debe ser una cadena de dígitos.
      * @param producto {@link ProductoDetailDTO} El producto que se desea guardar.
      * @return JSON {@link ProductoDetailDTO} - El producto guardada.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera al no poder actualizar el productod porque ya existe uno con ese nombre.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera al no poder actualizar el productod porque ya existe uno con ese nombre.
      */
     @PUT
     @Path("{id: \\d+}")

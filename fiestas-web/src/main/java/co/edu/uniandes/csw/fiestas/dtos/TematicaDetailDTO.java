@@ -8,8 +8,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
 import java.util.List;
 
 /**
- * TematicaDTO Objeto de transferencia de datos de la entidad de Tematica. Los DTO contienen las
- * representaciones de los JSON que se transfieren entre el cliente y el servidor.
+* Clase que extiende de {@link TematicaDTO} para manejar los proveedores del negocio con sus relaciones. 
+ * Para conocer el contenido de un proveedor vaya a la documentacion de {@link TematicaDTO}.
  * <p>
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>

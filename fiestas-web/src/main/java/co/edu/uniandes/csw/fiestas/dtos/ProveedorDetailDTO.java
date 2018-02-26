@@ -31,10 +31,30 @@ import java.util.List;
  *      },
  *      ...
  *      ],
- *      "servicio":[{"id": 12,
+ *      "servicios":[{"id": number,
+ *      "descripcion": String,
+ *      "Tipo": String
+ *      }, 
+ *      ...
+ *      ],
+ *      "horarios":[{"id": 12,
  *      "descripcion": "Entrega de invitaciones",
  *      "Tipo": "Entrega"
- *      }]
+ *      }, 
+ *      ...
+ *      ],
+ *      "valoraciones":[{"id": 12,
+ *      "descripcion": "Entrega de invitaciones",
+ *      "Tipo": "Entrega"
+ *      }, 
+ *      ...
+ *      ],
+ *      "conratos":[{"id": 12,
+ *      "descripcion": "Entrega de invitaciones",
+ *      "Tipo": "Entrega"
+ *      }, 
+ *      ...
+ *      ]
  *   }
  * </pre>
  * Por ejemplo el atributo extra en ProveedorDetail se representa asi:<br>
@@ -69,7 +89,9 @@ import java.util.List;
 public class ProveedorDetailDTO extends ProveedorDTO
 {
     private List<HorarioDTO> horarios;
-    private ServicioDTO servicio;
+    private List<ServicioDTO> servicios;
+    private List<ValoracionDTO> valoraciones;
+    private List<ContratoDTO> contratos;    
     
     /**
      * Constructor por defecto
@@ -97,16 +119,44 @@ public class ProveedorDetailDTO extends ProveedorDTO
     /**
      * @return El sevicio del proveedor.
      */
-    public ServicioDTO getServicio()
+    public List<ServicioDTO> getServicios()
     {
-        return servicio;
+        return servicios;
     }
     
     /**
-     * @param servicio El nuevo servicio del proveedor..
+     * @param servicios El nuevo servicio del proveedor..
      */
-    public void setHorarios(ServicioDTO servicio)
+    public void setServicios(List<ServicioDTO> servicios)
     {
-        this.servicio = servicio;
+        this.servicios = servicios;
+    }
+
+    /**
+     * @return the valoraciones
+     */
+    public List<ValoracionDTO> getValoraciones() {
+        return valoraciones;
+    }
+
+    /**
+     * @param valoraciones the valoraciones to set
+     */
+    public void setValoraciones(List<ValoracionDTO> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
+    /**
+     * @return the contratos
+     */
+    public List<ContratoDTO> getContratos() {
+        return contratos;
+    }
+
+    /**
+     * @param contratos the contratos to set
+     */
+    public void setContratos(List<ContratoDTO> contratos) {
+        this.contratos = contratos;
     }
 }

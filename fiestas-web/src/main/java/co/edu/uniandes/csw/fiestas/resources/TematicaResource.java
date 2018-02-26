@@ -12,6 +12,7 @@ import co.edu.uniandes.csw.fiestas.dtos.*;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,6 +38,8 @@ import javax.ws.rs.Produces;
  */
  @Path("tematicas")
  @Produces("application/json")
+@Consumes("application/json")
+@RequestScoped
 public class TematicaResource 
 {
     
@@ -102,7 +105,7 @@ public class TematicaResource
     * </pre>
     * @param tematica {@link TematicaDetailDTO} - La tematica que se desea guardar.
     * @return JSON {@link TematicaDetailDTO}  - La tematica guardado con el atributo id autogenerado.
-    * @throws BusinessLogicException {@link co.edu.uniandes.csw.correos.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la evento.
+    * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la evento.
     */ 
     @POST 
     public TematicaDetailDTO createTematica(TematicaDetailDTO tematica) throws BusinessLogicException{
