@@ -25,6 +25,8 @@ import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -35,7 +37,8 @@ import javax.ws.rs.Produces;
 
 @Path("usuarios")
 @Produces("application/json")
-
+@Consumes("application/json")
+@RequestScoped
 public class UsuarioResource {
 
     /**
@@ -95,7 +98,7 @@ public class UsuarioResource {
      * </pre>
      * @param usuario {@link UsuarioDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link UsuarioDetailDTO}  - El usuario guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */
     @POST
     public UsuarioDetailDTO createUsuario(UsuarioDetailDTO usuario) throws BusinessLogicException {

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
-
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -94,7 +93,7 @@ public class ContratoResource {
      * </pre>
      * @param contrato {@link ContratoDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link ContratoDetailDTO}  - El Contrato guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */
     @POST
     public ContratoDetailDTO createContrato(ContratoDetailDTO contrato) throws BusinessLogicException {

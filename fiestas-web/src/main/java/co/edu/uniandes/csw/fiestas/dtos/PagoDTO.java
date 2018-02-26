@@ -4,7 +4,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 
 
-/*
+/**
  * EventoDTO Objeto de transferencia de datos de Eventos.
  *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
