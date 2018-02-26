@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
-
 import co.edu.uniandes.csw.fiestas.dtos.HorarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.List;
@@ -95,7 +94,7 @@ public class HorarioResource {
      * </pre>
      * @param horario {@link HorarioDetailDTO} - El horario que se desea guardar.
      * @return JSON {@link HorarioDetailDTO}  - El horario guardada con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el horario.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el horario.
      */
     @POST
     public HorarioDetailDTO createHorario(HorarioDetailDTO horario) throws BusinessLogicException{

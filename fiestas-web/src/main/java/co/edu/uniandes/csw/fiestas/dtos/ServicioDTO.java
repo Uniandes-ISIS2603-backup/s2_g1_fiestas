@@ -7,9 +7,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
 
 
 /**
- * ServicioDTO Objeto tranferencia para el servicio. Los DTO contienen las
- * representaciones de los JSON que se transfieren entre el cliente y el
- * servidor.
+ * ServicioDTO Objeto tranferencia para el servicio.
  * 
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
