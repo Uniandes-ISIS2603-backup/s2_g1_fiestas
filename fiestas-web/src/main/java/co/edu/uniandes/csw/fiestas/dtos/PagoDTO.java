@@ -1,6 +1,8 @@
 
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+
 
 /*
  * EventoDTO Objeto de transferencia de datos de Eventos.
@@ -42,6 +44,37 @@ public class PagoDTO {
 
     }
 
+     /**
+     * Crea un objeto PagoDTO a partir de un objeto PagoEntity.
+     *
+     * @param entity Entidad PagoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     * 
+     */
+    public PagoDTO(PagoEntity entity){
+         if(entity!=null){
+             this.id=entity.getId();
+             this.estado=entity.getEstado();
+             this.metodoDePago=entity.getMetodoDePago();
+             this.realizado=entity.isRealizado();
+         }
+    }
+
+    /**
+     * Convierte un objeto PagoDTO a PagoEntity.
+     *
+     * @return Nueva objeto PagoEntity.
+     * 
+     */
+    public PagoEntity toEntity(){
+        PagoEntity entity=new PagoEntity();
+        entity.setId(this.id);
+        entity.setEstado(this.estado);
+        entity.setMetodoDePago(this.metodoDePago);
+        entity.setRealizado(this.realizado);
+        return entity;
+    }
+    
     /**
      * @return El ID del evento
      */

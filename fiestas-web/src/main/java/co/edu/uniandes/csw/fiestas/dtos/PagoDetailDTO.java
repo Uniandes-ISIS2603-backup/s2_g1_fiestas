@@ -5,6 +5,9 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+
 
 
 /**
@@ -29,7 +32,34 @@ public class PagoDetailDTO extends PagoDTO{
         
     }
     
-
+        /**
+     * Crea un objeto PagoDetailDTO a partir de un objeto PagoEntity
+     * incluyendo los atributos de PagoDTO.
+     *
+     * @param entity Entidad PagoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */
+    public PagoDetailDTO(PagoEntity entity){
+        super(entity);
+        this.evento=new EventoDTO(entity.getEvento());
+    }
+     
+     /**
+     * Convierte un objeto PagoDetailDTO a PagoEntity incluyendo los
+     * atributos de PagoDTO.
+     *
+     * @return Nueva objeto PagoEntity.
+     *
+     */   
+    @Override
+    public PagoEntity toEntity(){
+        PagoEntity entity=super.toEntity();
+        EventoEntity eventoEntity= this.evento.toEntity();
+        entity.setEvento(eventoEntity);
+        return entity;
+    }
+    
     /**
      * Retorna el evento correspondiente al pago.
      * @return Evento relacionado.

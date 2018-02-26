@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -25,20 +27,24 @@ public class PagoEntity implements Serializable {
     private Boolean realizado; /*Boolean que representa si el pago fur realizado*/
     private String estado;/*Estado actual del pagoo*/
     private String metodoDePago; /*Metodo de pago actual*/
+    
+    @PodamExclude
+    @OneToOne(mappedBy="pago")
+    private EventoEntity evento;
 
     /**
      * Obtiene el atributo id
      *
-     * @return id asignado al evento
+     * @return id asignado al pago
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * Establece el id al evento
+     * Establece el id al pago
      *
-     * @param id id nuevo del evento
+     * @param id id nuevo del pago
      */
     public void setId(Long id) {
         this.id = id;
@@ -50,12 +56,12 @@ public class PagoEntity implements Serializable {
      * @return boolean que es true si el pago fue realizado, false de lo
      * contrario.
      */
-    public boolean getRealizado() {
+    public boolean isRealizado() {
         return realizado;
     }
 
     /**
-     * Establece si el evento fue realizado.
+     * Establece si el pago fue realizado.
      *
      * @param realizado, boolean que representa si el pago fue realizado.
      */
@@ -64,16 +70,16 @@ public class PagoEntity implements Serializable {
     }
 
     /**
-     * Obtiene el estado actual del evento
+     * Obtiene el estado actual del pago
      *
-     * @return estado actual del evento
+     * @return estado actual del pago
      */
     public String getEstado() {
         return estado;
     }
 
     /**
-     * Establece el nuevo estado del evento
+     * Establece el nuevo estado del pago
      *
      * @param estado nuevo del pago
      */
@@ -82,20 +88,38 @@ public class PagoEntity implements Serializable {
     }
 
     /**
-     * Obtiene el metodo de pago del evento
+     * Obtiene el metodo de pago del pago
      *
-     * @return metodo de pago actual del evento
+     * @return metodo de pago actual del pago
      */
     public String getMetodoDePago() {
         return metodoDePago;
     }
 
     /**
-     * Establece el metodo de pago del evento
+     * Establece el metodo de pago del pago
      *
-     * @param metodoDePago Metodo de pago nuevo del evento
+     * @param metodoDePago Metodo de pago nuevo del pago
      */
     public void setMetodoDePago(String metodoDePago) {
         this.metodoDePago = metodoDePago;
+    }
+    
+     /**
+     * Obtiene el evento relacionado del pago
+     *
+     * @return evento relacionado del pago
+     */
+    public EventoEntity getEvento(){
+        return evento;
+    }
+    
+     /**
+     * Establece el evento al que corresponde el pago
+     *
+     * @param evento Entidad del evento a asignar al pago
+     */
+    public void setEvento(EventoEntity evento){
+        this.evento=evento;
     }
 }
