@@ -7,10 +7,15 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -25,6 +30,10 @@ public class HorarioEntity extends BaseEntity implements Serializable
     private Date horaInicio;
     @Temporal(TemporalType.TIME)
     private Date horaFin;
+    
+    @PodamExclude
+    @OneToMany(mappedBy ="horario")
+    private List<EventoEntity> eventos= new ArrayList();
 
     /**
      * @return the fecha
@@ -72,6 +81,14 @@ public class HorarioEntity extends BaseEntity implements Serializable
         this.horaFin = horaFin;
     }
     
+    public void setEventos(List<EventoEntity> eventos)
+    {
+        this.eventos= eventos;
+    }
     
+     public List<EventoEntity> getEventos()
+    {
+        return eventos;
+    }
     
 }
