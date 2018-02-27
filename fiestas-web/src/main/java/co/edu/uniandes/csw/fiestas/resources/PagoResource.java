@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
+
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.dtos.PagoDetailDTO;
@@ -19,8 +20,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-
-
+import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "pagos".
@@ -45,8 +45,8 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class PagoResource {
 
-    /*@Inject
-    private PagoLogic pagoLogic;*/
+    @Inject
+    private PagoLogic pagoLogic;
 
     /**
      * Convierte una lista de PagoEntity a una lista de PagoDetailDTO.
@@ -78,8 +78,7 @@ public class PagoResource {
      */
     @GET
     public List<PagoDetailDTO> getPagos() {
-        /*return listEntity2DTO(pagoLogic.getPagos());*/
-        return new ArrayList<>();
+        return listEntity2DTO(pagoLogic.getPagos());
     }
 
     /**
@@ -103,12 +102,11 @@ public class PagoResource {
     @GET
     @Path("{id: \\d+}")
     public PagoDetailDTO getPago(@PathParam("id") Long id) {
-       /* PagoEntity entity = pagoLogic.getPago(id);
+        PagoEntity entity = pagoLogic.getPago(id);
         if (entity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        return new PagoDetailDTO(entity);*/
-       return null;
+        return new PagoDetailDTO(entity);
     }
 
     /**
@@ -135,12 +133,11 @@ public class PagoResource {
      */
     @POST
     public PagoDetailDTO createPago(PagoDetailDTO pago) {
-       /* PagoEntity entity = pagoLogic.getPago(pago.getId());
+        PagoEntity entity = pagoLogic.getPago(pago.getId());
         if (entity != null) {
             throw new WebApplicationException("El pago existe", 412);
         }
-        return new PagoDetailDTO(pagoLogic.createPago(pago.toEntity()));*/
-        return pago;
+        return new PagoDetailDTO(pagoLogic.createPago(pago.toEntity()));
     }
 
     /**
@@ -165,16 +162,15 @@ public class PagoResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public PagoDetailDTO updatePago(@PathParam("id") Long id,PagoDetailDTO pago) {
-       /* PagoEntity entity=pago.toEntity();
+    public PagoDetailDTO updatePago(@PathParam("id") Long id, PagoDetailDTO pago) {
+        PagoEntity entity = pago.toEntity();
         entity.setId(id);
-         PagoEntity oldEntity = pagoLogic.getPago(id);
+        PagoEntity oldEntity = pagoLogic.getPago(id);
         if (oldEntity != null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
         entity.setEvento(oldEntity.getEvento());
-        return new PagoDetailDTO(pagoLogic.updatePago( entity));*/
-       return null;
+        return new PagoDetailDTO(pagoLogic.updatePago(entity));
     }
 
     /**
@@ -197,10 +193,10 @@ public class PagoResource {
     @DELETE
     @Path("{id:\\d+}")
     public void deletePago(@PathParam("id") Long id) {
-       /* PagoEntity entity = pagoLogic.getPago(id);
+        PagoEntity entity = pagoLogic.getPago(id);
         if (entity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        pagoLogic.deletePago(id);*/
+        pagoLogic.deletePago(id);
     }
 }

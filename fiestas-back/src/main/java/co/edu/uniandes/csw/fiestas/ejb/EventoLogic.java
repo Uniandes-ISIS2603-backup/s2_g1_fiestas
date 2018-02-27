@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.List;
@@ -15,7 +12,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *
+ *Clase que implementa la conexion con la persistencia para la entidad de Evento.
  * @author cm.amaya10
  */
 @Stateless
@@ -27,6 +24,12 @@ public class EventoLogic
     @Inject
     private EventoPersistence persistence;
 
+    @Inject
+    private ContratoLogic contratoLogic;
+    
+    @Inject
+    private PagoLogic pagoLogic;
+    
     /**
      * Devuelve todos los eventos que hay en la base de datos.
      *
@@ -63,6 +66,10 @@ public class EventoLogic
      */
     public EventoEntity createEvento(EventoEntity entity) {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
+        PagoEntity pago=new PagoEntity();
+        pago.setEvento(entity);
+        entity.setPago(pago);
+        pagoLogic.createPago(pago);
         return persistence.create(entity);
     }
 
@@ -90,3 +97,18 @@ public class EventoLogic
         LOGGER.log(Level.INFO, "Termina proceso de borrar evento con id={0}", id);
     }
 }
+//    
+//    /**
+//     * Añadir contrato a un evento por id
+//     * 
+//     * @param contratoId
+//     * @param eventoId
+//     * @return 
+//     */
+//    public ContratoEntity addContrato(Long contratoId,Long eventoId){
+//         EventoEntity evento = persistence.find(eventoId);
+//         ContratoEntity contrato= contratoLogic.getContrato(contratoId);
+//         
+//         return contrato;
+//    }
+//}

@@ -39,7 +39,6 @@ import javax.ws.rs.WebApplicationException;
 @Produces ("application/json")
 @Consumes ("application/json")
 @RequestScoped
-
 public class HorarioResource {
     
     public HorarioResource(){
