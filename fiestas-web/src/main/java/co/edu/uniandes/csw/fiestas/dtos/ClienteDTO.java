@@ -32,7 +32,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *
  * </pre>
  *
- * @author ISIS2603
+ * @author nm.hernandez10
  */
 public class ClienteDTO extends UsuarioDTO
 {

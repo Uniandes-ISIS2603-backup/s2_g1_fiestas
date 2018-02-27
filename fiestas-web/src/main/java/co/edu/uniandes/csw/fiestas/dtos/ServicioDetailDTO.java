@@ -9,7 +9,9 @@ import java.util.List;
 
 
 /**
- * Clase que extiende de {@link ServicioDTO} 
+ * Clase que extiende de {@link ServicioDTO} para manejar la transformacion entre
+ * los objetos JSON y las Entidades de la base de datos. Para conocer el
+ * contenido del servicio vaya a la documentacion de {@link ServicioDTO}
  * 
  * <pre>
  *   {

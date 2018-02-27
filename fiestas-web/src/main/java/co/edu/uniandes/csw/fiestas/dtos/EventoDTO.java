@@ -5,7 +5,7 @@ import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import java.util.Date;
 
 
-/*
+/**
  * EventoDTO Objeto de transferencia de datos de Eventos.
  *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>

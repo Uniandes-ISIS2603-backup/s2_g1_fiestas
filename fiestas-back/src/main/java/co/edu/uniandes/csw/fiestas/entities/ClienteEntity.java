@@ -5,7 +5,11 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,4 +19,24 @@ import javax.persistence.Entity;
 public class ClienteEntity extends UsuarioEntity
 {
     //Está vacío porque sólo tiene la relación de eventos extra (comparado con UsuarioEntity) y aún no debe hacerse las relaciones.
+    
+    @PodamExclude
+    @OneToMany
+    private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+
+    /**
+     * @return eventos
+     */
+    public List<EventoEntity> getEventos() 
+    {
+        return eventos;
+    }
+
+    /**
+     * @param eventos los nuevos eventos
+     */
+    public void setEventos(List<EventoEntity> eventos) {
+        this.eventos = eventos;
+    }
+    
 }

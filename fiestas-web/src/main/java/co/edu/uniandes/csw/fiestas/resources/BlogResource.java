@@ -16,7 +16,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-    
     /**
  * <pre>Clase que implementa el recurso "Blogs".
  * URL: /api/Blogs
@@ -92,9 +91,9 @@ public class BlogResource {
      * 412 Precodition Failed: Ya existe el Blog.
      * </code>
      * </pre>
-     * @param blog {@link BlogDetailDT} - La ciudad que se desea guardar.
+     * @param blog {@link BlogDetailDTO} - El blog que se desea guardar.
      * @return JSON {@link BlogDetailDTO}  - El Blog guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */
     @POST
     public BlogDetailDTO createBlog(BlogDetailDTO blog) throws BusinessLogicException {

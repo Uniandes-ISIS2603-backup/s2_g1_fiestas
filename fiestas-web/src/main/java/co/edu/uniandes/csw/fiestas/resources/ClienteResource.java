@@ -3,10 +3,8 @@ package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ClienteDetailDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -92,7 +90,7 @@ public class ClienteResource {
      * </pre>
      * @param cliente {@link ClienteDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link ClienteDetailDTO}  - El cliente guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
      */
     @POST
     public ClienteDetailDTO createCliente(ClienteDetailDTO cliente) throws BusinessLogicException {

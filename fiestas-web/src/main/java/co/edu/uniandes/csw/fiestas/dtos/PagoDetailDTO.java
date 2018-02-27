@@ -10,16 +10,12 @@ import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 
 
 
-/**
- *
- * @author cm.amaya10
 
 /**
  * Clase que extiende de {@link PagoDTO} para manejar la transformacion entre
  * los objetos JSON y las Entidades de la base de datos. Para conocer el
  * contenido del pago vaya a la documentacion de {@link PagoDTO}
  * @author Cristian M. Amaya (cm.amaya10)
-
  */
 public class PagoDetailDTO extends PagoDTO{
     

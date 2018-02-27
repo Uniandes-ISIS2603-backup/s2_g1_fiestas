@@ -19,7 +19,8 @@ import javax.inject.Inject;
  * @author cm.amaya10
  */
 @Stateless
-public class EventoLogic {
+public class EventoLogic 
+{
 
     private static final Logger LOGGER = Logger.getLogger(EventoLogic.class.getName());
 
