@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.fiestas.resources;
 import co.edu.uniandes.csw.fiestas.dtos.HorarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.HorarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -107,7 +108,7 @@ public class HorarioResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el horario.
      */
     @POST
-    public HorarioDetailDTO createHorario(HorarioDetailDTO horario) {
+    public HorarioDetailDTO createHorario(HorarioDetailDTO horario) throws BusinessLogicException {
         return new HorarioDetailDTO(logic.createHorario(horario.toEntity()));
     }
     
