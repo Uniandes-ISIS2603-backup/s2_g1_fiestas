@@ -5,6 +5,9 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *Clase que extiende de {@link HorarioDTO} para manejar la transformación entre los objetos JSON y las entidades de la base de datos.
@@ -82,6 +85,19 @@ public class HorarioDetailDTO extends HorarioDTO {
      * Constructor por defecto
      */
     public HorarioDetailDTO(){
+        super();
+    }
+    
+        /**
+     * Constructor por defecto
+     */
+    public HorarioDetailDTO(HorarioEntity entity){
+        super();
+        if(entity != null)
+            eventos = new ArrayList<>();
+        for (EventoEntity en : entity.getEventos()) {
+            eventos.add(new EventoDTO(en));
+        }
     }
 
     /**
@@ -98,6 +114,17 @@ public class HorarioDetailDTO extends HorarioDTO {
         this.eventos = eventos;
     }
     
-    
+    @Override
+    public HorarioEntity toEntity(){
+        HorarioEntity entity = super.toEntity();
+        if(eventos != null){
+            List<EventoEntity> eventosEntitys= new ArrayList<>();
+            for(EventoDTO dtoEvento: eventos){
+                eventosEntitys.add(dtoEvento.toEntity());
+            }
+            entity.setEventos(eventosEntitys);
+        }
+        return entity;
+    }
     
 }

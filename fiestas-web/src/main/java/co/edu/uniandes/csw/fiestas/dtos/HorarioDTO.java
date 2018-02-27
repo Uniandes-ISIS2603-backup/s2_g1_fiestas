@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.dtos;
+import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import java.util.Date;
 
 /**
@@ -96,6 +97,15 @@ public class HorarioDTO
      */
     public void setHoraFin(Date horaFin) {
         this.horaFin = horaFin;
+    }
+
+    HorarioEntity toEntity() {
+        HorarioEntity entity = new HorarioEntity();
+        entity.setFecha(this.fecha);
+        entity.setHoraFin(this.horaFin);
+        entity.setHoraInicio(this.horaInicio);
+        entity.setId(this.id);
+        return entity;
     }
     
     
