@@ -91,9 +91,9 @@ public class ProveedorResource {
      * 412 Precodition Failed: Ya existe el proveedor.
      * </code>
      * </pre>
-     * @param proveedor {@link ProveedorDetailDTO} - La ciudad que se desea guardar.
+     * @param proveedor {@link ProveedorDetailDTO} - El proveedor que se desea guardar.
      * @return JSON {@link ProveedorDetailDTO}  - El proveedor guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el proveedor.
      */
     @POST
     public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException {

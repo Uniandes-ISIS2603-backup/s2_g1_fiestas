@@ -88,7 +88,7 @@ public class ClienteResource {
      * 412 Precodition Failed: Ya existe el cliente.
      * </code>
      * </pre>
-     * @param cliente {@link ClienteDetailDTO} - La ciudad que se desea guardar.
+     * @param cliente {@link ClienteDetailDTO} - El cliente que se desea guardar.
      * @return JSON {@link ClienteDetailDTO}  - El cliente guardado con el atributo id autogenerado.
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el cliente.
      */
