@@ -23,7 +23,7 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     private ProveedorEntity proveedor;
 
     @OneToMany
-    private List<ProductoEntity> producto;
+    private List<ProductoEntity> productos;
 
     /**
      * Valor del contrato
@@ -67,12 +67,12 @@ public class ContratoEntity extends BaseEntity implements Serializable {
         this.proveedor = proveedor;
     }
 
-    public List<ProductoEntity> getProducto() {
-        return producto;
+    public List<ProductoEntity> getProductos() {
+        return productos;
     }
 
-    public void setProducto(List<ProductoEntity> producto) {
-        this.producto = producto;
+    public void setProductos(List<ProductoEntity> productos) {
+        this.productos = productos;
     }
 
 }
