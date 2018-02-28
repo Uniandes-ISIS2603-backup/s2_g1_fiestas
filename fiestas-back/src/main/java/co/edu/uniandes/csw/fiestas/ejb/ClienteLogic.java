@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -89,53 +85,92 @@ public class ClienteLogic
     }
     
     /**
+     * Agregar un evento a la cliente
+     *
+     * @param eventoId El id evento a guardar
+     * @param clienteId El id de la cliente en la cual se va a guardar el
+     * evento.
+     * @return El evento que fue agregado a la cliente.
+     */
+    public EventoEntity addEvento(Long eventoId, Long clienteId) {
+        ClienteEntity clienteEntity = getCliente(clienteId);
+        EventoEntity eventoEntity = eventoLogic.getEvento(eventoId);
+        eventoEntity.setCliente(clienteEntity);
+        return eventoEntity;
+    }
+
+    /**
+     * Borrar un evento de una cliente
+     *
+     * @param eventoId El evento que se desea borrar de la cliente.
+     * @param clienteId La cliente de la cual se desea eliminar.
+     */
+    public void removeEvento(Long eventoId, Long clienteId) {
+        ClienteEntity clienteEntity = getCliente(clienteId);
+        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        evento.setCliente(null);
+        clienteEntity.getEventos().remove(evento);
+    }
+
+    /**
+     * Remplazar eventos de una cliente
+     *
+     * @param eventos Lista de eventos que serán los de la cliente.
+     * @param clienteId El id de la cliente que se quiere actualizar.
+     * @return La lista de eventos actualizada.
+     */
+    public List<EventoEntity> replaceEventos(Long clienteId, List<EventoEntity> eventos) {
+        ClienteEntity cliente = getCliente(clienteId);
+        List<EventoEntity> eventoList = eventoLogic.getEventos();
+        for (EventoEntity evento : eventoList) {
+            if (eventos.contains(evento)) {
+                evento.setCliente(cliente);
+            } else if (evento.getCliente() != null && evento.getCliente().equals(cliente)) {
+                evento.setCliente(null);
+            }
+        }
+        return eventos;
+    }
+
+    /**
+     * Retorna todos los eventos asociados a una cliente
+     *
+     * @param clienteId El ID de la cliente buscada
+     * @return La lista de eventos de la cliente
+     */
+    public List<EventoEntity> getEventos(Long clienteId) {
+        return getCliente(clienteId).getEventos();
+    }
+
+    /**
+     * Retorna un evento asociado a una cliente
+     *
+     * @param clienteId El id de la cliente a buscar.
+     * @param eventoId El id del evento a buscar
+     * @return El evento encontrado dentro de la cliente.
+     * @throws BusinessLogicException Si el evento no se encuentra en la cliente
+     */
+    public EventoEntity getEvento(Long clienteId, Long eventoId) throws BusinessLogicException {
+        List<EventoEntity> eventos = getCliente(clienteId).getEventos();
+        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        int index = eventos.indexOf(evento);
+        if (index >= 0) {
+            return eventos.get(index);
+        }
+        throw new BusinessLogicException("El evento no está asociado a la cliente");
+    }
+
+    /**
      * Obtiene una colección de instancias de EventoEntity asociadas a una
      * instancia de Cliente
      *
-     * @param id Identificador de la instancia de Cliente
+     * @param clienteId Identificador de la instancia de Cliente
      * @return Colección de instancias de EventoEntity asociadas a la instancia de
      * Cliente
+     *
      */
-    public List<EventoEntity> listEventos(Long id)
+    public List<EventoEntity> listEventos(Long clienteId) 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los eventos del cliente con id = {0}", id);
-        return getCliente(id).getEventos();
-    }
-    
-    /**
-     * Obtiene una instancia de EventoEntity asociada a una instancia de Cliente
-     *
-     * @param clienteId Identificador de la instancia de Cliente
-     * @param eventosId Identificador de la instancia de Evento
-     * @return La entidadd de Libro del cliente
-     */
-    public EventoEntity getEvento(Long clienteId, Long eventosId) 
-    {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar un evento con id = {0}", eventosId);
-        List<EventoEntity> list = getCliente(clienteId).getEventos();
-        EventoEntity eventosEntity = new EventoEntity();
-        eventosEntity.setId(eventosId);
-        int index = list.indexOf(eventosEntity);
-        if (index >= 0) {
-            return list.get(index);
-        }
-        return null;
-    }
-
-    /**
-     * Asocia un Evento existente a un Cliente
-     *
-     * @param clienteId Identificador de la instancia de Cliente
-     * @param eventosId Identificador de la instancia de Evento
-     * @return Instancia de EventoEntity que fue asociada a Cliente
-     */
-    
-
-    /**
-     * Desasocia un Evento existente de un Cliente existente
-     *
-     * @param clienteId Identificador de la instancia de Cliente
-     * @param eventosId Identificador de la instancia de Evento
-     */
-    
+        return getCliente(clienteId).getEventos();
+    }    
 }

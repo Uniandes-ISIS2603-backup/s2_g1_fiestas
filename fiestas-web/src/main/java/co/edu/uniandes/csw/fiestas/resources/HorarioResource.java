@@ -173,10 +173,10 @@ public class HorarioResource {
     }
     
     @Path("{horariosId: \\d+}/eventos")
-    public void getHorarioEventosResource(@PathParam("horariosId") Long horariosId){
+    public void getHorarioEventosResource(@PathParam("horariosId") Long horariosId)
+    {
         HorarioEntity entity = logic.getHorario(horariosId);
         if(entity == null)
-            throw new WebApplicationException("El recurso /horarios/"+horariosId+" no existe.",404);
-        
+            throw new WebApplicationException("El recurso /horarios/"+horariosId+" no existe.",404);        
     }
 }
