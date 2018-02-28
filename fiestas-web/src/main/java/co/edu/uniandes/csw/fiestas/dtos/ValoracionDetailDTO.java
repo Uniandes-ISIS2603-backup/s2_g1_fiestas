@@ -16,13 +16,7 @@ import java.util.List;
  *   {
  *      "id": number,
  *      "comentario": string,
- *      "calificacion": number,
- *      "servicios": [{"id": 1,
- *      "descripcion": string,
- *      "tipo": string,
- *      },
- *      ...
- *      ]
+ *      "calificacion": number
  *   }
  * </pre>
  * Por ejemplo el atributo extra en ServicioDetail se representa asi:<br>
@@ -32,15 +26,7 @@ import java.util.List;
  *   {
  *      "id": 524,
  *      "comentario": "Muy buen servicio",
- *      "calificacion": "4.8",
- *      "servicios": [{"id": 123,
- *      "descripcion": "Mago frances que sabe hacer figuras con globos",
- *      "tipo": "entretenimiento",
- *      },
- *      {"id": 124,
- *      "descripcion": "carrito de perros calientes",
- *      "tipo": "comida",
- *      ]
+ *      "calificacion": "4.8"
  *   }
  *
  * </pre>
@@ -53,23 +39,4 @@ public class ValoracionDetailDTO extends ValoracionDTO {
      */
     public ValoracionDetailDTO() {
     }
-
-    private List<ServicioDTO> servicios;
-    
-    /**
-    * @return La lista de servicios.
-    */
-    public List<ServicioDTO> getServicios()
-    {
-        return servicios;
-    }
-    
-    /**
-    * @param servicios nuevos servicios 
-    */
-    public void setServicios(List<ServicioDTO> servicios)
-    {
-        this.servicios = servicios;
-    }
-
 }
