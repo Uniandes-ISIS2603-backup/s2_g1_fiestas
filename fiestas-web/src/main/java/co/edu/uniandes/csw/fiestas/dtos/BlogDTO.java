@@ -1,8 +1,10 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
+
 /**
- * BlogDTO Objeto de transferencia de datos de Blog. 
- * 
+ * BlogDTO Objeto de transferencia de datos de Blog.
+ *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
  *   {
@@ -11,11 +13,10 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *      "cuerpo": string,
  *      "likes": number
  *   }
- * </pre>
- * Por ejemplo un blog se representa asi:<br>
- * 
+ * </pre> Por ejemplo un blog se representa asi:<br>
+ *
  * <pre>
- * 
+ *
  *   {
  *      "id": 1520,
  *      "titulo": "Cumpleaños de Sarita",
@@ -26,38 +27,37 @@ package co.edu.uniandes.csw.fiestas.dtos;
  * @author mc.gonzalez15
  */
 class BlogDTO {
-    
 
     /**
      * Identificador del Blog
      */
-     private long id;
-     
-     /**
-      * Titulo del Blog
-      */
-     private String titulo;
-     
-     /**
-      * Cuerpo del Blog 
-      */
-     private String cuerpo;
-     
-     /**
-      * Número de likes
-      */
-     private int likes;
+    private long id;
 
     /**
-     * Constructor
-     */ 
-    public BlogDTO()
-    {
-        
+     * Titulo del Blog
+     */
+    private String titulo;
+
+    /**
+     * Cuerpo del Blog
+     */
+    private String cuerpo;
+
+    /**
+     * Número de likes
+     */
+    private int likes;
+
+    /**
+     * Constructor vacío
+     */
+    public BlogDTO() {
+
     }
-     
+
     /**
      * Retorna el identificador
+     *
      * @return id
      */
     public long getId() {
@@ -66,7 +66,8 @@ class BlogDTO {
 
     /**
      * Asigna el identificador
-     * @param id 
+     *
+     * @param id
      */
     public void setId(long id) {
         this.id = id;
@@ -74,6 +75,7 @@ class BlogDTO {
 
     /**
      * Retorna el titulo
+     *
      * @return titulo
      */
     public String getTitulo() {
@@ -82,14 +84,16 @@ class BlogDTO {
 
     /**
      * Asigna el titulo
-     * @param titulo 
+     *
+     * @param titulo
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
     /**
-     * Retorna el cuerpo 
+     * Retorna el cuerpo
+     *
      * @return cuerpo
      */
     public String getCuerpo() {
@@ -98,7 +102,8 @@ class BlogDTO {
 
     /**
      * Asigna el cuerpo
-     * @param cuerpo 
+     *
+     * @param cuerpo
      */
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
@@ -106,6 +111,7 @@ class BlogDTO {
 
     /**
      * Retorna el numero de likes
+     *
      * @return likes
      */
     public int getLikes() {
@@ -114,11 +120,43 @@ class BlogDTO {
 
     /**
      * Asigna el numero de likes
-     * @param likes 
+     *
+     * @param likes
      */
     public void setLikes(int likes) {
         this.likes = likes;
     }
-   
-     
+
+    /**
+     * Crea un objeto BlogDTO a partir de un objeto BlogEntity.
+     *
+     * @param entity Entidad BlogEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */
+    public BlogDTO(BlogEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.titulo = entity.getTitulo();
+            this.cuerpo = entity.getCuerpo();
+            this.likes = entity.getLikes();
+
+        }
+    }
+
+    /**
+     * Convierte un objeto BlogDTO a BlogEntity.
+     *
+     * @return Nueva objeto BlogEntity.
+     *
+     */
+    public BlogEntity toEntity() {
+        BlogEntity entity = new BlogEntity();
+        entity.setId(this.getId());
+        entity.setTitulo(this.getTitulo());
+        entity.setCuerpo(this.getCuerpo());
+        entity.setLikes(this.getLikes());
+        return entity;
+    }
+
 }
