@@ -6,7 +6,13 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,6 +21,13 @@ import javax.persistence.Entity;
 @Entity 
 public class ServicioEntity extends BaseEntity implements Serializable{
     
+    @PodamExclude
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ValoracionEntity> valoraciones = new ArrayList<>();
+    @OneToMany
+    private List<ProductoEntity> productos = new ArrayList<>();
+    @ManyToMany
+    private List<ProveedorEntity> proveedores = new ArrayList<>();
     private String descripcion;
     private String tipo;
     
@@ -37,4 +50,29 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     {
         this.tipo = pTipo;
     }
+
+    public List<ValoracionEntity> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(List<ValoracionEntity> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
+    public List<ProductoEntity> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoEntity> productos) {
+        this.productos = productos;
+    }
+
+    public List<ProveedorEntity> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(List<ProveedorEntity> proveedores) {
+        this.proveedores = proveedores;
+    }
+    
 }

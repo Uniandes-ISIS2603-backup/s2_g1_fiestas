@@ -49,6 +49,7 @@ public class UsuarioDTO
     private String correo;
     private String direccion;
     private String login;
+    private String contraseña;
 
     /**
      * Constructor por defecto
@@ -71,6 +72,14 @@ public class UsuarioDTO
     public void setId(Long id) 
     {
         this.id = id;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     /**

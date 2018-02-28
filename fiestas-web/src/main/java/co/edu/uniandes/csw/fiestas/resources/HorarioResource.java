@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
+import co.edu.uniandes.csw.fiestas.dtos.EventoDTO;
 import co.edu.uniandes.csw.fiestas.dtos.HorarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.HorarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
@@ -40,7 +41,6 @@ import javax.ws.rs.WebApplicationException;
 @Produces ("application/json")
 @Consumes ("application/json")
 @RequestScoped
-
 public class HorarioResource {
     
     public HorarioResource(){
@@ -179,5 +179,10 @@ public class HorarioResource {
             throw new WebApplicationException("El recurso /horarios/"+id+" no existe.",404);
             
         entity.getEventos();
+    }
+    
+    @POST
+    public HorarioDetailDTO addEventoHorario(EventoDTO evento) throws BusinessLogicException {
+        
     }
 }

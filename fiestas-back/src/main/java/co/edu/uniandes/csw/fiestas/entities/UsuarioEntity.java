@@ -17,7 +17,7 @@ import javax.persistence.Entity;
 public class UsuarioEntity extends BaseEntity implements Serializable
 {
     private String documento;
-    private Integer telefono;
+    private Long telefono;
     private String correo;
     private String direccion;
     private String login;
@@ -41,7 +41,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     /**
      * @return the telefono
      */
-    public Integer getTelefono() 
+    public Long getTelefono() 
     {
         return telefono;
     }
@@ -49,7 +49,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     /**
      * @param telefono the telefono to set
      */
-    public void setTelefono(Integer telefono) 
+    public void setTelefono(Long telefono) 
     {
         this.telefono = telefono;
     }
