@@ -13,7 +13,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *      "telefono": number,
  *      "correo": string,
  *      "direccion": string,
- *      "login": string
+ *      "login": string,
+ *      "penalizado": boolean
  *   }
  * </pre>
  * Por ejemplo un proveedor se representa asi:<br>
@@ -27,7 +28,8 @@ package co.edu.uniandes.csw.fiestas.dtos;
  *      "telefono": 3111234567,
  *      "correo": "nicolashernandez@hotmail.com",
  *      "direccion": "Calle 97 # 6-43",
- *      "login": "nm.hernandez10"
+ *      "login": "nm.hernandez10",
+ *      "penalizado": False
  *   }
  *
  * </pre>
@@ -42,5 +44,24 @@ public class ProveedorDTO extends UsuarioDTO
     public ProveedorDTO()
     {
         
+        
+        
     }      
+    private boolean penalizado;
+
+    /**
+     * @return the penalizado
+     */
+    public boolean isPenalizado() {
+        return penalizado;
+    }
+
+    /**
+     * @param penalizado the penalizado to set
+     */
+    public void setPenalizado(boolean penalizado) {
+        this.penalizado = penalizado;
+    }
+    
+    
 }
