@@ -196,5 +196,20 @@ public class EventoResource {
         }
         eventoLogic.deleteEvento(id);
     }
+    /**
+     * Conexion con el servicio contratos para un evento 
+     * 
+     * @param eventosId El Id del evento buscado
+     * @return El servicio de Contratos para ese evento en particulas.
+     */
+    @Path("{eventosId: \\d+}/contratos")
+    public Class<EventoContratosResource> getContratosEventoResource(@PathParam("eventosId") Long eventosId) {
+        
+    EventoEntity entity=eventoLogic.getEvento(eventosId);
+            if (entity == null) {
+            throw new WebApplicationException("El recurso /editorials/" + eventosId + " no existe.", 404);
+        }
+         return EventoContratosResource.class;
+}
 
 }

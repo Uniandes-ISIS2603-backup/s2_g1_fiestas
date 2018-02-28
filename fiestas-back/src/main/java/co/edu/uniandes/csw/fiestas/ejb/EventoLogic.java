@@ -157,4 +157,32 @@ public class EventoLogic {
         }
         return contratos;
     }
+    
+    /**
+     * Retorna un contrato asociado a un evento
+     * @param eventoId El id del evento a buscar
+     * @param contratoId El id del contrato a buscar
+     * @return El contrato encontrado en el evento
+     * @throws BusinessLogicException Si el contrato no se encuentra en el evento
+     */
+    public ContratoEntity getContrato(Long eventoId, Long contratoId) throws BusinessLogicException{
+         List<ContratoEntity> contratos = getEvento(eventoId).getContratos();
+         ContratoEntity contrato = contratoLogic.getContrato(contratoId);
+         int index = contratos.indexOf(contrato);
+          if (index >= 0) {
+            return contratos.get(index);
+        }
+          throw new BusinessLogicException("El contrato no está asociado al evento");
+    }
+    
+    /**
+     * Retorna todos los contratos del evento
+     * 
+     * @param eventoId El id del evento a buscar
+     * @return la lista de contratos del evento
+     */
+    public List<ContratoEntity> getContratos(Long eventoId){
+        return getEvento(eventoId).getContratos();
+    }
+   
 }

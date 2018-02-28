@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class ContratoDetailDTO {
     public ContratoDetailDTO()
     {
         
+    }
+
+    public ContratoDetailDTO(ContratoEntity entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     /**
      * Retorna el proveedor
@@ -84,6 +89,10 @@ public class ContratoDetailDTO {
      */
     public void setProductos(List<ProductoDTO> productos) {
         this.productos = productos;
+    }
+
+    public ContratoEntity toEntity() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
