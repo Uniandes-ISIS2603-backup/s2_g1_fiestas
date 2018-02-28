@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import java.util.ArrayList;
+import java.util.List;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
-import java.util.*;
+
 
 /**
  * Clase que extiende de {@link ContratoDTO} para manejar la transformacion
@@ -139,4 +141,5 @@ public class ContratoDetailDTO extends ContratoDTO {
         }
         return entity;
     }
+
 }

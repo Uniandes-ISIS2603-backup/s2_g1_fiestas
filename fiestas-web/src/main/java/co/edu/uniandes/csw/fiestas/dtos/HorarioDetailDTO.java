@@ -90,9 +90,10 @@ public class HorarioDetailDTO extends HorarioDTO {
     
         /**
      * Constructor por defecto
+     * @param entity Entidad horario que se usara para generar la clase
      */
     public HorarioDetailDTO(HorarioEntity entity){
-        super();
+        super(entity);
         if(entity != null)
             eventos = new ArrayList<>();
         for (EventoEntity en : entity.getEventos()) {
