@@ -6,6 +6,10 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ContratoPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,6 +29,12 @@ public class ContratoLogic {
 
     @Inject
     private EventoLogic eventoLogic;
+
+    @Inject
+    private ProveedorLogic proveedorLogic;
+
+    @Inject
+    private ProductoLogic productoLogic;
 
     /**
      * Obtiene la lista de los registros de Contrato.
@@ -79,6 +89,175 @@ public class ContratoLogic {
     public void deleteContrato(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un contrato ");
         persistence.delete(id);
+    }
+
+    /**
+     * Borrar el evento de un contrato
+     *
+     * @param eventoId El evento que se desea borrar del contrato.
+     * @param contratoId El contrato de la cual se desea eliminar.
+     */
+    public void removeEvento(Long eventoId, Long contratoId) {
+        ContratoEntity contratoEntity = getContrato(contratoId);
+        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        evento.getContratos().remove(contratoEntity);
+        contratoEntity.setEvento(null);
+    }
+
+    /**
+     * Remplazar el evento de un contrato
+     *
+     * @param evento Nuevo evento del contrato
+     * @param contratoId El id del contrato que se quiere actualizar.
+     * @return El nuevo evento del contrato
+     */
+    public EventoEntity replaceEvento(Long contratoId, EventoEntity evento) {
+        ContratoEntity contrato = getContrato(contratoId);
+        contrato.setEvento(evento);
+        return evento;
+    }
+
+    /**
+     * Retorna el evento asociado a un contrato
+     *
+     * @param contratoId El id del contrato a buscar.
+     * @return El evento encontrado dentro del contrato.
+     * @throws BusinessLogicException Si el evento no se encuentra en el
+     * contrato
+     */
+    public EventoEntity getEvento(Long contratoId) throws BusinessLogicException {
+        try {
+            EventoEntity evento = getContrato(contratoId).getEvento();
+            return evento;
+
+        } catch (Exception e) {
+            throw new BusinessLogicException("El contrato con id " + contratoId + " no existe");
+        }
+
+    }
+
+    /**
+     * Borrar el proveedor de un contrato
+     *
+     * @param proveedorId El proveedor que se desea borrar del contrato.
+     * @param contratoId El contrato del cual se desea eliminar.
+     */
+    public void removeProveedor(Long proveedorId, Long contratoId) {
+        ContratoEntity contratoEntity = getContrato(contratoId);
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedorId);
+        proveedor.getContratos().remove(contratoEntity);
+        contratoEntity.setEvento(null);
+    }
+
+    /**
+     * Remplazar el proveedor de un contrato
+     *
+     * @param proveedor
+     * @param contratoId El id del contrato que se quiere actualizar.
+     * @return El nuevo proveedor del contrato
+     */
+    public ProveedorEntity replaceProveedor(Long contratoId, ProveedorEntity proveedor) {
+        ContratoEntity contrato = getContrato(contratoId);
+        contrato.setProveedor(proveedor);
+        return proveedor;
+    }
+
+    /**
+     * Retorna el proveedor asociado a un contrato
+     *
+     * @param contratoId El id del contrato a buscar.
+     * @return El proveedor encontrado dentro del contrato.
+     * @throws BusinessLogicException Si el proveedor no se encuentra en el
+     * contrato
+     */
+    public ProveedorEntity getProveedor(Long contratoId) throws BusinessLogicException {
+        try {
+            ProveedorEntity proveedor = getContrato(contratoId).getProveedor();
+            return proveedor;
+
+        } catch (Exception e) {
+            throw new BusinessLogicException("El contrato con id " + contratoId + " no existe");
+        }
+    }
+
+    /**
+     * Obtiene una colección de instancias de ProductoEntity asociadas a una
+     * instancia de Contrato
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @return Colección de instancias de ProductoEntity asociadas a la
+     * instancia de Contrato
+     */
+    public List<ProductoEntity> listProductos(Long contratoId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros del autor con id = {0}", contratoId);
+        return getContrato(contratoId).getProductos();
+    }
+
+    /**
+     * Obtiene una instancia de ProductoEntity asociada a una instancia de
+     * Contrato
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param ProductosId Identificador de la instancia de Producto
+     * @return La entidadd de Libro del autor
+     */
+    public ProductoEntity getProducto(Long contratoId, Long ProductosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar un libro con id = {0}", ProductosId);
+        List<ProductoEntity> list = getContrato(contratoId).getProductos();
+        ProductoEntity ProductosEntity = new ProductoEntity();
+        ProductosEntity.setId(ProductosId);
+        int index = list.indexOf(ProductosEntity);
+        if (index >= 0) {
+            return list.get(index);
+        }
+        return null;
+    }
+
+    /**
+     * Asocia un Producto existente a un Contrato
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param ProductosId Identificador de la instancia de Producto
+     * @return Instancia de ProductoEntity que fue asociada a Contrato
+     */
+    public ProductoEntity addProducto(Long contratoId, Long ProductosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al contrato con id = {0}", contratoId);
+        ContratoEntity contrato = this.getContrato(contratoId);
+        ProductoEntity producto = productoLogic.getProducto(ProductosId);
+        List<ProductoEntity> productos = contrato.getProductos();
+        productos.add(producto);
+        contrato.setProductos(productos);
+        return producto;
+    }
+
+    /**
+     * Remplaza las instancias de Producto asociadas a una instancia de Contrato
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param list Colección de instancias de ProductoEntity a asociar a
+     * instancia de Contrato
+     * @return Nueva colección de ProductoEntity asociada a la instancia de
+     * Contrato
+     */
+    public List<ProductoEntity> replaceProductos(Long contratoId, List<ProductoEntity> list) {
+        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los libros asocidos al contrato con id = {0}", contratoId);
+        ContratoEntity contratoEntity = getContrato(contratoId);
+        contratoEntity.setProductos(list);
+        return contratoEntity.getProductos();
+    }
+
+    /**
+     * Desasocia un Producto existente de un Contrato existente
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param ProductosId Identificador de la instancia de Producto
+     */
+    public void removeProducto(Long contratoId, Long ProductosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar un producto del contrato con id = {0}", contratoId);
+        ContratoEntity contrato = getContrato(contratoId);
+        ProductoEntity producto = getProducto(contratoId, ProductosId);
+        contrato.getProductos().remove(producto);
+
     }
 
 }
