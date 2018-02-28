@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.dtos;
+
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import java.util.Date;
 
@@ -35,16 +36,31 @@ import java.util.Date;
  *
  * @author df.nino10
  */
-public class HorarioDTO 
-{    
+public class HorarioDTO {
+
     private long id;
     private Date fecha;
     private Date horaInicio;
     private Date horaFin;
-    
-    public HorarioDTO(){
+
+    /**
+     * Constructor por defecto
+     */
+    public HorarioDTO() {
     }
-    
+
+    /**
+     * Constructor de DTO apartir de una Entity
+     *
+     * @param entity Entidad
+     */
+    public HorarioDTO(HorarioEntity entity) {
+        this.id = entity.getId();
+        this.fecha=entity.getFecha();
+        this.horaInicio=entity.getHoraInicio();
+        this.horaFin=entity.getHoraFin();
+    }
+
     /**
      * @return el Id del horario
      */
@@ -58,7 +74,7 @@ public class HorarioDTO
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     /**
      * @return La fecha del horario.
      */
@@ -72,6 +88,7 @@ public class HorarioDTO
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
     /**
      * @return La fecha del horario.
      */
@@ -79,12 +96,13 @@ public class HorarioDTO
         return horaInicio;
     }
 
-     /**
+    /**
      * @param horaInicio La nueva hora de inicio
      */
     public void setHoraInicio(Date horaInicio) {
         this.horaInicio = horaInicio;
     }
+
     /**
      * @return La hora de fin del horario.
      */
@@ -93,7 +111,7 @@ public class HorarioDTO
     }
 
     /**
-     * @param horaFin La nueva hora de fin 
+     * @param horaFin La nueva hora de fin
      */
     public void setHoraFin(Date horaFin) {
         this.horaFin = horaFin;
@@ -107,6 +125,5 @@ public class HorarioDTO
         entity.setId(this.id);
         return entity;
     }
-    
-    
+
 }

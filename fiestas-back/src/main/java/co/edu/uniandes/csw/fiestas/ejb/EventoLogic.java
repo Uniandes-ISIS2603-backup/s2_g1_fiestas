@@ -2,9 +2,10 @@ package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
-import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,12 +13,13 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *Clase que implementa la conexion con la persistencia para la entidad de Evento.
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Evento.
+ *
  * @author cm.amaya10
  */
 @Stateless
-public class EventoLogic 
-{
+public class EventoLogic {
 
     private static final Logger LOGGER = Logger.getLogger(EventoLogic.class.getName());
 
@@ -26,10 +28,7 @@ public class EventoLogic
 
     @Inject
     private ContratoLogic contratoLogic;
-    
-    @Inject
-    private PagoLogic pagoLogic;
-    
+
     /**
      * Devuelve todos los eventos que hay en la base de datos.
      *
@@ -63,13 +62,28 @@ public class EventoLogic
      *
      * @param entity Objeto de EventoEntity con los datos nuevos
      * @return Objeto de EventoEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no se cumple reglas de negocio
      */
-    public EventoEntity createEvento(EventoEntity entity) {
+    public EventoEntity createEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
-        PagoEntity pago=new PagoEntity();
-        pago.setEvento(entity);
-        entity.setPago(pago);
-        pagoLogic.createPago(pago);
+
+        //Primera regla de negocio: El evento debe tener plazo minimo de una semana
+        int noOfDays = 7;
+        Date dateOfOrder = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateOfOrder);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date date = calendar.getTime(); 
+        
+        if(entity.getFecha().before(date)){
+            throw new BusinessLogicException("El evento debe tener un plazo minimo de 7 dias");
+        }
+        
+        //Segunda regla: El numero de invitados es un numero entero positivo mayor de 0
+       if(entity.getInvitados()<1){
+           throw new BusinessLogicException("El evento tiene un numero de invitados no valido");
+       }
+            
         return persistence.create(entity);
     }
 
@@ -96,19 +110,51 @@ public class EventoLogic
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar evento con id={0}", id);
     }
+
+    /**
+     * Añadir contrato a un evento por id
+     *
+     * @param contratoId id del contrato a añadir
+     * @param eventoId id del evento en el cual se asignara el contrato
+     * @return entidad del contato agregado
+     */
+    public ContratoEntity addContrato(Long contratoId, Long eventoId) {
+        EventoEntity evento = persistence.find(eventoId);
+        ContratoEntity contrato = contratoLogic.getContrato(contratoId);
+        contrato.setEvento(evento);
+        return contrato;
+    }
+
+    /**
+     * Borrar contrato de un evento
+     *
+     * @param contratoId id del contrato a borrar
+     * @param eventoId id del evento en el cual se borrara el contrato
+     */
+    public void removeContrato(Long contratoId, Long eventoId) {
+        EventoEntity evento = persistence.find(eventoId);
+        ContratoEntity contrato = contratoLogic.getContrato(contratoId);
+        contrato.setEvento(null);
+        evento.getContratos().remove(contrato);
+    }
+
+    /**
+     * Reemplazar los contratos de un evento
+     *
+     * @param eventoId id del evento al que se le cambiaran los contratos
+     * @param contratos Lista de contratos que se quiere actualizar
+     * @return Lista de contratos actualizados
+     */
+    public List<ContratoEntity> replaceContratos(Long eventoId, List<ContratoEntity> contratos) {
+        EventoEntity evento = persistence.find(eventoId);
+        List<ContratoEntity> listaContratos = evento.getContratos();
+        for (ContratoEntity contrato : listaContratos) {
+            if (contratos.contains(contrato)) {
+                contrato.setEvento(evento);
+            } else if (contrato.getEvento() != null && contrato.getEvento().equals(evento)) {
+                contrato.setEvento(null);
+            }
+        }
+        return contratos;
+    }
 }
-//    
-//    /**
-//     * Añadir contrato a un evento por id
-//     * 
-//     * @param contratoId
-//     * @param eventoId
-//     * @return 
-//     */
-//    public ContratoEntity addContrato(Long contratoId,Long eventoId){
-//         EventoEntity evento = persistence.find(eventoId);
-//         ContratoEntity contrato= contratoLogic.getContrato(contratoId);
-//         
-//         return contrato;
-//    }
-//}

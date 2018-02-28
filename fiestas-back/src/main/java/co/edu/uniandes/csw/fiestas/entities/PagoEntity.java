@@ -7,9 +7,6 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -18,12 +15,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author cm.amaya10
  */
 @Entity
-public class PagoEntity implements Serializable {
+public class PagoEntity extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; /*Id del pago*/
     private Boolean realizado; /*Boolean que representa si el pago fur realizado*/
     private String estado;/*Estado actual del pagoo*/
     private String metodoDePago; /*Metodo de pago actual*/
@@ -31,24 +24,6 @@ public class PagoEntity implements Serializable {
     @PodamExclude
     @OneToOne(mappedBy="pago")
     private EventoEntity evento;
-
-    /**
-     * Obtiene el atributo id
-     *
-     * @return id asignado al pago
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Establece el id al pago
-     *
-     * @param id id nuevo del pago
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     /**
      * Obtiene el boolean que representa si el pago fue realizado

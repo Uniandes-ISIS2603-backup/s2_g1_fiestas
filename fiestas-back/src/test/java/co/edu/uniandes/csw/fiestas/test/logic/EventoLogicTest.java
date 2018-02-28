@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class EventoLogicTest {
      *
      */
     @Test
-    public void createEventoTest() {
+    public void createEventoTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         EventoEntity result = eventoLogic.createEvento(newEntity);
         Assert.assertNotNull(result);
