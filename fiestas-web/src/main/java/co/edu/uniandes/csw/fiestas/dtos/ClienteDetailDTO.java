@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import java.util.List;
 
 /**
@@ -78,5 +79,22 @@ public class ClienteDetailDTO extends ClienteDTO
     public void setClienteDTO(List<EventoDTO> eventos) {
         this.eventos = eventos;
     }
-
+    
+    public ClienteDetailDTO(ClienteEntity entity)
+    {
+        if (entity != null)
+        {            
+            super(entity);
+            
+        }
+    }
+    
+    public ClienteEntity toEntity()
+    {
+        ClienteEntity entity = super.toEntity();
+        if (eventos != null)
+        {
+            
+        }        
+    }
 }

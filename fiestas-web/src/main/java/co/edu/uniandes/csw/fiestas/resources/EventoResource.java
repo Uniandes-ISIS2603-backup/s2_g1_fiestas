@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
+
 import co.edu.uniandes.csw.fiestas.dtos.EventoDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
@@ -21,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+
 /**
  * <pre>Clase que implementa el recurso "eventos".
  * URL: /api/eventos
@@ -42,16 +44,16 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class EventoResource {
-    
+
     @Inject
     private EventoLogic eventoLogic;
-    
-        /**
+
+    /**
      * Convierte una lista de EventoEntity a una lista de EventoDetailDTO.
      *
      * @param entityList Lista de EventoEntity a convertir.
      * @return Lista de EventoDetailDTO convertida.
-     * 
+     *
      */
     private List<EventoDetailDTO> listEntity2DTO(List<EventoEntity> entityList) {
         List<EventoDetailDTO> list = new ArrayList<>();
@@ -60,8 +62,8 @@ public class EventoResource {
         }
         return list;
     }
-    
-     /**
+
+    /**
      * <h1>GET /eventos : Obtener todos los eventos.</h1>
      *
      * <pre>Busca y devuelve todos los eventos que existen en la aplicacion.
@@ -76,7 +78,7 @@ public class EventoResource {
      */
     @GET
     public List<EventoDetailDTO> getEventos() {
-       return listEntity2DTO(eventoLogic.getEventos());
+        return listEntity2DTO(eventoLogic.getEventos());
     }
 
     /**
@@ -100,14 +102,12 @@ public class EventoResource {
     @GET
     @Path("{id: \\d+}")
     public EventoDetailDTO getEvento(@PathParam("id") Long id) {
-        EventoEntity entity=eventoLogic.getEvento(id);
-         if (entity == null) {
+        EventoEntity entity = eventoLogic.getEvento(id);
+        if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
         return new EventoDetailDTO(entity);
     }
-    
-       
 
     /**
      * <h1>POST /eventos : Crear un evento.</h1>
@@ -130,8 +130,9 @@ public class EventoResource {
      * @param evento {@link EventoDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link EventoDetailDTO} - El evento guardado con el atributo
      * id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando ya existe el evento.
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica que se genera cuando ya existe el evento.
      */
     @POST
     public EventoDetailDTO createEvento(EventoDetailDTO evento) throws BusinessLogicException {
@@ -161,7 +162,7 @@ public class EventoResource {
     @PUT
     @Path("{id: \\d+}")
     public EventoDetailDTO updateEvento(@PathParam("id") Long id, EventoDetailDTO evento) {
-      EventoEntity entity=evento.toEntity();
+        EventoEntity entity = evento.toEntity();
         entity.setId(id);
         EventoEntity oldEntity = eventoLogic.getEvento(id);
         if (oldEntity == null) {
@@ -190,11 +191,26 @@ public class EventoResource {
     @DELETE
     @Path("{id: \\d+}")
     public void deleteEvento(@PathParam("id") Long id) {
-       EventoEntity entity=eventoLogic.getEvento(id);
+        EventoEntity entity = eventoLogic.getEvento(id);
         if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
         eventoLogic.deleteEvento(id);
+    }
+
+    /**
+     * Conexion con el servicio contratos para un evento
+     *
+     * @param eventosId El Id del evento buscado
+     * @return El servicio de Contratos para ese evento en particulas.
+     */
+    @Path("{eventosId: \\d+}/contratos")
+    public Class<EventoContratosResource> getContratosEventoResource(@PathParam("eventosId") Long eventosId) {
+        EventoEntity entity = eventoLogic.getEvento(eventosId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /editorials/" + eventosId + " no existe.", 404);
+        }
+        return EventoContratosResource.class;
     }
 
 }
