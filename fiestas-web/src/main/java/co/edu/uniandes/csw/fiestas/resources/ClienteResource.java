@@ -31,7 +31,8 @@ import javax.ws.rs.Produces;
 @Path("clientes")
 @Produces("application/json")
 
-public class ClienteResource {
+public class ClienteResource 
+{
 
     /**
      * <h1>GET /clientes : Obtener todos los clientes.</h1>

@@ -115,7 +115,8 @@ public class ContratoDTO {
      *
      */
     public ContratoDTO(ContratoEntity entity) {
-        if (entity != null) {
+        if (entity != null) 
+        {
             this.id = entity.getId();
             this.valor = entity.getValor();
             this.tyc = entity.getTyc();

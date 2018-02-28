@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
+
 /**
  * ClienteDTO Objeto de transferencia de datos de Cliente. Los DTO contienen las
  * represnetaciones de los JSON que se transfieren entre el cliente y el
@@ -35,19 +37,22 @@ package co.edu.uniandes.csw.fiestas.dtos;
  * @author nm.hernandez10
  */
 public class ClienteDTO extends UsuarioDTO
-{
-    private long id;
-    
+{   
     public ClienteDTO()
     {
         
     }
-    
-    public Long getId() {
-        return id;
+        
+    public ClienteDTO(ClienteEntity entity)
+    {
+        if (entity != null)
+        {            
+            super(entity);
+        }
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    
+    public ClienteEntity toEntity()
+    {
+        ClienteEntity entity = super.toEntity();       
     }
 }

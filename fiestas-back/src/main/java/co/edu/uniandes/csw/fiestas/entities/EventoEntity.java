@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
@@ -11,9 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,14 +20,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author cm.amaya10
  */
 @Entity
-public class EventoEntity implements Serializable {
+public class EventoEntity extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Long id;
-    /*ID del evento */
     @Temporal(TemporalType.DATE)
     private Date fecha;
     /*Fecha del evento */
@@ -62,24 +49,10 @@ public class EventoEntity implements Serializable {
     @PodamExclude
     @OneToOne
     private TematicaEntity tematica;
-
-    /**
-     * Obtiene el atributo id
-     *
-     * @return id asignado al evento
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Establece el id al evento
-     *
-     * @param id id nuevo del evento
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
+    @PodamExclude
+    @ManyToOne
+    private HorarioEntity horario;
 
     /**
      * Obtiene el atributo fecha
@@ -241,6 +214,15 @@ public class EventoEntity implements Serializable {
      */
     public void setTematica(TematicaEntity tematica) {
         this.tematica = tematica;
+    }
+    
+    /**
+     * Establece el horario del evento
+     * 
+     * @param horario a asignar
+     */
+    public void setHorario(HorarioEntity horario){
+        this.horario=horario;
     }
 
 }

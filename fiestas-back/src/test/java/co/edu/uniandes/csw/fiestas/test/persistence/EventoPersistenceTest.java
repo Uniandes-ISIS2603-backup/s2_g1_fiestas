@@ -160,7 +160,7 @@ public class EventoPersistenceTest {
         Assert.assertEquals(encontrado.getLugar(), entidad.getLugar());
         Assert.assertEquals(encontrado.getCelebrado(), entidad.getCelebrado());
         Assert.assertEquals(encontrado.getInvitados(), entidad.getInvitados());
-        Assert.assertEquals(entidad.getFecha(), encontrado.getFecha());
+        Assert.assertEquals(entidad.getId(), encontrado.getId());
     }
     
      /**
@@ -194,7 +194,7 @@ public class EventoPersistenceTest {
         Assert.assertEquals(actualizado.getLugar(), nuevo.getLugar());
         Assert.assertEquals(actualizado.getCelebrado(), nuevo.getCelebrado());
         Assert.assertEquals(actualizado.getInvitados(), nuevo.getInvitados());
-        Assert.assertEquals(nuevo.getFecha(), actualizado.getFecha());
+        Assert.assertEquals(nuevo.getId(), actualizado.getId());
       
     }
 }
