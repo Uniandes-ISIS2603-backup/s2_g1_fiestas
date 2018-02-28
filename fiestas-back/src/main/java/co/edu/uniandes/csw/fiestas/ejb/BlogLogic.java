@@ -6,6 +6,8 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.BlogPersistence;
 import java.util.*;
 import java.util.logging.*;
@@ -77,6 +79,63 @@ public class BlogLogic {
     public void deleteBlog(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un autor ");
         persistence.delete(id);
+    }
+    
+    /**
+     * Asocia un Evento existente a un Blog
+     *
+     * @param blogId Identificador de la instancia de Blog
+     * @param eventoId Identificador de la instancia de Evento
+     * @return Instancia de EventoEntity que fue asociada a Blog
+     */
+    public EventoEntity addEvento(Long blogId, Long eventoId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al author con id = {0}", blogId);
+        BlogEntity entity = this.getBlog(blogId);
+        EventoEntity entityEvento = eventoLogic.getEvento(eventoId);
+        entity.setEvento(entityEvento);
+        return entityEvento;
+    }
+    
+     /**
+     * Borrar el evento de un blog
+     *
+     * @param blogId El blog de la cual se desea eliminar.
+     */
+    public void removeEvento(Long blogId) {
+        BlogEntity blogEntity = getBlog(blogId);
+        blogEntity.setEvento(null);
+    }
+
+    /**
+     * Remplazar el evento de un blog
+     *
+     * @param evento Nuevo evento del blog
+     * @param blogId El id del blog que se quiere actualizar.
+     * @return El nuevo evento del blog
+     */
+    public EventoEntity replaceEvento(Long blogId, EventoEntity evento) {
+        BlogEntity blog = getBlog(blogId);
+        blog.setEvento(evento);
+        return evento;
+    }
+
+    /**
+     * Retorna el evento asociado a un blog
+     *
+     * @param blogId El id del blog a buscar.
+     * @return El evento encontrado dentro del blog.
+     * @throws BusinessLogicException Si el evento no se encuentra en el
+     * blog
+     */
+    public EventoEntity getEvento(Long blogId) throws BusinessLogicException {
+        try {
+            EventoEntity evento = getBlog(blogId).getEvento();
+            return evento;
+
+        } catch (Exception e) {
+            throw new BusinessLogicException("El blog con id " + blogId + " no existe");
+        }
+
     }
     
     
