@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ValoracionPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,57 +17,89 @@ import javax.inject.Inject;
 
 /**
  *
- * @author ls.arias
+ * @valoracion ls.arias
  */
 @Stateless
 public class ValoracionLogic {
-    
-    private static final Logger LOGGER = Logger.getLogger(ValoracionLogic.class.getName());
-    
+     
     @Inject
     private ValoracionPersistence persistence;
+    @Inject
+    private ServicioLogic servicioLogic;
+
+//    @Inject 
+//    private ProveedorLogic proveedorLogic;
+    
+    
+    /**
+     * Obtiene la lista de los registros de Valoracion que pertenecen a un Servicio.
+     *
+     * @param servicioid id del Servicio el cual es padre de las Valoraciones.
+     * @return Colección de objetos de ValoracionEntity.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     */
+    public List<ValoracionEntity> getValoracionesServicio(Long servicioid) throws BusinessLogicException {
+        ServicioEntity servicio = servicioLogic.getServicio(servicioid);
+        if (servicio.getValoraciones() == null) {
+            throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
+        }
+        if (servicio.getValoraciones().isEmpty()) {
+            throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
+        }
+        return servicio.getValoraciones();
+    }
+
     
      /**
-     * Obtiene la lista de los registros de Valoracion.
-     *
-     * @return Colección de objetos de ValoracionEntity.
-     */
-    public List<ValoracionEntity> getValoraciones() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las valoraciones");
-        return persistence.findAll();
-    }
-    
-        /**
      * Obtiene los datos de una instancia de Valoracion a partir de su ID.
      *
      * @param id Identificador de la instancia a consultar
      * @return Instancia de ValoracionEntity con los datos de la Valoracion consultada.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public ValoracionEntity getValoracion(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar una valoracion con id = {0}", id);
+    public ValoracionEntity getValoracion(Long id) throws BusinessLogicException {
+        if(persistence.find(id)==null)
+        {
+            throw new BusinessLogicException("La valoración no existe");
+        }
         return persistence.find(id);
     }
     
     /**
-     * Se encarga de crear una Valoracion en la base de datos.
+     * Se encarga de crear un Valoracion en la base de datos.
      *
      * @param entity Objeto de ValoracionEntity con los datos nuevos
+     * @param servicioid id del servicio el cual sera padre del nuevo Valoracion.
      * @return Objeto de ValoracionEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * 
      */
-    public ValoracionEntity createValoracion(ValoracionEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de crear una valoracion ");
-        
+    public ValoracionEntity createValoracionServicio(Long servicioid, ValoracionEntity entity)throws BusinessLogicException {
+        if(entity.getCalificacion()>5.0 || entity.getCalificacion()<1.0)
+        {
+            throw new BusinessLogicException("La calificación debe estar entre 1.0 y 5.0");
+        }
+        ServicioEntity servicio = servicioLogic.getServicio(servicioid);
+        entity.setServicio(servicio);
         return persistence.create(entity);
     }
     
-    /**
+   /**
      * Actualiza la información de una instancia de Valoracion.
      *
      * @param entity Instancia de ValoracionEntity con los nuevos datos.
+     * @param servicioid id del Servicio el cual sera padre del Valoracion actualizado.
      * @return Instancia de ValoracionEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * 
      */
-    public ValoracionEntity updateValoracion(ValoracionEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar una valoracion ");
+    public ValoracionEntity updateValoracionServicio(Long servicioid, ValoracionEntity entity) throws BusinessLogicException {
+    if(entity.getCalificacion()>5.0 || entity.getCalificacion()<1.0)
+        {
+            throw new BusinessLogicException("La calificación debe estar entre 1.0 y 5.0");
+        }
+        ServicioEntity servicio = servicioLogic.getServicio(servicioid);
+        entity.setServicio(servicio);
         return persistence.update(entity);
     }
     
@@ -75,7 +109,6 @@ public class ValoracionLogic {
      * @param id Identificador de la instancia a eliminar.
      */
     public void deleteValoracion(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar una valoracion ");
         persistence.delete(id);
     }
 

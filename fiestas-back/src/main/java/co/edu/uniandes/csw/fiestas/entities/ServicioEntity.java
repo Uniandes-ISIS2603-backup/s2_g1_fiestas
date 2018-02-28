@@ -24,6 +24,8 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValoracionEntity> valoraciones = new ArrayList<>();
+    @OneToMany
+    private List<ProductoEntity> productos = new ArrayList<>();
     @ManyToMany
     private List<ProveedorEntity> proveedores = new ArrayList<>();
     private String descripcion;
@@ -55,6 +57,14 @@ public class ServicioEntity extends BaseEntity implements Serializable{
 
     public void setValoraciones(List<ValoracionEntity> valoraciones) {
         this.valoraciones = valoraciones;
+    }
+
+    public List<ProductoEntity> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoEntity> productos) {
+        this.productos = productos;
     }
 
     public List<ProveedorEntity> getProveedores() {

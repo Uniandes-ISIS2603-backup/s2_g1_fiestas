@@ -20,10 +20,8 @@ import javax.inject.Inject;
 @Stateless
 public class ServicioLogic {
     
-    private static final Logger LOGGER = Logger.getLogger(ServicioLogic.class.getName());
-    
     @Inject
-        private ServicioPersistence persistence;
+    private ServicioPersistence persistence;
     
      /**
      * Obtiene la lista de los registros de Servicio.
@@ -31,7 +29,6 @@ public class ServicioLogic {
      * @return Colección de objetos de ServicioEntity.
      */
     public List<ServicioEntity> getServicios() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los servicios");
         return persistence.findAll();
     }
     
@@ -42,7 +39,6 @@ public class ServicioLogic {
      * @return Instancia de ServicioEntity con los datos del Servicio consultado.
      */
     public ServicioEntity getServicio(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar un servicio con id = {0}", id);
         return persistence.find(id);
     }
     
@@ -53,8 +49,6 @@ public class ServicioLogic {
      * @return Objeto de ServicioEntity con los datos nuevos y su ID.
      */
     public ServicioEntity createServicio(ServicioEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de crear un servicio ");
-        
         return persistence.create(entity);
     }
     
@@ -65,7 +59,6 @@ public class ServicioLogic {
      * @return Instancia de ServicioEntity con los datos actualizados.
      */
     public ServicioEntity updateServicio(ServicioEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar un servicio ");
         return persistence.update(entity);
     }
 
@@ -75,7 +68,6 @@ public class ServicioLogic {
      * @param id Identificador de la instancia a eliminar.
      */
     public void deleteServicio(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar un autor ");
         persistence.delete(id);
     }
     
