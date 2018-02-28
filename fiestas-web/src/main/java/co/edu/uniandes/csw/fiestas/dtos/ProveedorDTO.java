@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+
 /**
  * Clase que extiende de {@link UsuarioDTO} para manejar los proveedores del negocio. Para conocer el
  * contenido de un proveedor vaya a la documentacion de {@link UsuarioDTO} más un atributo extra que corresponde
@@ -63,5 +65,32 @@ public class ProveedorDTO extends UsuarioDTO
         this.penalizado = penalizado;
     }
     
+    public ProveedorDTO(ProveedorEntity entity)
+    {
+        if (entity != null)
+        {
+            this.penalizado = entity.isPenalizado();   
+            setCorreo(entity.getCorreo());
+            setDireccion(entity.getDireccion());
+            setDocumento(entity.getDocumento());
+            setId(entity.getId());
+            setLogin(entity.getLogin());
+            setNombre(entity.getName());
+            setTelefono(entity.getTelefono());
+        }
+    }
     
+    public ProveedorEntity toEntity()
+    {
+        ProveedorEntity entity = new ProveedorEntity();
+        entity.setCorreo(getCorreo());
+        entity.setDireccion(getDireccion());
+        entity.setContraseña(getContraseña());
+        entity.setDocumento(getDocumento());
+        entity.setId(getId());
+        entity.setLogin(getLogin());
+        entity.setTelefono(getTelefono());
+        entity.setName(getNombre());
+        
+    }
 }

@@ -85,12 +85,12 @@ public class ClienteLogic
     }
     
     /**
-     * Agregar un evento a la cliente
+     * Agregar un evento al cliente
      *
      * @param eventoId El id evento a guardar
-     * @param clienteId El id de la cliente en la cual se va a guardar el
+     * @param clienteId El id del cliente en la cual se va a guardar el
      * evento.
-     * @return El evento que fue agregado a la cliente.
+     * @return El evento que fue agregado al cliente.
      */
     public EventoEntity addEvento(Long eventoId, Long clienteId) {
         ClienteEntity clienteEntity = getCliente(clienteId);
@@ -100,10 +100,10 @@ public class ClienteLogic
     }
 
     /**
-     * Borrar un evento de una cliente
+     * Borrar un evento de un cliente
      *
-     * @param eventoId El evento que se desea borrar de la cliente.
-     * @param clienteId La cliente de la cual se desea eliminar.
+     * @param eventoId El evento que se desea borrar del cliente.
+     * @param clienteId El cliente de la cual se desea eliminar.
      */
     public void removeEvento(Long eventoId, Long clienteId) {
         ClienteEntity clienteEntity = getCliente(clienteId);
@@ -113,10 +113,10 @@ public class ClienteLogic
     }
 
     /**
-     * Remplazar eventos de una cliente
+     * Remplazar eventos de un cliente
      *
-     * @param eventos Lista de eventos que serán los de la cliente.
-     * @param clienteId El id de la cliente que se quiere actualizar.
+     * @param eventos Lista de eventos que serán los del cliente.
+     * @param clienteId El id del cliente que se quiere actualizar.
      * @return La lista de eventos actualizada.
      */
     public List<EventoEntity> replaceEventos(Long clienteId, List<EventoEntity> eventos) {
@@ -133,21 +133,21 @@ public class ClienteLogic
     }
 
     /**
-     * Retorna todos los eventos asociados a una cliente
+     * Retorna todos los eventos asociados a un cliente
      *
-     * @param clienteId El ID de la cliente buscada
-     * @return La lista de eventos de la cliente
+     * @param clienteId El ID del cliente buscada
+     * @return La lista de eventos del cliente
      */
     public List<EventoEntity> getEventos(Long clienteId) {
         return getCliente(clienteId).getEventos();
     }
 
     /**
-     * Retorna un evento asociado a una cliente
+     * Retorna un evento asociado a un cliente
      *
-     * @param clienteId El id de la cliente a buscar.
+     * @param clienteId El id del cliente a buscar.
      * @param eventoId El id del evento a buscar
-     * @return El evento encontrado dentro de la cliente.
+     * @return El evento encontrado dentro del cliente.
      * @throws BusinessLogicException Si el evento no se encuentra en la cliente
      */
     public EventoEntity getEvento(Long clienteId, Long eventoId) throws BusinessLogicException {
@@ -157,7 +157,7 @@ public class ClienteLogic
         if (index >= 0) {
             return eventos.get(index);
         }
-        throw new BusinessLogicException("El evento no está asociado a la cliente");
+        throw new BusinessLogicException("El evento no está asociado al cliente");
     }
 
     /**
