@@ -43,8 +43,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class EventoResource {
     
-    /*@Inject
-    private EventoLogic eventoLogic;*/
+    @Inject
+    private EventoLogic eventoLogic;
     
         /**
      * Convierte una lista de EventoEntity a una lista de EventoDetailDTO.
@@ -76,8 +76,7 @@ public class EventoResource {
      */
     @GET
     public List<EventoDetailDTO> getEventos() {
-       /* return listEntity2DTO(eventoLogic.getEventos());*/
-       return new ArrayList<>();
+       return listEntity2DTO(eventoLogic.getEventos());
     }
 
     /**
@@ -101,12 +100,11 @@ public class EventoResource {
     @GET
     @Path("{id: \\d+}")
     public EventoDetailDTO getEvento(@PathParam("id") Long id) {
-        /*EventoEntity entity=eventoLogic.getEvento(id);
+        EventoEntity entity=eventoLogic.getEvento(id);
          if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        return new EventoDetailDTO(entity);*/
-        return null;
+        return new EventoDetailDTO(entity);
     }
     
        
@@ -137,8 +135,7 @@ public class EventoResource {
      */
     @POST
     public EventoDetailDTO createEvento(EventoDetailDTO evento) throws BusinessLogicException {
-        /*return new EventoDetailDTO(eventoLogic.createEvento(evento.toEntity()));*/
-        return evento;
+        return new EventoDetailDTO(eventoLogic.createEvento(evento.toEntity()));
     }
 
     /**
@@ -164,14 +161,13 @@ public class EventoResource {
     @PUT
     @Path("{id: \\d+}")
     public EventoDetailDTO updateEvento(@PathParam("id") Long id, EventoDetailDTO evento) {
-      /*  EventoEntity entity=evento.toEntity();
+      EventoEntity entity=evento.toEntity();
         entity.setId(id);
         EventoEntity oldEntity = eventoLogic.getEvento(id);
         if (oldEntity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        return new EventoDetailDTO(eventoLogic.updateEvento(entity));*/
-      return null;
+        return new EventoDetailDTO(eventoLogic.updateEvento(entity));
     }
 
     /**
@@ -194,11 +190,11 @@ public class EventoResource {
     @DELETE
     @Path("{id: \\d+}")
     public void deleteEvento(@PathParam("id") Long id) {
-       /* EventoEntity entity=eventoLogic.getEvento(id);
+       EventoEntity entity=eventoLogic.getEvento(id);
         if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        eventoLogic.deleteEvento(id);*/
+        eventoLogic.deleteEvento(id);
     }
 
 }
