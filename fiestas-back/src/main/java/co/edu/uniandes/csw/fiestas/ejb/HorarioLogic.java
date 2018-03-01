@@ -19,8 +19,8 @@ import javax.inject.Inject;
  * @author df.nino10
  */
 @Stateless
-public class HorarioLogic {
-    
+public class HorarioLogic 
+{    
     private static final Logger LOGGER= Logger.getLogger(HorarioLogic.class.getName());
     
     @Inject
