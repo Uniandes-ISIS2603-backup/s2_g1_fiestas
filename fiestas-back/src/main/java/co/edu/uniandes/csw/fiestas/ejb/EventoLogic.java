@@ -62,7 +62,8 @@ public class EventoLogic {
      *
      * @param entity Objeto de EventoEntity con los datos nuevos
      * @return Objeto de EventoEntity con los datos nuevos y su ID.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no se cumple reglas de negocio
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
      */
     public EventoEntity createEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
@@ -73,17 +74,17 @@ public class EventoLogic {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateOfOrder);
         calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
-        Date date = calendar.getTime(); 
-        
-        if(entity.getFecha().before(date)){
+        Date date = calendar.getTime();
+
+        if (entity.getFecha().before(date)) {
             throw new BusinessLogicException("El evento debe tener un plazo minimo de 7 dias");
         }
-        
+
         //Segunda regla: El numero de invitados es un numero entero positivo mayor de 0
-       if(entity.getInvitados()<1){
-           throw new BusinessLogicException("El evento tiene un numero de invitados no valido");
-       }
-            
+        if (entity.getInvitados() < 1) {
+            throw new BusinessLogicException("El evento tiene un numero de invitados no valido");
+        }
+
         return persistence.create(entity);
     }
 
@@ -92,9 +93,27 @@ public class EventoLogic {
      *
      * @param entity Instancia de EventoEntity con los nuevos datos.
      * @return Instancia de EventoEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public EventoEntity updateEvento(EventoEntity entity) {
+    public EventoEntity updateEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
+        //Primera regla de negocio: El evento debe tener plazo minimo de una semana
+        int noOfDays = 7;
+        Date dateOfOrder = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateOfOrder);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date date = calendar.getTime();
+
+        if (entity.getFecha().before(date)) {
+            throw new BusinessLogicException("El evento debe tener un plazo minimo de 7 dias");
+        }
+
+        //Segunda regla: El numero de invitados es un numero entero positivo mayor de 0
+        if (entity.getInvitados() < 1) {
+            throw new BusinessLogicException("El evento tiene un numero de invitados no valido");
+        }
+
         EventoEntity newEntity = persistence.update(entity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar evento con id={0}", entity.getId());
         return newEntity;
@@ -157,32 +176,34 @@ public class EventoLogic {
         }
         return contratos;
     }
-    
+
     /**
      * Retorna un contrato asociado a un evento
+     *
      * @param eventoId El id del evento a buscar
      * @param contratoId El id del contrato a buscar
      * @return El contrato encontrado en el evento
-     * @throws BusinessLogicException Si el contrato no se encuentra en el evento
+     * @throws BusinessLogicException Si el contrato no se encuentra en el
+     * evento
      */
-    public ContratoEntity getContrato(Long eventoId, Long contratoId) throws BusinessLogicException{
-         List<ContratoEntity> contratos = getEvento(eventoId).getContratos();
-         ContratoEntity contrato = contratoLogic.getContrato(contratoId);
-         int index = contratos.indexOf(contrato);
-          if (index >= 0) {
+    public ContratoEntity getContrato(Long eventoId, Long contratoId) throws BusinessLogicException {
+        List<ContratoEntity> contratos = getEvento(eventoId).getContratos();
+        ContratoEntity contrato = contratoLogic.getContrato(contratoId);
+        int index = contratos.indexOf(contrato);
+        if (index >= 0) {
             return contratos.get(index);
         }
-          throw new BusinessLogicException("El contrato no está asociado al evento");
+        throw new BusinessLogicException("El contrato no está asociado al evento");
     }
-    
+
     /**
      * Retorna todos los contratos del evento
-     * 
+     *
      * @param eventoId El id del evento a buscar
      * @return la lista de contratos del evento
      */
-    public List<ContratoEntity> getContratos(Long eventoId){
+    public List<ContratoEntity> getContratos(Long eventoId) {
         return getEvento(eventoId).getContratos();
     }
-   
+
 }
