@@ -5,6 +5,9 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
+
 /**
  * UsuarioDTO Objeto tranferencia para los Usuarios. Los DTO contienen las
  * representaciones de los JSON que se transfieren entre el cliente y el
@@ -176,5 +179,18 @@ public class UsuarioDTO
     public void setLogin(String login) 
     {
         this.login = login;
+    }
+    
+    public UsuarioEntity toEntity()
+    {
+        UsuarioEntity e = new UsuarioEntity(); 
+        e.setContraseña(this.contraseña);
+        e.setCorreo(this.correo);
+        e.setDireccion(this.direccion);
+        e.setDocumento(this.documento);
+        e.setLogin(this.login);
+        e.setName(this.nombre);
+        e.setTelefono(this.telefono);
+        return e;
     }
 }

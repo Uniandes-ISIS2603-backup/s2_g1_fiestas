@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -22,6 +24,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     private String direccion;
     private String login;
     private String contraseña;
+    private List<BlogEntity> blogs= new ArrayList<>();
 
     /**
      * @return the documento
@@ -36,6 +39,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     public void setDocumento(String documento)
     {
         this.documento = documento;
+    }
+
+    public List<BlogEntity> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(List<BlogEntity> blogs) {
+        this.blogs = blogs;
     }
 
     /**

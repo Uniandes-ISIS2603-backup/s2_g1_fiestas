@@ -1,6 +1,8 @@
 
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ import java.util.List;
  */
 public class UsuarioDetailDTO extends UsuarioDTO
 {
-    private List<BlogDTO> blogs;
+    private List<BlogDTO> blogs= new ArrayList<>();
     
     /**
      * Constructor por defecto
@@ -70,6 +72,15 @@ public class UsuarioDetailDTO extends UsuarioDTO
     public UsuarioDetailDTO()
     {
         
+    }
+
+    public UsuarioDetailDTO(UsuarioEntity entity) {
+        super();
+        for(BlogEntity u : entity.getBlogs())
+        {
+            BlogDTO b= new BlogDTO(u);
+            blogs.add(b);
+        }
     }
     
     /**
