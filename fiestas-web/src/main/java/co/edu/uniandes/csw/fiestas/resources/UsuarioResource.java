@@ -95,8 +95,13 @@ public class UsuarioResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public UsuarioDetailDTO getUsuario(@PathParam("id") Long id) {
-        return null;
+    public UsuarioDetailDTO getUsuario(@PathParam("id") Long id) throws BusinessLogicException{
+        UsuarioEntity e = logic.getUsuario(id);
+        if(e == null)
+        {
+            throw new BusinessLogicException("El usuario con el id buscado no existe.");
+        }
+        return new UsuarioDetailDTO(e);
     }
     
         /**
@@ -122,12 +127,15 @@ public class UsuarioResource {
      */
     @POST
     public UsuarioDetailDTO createUsuario(UsuarioDetailDTO usuario) throws BusinessLogicException {
+        logic.createUsuario(usuario.toEntity());
         return usuario;
     }
     
     @PUT
     @Path("{id: \\d+}")
     public UsuarioDetailDTO updateUsuario(@PathParam("id")Long id) {
+        logic.get
+                
         return null;
     }
     
