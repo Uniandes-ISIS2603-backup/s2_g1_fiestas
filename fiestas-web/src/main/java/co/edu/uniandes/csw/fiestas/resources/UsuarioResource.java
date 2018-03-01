@@ -22,6 +22,9 @@ package co.edu.uniandes.csw.fiestas.resources;
  */
 
 import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,8 @@ import javax.ws.rs.Produces;
 @Consumes("application/json")
 @RequestScoped
 public class UsuarioResource {
+    
+    private UsuarioLogic logic;
 
     /**
      * <h1>GET /usuarios : Obtener todos los usuarios.</h1>
@@ -54,9 +59,24 @@ public class UsuarioResource {
      */
     @GET
     public List<UsuarioDetailDTO> getusuarios() {
-        return new ArrayList<>();
+        return listEntity2DTO(logic.getUsuarios());
     }
 
+    
+     /**
+     * Convierte una lista de HoraroiEntity a una lista de UsuarioDetailDTO.
+     *
+     * @param entityList Lista de UsuarioEntity a convertir.
+     * @return Lista de UsuarioDetailDTO convertida.
+     *
+     */
+    private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
+        List<UsuarioDetailDTO> list = new ArrayList<>();
+        for (UsuarioEntity entity : entityList) {
+            list.add(new UsuarioDetailDTO(entity));
+        }
+        return list;
+    }
     /**
      * <h1>GET /usuarios/{id} : Obtener usuario por id.</h1>
      * 

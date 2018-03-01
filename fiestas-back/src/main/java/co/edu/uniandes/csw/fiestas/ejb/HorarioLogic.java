@@ -58,9 +58,9 @@ public class HorarioLogic
 
     public void deleteHorario(Long id) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LOGGER.log(Level.INFO,"Inicia proceso de actualización del horario con id={0}", id);
+        persistence.delete(id);        
     }
-    
     /**
      * Agregar un evento al horario
      *
@@ -177,7 +177,6 @@ public class HorarioLogic
     public List<EventoEntity> listEventos(Long horarioId) 
     {
         return getHorario(horarioId).getEventos();
-    }
-    
+    } 
     
 }
