@@ -53,7 +53,14 @@ public class ClienteDTO extends UsuarioDTO
     
     public ClienteEntity toEntity()
     {
-        ClienteEntity entity = super.toEntity();    
-        return entity;
+        ClienteEntity e = new ClienteEntity(); 
+        e.setContraseña(getContraseña());
+        e.setCorreo(getCorreo());
+        e.setDireccion(getDireccion());
+        e.setDocumento(getDocumento());
+        e.setLogin(getLogin());
+        e.setName(getNombre());
+        e.setTelefono(getTelefono());
+        return e;
     }
 }
