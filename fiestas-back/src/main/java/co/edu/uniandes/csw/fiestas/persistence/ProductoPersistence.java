@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.fiestas.persistence;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +57,12 @@ public class ProductoPersistence
 
     public ProductoEntity update(ProductoEntity entity) {
         LOGGER.log(Level.INFO, "Actualizando producto con id={0}", entity.getId());
+        return em.merge(entity);
+    }
+    
+    public ProductoEntity update(ProductoEntity entity, ServicioEntity servicio) {
+        LOGGER.log(Level.INFO, "Actualizando producto con id={0}", entity.getId());
+        entity.setServicio(servicio);
         return em.merge(entity);
     }
 

@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+
 /**
  * ProductoDTO Objeto de transferencia de datos de la entidad de Producto. Los DTO contienen las
  * representaciones de los JSON que se transfieren entre el cliente y el servidor.
@@ -57,7 +59,7 @@ public class ProductoDTO
     /**
      * @return El ID del producto
      */
-    public long darID()
+    public long getID()
     {
         return id;
     }
@@ -65,7 +67,7 @@ public class ProductoDTO
     /**
      * @return El precio del producto
      */
-    public int darPrecio()
+    public int getPrecio()
     {
         return precio;
     }
@@ -73,7 +75,7 @@ public class ProductoDTO
     /**
      * @return La descripción del producto
      */
-    public String darDescripcion()
+    public String getDescripcion()
     {
         return descripcion;
     }
@@ -81,7 +83,7 @@ public class ProductoDTO
     /**
      * @return Lo que incluye el producto
      */
-    public String darIncluidos()
+    public String getIncluidos()
     {
         return incluye;
     }
@@ -89,7 +91,7 @@ public class ProductoDTO
     /**
      * @return La cantidad de personal del producto
      */
-    public int darPersonal()
+    public int getPersonal()
     {
         return personal;
     }
@@ -136,6 +138,38 @@ public class ProductoDTO
     public void setPersonal(int pPer)
     {
         personal = pPer;
+    }
+    
+    
+    /**
+     * Constructor a partir de la entidad
+     * @param productoE  La entidad del libro
+     */
+    public ProductoDTO(ProductoEntity productoE) {
+        if (productoE != null) {
+            this.id = productoE.getId();
+            this.descripcion = productoE.getDescripcion();
+            this.incluye = productoE.getIncluye();
+            this.personal = productoE.getPersonal();
+            this.precio = productoE.getPrecio();
+            
+        }
+    }
+
+    /**
+     * Método para transformar el DTO a una entidad.
+     * @return La entidad del libro asociado.
+     */
+    public ProductoEntity toEntity() {
+
+        ProductoEntity productoE = new ProductoEntity();
+        productoE.setId(this.id);
+        productoE.setDescripcion(this.descripcion);
+        productoE.setIncluye(this.incluye);
+        productoE.setPersonal(this.personal);
+        productoE.setPrecio(this.precio);
+     
+        return productoE;
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.persistence;
 
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,6 +56,12 @@ public class TematicaPersistence
 
     public TematicaEntity update(TematicaEntity entity) {
         LOGGER.log(Level.INFO, "Actualizando tematica con id={0}", entity.getId());
+        return em.merge(entity);
+    }
+    
+    public TematicaEntity update(TematicaEntity entity, List<ServicioEntity> servicios) {
+        LOGGER.log(Level.INFO, "Actualizando tematica con id={0}", entity.getId());
+        entity.setServicio(servicios);
         return em.merge(entity);
     }
 
