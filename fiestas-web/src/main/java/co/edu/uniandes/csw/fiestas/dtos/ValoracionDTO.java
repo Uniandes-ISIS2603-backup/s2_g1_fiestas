@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import java.util.logging.Logger;
 
 /**
@@ -46,6 +47,19 @@ public class ValoracionDTO {
     {
         
     }
+       
+       /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     *
+     * @param valoracion: Es la entidad que se va a convertir a DTO
+     */
+    public ValoracionDTO(ValoracionEntity valoracion) {
+        this.id = valoracion.getId();
+        this.comentario = valoracion.getComentario();
+        this.calificacion = valoracion.getCalificacion();
+
+    }
     
     /**
      * @return El id de la valoracion.
@@ -84,5 +98,19 @@ public class ValoracionDTO {
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
     }
+    
+       /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public ValoracionEntity toEntity() {
+        ValoracionEntity entity = new ValoracionEntity();
+        entity.setId(this.id);
+        entity.setComentario(this.comentario);
+        entity.setCalificacion(this.calificacion);
+        return entity;
+    }
+    
  
 }

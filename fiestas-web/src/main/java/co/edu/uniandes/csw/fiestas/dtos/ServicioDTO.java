@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+
 
 /**
  * ServicioDTO Objeto tranferencia para el servicio.
@@ -41,6 +43,19 @@ public class ServicioDTO {
     public ServicioDTO()
     {
         
+    }
+    
+     /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     *
+     * @param servicio: Es la entidad que se va a convertir a DTO
+     */
+    public ServicioDTO(ServicioEntity servicio) {
+        this.id = servicio.getId();
+        this.descripcion = servicio.getDescripcion();
+        this.tipo = servicio.getTipo();
+
     }
     
     /**
@@ -85,5 +100,16 @@ public class ServicioDTO {
         this.tipo = tipo;
     }
     
-    
+       /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public ServicioEntity toEntity() {
+        ServicioEntity entity = new ServicioEntity();
+        entity.setId(this.id);
+        entity.setDescripcion(this.descripcion);
+        entity.setTipo(this.tipo);
+        return entity;
+    }
 }
