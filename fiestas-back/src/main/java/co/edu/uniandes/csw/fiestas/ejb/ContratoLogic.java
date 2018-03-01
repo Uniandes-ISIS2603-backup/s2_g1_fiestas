@@ -219,7 +219,7 @@ public class ContratoLogic {
      * instancia de Contrato
      */
     public List<ProductoEntity> listProductos(Long contratoId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros del autor con id = {0}", contratoId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los productos del autor con id = {0}", contratoId);
         return getContrato(contratoId).getProductos();
     }
 
@@ -232,7 +232,7 @@ public class ContratoLogic {
      * @return La entidadd de Libro del autor
      */
     public ProductoEntity getProducto(Long contratoId, Long ProductosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar un libro con id = {0}", ProductosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar un producto con id = {0}", ProductosId);
         List<ProductoEntity> list = getContrato(contratoId).getProductos();
         ProductoEntity ProductosEntity = new ProductoEntity();
         ProductosEntity.setId(ProductosId);
@@ -251,7 +251,7 @@ public class ContratoLogic {
      * @return Instancia de ProductoEntity que fue asociada a Contrato
      */
     public ProductoEntity addProducto(Long contratoId, Long ProductosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al contrato con id = {0}", contratoId);
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un producto al contrato con id = {0}", contratoId);
         ContratoEntity contrato = this.getContrato(contratoId);
         ProductoEntity producto = productoLogic.getProducto(ProductosId);
         List<ProductoEntity> productos = contrato.getProductos();
@@ -270,7 +270,7 @@ public class ContratoLogic {
      * Contrato
      */
     public List<ProductoEntity> replaceProductos(Long contratoId, List<ProductoEntity> list) {
-        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los libros asocidos al contrato con id = {0}", contratoId);
+        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los productos asocidos al contrato con id = {0}", contratoId);
         ContratoEntity contratoEntity = getContrato(contratoId);
         contratoEntity.setProductos(list);
         return contratoEntity.getProductos();

@@ -38,28 +38,19 @@ public class ContratoLogicTest {
     @Inject
     private ContratoLogic contratoLogic;
 
-    @Inject
-    private ProveedorLogic proveedorLogic;
-
-    @Inject
-    private EventoLogic eventoLogic;
-
-    @Inject
-    private ProductoLogic productoLogic;
-
     @PersistenceContext
     private EntityManager em;
 
     @Inject
     private UserTransaction utx;
 
-    private List<ContratoEntity> data = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> data = new ArrayList<>();
 
-    private List<ProveedorEntity> proveedorData = new ArrayList<ProveedorEntity>();
+    private final List<ProveedorEntity> proveedorData = new ArrayList<>();
 
-    private List<EventoEntity> eventoData = new ArrayList<EventoEntity>();
+    private final List<EventoEntity> eventoData = new ArrayList<>();
 
-    private List<List<ProductoEntity>> productoData = new ArrayList<>();
+    private final List<List<ProductoEntity>> productoData = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
