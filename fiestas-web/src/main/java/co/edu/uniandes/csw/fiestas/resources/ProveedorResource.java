@@ -1,7 +1,11 @@
 
 package co.edu.uniandes.csw.fiestas.resources;
 
+import co.edu.uniandes.csw.fiestas.dtos.EventoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +38,25 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class ProveedorResource {
-
+public class ProveedorResource 
+{
+    private ProveedorLogic proveedorLogic;
+    
+    /**
+     * Convierte una lista de EventoEntity a una lista de EventoDetailDTO.
+     *
+     * @param entityList Lista de EventoEntity a convertir.
+     * @return Lista de EventoDetailDTO convertida.
+     *
+     */
+    private List<ProveedorDetailDTO> listEntity2DTO(List<ProveedorEntity> entityList) {
+        List<ProveedorDetailDTO> list = new ArrayList<>();
+        for (ProveedorEntity entity : entityList) {
+            list.add(new ProveedorDetailDTO(entity));
+        }
+        return list;
+    }
+    
     /**
      * <h1>GET /proveedores : Obtener todos los proveedores.</h1>
      * 
@@ -48,7 +69,7 @@ public class ProveedorResource {
      * @return JSONArray {@link ProveedorDetailDTO} - Los proveedores encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<ProveedorDetailDTO> getproveedores() {
+    public List<ProveedorDetailDTO> getProveedores() {
         return new ArrayList<>();
     }
 
@@ -96,8 +117,9 @@ public class ProveedorResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el proveedor.
      */
     @POST
-    public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException {
-        return proveedor;
+    public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException 
+    {
+        
     }
     
     @PUT

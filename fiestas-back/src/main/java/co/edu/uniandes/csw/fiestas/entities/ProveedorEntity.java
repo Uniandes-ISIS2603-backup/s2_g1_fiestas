@@ -106,4 +106,24 @@ public class ProveedorEntity extends UsuarioEntity
     public void setValoraciones(List<ValoracionEntity> valoraciones) {
         this.valoraciones = valoraciones;
     }
+    
+    public void agregarHorario(HorarioEntity pHorario)
+    {
+        horarios.add(pHorario);
+    }
+    
+    public void removerHorario(HorarioEntity pHorario)
+    {
+        horarios.remove(pHorario);
+    }
+    
+    public void agregarServicio(ServicioEntity pServicio)
+    {
+        servicios.add(pServicio);
+    }
+    
+    public void removerServicio(ServicioEntity pServicio)
+    {
+        servicios.remove(pServicio);
+    }
 }
