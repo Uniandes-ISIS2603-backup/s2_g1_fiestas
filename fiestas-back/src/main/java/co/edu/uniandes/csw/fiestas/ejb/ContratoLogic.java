@@ -90,6 +90,21 @@ public class ContratoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un contrato ");
         persistence.delete(id);
     }
+    
+          /**
+     * Asocia un Evento existente a un Contrato
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param eventoId Identificador de la instancia de Evento
+     * @return Instancia de EventoEntity que fue asociada a Contrato
+     */
+    public EventoEntity addEvento(Long contratoId, Long eventoId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un evento al contrato con id = {0}", contratoId);
+        ContratoEntity entity = this.getContrato(contratoId);
+        EventoEntity entityU = eventoLogic.getEvento(eventoId);
+        entity.setEvento(entityU);
+        return entityU;
+    }
 
     /**
      * Borrar el evento de un contrato
@@ -136,6 +151,21 @@ public class ContratoLogic {
 
     }
 
+          /**
+     * Asocia un Proveedor existente a un Contrato
+     *
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param proveedorId Identificador de la instancia de Evento
+     * @return Instancia de EventoEntity que fue asociada a Contrato
+     */
+    public ProveedorEntity addProveedor(Long contratoId, Long proveedorId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un proveedor al contrato con id = {0}", contratoId);
+        ContratoEntity entity = this.getContrato(contratoId);
+        ProveedorEntity entityU = proveedorLogic.getProveedor(proveedorId);
+        entity.setProveedor(entityU);
+        return entityU;
+    }
+    
     /**
      * Borrar el proveedor de un contrato
      *
