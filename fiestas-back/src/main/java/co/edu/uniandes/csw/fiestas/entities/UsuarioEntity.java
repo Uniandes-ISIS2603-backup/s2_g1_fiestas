@@ -125,5 +125,13 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     {
         this.contraseña = contraseña;
     }  
+
+    public void agregarBlog(BlogEntity blogEntity) {
+        blogs.add(blogEntity);
+    }
+
+    public void removerBlog(BlogEntity blog) {
+        blogs.remove(blog);
+    }
     
 }
