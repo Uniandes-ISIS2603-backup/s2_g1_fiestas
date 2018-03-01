@@ -59,7 +59,7 @@ public class BlogDetailDTO extends BlogDTO {
     @Override
     public BlogEntity toEntity() {
         BlogEntity entity = super.toEntity();
-        entity.setUsuario(this.usuario.toEntity);
+        entity.setUsuario(this.usuario.toEntity());
         entity.setEvento(this.evento.toEntity());
         
         return entity;
