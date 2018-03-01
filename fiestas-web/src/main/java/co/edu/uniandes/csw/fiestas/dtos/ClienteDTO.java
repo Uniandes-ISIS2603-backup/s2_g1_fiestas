@@ -43,16 +43,30 @@ public class ClienteDTO extends UsuarioDTO
         
     }
         
-    public ClienteDTO(ClienteEntity entity)
+    public ClienteDTO(ClienteEntity e)
     {
-        if (entity != null)
+        if (e != null)
         {            
-            super(entity);
+            setContraseña(e.getContraseña());
+            setCorreo(e.getCorreo());
+            setDireccion(e.getDireccion());
+            this.documento=e.getDocumento();
+            this.login=e.getLogin();
+            this.nombre=e.getName();
+            this.telefono=e.getTelefono();
         }
     }
     
     public ClienteEntity toEntity()
     {
-        ClienteEntity entity = super.toEntity();       
+        ClienteEntity e = new ClienteEntity(); 
+        e.setContraseña(getContraseña());
+        e.setCorreo(getCorreo());
+        e.setDireccion(getDireccion());
+        e.setDocumento(getDocumento());
+        e.setLogin(getLogin());
+        e.setName(getNombre());
+        e.setTelefono(getTelefono());
+        return e;
     }
 }

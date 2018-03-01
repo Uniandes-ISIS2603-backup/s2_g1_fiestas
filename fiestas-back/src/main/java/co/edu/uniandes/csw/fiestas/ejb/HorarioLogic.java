@@ -56,10 +56,10 @@ public class HorarioLogic
          return newEntity;
     }
 
-    public void deleteHorario(Long id) {
+    public void deleteHorario(Long id) 
+    {
         LOGGER.log(Level.INFO,"Inicia proceso de actualización del horario con id={0}", id);
-        persistence.delete(id);
-        
+        persistence.delete(id);        
     }
     /**
      * Agregar un evento al horario
@@ -94,7 +94,8 @@ public class HorarioLogic
     {
         HorarioEntity horarioEntity = getHorario(horarioId);
         EventoEntity evento = eventoLogic.getEvento(eventoId);
-        if(horarioEntity != null)
+        int index = horarioEntity.getEventos().indexOf(evento);
+        if(horarioEntity != null && index >=0)
         {
             horarioEntity.removerEvento(evento);
         }
@@ -117,17 +118,20 @@ public class HorarioLogic
         HorarioEntity horario = getHorario(horarioId);
         if(horario != null)
         {
-            horario.setEventos(eventos);
+            if(eventos.size() ==0 || eventos == null)
+            {
+                throw new BusinessLogicException("No hay lista nueva de eventos o la lista está vacía");
+            }
+            else
+            {
+                horario.setEventos(eventos);
+            }            
         }
         else
         {
             throw new BusinessLogicException("El horario al que se le quiere reemplazar eventos es nulo");
         }
         
-        if(eventos != null || eventos.size() == 0)
-        {
-            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
-        }
         return eventos;
     }
 
@@ -137,7 +141,8 @@ public class HorarioLogic
      * @param horarioId El ID del horario buscada
      * @return La lista de eventos del horario
      */
-    public List<EventoEntity> getEventos(Long horarioId) {
+    public List<EventoEntity> getEventos(Long horarioId) 
+    {
         return getHorario(horarioId).getEventos();
     }
 
@@ -153,7 +158,8 @@ public class HorarioLogic
         List<EventoEntity> eventos = getHorario(horarioId).getEventos();
         EventoEntity evento = eventoLogic.getEvento(eventoId);
         int index = eventos.indexOf(evento);
-        if (index >= 0) {
+        if (index >= 0) 
+        {
             return eventos.get(index);
         }
         throw new BusinessLogicException("El horario no está asociado al horario");
