@@ -84,9 +84,9 @@ public class ClienteDetailDTO extends ClienteDTO
     
     public ClienteDetailDTO(ClienteEntity entity)
     {
+        super(entity);  
         if (entity != null)
-        {
-            super(entity);             
+        {                       
             for(EventoEntity ent : entity.getEventos())
             {
                 EventoDTO dto = new EventoDTO(ent);

@@ -163,9 +163,9 @@ public class ProveedorDetailDTO extends ProveedorDTO
     
     public ProveedorDetailDTO(ProveedorEntity entity)
     {
+        super(entity); 
         if (entity != null)
-        {
-            super(entity); 
+        {            
             contratos = new ArrayList<ContratoDTO>();
             for(ContratoEntity ent : entity.getContratos())
             {

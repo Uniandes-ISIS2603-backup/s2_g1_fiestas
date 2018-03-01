@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.dtos;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import java.util.List;
 
 
@@ -64,6 +65,13 @@ public class ServicioDetailDTO extends ServicioDTO {
     public ServicioDetailDTO() 
     {
         
+    }
+    /**
+     * Constructor por defecto
+     */
+    public ServicioDetailDTO(ServicioEntity e) 
+    {
+        super(e);
     }
      private List<ProveedorDTO> proveedores;
      

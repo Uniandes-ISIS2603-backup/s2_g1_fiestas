@@ -67,16 +67,24 @@ public class ProveedorDTO extends UsuarioDTO
     
     public ProveedorDTO(ProveedorEntity entity)
     {
+        super(entity);
         if (entity != null)
-        {
-            super(entity);
+        {            
             this.penalizado = entity.isPenalizado();             
         }
     }
     
     public ProveedorEntity toEntity()
     {
-        ProveedorEntity entity = super.toEntity(); 
-        return entity;
+        ProveedorEntity e = new ProveedorEntity(); 
+        e.setContraseña(getContraseña());
+        e.setCorreo(getCorreo());
+        e.setDireccion(getDireccion());
+        e.setDocumento(getDocumento());
+        e.setLogin(getLogin());
+        e.setName(getNombre());
+        e.setTelefono(getTelefono());
+        e.setPenalizado(isPenalizado());
+        return e;
     }
 }
