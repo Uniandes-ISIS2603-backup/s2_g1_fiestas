@@ -74,7 +74,8 @@ public class UsuarioDetailDTO extends UsuarioDTO
         
     }
 
-    public UsuarioDetailDTO(UsuarioEntity entity) {
+    public UsuarioDetailDTO(UsuarioEntity entity) 
+    {
         super();
         for(BlogEntity u : entity.getBlogs())
         {

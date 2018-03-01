@@ -50,10 +50,10 @@ public class ClienteDTO extends UsuarioDTO
             setContraseña(e.getContraseña());
             setCorreo(e.getCorreo());
             setDireccion(e.getDireccion());
-            this.documento=e.getDocumento();
-            this.login=e.getLogin();
-            this.nombre=e.getName();
-            this.telefono=e.getTelefono();
+            setDocumento(e.getDocumento());
+            setLogin(e.getLogin());
+            setNombre(e.getName());
+            setTelefono(e.getTelefono());
         }
     }
     
