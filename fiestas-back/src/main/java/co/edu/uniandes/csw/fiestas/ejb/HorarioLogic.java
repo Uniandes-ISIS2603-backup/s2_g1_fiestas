@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.HorarioPersistence;
@@ -26,9 +27,11 @@ public class HorarioLogic
     @Inject
     private HorarioPersistence persistence;
     
+    private EventoLogic eventoLogic;
+    
             
     public List<HorarioEntity> getHorarios(){
-        LOGGER.log(Level.INFO,"Inicia proceso de consultar todos los horarios.");
+        LOGGER.log(Level.INFO,"Inicia proceso de consultar todos los eventos.");
         return persistence.findAll();
     }
 
@@ -56,5 +59,118 @@ public class HorarioLogic
     public void deleteHorario(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    /**
+     * Agregar un evento al horario
+     *
+     * @param eventoId El id evento a guardar
+     * @param horarioId El id del horario en la cual se va a guardar el
+     * evento.
+     * @return El evento que fue agregado al horario.
+     */
+    public EventoEntity addEvento(Long eventoId, Long horarioId) throws BusinessLogicException 
+    {
+        HorarioEntity horarioEntity = getHorario(horarioId);
+        EventoEntity eventoEntity = eventoLogic.getEvento(eventoId);
+        if(horarioEntity != null)
+        {
+            horarioEntity.agregarEvento(eventoEntity);
+        }
+        else
+        {
+            throw new BusinessLogicException("El horario al que se le quiere agregar evento es nulo");
+        }        
+        return eventoEntity;
+    }
+
+    /**
+     * Borrar un evento de un horario
+     *
+     * @param eventoId El evento que se desea borrar del horario.
+     * @param horarioId El horario de la cual se desea eliminar.
+     */
+    public void removeEvento(Long eventoId, Long horarioId) throws BusinessLogicException 
+    {
+        HorarioEntity horarioEntity = getHorario(horarioId);
+        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        if(horarioEntity != null)
+        {
+            horarioEntity.removerEvento(evento);
+        }
+        else
+        {
+            throw new BusinessLogicException("El horario al que se le quiere remover el evento es nulo");
+        }        
+        
+    }
+
+    /**
+     * Remplazar eventos de un horario
+     *
+     * @param eventos Lista de eventos que serán los del horario.
+     * @param horarioId El id del horario que se quiere actualizar.
+     * @return La lista de eventos actualizada.
+     */
+    public List<EventoEntity> replaceEventos(Long horarioId, List<EventoEntity> eventos) throws BusinessLogicException 
+    {
+        HorarioEntity horario = getHorario(horarioId);
+        if(horario != null)
+        {
+            horario.setEventos(eventos);
+        }
+        else
+        {
+            throw new BusinessLogicException("El horario al que se le quiere reemplazar eventos es nulo");
+        }
+        
+        if(eventos != null || eventos.size() == 0)
+        {
+            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
+        }
+        return eventos;
+    }
+
+    /**
+     * Retorna todos los eventos asociados a un horario
+     *
+     * @param horarioId El ID del horario buscada
+     * @return La lista de eventos del horario
+     */
+    public List<EventoEntity> getEventos(Long horarioId) {
+        return getHorario(horarioId).getEventos();
+    }
+
+    /**
+     * Retorna un evento asociado a un horario
+     *
+     * @param horarioId El id del horario a buscar.
+     * @param eventoId El id del evento a buscar
+     * @return El evento encontrado dentro del horario.
+     * @throws BusinessLogicException Si el evento no se encuentra en la horario
+     */
+    public EventoEntity getEvento(Long horarioId, Long eventoId) throws BusinessLogicException {
+        List<EventoEntity> eventos = getHorario(horarioId).getEventos();
+        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        int index = eventos.indexOf(evento);
+        if (index >= 0) {
+            return eventos.get(index);
+        }
+        throw new BusinessLogicException("El horario no está asociado al horario");
+    }
+
+    /**
+     * Obtiene una colección de instancias de EventoEntity asociadas a una
+     * instancia de Horario
+     *
+     * @param horarioId Identificador de la instancia de Horario
+     * @return Colección de instancias de EventoEntity asociadas a la instancia de
+     * Horario
+     *
+     */
+    public List<EventoEntity> listEventos(Long horarioId) 
+    {
+        return getHorario(horarioId).getEventos();
+    }
+    
     
 }

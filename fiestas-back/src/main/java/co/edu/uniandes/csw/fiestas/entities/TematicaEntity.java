@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -16,6 +17,11 @@ import javax.persistence.Entity;
 public class TematicaEntity  extends BaseEntity implements Serializable
 {
 
+    private String descripcion;
+    private List<ServicioEntity> servicios;
+    
+    
+    
     /**
      * @return the descripcion
      */
@@ -31,5 +37,18 @@ public class TematicaEntity  extends BaseEntity implements Serializable
     {
         this.descripcion = descripcion;
     }
-    private String descripcion;
+    
+    /**
+     * @return the servicios
+     */
+    public List<ServicioEntity> getServicios() {
+        return servicios;
+    }
+
+    /**
+     * @param servicios the servicios to set
+     */
+    public void setServicios(List<ServicioEntity> servicios) {
+        this.servicios = servicios;
+    }
 }

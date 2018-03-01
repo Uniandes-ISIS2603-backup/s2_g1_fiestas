@@ -56,6 +56,7 @@ public class ContratoPersistence {
     public ContratoEntity update(ContratoEntity entity) {
         LOGGER.log(Level.INFO, "Actualizando contrato con id={0}", entity.getId());
         return em.merge(entity);
+        
     }
 
     public void delete(Long id) {
