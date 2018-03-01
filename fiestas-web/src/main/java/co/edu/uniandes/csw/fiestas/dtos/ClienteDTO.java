@@ -53,6 +53,7 @@ public class ClienteDTO extends UsuarioDTO
     
     public ClienteEntity toEntity()
     {
-        ClienteEntity entity = super.toEntity();       
+        ClienteEntity entity = super.toEntity();    
+        return entity;
     }
 }

@@ -1,10 +1,9 @@
-
 package co.edu.uniandes.csw.fiestas.test.logic;
 
-import co.edu.uniandes.csw.fiestas.ejb.ClienteLogic;
-import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
+import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,14 +25,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author nm.hernandez10
  */
-
 @RunWith(Arquillian.class)
-public class ClienteLogicTest 
+public class ProveedorLogicTest 
 {
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
-    private ClienteLogic clienteLogic;
+    private ProveedorLogic proveedorLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -41,15 +39,15 @@ public class ClienteLogicTest
     @Inject
     private UserTransaction utx;
 
-    private List<ClienteEntity> data = new ArrayList<ClienteEntity>();
+    private List<ProveedorEntity> data = new ArrayList<ProveedorEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() 
     {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(ClienteEntity.class.getPackage())
-                .addPackage(ClienteLogic.class.getPackage())
-                .addPackage(ClientePersistence.class.getPackage())
+                .addPackage(ProveedorEntity.class.getPackage())
+                .addPackage(ProveedorLogic.class.getPackage())
+                .addPackage(ProveedorPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
 
@@ -81,7 +79,7 @@ public class ClienteLogicTest
      */
     private void clearData() 
     {
-        em.createQuery("delete from ClienteEntity").executeUpdate();
+        em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
 
     /**
@@ -91,22 +89,22 @@ public class ClienteLogicTest
     private void insertData() 
     {
         for (int i = 0; i < 3; i++) {
-            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
 
     /**
-     * Prueba para crear un Cliente
+     * Prueba para crear un Proveedor
      *
      */
     @Test
-    public void createClienteTest() throws BusinessLogicException {
-        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
-        ClienteEntity result = clienteLogic.createCliente(newEntity);
+    public void createProveedorTest() throws BusinessLogicException {
+        ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
+        ProveedorEntity result = proveedorLogic.createProveedor(newEntity);
         Assert.assertNotNull(result);
-        ClienteEntity entidad = em.find(ClienteEntity.class, result.getId());
+        ProveedorEntity entidad = em.find(ProveedorEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
@@ -115,19 +113,20 @@ public class ClienteLogicTest
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
         Assert.assertEquals(newEntity.getName(), entidad.getName());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
+        Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
     }
 
     /**
-     * Prueba para consultar la lista de clientes
+     * Prueba para consultar la lista de provedoores
      */
     @Test
-    public void getClientesTest() {
-        List<ClienteEntity> lista = clienteLogic.getClientes();
+    public void getProveedoresTest() {
+        List<ProveedorEntity> lista = proveedorLogic.getProveedores();
         Assert.assertEquals(data.size(), lista.size());
-        for (ClienteEntity entity : lista) {
+        for (ProveedorEntity entity : lista) {
             boolean encontrado = false;
-            for (ClienteEntity clienteEntity : data) {
-                if (entity.getId().equals(clienteEntity.getId())) {
+            for (ProveedorEntity proveedorEntity : data) {
+                if (entity.getId().equals(proveedorEntity.getId())) {
                     encontrado = true;
                     break;
                 }
@@ -137,29 +136,29 @@ public class ClienteLogicTest
     }
 
     /**
-     * Prueba para eliminar un cliente
+     * Prueba para eliminar un proveedor
      */
     @Test
-    public void deleteCliente() {
-        ClienteEntity entity = data.get(0);
-        clienteLogic.deleteCliente(entity.getId());
-        ClienteEntity deleted = em.find(ClienteEntity.class, entity.getId());
+    public void deleteProveedor() {
+        ProveedorEntity entity = data.get(0);
+        proveedorLogic.deleteProveedor(entity.getId());
+        ProveedorEntity deleted = em.find(ProveedorEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
 
     /**
-     * Prueba para actualizar un cliente
+     * Prueba para actualizar un proveedor
      */
     @Test
-    public void updateClienteTest() {
-        ClienteEntity entity = data.get(0);
-        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
+    public void updateProveedorTest() {
+        ProveedorEntity entity = data.get(0);
+        ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
 
         newEntity.setId(entity.getId());
 
-        clienteLogic.updateCliente(newEntity);
+        proveedorLogic.updateProveedor(newEntity);
 
-        ClienteEntity entidad = em.find(ClienteEntity.class, entity.getId());
+        ProveedorEntity entidad = em.find(ProveedorEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
@@ -168,5 +167,6 @@ public class ClienteLogicTest
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
         Assert.assertEquals(newEntity.getName(), entidad.getName());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
+        Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
     }
 }

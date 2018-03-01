@@ -1,6 +1,8 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,29 +74,38 @@ public class ClienteDetailDTO extends ClienteDTO
         
     }
 
-    public List getEventos() {
+    public List<EventoDTO> getEventos() {
         return eventos;
     }
 
     public void setClienteDTO(List<EventoDTO> eventos) {
         this.eventos = eventos;
-    }
+    }     
     
     public ClienteDetailDTO(ClienteEntity entity)
     {
         if (entity != null)
-        {            
-            super(entity);
-            
+        {
+            super(entity);             
+            for(EventoEntity ent : entity.getEventos())
+            {
+                EventoDTO dto = new EventoDTO(ent);
+                eventos.add(dto);
+            }            
         }
     }
     
     public ClienteEntity toEntity()
     {
         ClienteEntity entity = super.toEntity();
-        if (eventos != null)
+        List<EventoEntity> listEventos = new ArrayList<EventoEntity>();
+        for(EventoDTO dto : getEventos())
         {
-            
-        }        
+            EventoEntity ent = dto.toEntity();
+            listEventos.add(ent);
+        }
+        
+        entity.setEventos(listEventos);
+        return entity;
     }
 }
