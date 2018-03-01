@@ -15,10 +15,14 @@ import javax.persistence.Entity;
 @Entity
 public class ProductoEntity extends BaseEntity implements Serializable
 {
+
     private Integer precio;
     private String descripcion;
     private String incluye;
-    private String personal;
+    private Integer personal;
+    
+    private ServicioEntity servicio;
+    
 
     /**
      * @return the precio
@@ -71,7 +75,7 @@ public class ProductoEntity extends BaseEntity implements Serializable
     /**
      * @return the personal
      */
-    public String getPersonal() 
+    public Integer getPersonal() 
     {
         return personal;
     }
@@ -79,8 +83,24 @@ public class ProductoEntity extends BaseEntity implements Serializable
     /**
      * @param personal the personal to set
      */
-    public void setPersonal(String personal) 
+    public void setPersonal(Integer personal) 
     {
         this.personal = personal;
     }  
+    
+    
+    /**
+     * @return the servicio
+     */
+    public ServicioEntity getServicio() {
+        return servicio;
+    }
+
+    /**
+     * @param servicio the servicio to set
+     */
+    public void setServicio(ServicioEntity servicio) {
+        this.servicio = servicio;
+    }
+    
 }

@@ -5,6 +5,10 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Clase que extiende de {@link ProductoDTO} para manejar los proveedores del negocio con sus relaciones. 
  * Para conocer el contenido de un proveedor vaya a la documentacion de {@link ProductoDTO}.
@@ -93,13 +97,6 @@ return servicio;
 /*
 Setters
 */
-/*
-    Cambia el contrato por el ingresado
-*/
-void setContrato(ContratoDTO pCont)
-{
-    contrato = pCont;
-}
 
 /*
     Cambia el servicio por el ingresado
@@ -108,6 +105,40 @@ void setServicio(ServicioDTO pServ)
 {
     servicio = pServ;
 }
+    
+
+
+
+    /**
+     * Crea un objeto ProductoDetailDTO a partir de un objeto ProductoEntity
+     * incluyendo los atributos de ProductoDTO.
+     *
+     * @param entity Entidad ProductoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */ 
+    public ProductoDetailDTO(ProductoEntity entity) {
+        super(entity);
+    }
+
+    /**
+     * Convierte un objeto ProductoDetailDTO a ProductoEntity incluyendo los
+     * atributos de ProductoDTO.
+     *
+     * @return Nueva objeto ProductoEntity.
+     *
+     */
+    @Override 
+    public ProductoEntity toEntity()
+    {
+        ProductoEntity producto = super.toEntity();
+        producto.setServicio(this.servicio.toEntity());
+        return null;
+    }
+    
+    
+    
+    
     
 }
 
