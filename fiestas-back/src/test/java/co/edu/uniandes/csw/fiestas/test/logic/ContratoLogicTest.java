@@ -5,9 +5,13 @@
  */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
-
 import co.edu.uniandes.csw.fiestas.ejb.ContratoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ContratoPersistence;
 import java.util.*;
@@ -26,13 +30,22 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author mc.gonzalez15
  */
 public class ContratoLogicTest {
-    
+
     public ContratoLogicTest() {
     }
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
     private ContratoLogic contratoLogic;
+
+    @Inject
+    private ProveedorLogic proveedorLogic;
+
+    @Inject
+    private EventoLogic eventoLogic;
+
+    @Inject
+    private ProductoLogic productoLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -41,6 +54,12 @@ public class ContratoLogicTest {
     private UserTransaction utx;
 
     private List<ContratoEntity> data = new ArrayList<ContratoEntity>();
+
+    private List<ProveedorEntity> proveedorData = new ArrayList<ProveedorEntity>();
+
+    private List<EventoEntity> eventoData = new ArrayList<EventoEntity>();
+
+    private List<List<ProductoEntity>> productoData = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -86,8 +105,28 @@ public class ContratoLogicTest {
      */
     private void insertData() {
 
+        ArrayList<ProductoEntity> x = new ArrayList<>();
+        for (int m = 0; m < 3; m++) {
+            ProveedorEntity entitya = factory.manufacturePojo(ProveedorEntity.class);
+            EventoEntity entityb = factory.manufacturePojo(EventoEntity.class);
+            for (int l = 0; l < 2; l++) {
+                ProductoEntity entityc = factory.manufacturePojo(ProductoEntity.class);
+                x.add(entityc);
+
+            }
+
+            proveedorData.add(entitya);
+            eventoData.add(entityb);
+            productoData.add(x);
+        }
+
         for (int i = 0; i < 3; i++) {
+
             ContratoEntity entity = factory.manufacturePojo(ContratoEntity.class);
+            entity.setEvento(eventoData.get(i));
+            entity.setProveedor(proveedorData.get(i));
+            entity.setProductos(productoData.get(i));
+
             em.persist(entity);
             data.add(entity);
         }
@@ -107,6 +146,14 @@ public class ContratoLogicTest {
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getValor(), entidad.getValor());
         Assert.assertEquals(newEntity.getTyc(), entidad.getTyc());
+        Assert.assertEquals(newEntity.getProveedor(), entidad.getProveedor());
+        Assert.assertEquals(newEntity.getEvento(), entidad.getEvento());
+        
+        for(int i = 0; i<2;i++)
+        {
+            Assert.assertEquals(newEntity.getProductos().get(i), entidad.getProductos().get(i));
+        }
+       
     }
 
     /**
@@ -155,5 +202,12 @@ public class ContratoLogicTest {
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getValor(), resp.getValor());
         Assert.assertEquals(newEntity.getTyc(), resp.getTyc());
+        Assert.assertEquals(newEntity.getProveedor(), resp.getProveedor());
+        Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
+        
+        for(int i = 0; i<2;i++)
+        {
+            Assert.assertEquals(newEntity.getProductos().get(i), resp.getProductos().get(i));
+        }
     }
 }
