@@ -58,7 +58,18 @@ public class UsuarioDTO
      * Constructor por defecto
      */
     public UsuarioDTO() 
-    {
+    {  
+    }
+    
+    public UsuarioDTO(UsuarioEntity e)
+    { 
+        (this.contraseña)=e.getContraseña();
+        (this.correo)=e.getCorreo();
+        this.direccion=e.getDireccion();
+        this.documento=e.getDocumento();
+        this.login=e.getLogin();
+        this.nombre=e.getName();
+        this.telefono=e.getTelefono();
     }
     
     /**
