@@ -1,6 +1,11 @@
 
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,5 +159,60 @@ public class ProveedorDetailDTO extends ProveedorDTO
      */
     public void setContratos(List<ContratoDTO> contratos) {
         this.contratos = contratos;
+    }
+    
+    public ProveedorDetailDTO(ProveedorEntity entity)
+    {
+        if (entity != null)
+        {
+            super(entity); 
+            contratos = new ArrayList<ContratoDTO>();
+            for(ContratoEntity ent : entity.getContratos())
+            {
+                ContratoDTO dto = new ContratoDTO(ent);
+                contratos.add(dto);
+            }
+            for(HorarioEntity ent : entity.getHorarios())
+            {
+                HorarioDTO dto = new HorarioDTO(ent);
+                horarios.add(dto);
+            }
+            for(ServicioEntity ent : entity.getServicios())
+            {
+                ServicioDTO dto = new ServicioDTO(ent);
+                servicios.add(dto);
+            }
+            for(ValoracionEntity ent : entity.getValoraciones())
+            {
+                ValoracionDTO dto = new ValoracionDTO(ent);
+                valoraciones.add(dto);
+            }
+        }
+    }
+    
+    public ProveedorEntity toEntity()
+    {
+        ProveedorEntity entity = super.toEntity();
+        for(ContratoEntity dto : getContratos())
+        {
+            ContratoEntity ent = new ContratoDTO();
+            contratos.add(dto);
+        }
+        for(HorarioEntity ent : entity.getHorarios())
+        {
+            HorarioDTO dto = new HorarioDTO();
+            horarios.add(dto);
+        }
+        for(ServicioEntity ent : entity.getServicios())
+        {
+            ServicioDTO dto = new ServicioDTO();
+            servicios.add(dto);
+        }
+        for(ValoracionEntity ent : entity.getValoraciones())
+        {
+            ValoracionDTO dto = new ValoracionDTO();
+            valoraciones.add(dto);
+        }
+        entity.setContratos();
     }
 }
