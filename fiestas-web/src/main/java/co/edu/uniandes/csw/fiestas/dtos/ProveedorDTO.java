@@ -69,28 +69,14 @@ public class ProveedorDTO extends UsuarioDTO
     {
         if (entity != null)
         {
-            this.penalizado = entity.isPenalizado();   
-            setCorreo(entity.getCorreo());
-            setDireccion(entity.getDireccion());
-            setDocumento(entity.getDocumento());
-            setId(entity.getId());
-            setLogin(entity.getLogin());
-            setNombre(entity.getName());
-            setTelefono(entity.getTelefono());
+            super(entity);
+            this.penalizado = entity.isPenalizado();             
         }
     }
     
     public ProveedorEntity toEntity()
     {
-        ProveedorEntity entity = new ProveedorEntity();
-        entity.setCorreo(getCorreo());
-        entity.setDireccion(getDireccion());
-        entity.setContraseña(getContraseña());
-        entity.setDocumento(getDocumento());
-        entity.setId(getId());
-        entity.setLogin(getLogin());
-        entity.setTelefono(getTelefono());
-        entity.setName(getNombre());
-        
+        ProveedorEntity entity = super.toEntity(); 
+        return entity;
     }
 }
