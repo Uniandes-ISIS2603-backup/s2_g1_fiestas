@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ServicioLogic {
         return persistence.findAll();
     }
     
-        /**
+     /**
      * Obtiene los datos de una instancia de Servicio a partir de su ID.
      *
      * @param id Identificador de la instancia a consultar
@@ -71,5 +72,81 @@ public class ServicioLogic {
         persistence.delete(id);
     }
     
+    /**
+     * Obtiene una colección de instancias de ProveedorEntity asociadas a una
+     * instancia de Servicio
+     *
+     * @param servicioId Identificador de la instancia de Servicio
+     * @return Colección de instancias de ProveedorEntity asociadas a la instancia
+     * de Servicio
+     * 
+     */
+    public List<ProveedorEntity> listProveedores(Long servicioId) {
+        return getServicio(servicioId).getProveedores();
+    }
+    
+    /**
+     * Obtiene una instancia de ProveedorEntity asociada a una instancia de Servicio
+     *
+     * @param servicioId Identificador de la instancia de Servicio
+     * @param proveedoresId Identificador de la instancia de Proveedor
+     * @return La entidad del Proveedor asociada al servicio
+     */
+    public ProveedorEntity getProveedor(Long servicioId, Long proveedoresId) {
+        List<ProveedorEntity> list = getServicio(servicioId).getProveedores();
+        ProveedorEntity proveedoresEntity = new ProveedorEntity();
+        proveedoresEntity.setId(proveedoresId);
+        int index = list.indexOf(proveedoresEntity);
+        if (index >= 0) {
+            return list.get(index);
+        }
+        return null;
+    }
+    
+    
+      /**
+     * Asocia un Proveedor existente a un Servicio
+     *
+     * @param servicioId Identificador de la instancia de Servicio
+     * @param proveedoresId Identificador de la instancia de Proveedor
+     * @return Instancia de ProveedorEntity que fue asociada a Servicio
+     * 
+     */
+    public ProveedorEntity addProveedor(Long servicioId, Long proveedoresId) {
+        ServicioEntity servicioEntity = getServicio(servicioId);
+        ProveedorEntity proveedoresEntity = new ProveedorEntity();
+        proveedoresEntity.setId(proveedoresId);
+        servicioEntity.getProveedores().add(proveedoresEntity);
+        return getProveedor(servicioId, proveedoresId);
+    }
+
+    /**
+     * Remplaza las instancias de Proveedor asociadas a una instancia de Servicio
+     *
+     * @param servicioId Identificador de la instancia de Servicio
+     * @param list Colección de instancias de ProveedorEntity a asociar a instancia
+     * de Servicio
+     * @return Nueva colección de ProveedorEntity asociada a la instancia de Servicio
+     * 
+     */
+    public List<ProveedorEntity> replaceProveedores(Long servicioId, List<ProveedorEntity> list) {
+        ServicioEntity servicioEntity = getServicio(servicioId);
+        servicioEntity.setProveedores(list);
+        return servicioEntity.getProveedores();
+    }
+
+    /**
+     * Desasocia un Proveedor existente de un Servicio existente
+     *
+     * @param servicioId Identificador de la instancia de Servicio
+     * @param proveedoresId Identificador de la instancia de Proveedor
+     * 
+     */
+    public void removeProveedor(Long servicioId, Long proveedoresId) {
+        ServicioEntity entity = getServicio(servicioId);
+        ProveedorEntity proveedoresEntity = new ProveedorEntity();
+        proveedoresEntity.setId(proveedoresId);
+        entity.getProveedores().remove(proveedoresEntity);
+    }
     
 }
