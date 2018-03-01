@@ -61,7 +61,7 @@ public class TematicaPersistence
     
     public TematicaEntity update(TematicaEntity entity, List<ServicioEntity> servicios) {
         LOGGER.log(Level.INFO, "Actualizando tematica con id={0}", entity.getId());
-        entity.setServicio(servicios);
+        entity.setServicios(servicios);
         return em.merge(entity);
     }
 
@@ -70,4 +70,7 @@ public class TematicaPersistence
         TematicaEntity entity = em.find(TematicaEntity.class, id);
         em.remove(entity);
     }
+    
+    
+    
 }
