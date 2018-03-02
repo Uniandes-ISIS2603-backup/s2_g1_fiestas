@@ -16,6 +16,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Usuario.
  *
  * @author df.nino10
  */

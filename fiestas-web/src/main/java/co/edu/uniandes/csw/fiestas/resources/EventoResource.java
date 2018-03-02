@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
@@ -159,11 +154,14 @@ public class EventoResource {
      * @param id Identificador del evento que se esta buscando. Este debe ser
      * una cadena de dígitos.
      * @param evento evento a actualizar en la base de datos
-     * @return JSON {@link EventoDetailDTO} - El evento buscado y actuaizado
+     * @return JSON {@link EventoDetailDTO} - El evento buscado y actualizado
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica.
      */
     @PUT
     @Path("{id: \\d+}")
-    public EventoDetailDTO updateEvento(@PathParam("id") Long id, EventoDetailDTO evento) {
+    public EventoDetailDTO updateEvento(@PathParam("id") Long id, EventoDetailDTO evento) throws BusinessLogicException {
         EventoEntity entity = evento.toEntity();
         entity.setId(id);
         EventoEntity oldEntity = eventoLogic.getEvento(id);
@@ -201,7 +199,8 @@ public class EventoResource {
     }
 
     /**
-     * <h1>GET /{eventosId}/contratos/ : Obtener todos los contratos de un evento.</h1>
+     * <h1>GET /{eventosId}/contratos/ : Obtener todos los contratos de un
+     * evento.</h1>
      *
      * <pre>Busca y devuelve todos los contratos que existen en el evento.
      *
@@ -223,7 +222,7 @@ public class EventoResource {
 
     /**
      * <h1>PUT /{eventosId}/contratos: Edita loscontratos de un evento..</h1>
-     * <pre> Remplaza las instancias de Contrato asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Contrato asociadas a una instancia de Evento
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -243,13 +242,13 @@ public class EventoResource {
     public List<ContratoDetailDTO> replaceContratos(@PathParam("eventosId") Long eventosId, List<ContratoDetailDTO> contratos) {
         return contratosListEntity2DTO(eventoLogic.replaceContratos(eventosId, contratosListDTO2Entity(contratos)));
     }
-    
-        /**
-     * <h1>POST /{eventosId}/contratos/{contratosId} : Guarda un
-     * contrato dentro del evento.</h1>
+
+    /**
+     * <h1>POST /{eventosId}/contratos/{contratosId} : Guarda un contrato dentro
+     * del evento.</h1>
      *
      * <pre> Guarda un contrato dentro de un evento con la informacion que
-     * recibe el la URL. Se devuelve el contrato que se guarda en la evento.
+     * recibe en la URL. Se devuelve el contrato que se guarda en la evento.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -270,12 +269,12 @@ public class EventoResource {
         return new ContratoDetailDTO(eventoLogic.addContrato(contratoId, eventosId));
     }
 
-        /**
-     * <h1>DELETE /{eventosId}/contratos/{contratosId} : Elimina un
-     * contrato dentro del evento.</h1>
+    /**
+     * <h1>DELETE /{eventosId}/contratos/{contratosId} : Elimina un contrato
+     * dentro del evento.</h1>
      *
      * <pre> Elimina la referencia del contrato asociado al ID dentro del evento
-     * con la informacion que recibe el la URL.
+     * con la informacion que recibe en la URL.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -293,10 +292,10 @@ public class EventoResource {
     public void removeContratos(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) {
         eventoLogic.removeContrato(contratosId, eventosId);
     }
-    
-        /**
-     * <h1>GET /{eventosId}/contratos/{contratosId} : Obtener
-     * contrato por id del evento por id.</h1>
+
+    /**
+     * <h1>GET /{eventosId}/contratos/{contratosId} : Obtener contrato por id
+     * del evento por id.</h1>
      *
      * <pre>Busca el contrato con el id asociado dentro del evento con id asociado.
      *
@@ -323,7 +322,7 @@ public class EventoResource {
     public ContratoDetailDTO getContrato(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) throws BusinessLogicException {
         return new ContratoDetailDTO(eventoLogic.getContrato(eventosId, contratosId));
     }
-    
+
     /**
      * Convierte una lista de ContratoEntity a una lista de ContratoDetailDTO.
      *

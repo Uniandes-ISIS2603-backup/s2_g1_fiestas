@@ -95,6 +95,7 @@ public class ClienteDetailDTO extends ClienteDTO
         }
     }
     
+    @Override
     public ClienteEntity toEntity()
     {
         ClienteEntity entity = super.toEntity();

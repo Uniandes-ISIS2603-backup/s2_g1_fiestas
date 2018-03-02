@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 /**
+ *Clase que implementa la conexion con la persistencia para la entidad de
+ * Producto.
  *
  * @author af.losada
  */

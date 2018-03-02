@@ -11,12 +11,14 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Cliente.
  *
  * @cliente nm.hernandez10
  */
 @Stateless
-public class ClienteLogic 
-{
+public class ClienteLogic {
+
     private static final Logger LOGGER = Logger.getLogger(ClienteLogic.class.getName());
 
     @Inject
@@ -24,72 +26,66 @@ public class ClienteLogic
 
     @Inject
     private EventoLogic eventoLogic;
-    
+
     /**
      * Obtiene la lista de los registros de Cliente.
      *
      * @return Colección de objetos de ClienteEntity.
      */
-    public List<ClienteEntity> getClientes() 
-    {
+    public List<ClienteEntity> getClientes() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los cliente");
         return persistence.findAll();
     }
-    
+
     /**
      * Obtiene los datos de una instancia de Cliente a partir de su ID.
      *
      * @param id Identificador de la instancia a consultar
      * @return Instancia de ClienteEntity con los datos del Cliente consultado.
      */
-    public ClienteEntity getCliente(Long id) 
-    {
+    public ClienteEntity getCliente(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un cliente con id = {0}", id);
         return persistence.find(id);
     }
-    
+
     /**
      * Se encarga de crear un Cliente en la base de datos.
      *
      * @param entity Objeto de ClienteEntity con los datos nuevos
      * @return Objeto de ClienteEntity con los datos nuevos y su ID.
      */
-    public ClienteEntity createCliente(ClienteEntity entity) 
-    {
+    public ClienteEntity createCliente(ClienteEntity entity) {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un cliente");
-        
+
         return persistence.create(entity);
     }
-    
+
     /**
      * Actualiza la información de una instancia de Cliente.
      *
      * @param entity Instancia de ClienteEntity con los nuevos datos.
      * @return Instancia de ClienteEntity con los datos actualizados.
      */
-    public ClienteEntity updateCliente(ClienteEntity entity) 
-    {
+    public ClienteEntity updateCliente(ClienteEntity entity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un cliente");
         return persistence.update(entity);
     }
-    
+
     /**
      * Elimina una instancia de Cliente de la base de datos.
      *
      * @param id Identificador de la instancia a eliminar.
      */
-    public void deleteCliente(Long id) 
-    {
+    public void deleteCliente(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un cliente");
         persistence.delete(id);
     }
-    
+
     /**
      * Agregar un evento al cliente
      *
      * @param eventoId El id evento a guardar
-     * @param clienteId El id del cliente en la cual se va a guardar el
-     * evento.
+     * @param clienteId El id del cliente en la cual se va a guardar el evento.
      * @return El evento que fue agregado al cliente.
      */
     public EventoEntity addEvento(Long eventoId, Long clienteId) {
@@ -165,12 +161,11 @@ public class ClienteLogic
      * instancia de Cliente
      *
      * @param clienteId Identificador de la instancia de Cliente
-     * @return Colección de instancias de EventoEntity asociadas a la instancia de
-     * Cliente
+     * @return Colección de instancias de EventoEntity asociadas a la instancia
+     * de Cliente
      *
      */
-    public List<EventoEntity> listEventos(Long clienteId) 
-    {
+    public List<EventoEntity> listEventos(Long clienteId) {
         return getCliente(clienteId).getEventos();
-    }    
+    }
 }

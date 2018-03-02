@@ -103,7 +103,6 @@ public class EventoDTO {
     /**
      * @return La fecha del evento
      */
-
     public Date getFecha() {
         return fecha;
     }
