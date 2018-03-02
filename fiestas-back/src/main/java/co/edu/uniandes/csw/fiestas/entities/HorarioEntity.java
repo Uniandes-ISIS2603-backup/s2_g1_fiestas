@@ -32,7 +32,7 @@ public class HorarioEntity extends BaseEntity implements Serializable
     private Date horaFin;
     
     @PodamExclude
-    @OneToMany(mappedBy ="horario")
+    @OneToMany
     private List<EventoEntity> eventos= new ArrayList();
 
     /**
