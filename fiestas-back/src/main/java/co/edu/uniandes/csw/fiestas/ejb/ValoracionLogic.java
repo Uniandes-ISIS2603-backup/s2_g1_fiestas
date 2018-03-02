@@ -1,7 +1,5 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
-import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ValoracionPersistence;
@@ -19,27 +17,60 @@ import javax.inject.Inject;
  */
 @Stateless
 public class ValoracionLogic {
-     
+
     @Inject
     private ValoracionPersistence persistence;
-    
-    
-     /**
+
+    /**
+     * Devuelve todas las valoraciones que hay en la base de datos
+     *
+     * @return Lista de entidades de tipo valoracion
+     */
+    public List<ValoracionEntity> getValoraciones() {
+        List<ValoracionEntity> valoraciones = persistence.findAll();
+        return valoraciones;
+    }
+
+    /**
      * Obtiene los datos de una instancia de Valoracion a partir de su ID.
      *
      * @param id Identificador de la instancia a consultar
-     * @return Instancia de ValoracionEntity con los datos de la Valoracion consultada.
+     * @return Instancia de ValoracionEntity con los datos de la Valoracion
+     * consultada.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public ValoracionEntity getValoracion(Long id) throws BusinessLogicException {
-        if(persistence.find(id)==null)
-        {
+        if (persistence.find(id) == null) {
             throw new BusinessLogicException("La valoración no existe");
         }
         return persistence.find(id);
     }
-       
-    
+
+    /**
+     * Se crea una valoracion en la base de datos.
+     *
+     * @param entity Instancia de ValoracionEntity a crear
+     * @return nstancia de ValoracionEntity creada
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     */
+    public ValoracionEntity createValoracion(ValoracionEntity entity) throws BusinessLogicException {
+        if (entity.getCalificacion() > 5.0 || entity.getCalificacion() < 1.0) {
+            throw new BusinessLogicException("La calificación debe estar entre 1.0 y 5.0");
+        }
+        return persistence.create(entity);
+    }
+
+    /**
+     * Actualiza la informacion de una valoracion.
+     *
+     * @param entity Instancia de ValoracionEntity a actualizar
+     * @return Instancia de ValoracionEntity actualizada
+     */
+    public ValoracionEntity updateValoracion(ValoracionEntity entity) {
+        ValoracionEntity newValoracion = persistence.update(entity);
+        return newValoracion;
+    }
+
     /**
      * Elimina una instancia de Valoracion de la base de datos.
      *

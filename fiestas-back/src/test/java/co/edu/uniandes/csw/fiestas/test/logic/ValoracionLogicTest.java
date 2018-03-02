@@ -39,10 +39,7 @@ public class ValoracionLogicTest {
     
     @Inject
     private ValoracionLogic ValoracionLogic;
-    
-    @Inject
-    private ProveedorLogic ProveedorLogic;
-      
+
     @PersistenceContext
     private EntityManager em;
       
@@ -50,10 +47,6 @@ public class ValoracionLogicTest {
     private UserTransaction utx;
     
     private List<ValoracionEntity> data = new ArrayList<ValoracionEntity>();
-    
-    private List<ServicioEntity> dataServicio = new ArrayList<ServicioEntity>();
-    
-    private List<ProveedorEntity> dataProveedor = new ArrayList<ProveedorEntity>();
     
     @Deployment
     public static JavaArchive createDeployment() {
@@ -94,8 +87,6 @@ public class ValoracionLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from ValoracionEntity").executeUpdate();
-        em.createQuery("delete from ServicioEntity").executeUpdate();
-        em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
     
      /**
@@ -104,102 +95,15 @@ public class ValoracionLogicTest {
      *
      * 
      */
-    private void insertData() {
-        for (int i = 0; i < 3; i++) 
-        {
-            ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
-            em.persist(entity);
-            dataServicio.add(entity);
-        }
-        
-         for (int i = 0; i < 3; i++) 
-        {
-            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);
-            em.persist(entity);
-            dataProveedor.add(entity);
-        }
-        
+    private void insertData() {    
         for (int i = 0; i < 3; i++) {
             ValoracionEntity entity = factory.manufacturePojo(ValoracionEntity.class);
-            entity.setServicio(dataServicio.get(1));
             em.persist(entity);
             data.add(entity);
         }
     }
-
-     /**
-     * Prueba para crear una Valoracion de un servicio
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void createValoracionServicioTest() throws BusinessLogicException {
-        ValoracionEntity newEntity = factory.manufacturePojo(ValoracionEntity.class);
-        ValoracionEntity result = ValoracionLogic.createValoracionServicio(data.get(0).getServicio().getId(), newEntity);
-        Assert.assertNotNull(result);
-        ValoracionEntity entity = em.find(ValoracionEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
-        Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
-    }
     
-    /**
-     * Prueba para crear una Valoracion de un proveedor
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void createValoracionProveedorTest() throws BusinessLogicException {
-        ValoracionEntity newEntity = factory.manufacturePojo(ValoracionEntity.class);
-        ValoracionEntity result = ValoracionLogic.createValoracionProveedor(data.get(0).getProveedor().getId(), newEntity);
-        Assert.assertNotNull(result);
-        ValoracionEntity entity = em.find(ValoracionEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
-        Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
-    }
-    
-     /**
-     * Prueba para consultar la lista de Valoraciones de un servicio 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    
-    @Test
-    public void getValoracionesServicioTest() throws BusinessLogicException {
-        List<ValoracionEntity> list = ValoracionLogic.getValoracionesServicio(dataServicio.get(1).getId());        
-        Assert.assertEquals(data.size(), list.size());
-        for (ValoracionEntity entity : list) {
-            boolean found = false;
-            for (ValoracionEntity storedEntity : data) {
-                if (entity.getId().equals(storedEntity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-    
-     /**
-     * Prueba para consultar la lista de Valoraciones de un proveedor 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    
-    @Test
-    public void getValoracionesProveedorTest() throws BusinessLogicException {
-        List<ValoracionEntity> list = ValoracionLogic.getValoracionesProveedor(dataProveedor.get(1).getId());        
-        Assert.assertEquals(data.size(), list.size());
-        for (ValoracionEntity entity : list) {
-            boolean found = false;
-            for (ValoracionEntity storedEntity : data) {
-                if (entity.getId().equals(storedEntity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-    
-    
+ 
     /**
      * Prueba para consultar una Valoracion por su id
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
@@ -229,45 +133,4 @@ public class ValoracionLogicTest {
         Assert.assertNull(deleted);
     }
     
-      /**
-     * Prueba para actualizar una Valoracion de un Servicio
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void updateValoracionServicioTest() throws BusinessLogicException {
-        ValoracionEntity entity = data.get(0);
-        ValoracionEntity pojoEntity = factory.manufacturePojo(ValoracionEntity.class);
-
-        pojoEntity.setId(entity.getId());
-
-        ValoracionLogic.updateValoracionServicio(dataServicio.get(1).getId(), pojoEntity);
-
-        ValoracionEntity resp = em.find(ValoracionEntity.class, entity.getId());
-
-        Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getName(), resp.getName());
-        Assert.assertEquals(pojoEntity.getCalificacion(), resp.getCalificacion());
-        Assert.assertEquals(pojoEntity.getComentario(), resp.getComentario());
-    }
-    
-     /**
-     * Prueba para actualizar una Valoracion de un Proveedor
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void updateValoracionProveedorTest() throws BusinessLogicException {
-        ValoracionEntity entity = data.get(0);
-        ValoracionEntity pojoEntity = factory.manufacturePojo(ValoracionEntity.class);
-
-        pojoEntity.setId(entity.getId());
-
-        ValoracionLogic.updateValoracionProveedor(dataProveedor.get(1).getId(), pojoEntity);
-
-        ValoracionEntity resp = em.find(ValoracionEntity.class, entity.getId());
-
-        Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getName(), resp.getName());
-        Assert.assertEquals(pojoEntity.getCalificacion(), resp.getCalificacion());
-        Assert.assertEquals(pojoEntity.getComentario(), resp.getComentario());
-    }
 }

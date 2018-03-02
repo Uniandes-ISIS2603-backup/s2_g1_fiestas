@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.fiestas.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -16,12 +17,15 @@ import javax.persistence.*;
 @Entity
 public class ContratoEntity extends BaseEntity implements Serializable {
 
+    @PodamExclude
     @ManyToOne
     private EventoEntity evento;
 
+    @PodamExclude
     @ManyToOne
     private ProveedorEntity proveedor;
 
+    @PodamExclude
     @OneToMany
     private List<ProductoEntity> productos;
 
