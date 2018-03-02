@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
@@ -15,19 +10,21 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Tematica.
  *
  * @author af.losada
  */
-public class TematicaLogic 
-{
+public class TematicaLogic {
+
     private static final Logger LOGGER = Logger.getLogger(TematicaLogic.class.getName());
-    
+
     @Inject
     private TematicaPersistence persistence;
-    
+
     @Inject
     private ServicioPersistence servicioPer;
-    
+
     /**
      * Obtiene la lista de los registros de Tematica.
      *
@@ -37,27 +34,17 @@ public class TematicaLogic
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los tematicas");
         return persistence.findAll();
     }
-    
+
     /**
      * Obtiene la Tematica.
      *
+     * @param id Id de la tematica
      * @return Objetos de TematicaEntity.
      */
     public TematicaEntity getTematica(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los tematicas");
         return persistence.find(id);
     }
-    
-    /**
-     * Obtiene la lista de los registros de Tematica.
-     *
-     * @return Objetos de TematicaEntity.
-     */
-    public ServicioEntity getServicio(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los tematicas");
-        return servicioPer.find(id);
-    }
-    
 
     /**
      * Se encarga de crear un tematica en la base de datos.
@@ -93,14 +80,14 @@ public class TematicaLogic
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar tematica con id={0}", id);
     }
-    
+
     /**
      * Obtiene una colección de instancias de ServicioEntity asociadas a una
      * instancia de Tematica
      *
      * @param TematicaId Identificador de la instancia de Tematica
-     * @return Colección de instancias de ServicioEntity asociadas a la instancia de
-     * Tematica
+     * @return Colección de instancias de ServicioEntity asociadas a la
+     * instancia de Tematica
      */
     public List<ServicioEntity> listServicios(Long TematicaId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros del autor con id = {0}", TematicaId);
@@ -108,7 +95,8 @@ public class TematicaLogic
     }
 
     /**
-     * Obtiene una instancia de ServicioEntity asociada a una instancia de Tematica
+     * Obtiene una instancia de ServicioEntity asociada a una instancia de
+     * Tematica
      *
      * @param TematicaId Identificador de la instancia de Tematica
      * @param serviciosId Identificador de la instancia de Servicio
@@ -137,5 +125,5 @@ public class TematicaLogic
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al Tematica con id = {0}", TematicaId);
         return persistence.find(TematicaId).setServicios((persistence.find(TematicaId).getServicios().add(servicioPer.find(serviciosId))));
     }
-    
+
 }

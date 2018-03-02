@@ -35,11 +35,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /*Numero de invitados del evento */
 
     @PodamExclude
-    @OneToMany
+    @OneToMany(mappedBy="evento")
     private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
 
     @PodamExclude
-    @OneToOne
+    @OneToOne(mappedBy="evento")
     private PagoEntity pago;
 
     @PodamExclude
@@ -49,10 +49,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne
     private TematicaEntity tematica;
-    
-    @PodamExclude
-    @ManyToOne
-    private HorarioEntity horario;
 
     /**
      * Obtiene el atributo fecha
@@ -216,13 +212,4 @@ public class EventoEntity extends BaseEntity implements Serializable {
         this.tematica = tematica;
     }
     
-    /**
-     * Establece el horario del evento
-     * 
-     * @param horario a asignar
-     */
-    public void setHorario(HorarioEntity horario){
-        this.horario=horario;
-    }
-
 }

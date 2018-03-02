@@ -21,7 +21,7 @@ import javax.ws.rs.Produces;
  * URL: /api/blogs
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
- * este recurso tiene la ruta "Blog".</i>
+ * este recurso tiene la ruta "blogs".</i>
  *
  * <h2>Anotaciones </h2>
  * <pre>
@@ -31,7 +31,7 @@ import javax.ws.rs.Produces;
  * </pre>
  * @author mc.gonzalez15  
  */
-@Path("Blog")
+@Path("blogs")
 @Produces("application/json")
 
 public class BlogResource {

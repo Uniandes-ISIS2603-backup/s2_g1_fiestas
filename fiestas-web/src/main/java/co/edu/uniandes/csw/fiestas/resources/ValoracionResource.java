@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
@@ -26,7 +21,7 @@ import javax.ws.rs.Produces;
  */
 
 
-@Path("valoracion")
+@Path("valoraciones")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -52,7 +47,7 @@ public class ValoracionResource {
      * </pre>
      * @param valoracion {@link ValoracionDetailDTO} - La valoracion que se desea guardar.
      * @return JSON {@link ValoracionDetailDTO}  - la valoracion guardada con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la valoracion.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la valoracion.
      */
        @POST
     public ValoracionDetailDTO createValoracion(ValoracionDetailDTO valoracion) throws BusinessLogicException {

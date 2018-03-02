@@ -37,7 +37,7 @@ import javax.ws.rs.WebApplicationException;
  * @author df.nino10
  */
 
-@Path("/horarios")
+@Path("horarios")
 @Produces ("application/json")
 @Consumes ("application/json")
 @RequestScoped
@@ -183,6 +183,6 @@ public class HorarioResource {
     
     @POST
     public HorarioDetailDTO addEventoHorario(EventoDTO evento) throws BusinessLogicException {
-        
+        return null;
     }
 }

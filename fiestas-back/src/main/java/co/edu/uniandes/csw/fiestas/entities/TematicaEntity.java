@@ -26,7 +26,6 @@ public class TematicaEntity  extends BaseEntity implements Serializable
     private List<ServicioEntity> servicios;
     
     
-    
     /**
      * @return the descripcion
      */

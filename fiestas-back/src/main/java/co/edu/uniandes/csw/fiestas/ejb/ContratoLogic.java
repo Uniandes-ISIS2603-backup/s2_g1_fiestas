@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
@@ -17,7 +12,8 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 /**
- *
+ * Clase que implementa la conexion con la persistencia para la entidad de contrato.
+ * 
  * @author mc.gonzalez15
  */
 public class ContratoLogic {

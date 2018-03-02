@@ -16,6 +16,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Horario.
  *
  * @author df.nino10
  */
@@ -27,6 +29,7 @@ public class HorarioLogic
     @Inject
     private HorarioPersistence persistence;
     
+    @Inject
     private EventoLogic eventoLogic;
     
             
