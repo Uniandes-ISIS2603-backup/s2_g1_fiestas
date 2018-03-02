@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 
-
 /**
  * Clase que extiende de {@link ContratoDTO} para manejar la transformacion
  * entre los objetos JSON y las Entidades de la base de datos. Para conocer el
@@ -29,6 +28,8 @@ public class ContratoDetailDTO extends ContratoDTO {
      * Lista de productos
      */
     private List<ProductoDTO> productos;
+
+    private HorarioDTO horario;
 
     /**
      * Método constructor
@@ -89,6 +90,25 @@ public class ContratoDetailDTO extends ContratoDTO {
      */
     public void setProductos(List<ProductoDTO> productos) {
         this.productos = productos;
+    }
+
+    /**
+     * Retorna el horario del contrato
+     * 
+     * @return horario el horario
+     */
+    
+    public HorarioDTO getHorario() {
+        return horario;
+    }
+
+    /**
+     * Asigna el un nuevo horario al contrato
+     * 
+     * @param horario el nuevo horario
+     */
+    public void setHorario(HorarioDTO horario) {
+        this.horario = horario;
     }
 
     /**
