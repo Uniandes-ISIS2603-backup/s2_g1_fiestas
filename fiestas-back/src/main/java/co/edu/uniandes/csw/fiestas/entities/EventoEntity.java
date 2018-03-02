@@ -39,7 +39,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
 
     @PodamExclude
-    @OneToOne(mappedBy="evento")
+    @OneToOne
     private PagoEntity pago;
 
     @PodamExclude

@@ -24,12 +24,6 @@ public class ContratoLogic {
     private ContratoPersistence persistence;
 
     @Inject
-    private EventoLogic eventoLogic;
-
-    @Inject
-    private ProveedorLogic proveedorLogic;
-
-    @Inject
     private ProductoLogic productoLogic;
 
     /**
@@ -86,126 +80,7 @@ public class ContratoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un contrato ");
         persistence.delete(id);
     }
-    
-          /**
-     * Asocia un Evento existente a un Contrato
-     *
-     * @param contratoId Identificador de la instancia de Contrato
-     * @param eventoId Identificador de la instancia de Evento
-     * @return Instancia de EventoEntity que fue asociada a Contrato
-     */
-    public EventoEntity addEvento(Long contratoId, Long eventoId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar un evento al contrato con id = {0}", contratoId);
-        ContratoEntity entity = this.getContrato(contratoId);
-        EventoEntity entityU = eventoLogic.getEvento(eventoId);
-        entity.setEvento(entityU);
-        return entityU;
-    }
-
-    /**
-     * Borrar el evento de un contrato
-     *
-     * @param eventoId El evento que se desea borrar del contrato.
-     * @param contratoId El contrato de la cual se desea eliminar.
-     */
-    public void removeEvento(Long eventoId, Long contratoId) {
-        ContratoEntity contratoEntity = getContrato(contratoId);
-        EventoEntity evento = eventoLogic.getEvento(eventoId);
-        evento.getContratos().remove(contratoEntity);
-        contratoEntity.setEvento(null);
-    }
-
-    /**
-     * Remplazar el evento de un contrato
-     *
-     * @param evento Nuevo evento del contrato
-     * @param contratoId El id del contrato que se quiere actualizar.
-     * @return El nuevo evento del contrato
-     */
-    public EventoEntity replaceEvento(Long contratoId, EventoEntity evento) {
-        ContratoEntity contrato = getContrato(contratoId);
-        contrato.setEvento(evento);
-        return evento;
-    }
-
-    /**
-     * Retorna el evento asociado a un contrato
-     *
-     * @param contratoId El id del contrato a buscar.
-     * @return El evento encontrado dentro del contrato.
-     * @throws BusinessLogicException Si el evento no se encuentra en el
-     * contrato
-     */
-    public EventoEntity getEvento(Long contratoId) throws BusinessLogicException {
-        try {
-            EventoEntity evento = getContrato(contratoId).getEvento();
-            return evento;
-
-        } catch (Exception e) {
-            throw new BusinessLogicException("El contrato con id " + contratoId + " no existe");
-        }
-
-    }
-
-          /**
-     * Asocia un Proveedor existente a un Contrato
-     *
-     * @param contratoId Identificador de la instancia de Contrato
-     * @param proveedorId Identificador de la instancia de Evento
-     * @return Instancia de EventoEntity que fue asociada a Contrato
-     */
-    public ProveedorEntity addProveedor(Long contratoId, Long proveedorId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar un proveedor al contrato con id = {0}", contratoId);
-        ContratoEntity entity = this.getContrato(contratoId);
-        ProveedorEntity entityU = proveedorLogic.getProveedor(proveedorId);
-        entity.setProveedor(entityU);
-        return entityU;
-    }
-    
-    /**
-     * Borrar el proveedor de un contrato
-     *
-     * @param proveedorId El proveedor que se desea borrar del contrato.
-     * @param contratoId El contrato del cual se desea eliminar.
-     */
-    public void removeProveedor(Long proveedorId, Long contratoId) {
-        ContratoEntity contratoEntity = getContrato(contratoId);
-        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedorId);
-        proveedor.getContratos().remove(contratoEntity);
-        contratoEntity.setEvento(null);
-    }
-
-    /**
-     * Remplazar el proveedor de un contrato
-     *
-     * @param proveedor
-     * @param contratoId El id del contrato que se quiere actualizar.
-     * @return El nuevo proveedor del contrato
-     */
-    public ProveedorEntity replaceProveedor(Long contratoId, ProveedorEntity proveedor) {
-        ContratoEntity contrato = getContrato(contratoId);
-        contrato.setProveedor(proveedor);
-        return proveedor;
-    }
-
-    /**
-     * Retorna el proveedor asociado a un contrato
-     *
-     * @param contratoId El id del contrato a buscar.
-     * @return El proveedor encontrado dentro del contrato.
-     * @throws BusinessLogicException Si el proveedor no se encuentra en el
-     * contrato
-     */
-    public ProveedorEntity getProveedor(Long contratoId) throws BusinessLogicException {
-        try {
-            ProveedorEntity proveedor = getContrato(contratoId).getProveedor();
-            return proveedor;
-
-        } catch (Exception e) {
-            throw new BusinessLogicException("El contrato con id " + contratoId + " no existe");
-        }
-    }
-
+   
     /**
      * Obtiene una colección de instancias de ProductoEntity asociadas a una
      * instancia de Contrato

@@ -47,7 +47,7 @@ public class TematicaLogic {
     }
 
     /**
-     * Se encarga de crear un tematica en la base de datos.
+     * Se encarga de crear una tematica en la base de datos.
      *
      * @param entity Objeto de TematicaEntity con los datos nuevos
      * @return Objeto de TematicaEntity con los datos nuevos y su ID.
@@ -71,7 +71,7 @@ public class TematicaLogic {
     }
 
     /**
-     * Eliminar un tematica por ID
+     * Eliminar una tematica por ID
      *
      * @param id El ID del tematica a eliminar
      */
@@ -123,7 +123,10 @@ public class TematicaLogic {
      */
     public ServicioEntity addServicio(Long TematicaId, Long serviciosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al Tematica con id = {0}", TematicaId);
-        return persistence.find(TematicaId).setServicios((persistence.find(TematicaId).getServicios().add(servicioPer.find(serviciosId))));
+        TematicaEntity tematica= persistence.find(TematicaId);
+        ServicioEntity servicio= servicioPer.find(serviciosId);
+        tematica.getServicios().add(servicio);
+        return servicio;
     }
 
 }

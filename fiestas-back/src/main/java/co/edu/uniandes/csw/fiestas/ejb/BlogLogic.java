@@ -26,13 +26,7 @@ public class BlogLogic {
 
     @Inject
     private BlogPersistence persistence;
-
-    @Inject
-    private EventoLogic eventoLogic;
-
-    @Inject
-    private UsuarioLogic usuarioLogic;
-
+    
     /**
      * Obtiene la lista de los registros de Blog.
      *
@@ -86,71 +80,4 @@ public class BlogLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un autor ");
         persistence.delete(id);
     }
-
-    /**
-     * Asocia un Evento existente a un Blog
-     *
-     * @param blogId Identificador de la instancia de Blog
-     * @param eventoId Identificador de la instancia de Evento
-     * @return Instancia de EventoEntity que fue asociada a Blog
-     */
-    public EventoEntity addEvento(Long blogId, Long eventoId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al author con id = {0}", blogId);
-        BlogEntity entity = this.getBlog(blogId);
-        EventoEntity entityEvento = eventoLogic.getEvento(eventoId);
-        entity.setEvento(entityEvento);
-        return entityEvento;
-    }
-
-    /**
-     * Retorna el evento asociado a un blog
-     *
-     * @param blogId El id del blog a buscar.
-     * @return El evento encontrado dentro del blog.
-     * @throws BusinessLogicException Si el evento no se encuentra en el blog
-     */
-    public EventoEntity getEvento(Long blogId) throws BusinessLogicException {
-        try {
-            EventoEntity evento = getBlog(blogId).getEvento();
-            return evento;
-
-        } catch (Exception e) {
-            throw new BusinessLogicException("El blog con id " + blogId + " no existe");
-        }
-
-    }
-
-    /**
-     * Asocia un Usuario existente a un Blog
-     *
-     * @param blogId Identificador de la instancia de Blog
-     * @param usuarioId Identificador de la instancia de Evento
-     * @return Instancia de EventoEntity que fue asociada a Blog
-     */
-    public UsuarioEntity addUsuario(Long blogId, Long usuarioId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar un usuario al blog con id = {0}", blogId);
-        BlogEntity entity = this.getBlog(blogId);
-        UsuarioEntity entityU = usuarioLogic.getUsuario(usuarioId);
-        entity.setUsuario(entityU);
-        return entityU;
-    }
-
-    /**
-     * Retorna el usuario asociado a un blog
-     *
-     * @param blogId El id del blog a buscar.
-     * @return usuario - El usuario encontrado dentro del blog.
-     * @throws BusinessLogicException Si el usuario no se encuentra en el blog
-     */
-    public UsuarioEntity getUsuario(Long blogId) throws BusinessLogicException {
-        try {
-            UsuarioEntity usuario = getBlog(blogId).getUsuario();
-            return usuario;
-
-        } catch (Exception e) {
-            throw new BusinessLogicException("El blog con id " + blogId + " no existe");
-        }
-
-    }
-
 }

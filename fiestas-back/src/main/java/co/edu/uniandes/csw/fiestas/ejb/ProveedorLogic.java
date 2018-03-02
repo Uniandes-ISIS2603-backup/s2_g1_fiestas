@@ -455,7 +455,7 @@ public class ProveedorLogic
     public List<ValoracionEntity> replaceValoraciones(Long proveedorId, List<ValoracionEntity> valoraciones) throws BusinessLogicException 
     {
         ProveedorEntity proveedor = getProveedor(proveedorId);
-        List<ValoracionEntity> valoracionList = valoracionLogic.getValoracionesProveedor(proveedorId);
+        List<ValoracionEntity> valoracionList = proveedor.getValoraciones();
         for (ValoracionEntity valoracion : valoracionList) 
         {
             if (valoraciones.contains(valoracion)) {
