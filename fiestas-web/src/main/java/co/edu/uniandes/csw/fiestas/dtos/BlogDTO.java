@@ -26,7 +26,7 @@ import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
  *
  * @author mc.gonzalez15
  */
-class BlogDTO {
+public class BlogDTO {
 
     /**
      * Identificador del Blog

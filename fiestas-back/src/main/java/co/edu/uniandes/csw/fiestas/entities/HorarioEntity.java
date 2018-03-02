@@ -91,4 +91,13 @@ public class HorarioEntity extends BaseEntity implements Serializable
         return eventos;
     }
     
+    public void agregarEvento(EventoEntity pEvento)
+    {
+        eventos.add(pEvento);
+    }
+    
+    public void removerEvento(EventoEntity pEvento)
+    {
+        eventos.remove(pEvento);
+    }
 }

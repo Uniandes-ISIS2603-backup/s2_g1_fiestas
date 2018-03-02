@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
-import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
-import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
+import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.fiestas.persistence.UsuarioPersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -19,50 +14,45 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author df.nino10
+ * @author nm.hernandez10
  */
 @RunWith(Arquillian.class)
-public class UsuarioLogicTest {
-    
-    PodamFactory factory = new PodamFactoryImpl();
-    
+public class ProveedorLogicTest 
+{
+    private PodamFactory factory = new PodamFactoryImpl();
+
     @Inject
-    private UsuarioLogic usuarioLogic;
-    
+    private ProveedorLogic proveedorLogic;
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
-    
-    private List<UsuarioEntity> data = new ArrayList<>();
-    
-    public UsuarioLogicTest() {
-    }
-    
+
+    private List<ProveedorEntity> data = new ArrayList<ProveedorEntity>();
+
     @Deployment
-    public static JavaArchive createDeployment(){
-        return ShrinkWrap.create(JavaArchive.class).addPackage(UsuarioEntity.class.getPackage())
-                .addPackage(UsuarioLogic.class.getPackage()).addPackage(UsuarioPersistence.class.getPackage())
-                .addPackage(UsuarioEntity.class.getPackage())
-                .addPackage(UsuarioPersistence.class.getPackage())
+    public static JavaArchive createDeployment() 
+    {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(ProveedorEntity.class.getPackage())
+                .addPackage(ProveedorLogic.class.getPackage())
+                .addPackage(ProveedorPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml","beans.xml");
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+
     }
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -83,30 +73,15 @@ public class UsuarioLogicTest {
             }
         }
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() 
     {
-        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
@@ -114,22 +89,22 @@ public class UsuarioLogicTest {
     private void insertData() 
     {
         for (int i = 0; i < 3; i++) {
-            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
-    
-     /**
-     * Prueba para crear un Usuario
+
+    /**
+     * Prueba para crear un Proveedor
      *
      */
     @Test
-    public void createUsuarioTest() throws BusinessLogicException {
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
+    public void createProveedorTest() throws BusinessLogicException {
+        ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
+        ProveedorEntity result = proveedorLogic.createProveedor(newEntity);
         Assert.assertNotNull(result);
-        UsuarioEntity entidad = em.find(UsuarioEntity.class, result.getId());
+        ProveedorEntity entidad = em.find(ProveedorEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
@@ -138,20 +113,20 @@ public class UsuarioLogicTest {
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
         Assert.assertEquals(newEntity.getName(), entidad.getName());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
+        Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
     }
-    
-    
+
     /**
-     * Prueba para consultar la lista de Usuarios
+     * Prueba para consultar la lista de provedoores
      */
     @Test
-    public void getUsuarioesTest() {
-        List<UsuarioEntity> lista = usuarioLogic.getUsuarios();
+    public void getProveedoresTest() {
+        List<ProveedorEntity> lista = proveedorLogic.getProveedores();
         Assert.assertEquals(data.size(), lista.size());
-        for (UsuarioEntity entity : lista) {
+        for (ProveedorEntity entity : lista) {
             boolean encontrado = false;
-            for (UsuarioEntity usuarioEntity : data) {
-                if (entity.getId().equals(usuarioEntity.getId())) {
+            for (ProveedorEntity proveedorEntity : data) {
+                if (entity.getId().equals(proveedorEntity.getId())) {
                     encontrado = true;
                     break;
                 }
@@ -159,31 +134,31 @@ public class UsuarioLogicTest {
             Assert.assertTrue(encontrado);
         }
     }
-    
-     /**
-     * Prueba para eliminar un usuario.
+
+    /**
+     * Prueba para eliminar un proveedor
      */
     @Test
-    public void deleteUsuario() throws BusinessLogicException {
-        UsuarioEntity entity = data.get(0);
-        usuarioLogic.deleteUsuario(entity.getId());
-        UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
+    public void deleteProveedor() {
+        ProveedorEntity entity = data.get(0);
+        proveedorLogic.deleteProveedor(entity.getId());
+        ProveedorEntity deleted = em.find(ProveedorEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
 
-     /**
-     * Prueba para actualizar un usuario
+    /**
+     * Prueba para actualizar un proveedor
      */
     @Test
-    public void updateUsuarioTest() throws BusinessLogicException {
-        UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+    public void updateProveedorTest() {
+        ProveedorEntity entity = data.get(0);
+        ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
 
         newEntity.setId(entity.getId());
 
-        usuarioLogic.updateUsuario(newEntity);
+        proveedorLogic.updateProveedor(newEntity);
 
-        UsuarioEntity entidad = em.find(UsuarioEntity.class, entity.getId());
+        ProveedorEntity entidad = em.find(ProveedorEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
@@ -192,5 +167,6 @@ public class UsuarioLogicTest {
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
         Assert.assertEquals(newEntity.getName(), entidad.getName());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
+        Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
     }
 }

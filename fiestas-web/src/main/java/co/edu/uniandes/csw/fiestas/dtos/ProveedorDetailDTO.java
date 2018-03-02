@@ -163,9 +163,9 @@ public class ProveedorDetailDTO extends ProveedorDTO
     
     public ProveedorDetailDTO(ProveedorEntity entity)
     {
+        super(entity); 
         if (entity != null)
-        {
-            super(entity); 
+        {            
             contratos = new ArrayList<ContratoDTO>();
             for(ContratoEntity ent : entity.getContratos())
             {
@@ -193,26 +193,34 @@ public class ProveedorDetailDTO extends ProveedorDTO
     public ProveedorEntity toEntity()
     {
         ProveedorEntity entity = super.toEntity();
-        for(ContratoEntity dto : getContratos())
+        List<ContratoEntity> listContratos = new ArrayList<ContratoEntity>();
+        List<HorarioEntity> listHorarios = new ArrayList<HorarioEntity>();
+        List<ValoracionEntity> listValoraciones = new ArrayList<ValoracionEntity>();
+        List<ServicioEntity> listServicios = new ArrayList<ServicioEntity>();
+        for(ContratoDTO dto : getContratos())
         {
-            ContratoEntity ent = new ContratoDTO();
-            contratos.add(dto);
+            ContratoEntity ent = dto.toEntity();
+            listContratos.add(ent);
         }
-        for(HorarioEntity ent : entity.getHorarios())
+        for(HorarioDTO dto : getHorarios())
         {
-            HorarioDTO dto = new HorarioDTO();
-            horarios.add(dto);
+            HorarioEntity ent = dto.toEntity();
+            listHorarios.add(ent);
         }
-        for(ServicioEntity ent : entity.getServicios())
+        for(ValoracionDTO dto : getValoraciones())
         {
-            ServicioDTO dto = new ServicioDTO();
-            servicios.add(dto);
+            ValoracionEntity ent = dto.toEntity();
+            listValoraciones.add(ent);
         }
-        for(ValoracionEntity ent : entity.getValoraciones())
+        for(ServicioDTO dto : getServicios())
         {
-            ValoracionDTO dto = new ValoracionDTO();
-            valoraciones.add(dto);
+            ServicioEntity ent = dto.toEntity();
+            listServicios.add(ent);
         }
-        entity.setContratos();
+        entity.setContratos(listContratos);
+        entity.setHorarios(listHorarios);
+        entity.setServicios(listServicios);
+        entity.setValoraciones(listValoraciones);
+        return entity;
     }
 }

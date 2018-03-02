@@ -21,7 +21,13 @@ package co.edu.uniandes.csw.fiestas.resources;
  * @author nm.hernandez10
  */
 
+import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.BlogDTO;
 import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +46,8 @@ import javax.ws.rs.Produces;
 @Consumes("application/json")
 @RequestScoped
 public class UsuarioResource {
+    
+    private UsuarioLogic logic;
 
     /**
      * <h1>GET /usuarios : Obtener todos los usuarios.</h1>
@@ -54,9 +62,24 @@ public class UsuarioResource {
      */
     @GET
     public List<UsuarioDetailDTO> getusuarios() {
-        return new ArrayList<>();
+        return listEntity2DTO(logic.getUsuarios());
     }
 
+    
+     /**
+     * Convierte una lista de HoraroiEntity a una lista de UsuarioDetailDTO.
+     *
+     * @param entityList Lista de UsuarioEntity a convertir.
+     * @return Lista de UsuarioDetailDTO convertida.
+     *
+     */
+    private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
+        List<UsuarioDetailDTO> list = new ArrayList<>();
+        for (UsuarioEntity entity : entityList) {
+            list.add(new UsuarioDetailDTO(entity));
+        }
+        return list;
+    }
     /**
      * <h1>GET /usuarios/{id} : Obtener usuario por id.</h1>
      * 
@@ -75,8 +98,13 @@ public class UsuarioResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public UsuarioDetailDTO getUsuario(@PathParam("id") Long id) {
-        return null;
+    public UsuarioDetailDTO getUsuario(@PathParam("id") Long id) throws BusinessLogicException{
+        UsuarioEntity e = logic.getUsuario(id);
+        if(e == null)
+        {
+            throw new BusinessLogicException("El usuario con el id buscado no existe.");
+        }
+        return new UsuarioDetailDTO(e);
     }
     
         /**
@@ -102,19 +130,136 @@ public class UsuarioResource {
      */
     @POST
     public UsuarioDetailDTO createUsuario(UsuarioDetailDTO usuario) throws BusinessLogicException {
+        if(logic.getUsuario(usuario.getId())!=null)
+            throw new BusinessLogicException("El usuario ya existe.");
+        logic.createUsuario(usuario.toEntity());
         return usuario;
     }
     
     @PUT
     @Path("{id: \\d+}")
-    public UsuarioDetailDTO updateUsuario(@PathParam("id")Long id) {
-        return null;
+    public UsuarioDetailDTO updateUsuario(@PathParam("id")Long id) throws BusinessLogicException {
+        UsuarioEntity ent =logic.getUsuario(id);
+        if(ent == null)
+            throw new BusinessLogicException("El usuario no existe.");
+        logic.updateUsuario(ent);
+        return new UsuarioDetailDTO(ent);
     }
     
     @DELETE
     @Path("{id:\\d+}")
-    public void deleteUsuario(@PathParam("id")Long id){
-        
+    public void deleteUsuario(@PathParam("id")Long id) throws BusinessLogicException{
+        UsuarioEntity ent =logic.getUsuario(id);
+        if(ent == null)
+             throw new BusinessLogicException("El usuario no existe.");
+        logic.deleteUsuario(id);
     }
     
+    @GET
+    @Path("{id:\\d+}/blogs")
+    public List<BlogDetailDTO> getBlogsUsuario(@PathParam("id")Long id) throws BusinessLogicException{
+        UsuarioEntity ent = logic.getUsuario(id);
+        if(ent == null)
+            throw new BusinessLogicException("El usuario no existe.");
+        return blogListEntity2DTO(logic.getBlogs(ent));
+    }
+    
+    @GET
+    @Path("{id:\\d+}/blogs/{blogId:\\d+}")
+    public BlogDetailDTO getUsuarioBlog(@PathParam("id")Long id, @PathParam("blogId")Long blogId) throws BusinessLogicException
+    {
+        UsuarioEntity e = logic.getUsuario(id);
+        if(e==null)
+            throw new BusinessLogicException("El usuario no existe.");
+        BlogEntity be= logic.getBlog(e,blogId);
+        return new BlogDetailDTO(be);
+    }
+    
+    @PUT
+    @Path("{id: \\d+}")
+    public  List<BlogDetailDTO> replaceBlogs(@PathParam("id")Long id,List<BlogDetailDTO> blogs) throws BusinessLogicException
+    {
+        return blogListEntity2DTO(logic.replaceBlogs(id,blogListDTO2Entity(blogs)));
+    }
+    
+    /**
+     * Convierte una lista de BlogEntity a una lista de BlogDetailDTO.
+     *
+     * @param entityList Lista de BlogEntity a convertir.
+     * @return Lista de BlogDetailDTO convertida.
+     *
+     */
+    private List<BlogDetailDTO> blogListEntity2DTO(List<BlogEntity> entityList) {
+        List<BlogDetailDTO> list = new ArrayList<>();
+        for (BlogEntity entity : entityList) {
+            list.add(new BlogDetailDTO(entity));
+        }
+        return list;
+    }
+    
+     /**
+     * Convierte una lista de BlogDetailDTO a una lista de BlogEntity.
+     *
+     * @param dtos Lista de BlogDetailDTO a convertir.
+     * @return Lista de BlogEntity convertida.
+     *
+     */
+    private List<BlogEntity> blogListDTO2Entity(List<BlogDetailDTO> dtos) {
+        List<BlogEntity> list = new ArrayList<>();
+        for (BlogDetailDTO dto : dtos) {
+            list.add(dto.toEntity());
+        }
+        return list;
+    }
+    
+    
+    /**
+     * <h1>POST /{usuariosId}/blogs/{blogsId} : Guarda un
+     * blog dentro del usuario.</h1>
+     *
+     * <pre> Guarda un blog dentro de un usuario con la informacion que
+     * recibe el la URL. Se devuelve el blog que se guarda en el usuario.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo blog .
+     * </code>
+     * </pre>
+     *
+     * @param usuariosId Identificador del usuario que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param blogId Identificador del blog que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BlogDetailDTO} - El blog guardado en la
+     * usuario.
+     */
+    @POST
+    @Path("{usuariosId: \\d+}/blogs/{blogsId: \\d+}")
+    public BlogDetailDTO addBlog(@PathParam("usuariosId") Long usuariosId, @PathParam("blogsId") Long blogId) throws BusinessLogicException {
+        return new BlogDetailDTO(logic.addBlog(blogId, usuariosId));
+    }
+    
+    /**
+     * <h1>DELETE /{usuarioId}/blogs/{blogId} : Elimina un
+     * blog dentro del usuario.</h1>
+     *
+     * <pre> Elimina la referencia del blog asociado al ID dentro del usuario
+     * con la informacion que recibe el la URL.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Se eliminó la referencia del blog.
+     * </code>
+     * </pre>
+     *
+     * @param usuarioId Identificador del usuario que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param blogsId Identificador del blog que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     */
+    @DELETE
+    @Path("{usuarioesId: \\d+}/blogs/{blogsId: \\d+}")
+    public void removeBlogs(@PathParam("usuarioesId") Long usuarioesId, @PathParam("blogsId") Long blogsId) throws BusinessLogicException {
+        logic.removeBlog(blogsId, usuarioesId);
+    }
 }
