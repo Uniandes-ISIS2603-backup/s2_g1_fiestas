@@ -79,7 +79,6 @@ import java.util.List;
 
 public class HorarioDetailDTO extends HorarioDTO {
     
-    private List<EventoDTO> eventos;
     
     /**
      * Constructor por defecto
@@ -94,37 +93,12 @@ public class HorarioDetailDTO extends HorarioDTO {
      */
     public HorarioDetailDTO(HorarioEntity entity){
         super(entity);
-        if(entity != null)
-            eventos = new ArrayList<>();
-        for (EventoEntity en : entity.getEventos()) {
-            eventos.add(new EventoDTO(en));
-        }
     }
 
-    /**
-     * @return lista de eventos
-     */
-    public List<EventoDTO> getEventos() {
-        return eventos;
-    }
-
-     /**
-     * @param eventos La lista de eventos.
-     */
-    public void setEventos(List<EventoDTO> eventos) {
-        this.eventos = eventos;
-    }
     
     @Override
     public HorarioEntity toEntity(){
         HorarioEntity entity = super.toEntity();
-        if(eventos != null){
-            List<EventoEntity> eventosEntitys= new ArrayList<>();
-            for(EventoDTO dtoEvento: eventos){
-                eventosEntitys.add(dtoEvento.toEntity());
-            }
-            entity.setEventos(eventosEntitys);
-        }
         return entity;
     }
     
