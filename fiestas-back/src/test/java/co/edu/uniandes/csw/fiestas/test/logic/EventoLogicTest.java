@@ -6,10 +6,13 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -32,7 +35,7 @@ import org.junit.Test;
  */
 @RunWith(Arquillian.class)
 public class EventoLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -45,6 +48,8 @@ public class EventoLogicTest {
     private UserTransaction utx;
 
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
+
+    private List<ContratoEntity> contratosData = new ArrayList<ContratoEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -81,6 +86,7 @@ public class EventoLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
+        em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
@@ -89,9 +95,20 @@ public class EventoLogicTest {
      * pruebas.
      */
     private void insertData() {
-
+        for (int i = 0; i < 3; i++) {
+            ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
+            em.persist(contrato);
+            contratosData.add(contrato);
+        }
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+            int noOfDays = 8;
+            Date dateOfOrder = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateOfOrder);
+            calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+            Date date = calendar.getTime();
+            entity.setFecha(date);
             em.persist(entity);
             data.add(entity);
         }
@@ -100,6 +117,7 @@ public class EventoLogicTest {
     /**
      * Prueba para crear un Evento
      *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void createEventoTest() throws BusinessLogicException {
@@ -136,18 +154,30 @@ public class EventoLogicTest {
      * Prueba para eliminar un evento
      */
     @Test
-    public void deleteEvento() {
+    public void deleteEventoTest() {
         EventoEntity entity = data.get(0);
+        eventoLogic.removeContrato(contratosData.get(0).getId(),entity.getId());
         eventoLogic.deleteEvento(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
+    
+    @Test
+    public void getContratosTest() throws BusinessLogicException{
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity= contratosData.get(0);
+        ContratoEntity respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
+        
+        Assert.assertEquals(respuesta.getId(), contratoEntity.getId());
+        Assert.assertEquals(respuesta.getTyc(), contratoEntity.getTyc());
+    }
 
     /**
      * Prueba para actualizar un evento
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
-    public void updateEventoTest() {
+    public void updateEventoTest() throws BusinessLogicException {
         EventoEntity entity = data.get(0);
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
 
