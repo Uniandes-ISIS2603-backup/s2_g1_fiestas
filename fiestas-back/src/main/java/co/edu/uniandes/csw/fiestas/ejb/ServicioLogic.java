@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,6 +27,9 @@ public class ServicioLogic {
     
     @Inject
     private ServicioPersistence persistence;
+    
+    @Inject 
+    private ValoracionLogic valoracionLogic;
     
      /**
      * Obtiene la lista de los registros de Servicio.
@@ -151,4 +156,37 @@ public class ServicioLogic {
         entity.getProveedores().remove(proveedoresEntity);
     }
     
+     /**
+    * Obtiene la lista de los registros de Valoracion que pertenecen a un Servicio.
+     *
+    * @param servicioid id del Servicio el cual es padre de las Valoraciones.
+    * @return Colección de objetos de ValoracionEntity.
+    * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+    */
+    public List<ValoracionEntity> getValoraciones(Long servicioid) throws BusinessLogicException {
+        ServicioEntity servicio = getServicio(servicioid);
+        if (servicio.getValoraciones() == null) {
+           throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
+       }
+       if (servicio.getValoraciones().isEmpty()) {
+           throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
+       }
+       return servicio.getValoraciones();
+    }
+    
+    /**
+     * Se encarga de agregar una Valoracion al servicio
+     *
+     * @param valoracionId id de la nueva Valoracion.
+     * @param servicioId id del servicio el cual sera padre del nuevo Valoracion.
+     * @return Objeto de ValoracionEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * 
+     */
+    public ValoracionEntity addValoracion(Long valoracionId, Long servicioId)throws BusinessLogicException {
+        ServicioEntity servicio = getServicio(servicioId);
+        ValoracionEntity entity = valoracionLogic.getValoracion(valoracionId);
+        entity.setServicio(servicio);
+        return entity;
+    }
 }
