@@ -74,6 +74,7 @@ public class ProveedorDTO extends UsuarioDTO
         }
     }
     
+    @Override
     public ProveedorEntity toEntity()
     {
         ProveedorEntity e = new ProveedorEntity(); 

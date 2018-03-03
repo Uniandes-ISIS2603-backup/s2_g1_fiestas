@@ -1,7 +1,7 @@
-
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import java.util.Enumeration;
 
 /**
  * ContratoDTO Objeto de transferencia de datos de Contratos.
@@ -45,6 +45,8 @@ public class ContratoDTO {
      * Condiciones del contrato
      */
     private String tyc;
+
+    private String estado;
 
     /**
      * Método constructor
@@ -91,7 +93,7 @@ public class ContratoDTO {
 
     /**
      * Retorna los terminos y condiciones del contrato
-     * 
+     *
      * @return tyc - los terminos y condiciones
      */
     public String getTyc() {
@@ -100,11 +102,29 @@ public class ContratoDTO {
 
     /**
      * Asigna los terminos y condiciones del contrato
-     * 
+     *
      * @param tyc los nuevos terminos y condiciones
      */
     public void setTyc(String tyc) {
         this.tyc = tyc;
+    }
+
+    /**
+     * Retorna el estado actual del contrato
+     * 
+     * @return estado - el estado actual del contrato
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * Asigna el estado actual del contrato
+     * 
+     * @param estado el nuevo estado del contrato 
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     /**
@@ -115,8 +135,7 @@ public class ContratoDTO {
      *
      */
     public ContratoDTO(ContratoEntity entity) {
-        if (entity != null) 
-        {
+        if (entity != null) {
             this.id = entity.getId();
             this.valor = entity.getValor();
             this.tyc = entity.getTyc();
