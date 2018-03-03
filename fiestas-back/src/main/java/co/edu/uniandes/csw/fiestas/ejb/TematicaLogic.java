@@ -123,10 +123,27 @@ public class TematicaLogic {
      */
     public ServicioEntity addServicio(Long TematicaId, Long serviciosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al Tematica con id = {0}", TematicaId);
-        TematicaEntity tematica= persistence.find(TematicaId);
-        ServicioEntity servicio= servicioPer.find(serviciosId);
+        TematicaEntity tematica = persistence.find(TematicaId);
+        ServicioEntity servicio = servicioPer.find(serviciosId);
         tematica.getServicios().add(servicio);
         return servicio;
     }
-
+    
+    public ServicioEntity removeServicio(Long TematicaId, Long servicioId)
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al Tematica con id = {0}", TematicaId);
+        TematicaEntity tematica = persistence.find(TematicaId);
+        ServicioEntity servicio = servicioPer.find(servicioId);
+        tematica.getServicios().remove(servicio);
+        return servicio;
+    }
+    
+    public List<ServicioEntity> replaceServicios(List<ServicioEntity> lista, Long TematicaId)
+    {
+        if(lista.size() != 0)
+        {
+            persistence.find(TematicaId).setServicios(lista);
+        }
+        return lista;
+    }
 }
