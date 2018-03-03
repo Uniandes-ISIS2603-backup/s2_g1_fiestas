@@ -25,24 +25,10 @@ import java.util.List;
  *      "correo": string,
  *      "direccion": string,
  *      "login": string,
- *      "horarios": [{"id": number,
- *      "fecha": Date,
- *      "horaInicio": Date,
- *      "horaFin": Date
- *      },
- *      ...
- *      ],
  *      "servicios":[{"id": number,
  *      "descripcion": String,
  *      "Tipo": String
  *      }, 
- *      ...
- *      ],
- *      "horarios":[{"id": 12,
- *      "descripcion": "Entrega de invitaciones",
- *      "Tipo": "Entrega"
- *      }, 
- *      ...
  *      ],
  *      "valoraciones":[{"id": 12,
  *      "descripcion": "Entrega de invitaciones",
@@ -70,17 +56,7 @@ import java.util.List;
  *      "correo": "nicolashernandez@hotmail.com",
  *      "direccion": "Calle 97 # 6-43",
  *      "login": "nm.hernandez10",
- *      "horarios": [{"id": 2,
- *      "fecha": 14/02/2018,
- *      "horaInicio": 18:00,
- *      "horaFin": 20:00
- *      },
- *      {"id": 1,
- *      "fecha": 17/02/2018,
- *      "horaInicio": 08:00,
- *      "horaFin": 12:00
- *      }
- *      ]
+ *      
  *   }
  *
  * </pre>
@@ -89,7 +65,6 @@ import java.util.List;
  */
 public class ProveedorDetailDTO extends ProveedorDTO
 {
-    private List<HorarioDTO> horarios;
     private List<ServicioDTO> servicios;
     private List<ValoracionDTO> valoraciones;
     private List<ContratoDTO> contratos;    
@@ -102,21 +77,6 @@ public class ProveedorDetailDTO extends ProveedorDTO
         
     }
     
-    /**
-     * @return La lista de horarios del proveedor.
-     */
-    public List<HorarioDTO> getHorarios()
-    {
-        return horarios;
-    }
-    
-    /**
-     * @param horarios La nueva lista de horarios.
-     */
-    public void setHorarios(List<HorarioDTO> horarios)
-    {
-        this.horarios = horarios;
-    }
     /**
      * @return El sevicio del proveedor.
      */
@@ -166,16 +126,11 @@ public class ProveedorDetailDTO extends ProveedorDTO
         super(entity); 
         if (entity != null)
         {            
-            contratos = new ArrayList<ContratoDTO>();
+            contratos = new ArrayList<>();
             for(ContratoEntity ent : entity.getContratos())
             {
                 ContratoDTO dto = new ContratoDTO(ent);
                 contratos.add(dto);
-            }
-            for(HorarioEntity ent : entity.getHorarios())
-            {
-                HorarioDTO dto = new HorarioDTO(ent);
-                horarios.add(dto);
             }
             for(ServicioEntity ent : entity.getServicios())
             {
@@ -190,22 +145,18 @@ public class ProveedorDetailDTO extends ProveedorDTO
         }
     }
     
+    @Override
     public ProveedorEntity toEntity()
     {
         ProveedorEntity entity = super.toEntity();
-        List<ContratoEntity> listContratos = new ArrayList<ContratoEntity>();
-        List<HorarioEntity> listHorarios = new ArrayList<HorarioEntity>();
-        List<ValoracionEntity> listValoraciones = new ArrayList<ValoracionEntity>();
-        List<ServicioEntity> listServicios = new ArrayList<ServicioEntity>();
+        List<ContratoEntity> listContratos = new ArrayList<>();
+        List<HorarioEntity> listHorarios = new ArrayList<>();
+        List<ValoracionEntity> listValoraciones = new ArrayList<>();
+        List<ServicioEntity> listServicios = new ArrayList<>();
         for(ContratoDTO dto : getContratos())
         {
             ContratoEntity ent = dto.toEntity();
             listContratos.add(ent);
-        }
-        for(HorarioDTO dto : getHorarios())
-        {
-            HorarioEntity ent = dto.toEntity();
-            listHorarios.add(ent);
         }
         for(ValoracionDTO dto : getValoraciones())
         {
