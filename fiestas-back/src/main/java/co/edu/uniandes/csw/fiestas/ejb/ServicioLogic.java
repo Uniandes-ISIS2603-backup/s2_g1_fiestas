@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -30,6 +31,10 @@ public class ServicioLogic {
     
     @Inject 
     private ValoracionLogic valoracionLogic;
+    
+    @Inject
+    private ProductoLogic productoLogic;
+    
     
      /**
      * Obtiene la lista de los registros de Servicio.
@@ -189,4 +194,22 @@ public class ServicioLogic {
         entity.setServicio(servicio);
         return entity;
     }
+    
+    /**
+     * Se encarga de agregar una Valoracion al servicio
+     *
+     * @param productoId id de el nuevo Producto.
+     * @param servicioId id del servicio el cual sera padre del nuevo Valoracion.
+     * @return Objeto de ProductoEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * 
+     */
+    public ProductoEntity addProducto(Long productoId, Long servicioId)throws BusinessLogicException {
+        ServicioEntity servicio = getServicio(servicioId);
+        ProductoEntity entity = productoLogic.getProducto(productoId);
+        servicio.getProductos().add(entity);
+        entity.setServicio(servicio);
+        return entity;
+    }
+    
 }
