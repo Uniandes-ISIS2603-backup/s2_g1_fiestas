@@ -20,6 +20,9 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
+     
+    
+    private String estado;
 
     @PodamExclude
     @ManyToOne
@@ -28,6 +31,10 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany
     private List<ProductoEntity> productos;
+    
+    @PodamExclude
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private HorarioEntity horario;
 
     /**
      * Valor del contrato
@@ -78,5 +85,23 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     public void setProductos(List<ProductoEntity> productos) {
         this.productos = productos;
     }
+
+    public HorarioEntity getHorario() {
+        return horario;
+    }
+
+    public void setHorario(HorarioEntity horario) {
+        this.horario = horario;
+    }
+
+    public void setEstado(String estado) {
+       this.estado = estado;
+    }
+    
+    public String getEstado(String estado) {
+        return estado;
+    }
+
+
 
 }

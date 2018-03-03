@@ -20,9 +20,6 @@ public class ProveedorEntity extends UsuarioEntity
 {
     private boolean penalizado;
     
-    @PodamExclude
-    @OneToMany
-    private List<HorarioEntity> horarios;
     
     @PodamExclude
     @OneToMany
@@ -36,19 +33,7 @@ public class ProveedorEntity extends UsuarioEntity
     @OneToMany
     private List<ValoracionEntity> valoraciones;
     
-    /**
-     * @return the horarios
-     */
-    public List<HorarioEntity> getHorarios() {
-        return horarios;
-    }
 
-    /**
-     * @param horarios the horarios to set
-     */
-    public void setHorarios(List<HorarioEntity> horarios) {
-        this.horarios = horarios;
-    }
 
     /**
      * @return the contratos
@@ -105,16 +90,6 @@ public class ProveedorEntity extends UsuarioEntity
      */
     public void setValoraciones(List<ValoracionEntity> valoraciones) {
         this.valoraciones = valoraciones;
-    }
-    
-    public void agregarHorario(HorarioEntity pHorario)
-    {
-        horarios.add(pHorario);
-    }
-    
-    public void removerHorario(HorarioEntity pHorario)
-    {
-        horarios.remove(pHorario);
     }
     
     public void agregarServicio(ServicioEntity pServicio)

@@ -169,7 +169,6 @@ public class ProveedorDetailDTO extends ProveedorDTO
             listServicios.add(ent);
         }
         entity.setContratos(listContratos);
-        entity.setHorarios(listHorarios);
         entity.setServicios(listServicios);
         entity.setValoraciones(listValoraciones);
         return entity;

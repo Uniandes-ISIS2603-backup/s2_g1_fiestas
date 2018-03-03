@@ -1,7 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
-import java.util.Enumeration;
+
 
 /**
  * ContratoDTO Objeto de transferencia de datos de Contratos.
@@ -46,6 +46,9 @@ public class ContratoDTO {
      */
     private String tyc;
 
+    /**
+     * Estado del contrato
+     */
     private String estado;
 
     /**
@@ -153,8 +156,11 @@ public class ContratoDTO {
         entity.setId(this.getId());
         entity.setValor(this.valor);
         entity.setTyc(this.tyc);
+        entity.setEstado(this.estado);
 
         return entity;
     }
+    
+    
 
 }
