@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -39,7 +40,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
 
     @PodamExclude
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private PagoEntity pago;
 
     @PodamExclude

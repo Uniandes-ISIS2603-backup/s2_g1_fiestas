@@ -22,7 +22,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
     private String metodoDePago; /*Metodo de pago actual*/
     
     @PodamExclude
-    @OneToOne
+    @OneToOne(mappedBy = "pago")
     private EventoEntity evento;
 
     /**

@@ -7,7 +7,9 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.beans.PropertyChangeSupport;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -22,15 +24,15 @@ public class ProveedorEntity extends UsuarioEntity
     
     
     @PodamExclude
-    @OneToMany
+    @OneToMany(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContratoEntity> contratos;
     
     @PodamExclude
-    @OneToMany
+    @ManyToMany(mappedBy = "servicio")
     private List<ServicioEntity> servicios;
     
     @PodamExclude
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValoracionEntity> valoraciones;
     
 
