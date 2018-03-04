@@ -50,7 +50,8 @@ public class BlogEntity extends BaseEntity implements Serializable {
         return cuerpo;
     }
 
-    public void setCuerpo(String cuerpo) {
+    public void setCuerpo(String cuerpo) 
+    {
         this.cuerpo = cuerpo;
     }
 

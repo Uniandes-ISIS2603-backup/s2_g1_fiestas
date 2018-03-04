@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import org.eclipse.persistence.jpa.config.Cascade;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -21,7 +23,7 @@ public class ClienteEntity extends UsuarioEntity
     //Está vacío porque sólo tiene la relación de eventos extra (comparado con UsuarioEntity) y aún no debe hacerse las relaciones.
     
     @PodamExclude
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
 
     /**

@@ -9,7 +9,10 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,6 +27,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     private String direccion;
     private String login;
     private String contraseña;
+    @OneToMany(mappedBy = "usuario")
     private List<BlogEntity> blogs= new ArrayList<>();
 
     /**
