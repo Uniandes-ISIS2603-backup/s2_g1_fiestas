@@ -24,11 +24,11 @@ public class ProveedorEntity extends UsuarioEntity
     
     
     @PodamExclude
-    @OneToMany(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContratoEntity> contratos;
     
     @PodamExclude
-    @ManyToMany(mappedBy = "servicio")
+    @ManyToMany(mappedBy = "proveedores")
     private List<ServicioEntity> servicios;
     
     @PodamExclude

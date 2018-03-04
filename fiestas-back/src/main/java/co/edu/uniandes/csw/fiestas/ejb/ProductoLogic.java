@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
-import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,6 +33,7 @@ public class ProductoLogic
     /**
      * Obtiene la Producto.
      *
+     * @param id del producto a buscar
      * @return Objetos de ProductoEntity.
      */
     public ProductoEntity getProducto(Long id) {

@@ -168,6 +168,7 @@ public class ServicioLogic {
      * @param servicioId El id del servicio en la cual se va a guardar el
      * valoracion.
      * @return El valoracion que fue agregado al servicio.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no existe la valoracion
      */
     public ValoracionEntity addValoracion(Long valoracionId, Long servicioId) throws BusinessLogicException {
         ServicioEntity servicioEntity = getServicio(servicioId);
@@ -181,7 +182,7 @@ public class ServicioLogic {
      *
     * @param servicioid id del Servicio el cual es padre de las Valoraciones.
     * @return Colección de objetos de ValoracionEntity.
-    * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+    * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no hay valoraciones
     */
     public List<ValoracionEntity> getValoraciones(Long servicioid) throws BusinessLogicException {
         ServicioEntity servicio = getServicio(servicioid);
@@ -200,6 +201,7 @@ public class ServicioLogic {
      *
      * @param valoracionId El valoracion que se desea borrar del proveedor.
      * @param servicioId El servicio del cual se desea eliminar.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no existe la valoracion
      */
     public void removeValoracion(Long valoracionId, Long servicioId) throws BusinessLogicException  {
         ServicioEntity servicio = getServicio(servicioId);
@@ -214,7 +216,7 @@ public class ServicioLogic {
      * @param servicioId El id del servicio que se quiere actualizar.
      * @return La lista de valoraciones actualizada.
      */
-    public List<ValoracionEntity> replaceValoraciones(Long servicioId, List<ValoracionEntity> valoraciones) throws BusinessLogicException 
+    public List<ValoracionEntity> replaceValoraciones(Long servicioId, List<ValoracionEntity> valoraciones)
     {
         ServicioEntity servicio = getServicio(servicioId);
         servicio.setValoraciones(valoraciones);
@@ -227,10 +229,9 @@ public class ServicioLogic {
      * @param productoId id de el nuevo Producto.
      * @param servicioId id del servicio el cual sera padre del nuevo Valoracion.
      * @return Objeto de ProductoEntity con los datos nuevos y su ID.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      * 
      */
-    public ProductoEntity addProducto(Long productoId, Long servicioId)throws BusinessLogicException {
+    public ProductoEntity addProducto(Long productoId, Long servicioId) {
         ServicioEntity servicio = getServicio(servicioId);
         ProductoEntity entity = productoLogic.getProducto(productoId);
         servicio.getProductos().add(entity);

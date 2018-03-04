@@ -15,6 +15,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -26,6 +27,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 
 /**
  * <pre>Clase que implementa el recurso "proveedores".
@@ -205,37 +208,6 @@ public class ProveedorResource {
     }
 
     /**
-     * Convierte una lista de HorarioEntity a una lista de HorarioDetailDTO.
-     *
-     * @param entityList Lista de HorarioEntity a convertir.
-     * @return Lista de HorarioDetailDTO convertida.
-     *
-     */
-    private List<HorarioDetailDTO> horariosListEntity2DTO(List<HorarioEntity> entityList) {
-        List<HorarioDetailDTO> list = new ArrayList<>();
-        for (HorarioEntity entity : entityList) {
-            list.add(new HorarioDetailDTO(entity));
-        }
-        return list;
-    }
-
-    /**
-     * Convierte una lista de HorarioDetailDTO a una lista de HorarioEntity.
-     *
-     * @param dtos Lista de HorarioDetailDTO a convertir.
-     * @return Lista de HorarioEntity convertida.
-     *
-     */
-    private List<HorarioEntity> horariosListDTO2Entity(List<HorarioDetailDTO> dtos) {
-        List<HorarioEntity> list = new ArrayList<>();
-        for (HorarioDetailDTO dto : dtos) {
-            list.add(dto.toEntity());
-        }
-        return list;
-    }
-
-    /////////////////////////////////////
-    /**
      * <h1>GET /{proveedorId}/contratos/ : Obtener todos los contratos de un
      * proveedor.</h1>
      *
@@ -274,6 +246,7 @@ public class ProveedorResource {
      * contratos nuevo para la proveedor.
      * @return JSON {@link ContratoDetailDTO} - El arreglo de contratos guardado
      * en la proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si hay errores de logica
      */
     @PUT
     @Path("{proveedorId: \\d+}/contratos")
@@ -300,35 +273,13 @@ public class ProveedorResource {
      * debe ser una cadena de dígitos.
      * @return JSON {@link ContratoDetailDTO} - El contrato guardado en la
      * proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hubo algun error de logica
      */
     @POST
     @Path("{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
     public ContratoDetailDTO addContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
         return new ContratoDetailDTO(proveedorLogic.addContrato(contratoId, proveedorId));
-    }
-
-    /**
-     * <h1>DELETE /{proveedorId}/contratos/{contratoId} : Elimina un contrato
-     * dentro del proveedor.</h1>
-     *
-     * <pre> Elimina la referencia del contrato asociado al ID dentro del proveedor
-     * con la informacion que recibe el la URL.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Se eliminó la referencia del contrato.
-     * </code>
-     * </pre>
-     *
-     * @param proveedorId Identificador del proveedor que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @param contratoId Identificador del contrato que se desea guardar. Este
-     * debe ser una cadena de dígitos.
-     */
-    @DELETE
-    @Path("{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
-    public void removeContratos(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
-        proveedorLogic.removeContrato(contratoId, proveedorId);
     }
 
     /**
@@ -351,8 +302,9 @@ public class ProveedorResource {
      * @param contratoId Identificador del contrato que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link ContratoDetailDTO} - El contrato buscado
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la proveedor o el
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica que se genera cuando no se encuentra la proveedor o el
      * contrato.
      */
     @GET
@@ -391,7 +343,6 @@ public class ProveedorResource {
         return list;
     }
 
-    /////////////////////////////////////
     /**
      * <h1>GET /{proveedorId}/valoraciones/ : Obtener todos los valoraciones de
      * un proveedor.</h1>
@@ -431,6 +382,8 @@ public class ProveedorResource {
      * valoraciones nuevo para la proveedor.
      * @return JSON {@link ValoracionDetailDTO} - El arreglo de valoraciones
      * guardado en la proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
      */
     @PUT
     @Path("{proveedorId: \\d+}/valoraciones")
@@ -457,6 +410,8 @@ public class ProveedorResource {
      * Este debe ser una cadena de dígitos.
      * @return JSON {@link ValoracionDetailDTO} - El valoracion guardado en la
      * proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
      */
     @POST
     @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
@@ -481,6 +436,8 @@ public class ProveedorResource {
      * debe ser una cadena de dígitos.
      * @param valoracionId Identificador del valoracion que se desea guardar.
      * Este debe ser una cadena de dígitos.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
      */
     @DELETE
     @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
@@ -508,8 +465,8 @@ public class ProveedorResource {
      * @param valoracionId Identificador del valoracion que se esta buscando.
      * Este debe ser una cadena de dígitos.
      * @return JSON {@link ValoracionDetailDTO} - El valoracion buscado
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la proveedor o el
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -Error de lógica 
+     * que se genera cuando no se encuentra la proveedor o el
      * valoracion.
      */
     @GET
@@ -550,7 +507,6 @@ public class ProveedorResource {
         return list;
     }
 
-    /////////////////////////////////////
     /**
      * <h1>GET /{proveedorId}/servicios/ : Obtener todos los servicios de un
      * proveedor.</h1>
@@ -590,6 +546,8 @@ public class ProveedorResource {
      * servicios nuevo para la proveedor.
      * @return JSON {@link ServicioDetailDTO} - El arreglo de servicios guardado
      * en la proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
      */
     @PUT
     @Path("{proveedorId: \\d+}/servicios")
@@ -616,6 +574,8 @@ public class ProveedorResource {
      * debe ser una cadena de dígitos.
      * @return JSON {@link ServicioDetailDTO} - El servicio guardado en la
      * proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
      */
     @POST
     @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
@@ -640,6 +600,8 @@ public class ProveedorResource {
      * debe ser una cadena de dígitos.
      * @param serviciosId Identificador del servicio que se desea guardar. Este
      * debe ser una cadena de dígitos.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
      */
     @DELETE
     @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
@@ -667,7 +629,7 @@ public class ProveedorResource {
      * @param serviciosId Identificador del servicio que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link ServicioDetailDTO} - El servicio buscado
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la proveedor o el
      * servicio.
      */
@@ -705,5 +667,28 @@ public class ProveedorResource {
             list.add(dto.toEntity());
         }
         return list;
+    }
+    private ExecutorService executorService = java.util.concurrent.Executors.newCachedThreadPool();
+
+    /**
+     * Remover un contrato de un proveedor.
+     * 
+     * @param asyncResponse Elemento de la clase AsyncResponse
+     * @param proveedorId id del proveedor que tiene el contrato
+     * @param contratoId id del contrato a remover
+     */
+    @DELETE
+    @Path(value = "{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
+    public void removeContratos(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "proveedorId") final Long proveedorId, @PathParam(value = "contratoId") final Long contratoId) {
+        executorService.submit(new Runnable() {
+            public void run() {
+                doRemoveContratos(proveedorId, contratoId);
+                asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+            }
+        });
+    }
+
+    private void doRemoveContratos(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) {
+        proveedorLogic.removeContrato(contratoId, proveedorId);
     }
 }
