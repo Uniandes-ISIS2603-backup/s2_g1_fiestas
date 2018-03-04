@@ -161,6 +161,21 @@ public class ServicioLogic {
         entity.getProveedores().remove(proveedoresEntity);
     }
     
+        /**
+     * Agregar un valoracion al servicio
+     *
+     * @param valoracionId El id valoracion a guardar
+     * @param servicioId El id del servicio en la cual se va a guardar el
+     * valoracion.
+     * @return El valoracion que fue agregado al servicio.
+     */
+    public ValoracionEntity addValoracion(Long valoracionId, Long servicioId) throws BusinessLogicException {
+        ServicioEntity servicioEntity = getServicio(servicioId);
+        ValoracionEntity valoracionEntity = valoracionLogic.getValoracion(valoracionId);
+        servicioEntity.getValoraciones().add(valoracionEntity);
+        return valoracionEntity;
+    }
+    
      /**
     * Obtiene la lista de los registros de Valoracion que pertenecen a un Servicio.
      *
@@ -179,20 +194,31 @@ public class ServicioLogic {
        return servicio.getValoraciones();
     }
     
+    
     /**
-     * Se encarga de agregar una Valoracion al servicio
+     * Borrar un valoracion de un servicio
      *
-     * @param valoracionId id de la nueva Valoracion.
-     * @param servicioId id del servicio el cual sera padre del nuevo Valoracion.
-     * @return Objeto de ValoracionEntity con los datos nuevos y su ID.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     * 
+     * @param valoracionId El valoracion que se desea borrar del proveedor.
+     * @param servicioId El servicio del cual se desea eliminar.
      */
-    public ValoracionEntity addValoracion(Long valoracionId, Long servicioId)throws BusinessLogicException {
+    public void removeValoracion(Long valoracionId, Long servicioId) throws BusinessLogicException  {
         ServicioEntity servicio = getServicio(servicioId);
-        ValoracionEntity entity = valoracionLogic.getValoracion(valoracionId);
-        entity.setServicio(servicio);
-        return entity;
+        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
+        servicio.getValoraciones().remove(valoracion);
+    }
+
+    /**
+     * Remplazar valoraciones de un servicio
+     *
+     * @param valoraciones Lista de valoraciones que serán los del proveedor.
+     * @param servicioId El id del servicio que se quiere actualizar.
+     * @return La lista de valoraciones actualizada.
+     */
+    public List<ValoracionEntity> replaceValoraciones(Long servicioId, List<ValoracionEntity> valoraciones) throws BusinessLogicException 
+    {
+        ServicioEntity servicio = getServicio(servicioId);
+        servicio.setValoraciones(valoraciones);
+        return valoraciones;
     }
     
     /**
@@ -210,6 +236,24 @@ public class ServicioLogic {
         servicio.getProductos().add(entity);
         entity.setServicio(servicio);
         return entity;
+    }
+    
+        /**
+     * Retorna un valoracion asociado a un servicio
+     *
+     * @param servicioId El id del servicio a buscar.
+     * @param valoracionId El id del valoracion a buscar
+     * @return El valoracion encontrado dentro del servicio.
+     * @throws BusinessLogicException Si el valoracion no se encuentra en el servicio
+     */
+    public ValoracionEntity getValoracion(Long servicioId, Long valoracionId) throws BusinessLogicException {
+        List<ValoracionEntity> valoraciones = getServicio(servicioId).getValoraciones();
+        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
+        int index = valoraciones.indexOf(valoracion);
+        if (index >= 0) {
+            return valoraciones.get(index);
+        }
+        throw new BusinessLogicException("El valoracion no está asociado al proveedor");
     }
     
 }

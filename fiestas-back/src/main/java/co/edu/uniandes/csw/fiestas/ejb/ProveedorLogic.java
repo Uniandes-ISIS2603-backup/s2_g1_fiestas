@@ -34,9 +34,6 @@ public class ProveedorLogic
     private ServicioLogic servicioLogic;
     
     @Inject
-    private HorarioLogic horarioLogic;
-    
-    @Inject
     private ValoracionLogic valoracionLogic;
     
     @Inject
@@ -216,118 +213,6 @@ public class ProveedorLogic
     }
     
     /**
-     * Agregar un horario al proveedor
-     *
-     * @param horarioId El id horario a guardar
-     * @param proveedorId El id del proveedor en la cual se va a guardar el
-     * horario.
-     * @return El horario que fue agregado al proveedor.
-     */
-    public HorarioEntity addHorario(Long horarioId, Long proveedorId) throws BusinessLogicException 
-    {
-        ProveedorEntity proveedorEntity = getProveedor(proveedorId);
-        HorarioEntity horarioEntity = horarioLogic.getHorario(horarioId);
-        if(proveedorEntity != null)
-        {
-            proveedorEntity.agregarHorario(horarioEntity);
-        }
-        else
-        {
-            throw new BusinessLogicException("El proveedor al que se le quiere agregar horario es nulo");
-        }        
-        return horarioEntity;
-    }
-
-    /**
-     * Borrar un horario de un proveedor
-     *
-     * @param horarioId El horario que se desea borrar del proveedor.
-     * @param proveedorId El proveedor de la cual se desea eliminar.
-     */
-    public void removeHorario(Long horarioId, Long proveedorId) throws BusinessLogicException 
-    {
-        ProveedorEntity proveedorEntity = getProveedor(proveedorId);
-        HorarioEntity horario = horarioLogic.getHorario(horarioId);
-        if(proveedorEntity != null)
-        {
-            proveedorEntity.removerHorario(horario);
-        }
-        else
-        {
-            throw new BusinessLogicException("El proveedor al que se le quiere remover el horario es nulo");
-        }        
-        
-    }
-
-    /**
-     * Remplazar horarios de un proveedor
-     *
-     * @param horarios Lista de horarios que serán los del proveedor.
-     * @param proveedorId El id del proveedor que se quiere actualizar.
-     * @return La lista de horarios actualizada.
-     */
-    public List<HorarioEntity> replaceHorarios(Long proveedorId, List<HorarioEntity> horarios) throws BusinessLogicException 
-    {
-        ProveedorEntity proveedor = getProveedor(proveedorId);
-        if(proveedor != null)
-        {
-            proveedor.setHorarios(horarios);
-        }
-        else
-        {
-            throw new BusinessLogicException("El proveedor al que se le quiere reemplazar horarios es nulo");
-        }
-        
-        if(horarios != null || horarios.size() == 0)
-        {
-            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
-        }
-        return horarios;
-    }
-
-    /**
-     * Retorna todos los horarios asociados a un proveedor
-     *
-     * @param proveedorId El ID del proveedor buscada
-     * @return La lista de horarios del proveedor
-     */
-    public List<HorarioEntity> getHorarios(Long proveedorId) {
-        return getProveedor(proveedorId).getHorarios();
-    }
-
-    /**
-     * Retorna un horario asociado a un proveedor
-     *
-     * @param proveedorId El id del proveedor a buscar.
-     * @param horarioId El id del horario a buscar
-     * @return El horario encontrado dentro del proveedor.
-     * @throws BusinessLogicException Si el horario no se encuentra en la proveedor
-     */
-    public HorarioEntity getHorario(Long proveedorId, Long horarioId) throws BusinessLogicException {
-        List<HorarioEntity> horarios = getProveedor(proveedorId).getHorarios();
-        HorarioEntity horario = horarioLogic.getHorario(horarioId);
-        int index = horarios.indexOf(horario);
-        if (index >= 0) {
-            return horarios.get(index);
-        }
-        throw new BusinessLogicException("El horario no está asociado al proveedor");
-    }
-
-    /**
-     * Obtiene una colección de instancias de HorarioEntity asociadas a una
-     * instancia de Proveedor
-     *
-     * @param proveedorId Identificador de la instancia de Proveedor
-     * @return Colección de instancias de HorarioEntity asociadas a la instancia de
-     * Proveedor
-     *
-     */
-    public List<HorarioEntity> listHorarios(Long proveedorId) 
-    {
-        return getProveedor(proveedorId).getHorarios();
-    }
-    
-    /**
      * Agregar un contrato al proveedor
      *
      * @param contratoId El id contrato a guardar
@@ -428,7 +313,7 @@ public class ProveedorLogic
     public ValoracionEntity addValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException {
         ProveedorEntity proveedorEntity = getProveedor(proveedorId);
         ValoracionEntity valoracionEntity = valoracionLogic.getValoracion(valoracionId);
-        valoracionEntity.setProveedor(proveedorEntity);
+        proveedorEntity.getValoraciones().add(valoracionEntity);
         return valoracionEntity;
     }
 
@@ -441,7 +326,6 @@ public class ProveedorLogic
     public void removeValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException  {
         ProveedorEntity proveedorEntity = getProveedor(proveedorId);
         ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
-        valoracion.setProveedor(null);
         proveedorEntity.getValoraciones().remove(valoracion);
     }
 
@@ -455,16 +339,7 @@ public class ProveedorLogic
     public List<ValoracionEntity> replaceValoraciones(Long proveedorId, List<ValoracionEntity> valoraciones) throws BusinessLogicException 
     {
         ProveedorEntity proveedor = getProveedor(proveedorId);
-        List<ValoracionEntity> valoracionList = proveedor.getValoraciones();
-        for (ValoracionEntity valoracion : valoracionList) 
-        {
-            if (valoraciones.contains(valoracion)) {
-                valoracion.setProveedor(proveedor);
-            } else if (valoracion.getProveedor() != null && valoracion.getProveedor().equals(proveedor)) 
-            {
-                valoracion.setProveedor(null);
-            }
-        }
+        proveedor.setValoraciones(valoraciones);
         return valoraciones;
     }
 
@@ -484,7 +359,7 @@ public class ProveedorLogic
      * @param proveedorId El id del proveedor a buscar.
      * @param valoracionId El id del valoracion a buscar
      * @return El valoracion encontrado dentro del proveedor.
-     * @throws BusinessLogicException Si el valoracion no se encuentra en la proveedor
+     * @throws BusinessLogicException Si el valoracion no se encuentra en el proveedor
      */
     public ValoracionEntity getValoracion(Long proveedorId, Long valoracionId) throws BusinessLogicException {
         List<ValoracionEntity> valoraciones = getProveedor(proveedorId).getValoraciones();
