@@ -54,7 +54,7 @@ public class UsuarioResource {
      * @return JSONArray {@link UsuarioDetailDTO} - Los usuarios encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<UsuarioDetailDTO> getusuarios() {
+    public List<UsuarioDetailDTO> getUsuarios() {
         return listEntity2DTO(logic.getUsuarios());
     }
 
@@ -178,7 +178,7 @@ public class UsuarioResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
      */
     @PUT
-    @Path("{id: \\d+}")
+    @Path("{id: \\d+}/blogs")
     public  List<BlogDetailDTO> replaceBlogs(@PathParam("id")Long id,List<BlogDetailDTO> blogs) throws BusinessLogicException
     {
         return blogListEntity2DTO(logic.replaceBlogs(id,blogListDTO2Entity(blogs)));
