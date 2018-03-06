@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * Clase que implementa la conexion con la persistencia para la entidad de
  * Cliente.
  *
- * @cliente nm.hernandez10
+ * @author nm.hernandez10
  */
 @Stateless
 public class ClienteLogic {

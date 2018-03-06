@@ -68,6 +68,7 @@ public class ServicioDetailDTO extends ServicioDTO {
     }
     /**
      * Constructor por defecto
+     * @param e Entidad Servicio para crear el DetailDTO
      */
     public ServicioDetailDTO(ServicioEntity e) 
     {

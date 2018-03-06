@@ -150,7 +150,6 @@ public class ProveedorDetailDTO extends ProveedorDTO
     {
         ProveedorEntity entity = super.toEntity();
         List<ContratoEntity> listContratos = new ArrayList<>();
-        List<HorarioEntity> listHorarios = new ArrayList<>();
         List<ValoracionEntity> listValoraciones = new ArrayList<>();
         List<ServicioEntity> listServicios = new ArrayList<>();
         for(ContratoDTO dto : getContratos())

@@ -37,7 +37,7 @@ public class ValoracionLogic {
      * @param id Identificador de la instancia a consultar
      * @return Instancia de ValoracionEntity con los datos de la Valoracion
      * consultada.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * @throws BusinessLogicException  - Error de lógica si no existe la valoracion
      */
     public ValoracionEntity getValoracion(Long id) throws BusinessLogicException {
         if (persistence.find(id) == null) {
@@ -51,7 +51,7 @@ public class ValoracionLogic {
      *
      * @param entity Instancia de ValoracionEntity a crear
      * @return nstancia de ValoracionEntity creada
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * @throws BusinessLogicException - Error de lógica si no se cumple la regla de negocio
      */
     public ValoracionEntity createValoracion(ValoracionEntity entity) throws BusinessLogicException {
         if (entity.getCalificacion() > 5.0 || entity.getCalificacion() < 1.0) {

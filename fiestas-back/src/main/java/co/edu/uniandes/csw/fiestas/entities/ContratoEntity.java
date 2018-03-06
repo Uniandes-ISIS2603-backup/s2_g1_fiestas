@@ -21,7 +21,6 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private EventoEntity evento;
      
-    
     private String estado;
 
     @PodamExclude

@@ -1,6 +1,5 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
-import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -16,27 +15,36 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
+ * <pre>Clase que implementa el recurso "valoraciones".
+ * URL: /api/valoraciones
+ * </pre>
+ * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta
+ * "/api" y este recurso tiene la ruta "valoraciones".</i>
+ *
+ * <h2>Anotaciones </h2>
+ * <pre>
+ * Path: indica la dirección después de "api" para acceder al recurso
+ * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
+ * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio).
+ * </pre>
  *
  * @author ls.arias
  */
-
-
 @Path("valoraciones")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class ValoracionResource {
-    
-    
-     /**
+
+    /**
      * <h1>POST /valoraciones : Crear un valoracion.</h1>
-     * 
+     *
      * <pre>Cuerpo de petición: JSON {@link ValoracionDetailDTO}.
-     * 
-     * Crea una nueva valoracion con la informacion que se recibe en el cuerpo 
-     * de la petición y se regresa un objeto identico con un id auto-generado 
+     *
+     * Crea una nueva valoracion con la informacion que se recibe en el cuerpo
+     * de la petición y se regresa un objeto identico con un id auto-generado
      * por la base de datos.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Creó la nueva valoracion.
@@ -45,45 +53,54 @@ public class ValoracionResource {
      * 412 Precodition Failed: Ya existe la valoracion.
      * </code>
      * </pre>
-     * @param valoracion {@link ValoracionDetailDTO} - La valoracion que se desea guardar.
-     * @return JSON {@link ValoracionDetailDTO}  - la valoracion guardada con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la valoracion.
+     *
+     * @param valoracion {@link ValoracionDetailDTO} - La valoracion que se
+     * desea guardar.
+     * @return JSON {@link ValoracionDetailDTO} - la valoracion guardada con el
+     * atributo id autogenerado.
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica que se genera cuando ya existe la valoracion.
      */
-       @POST
+    @POST
     public ValoracionDetailDTO createValoracion(ValoracionDetailDTO valoracion) throws BusinessLogicException {
         return valoracion;
     }
-    
+
     /**
      * <h1>GET /valoraciones : Obtener todas los valoraciones.</h1>
-     * 
+     *
      * <pre>Busca y devuelve todas las valoraciones que existen en la aplicacion.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todas las valoraciones de la aplicacion.</code> 
+     * 200 OK Devuelve todas las valoraciones de la aplicacion.</code>
      * </pre>
-     * @return JSONArray {@link ValoracionDetailDTO} - Los valoraciones encontradas en la aplicación. Si no hay ninguno retorna una lista vacía.
+     *
+     * @return JSONArray {@link ValoracionDetailDTO} - Los valoraciones
+     * encontradas en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
     public List<ValoracionDetailDTO> getValoraciones() {
         return new ArrayList<>();
     }
-    
+
     /**
      * <h1>GET /valoraciones/{id} : Obtener valoracion por id.</h1>
-     * 
+     *
      * <pre>Busca la valoracion con el id asociado recibido en la URL y lo devuelve.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Devuelve la valoracion correspondiente al id.
-     * </code> 
+     * </code>
      * <code style="color: #c7254e; background-color: #f9f2f4;">
      * 404 Not Found No existe una valoracion con el id dado.
-     * </code> 
+     * </code>
      * </pre>
-     * @param id Identificador de la valoracion que se esta buscando. Este debe ser una cadena de dígitos.
+     *
+     * @param id Identificador de la valoracion que se esta buscando. Este debe
+     * ser una cadena de dígitos.
      * @return JSON {@link ValoracionDetailDTO} - La valoracion buscado
      */
     @GET
@@ -91,49 +108,58 @@ public class ValoracionResource {
     public ValoracionDetailDTO getValoracion(@PathParam("id") Long id) {
         return null;
     }
-    
+
     /**
-    * <h1>PUT /valoracion/{id} : Actualizar valoracion por id.</h1>
-    * 
-    * <pre>Busca la valoracion con el id asociado recibido en la URL, actualiza los paramteros
-    * y la devuelve.
-    * 
-    * Codigos de respuesta:
-    * <code style="color: mediumseagreen; background-color: #eaffe0;">
-    * 200 OK Devuelve la valoracion correspondiente al id, despues de actualizado.
-    * </code> 
-    * <code style="color: #c7254e; background-color: #f9f2f4;">
-    * 404 Not Found No existe una valoracion con el id dado.
-    * </code> 
-    * </pre>
-    * @param id Identificador de la valoracion que se esta buscando. Este debe ser una cadena de dígitos.
-    * @return JSON {@link ValoracionDetailDTO} - La valoracion buscada y actuaizada
-    */
-     @PUT
+     * <h1>PUT /valoracion/{id} : Actualizar valoracion por id.</h1>
+     *
+     * <pre>Busca la valoracion con el id asociado recibido en la URL, actualiza los paramteros
+     * y la devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve la valoracion correspondiente al id, despues de actualizado.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe una valoracion con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador de la valoracion que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param valoracion a actualizar
+     * @return JSON {@link ValoracionDetailDTO} - La valoracion buscada y
+     * actuaizada
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica
+     */
+    @PUT
     @Path("{id: \\d+}")
     public ValoracionDetailDTO updateValoracion(@PathParam("id") Long id, ValoracionDetailDTO valoracion) throws BusinessLogicException {
         return valoracion;
     }
-    
+
     /**
-    * <h1>DELETE /valoracion/{id} : Elimina una valoracion por id.</h1>
-    * 
-    * <pre>Busca la valoracion con el id asociado recibido en la URL y lo elimina
-    * 
-    * Codigos de respuesta:
-    * <code style="color: mediumseagreen; background-color: #eaffe0;">
-    * 200 OK La valoracion fue eliminada exitosamente
-    * </code> 
-    * <code style="color: #c7254e; background-color: #f9f2f4;">
-    * 404 Not Found No existe una valoracion con el id dado.
-    * </code> 
-    * </pre>
-    * @param id Identificador de la valoracion que se esta buscando. Este debe ser una cadena de dígitos.
-    */
+     * <h1>DELETE /valoracion/{id} : Elimina una valoracion por id.</h1>
+     *
+     * <pre>Busca la valoracion con el id asociado recibido en la URL y lo elimina
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK La valoracion fue eliminada exitosamente
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe una valoracion con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador de la valoracion que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     */
     @DELETE
     @Path("{id: \\d+}")
-     public void deleteValoracion(@PathParam("id") Long id) {
+    public void deleteValoracion(@PathParam("id") Long id) {
         // Void
     }
-    
+
 }
