@@ -2,9 +2,12 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +17,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -98,7 +102,12 @@ public class PagoLogicTest {
     @Test
     public void createPagoTest() {
         PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
-        PagoEntity result = pagoLogic.createPago(newEntity);
+        PagoEntity result = new PagoEntity();
+        try {
+            result = pagoLogic.createPago(newEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
         Assert.assertNotNull(result);
         PagoEntity entidad = em.find(PagoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
@@ -113,14 +122,18 @@ public class PagoLogicTest {
      */
     @Test
     public void getPagoTest() {
-        PagoEntity newEntity = data.get(0);
-        PagoEntity result = pagoLogic.createPago(newEntity);
-        Assert.assertNotNull(result);
-        PagoEntity entidad = pagoLogic.getPago(newEntity.getId());
-        Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
-        Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
-        Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+        try {
+            PagoEntity newEntity = data.get(0);
+            PagoEntity result = pagoLogic.createPago(newEntity);
+            Assert.assertNotNull(result);
+            PagoEntity entidad = pagoLogic.getPago(newEntity.getId());
+            Assert.assertEquals(newEntity.getId(), entidad.getId());
+            Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
+            Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
+            Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
     }
 
     /**
@@ -158,16 +171,20 @@ public class PagoLogicTest {
      */
     @Test
     public void updatePagoTest() {
-        PagoEntity entity = data.get(0);
-        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
-
-        newEntity.setId(entity.getId());
-
-        pagoLogic.updatePago(newEntity);
-
-        PagoEntity resp = em.find(PagoEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getId(), resp.getId());
-        Assert.assertEquals(newEntity.getEstado(), resp.getEstado());
-        Assert.assertEquals(newEntity.isRealizado(), resp.isRealizado());
+        try {
+            PagoEntity entity = data.get(0);
+            PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+            
+            newEntity.setId(entity.getId());
+            
+            pagoLogic.updatePago(newEntity);
+            
+            PagoEntity resp = em.find(PagoEntity.class, entity.getId());
+            Assert.assertEquals(newEntity.getId(), resp.getId());
+            Assert.assertEquals(newEntity.getEstado(), resp.getEstado());
+            Assert.assertEquals(newEntity.isRealizado(), resp.isRealizado());
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
     }
 }

@@ -5,5 +5,5 @@ package co.edu.uniandes.csw.fiestas.enums;
  * @author cm.amaya10
  */
 public enum MetodoDePago {
-    
+    PSE,TARJETA_CREDITO,CONSIGNACION;
 }

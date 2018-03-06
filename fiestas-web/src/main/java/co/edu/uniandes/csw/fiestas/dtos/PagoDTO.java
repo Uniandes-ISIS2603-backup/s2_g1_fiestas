@@ -1,8 +1,8 @@
-
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
-
+import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 
 /**
  * EventoDTO Objeto de transferencia de datos de Eventos.
@@ -44,41 +44,53 @@ public class PagoDTO {
 
     }
 
-     /**
+    /**
      * Crea un objeto PagoDTO a partir de un objeto PagoEntity.
      *
      * @param entity Entidad PagoEntity desde la cual se va a crear el nuevo
      * objeto.
-     * 
+     *
      */
-    public PagoDTO(PagoEntity entity){
-         if(entity!=null){
-             this.id=entity.getId();
-             this.estado=entity.getEstado();
-             this.metodoDePago=entity.getMetodoDePago();
-             this.realizado=entity.isRealizado();
-         }
+    public PagoDTO(PagoEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.estado = entity.getEstado().toString();
+            this.metodoDePago = entity.getMetodoDePago().toString();
+            this.realizado = entity.isRealizado();
+        }
     }
 
     /**
      * Convierte un objeto PagoDTO a PagoEntity.
      *
      * @return Nueva objeto PagoEntity.
-     * 
+     *
      */
-    public PagoEntity toEntity(){
-        PagoEntity entity=new PagoEntity();
+    public PagoEntity toEntity() {
+        PagoEntity entity = new PagoEntity();
         entity.setId(this.id);
-        entity.setEstado(this.estado);
-        entity.setMetodoDePago(this.metodoDePago);
+        if (this.estado.equalsIgnoreCase(Estado.CONFIRMADO.toString())) {
+            entity.setEstado(Estado.CONFIRMADO);
+        } else if (this.estado.equalsIgnoreCase(Estado.RECHAZADO.toString())) {
+            entity.setEstado(Estado.RECHAZADO);
+        } else {
+            entity.setEstado(Estado.EN_REVISION);
+        }
+
+        if (this.metodoDePago.equalsIgnoreCase(MetodoDePago.PSE.toString())) {
+            entity.setMetodoDePago(MetodoDePago.PSE);
+        } else if (this.metodoDePago.equalsIgnoreCase(MetodoDePago.TARJETA_CREDITO.toString())) {
+            entity.setMetodoDePago(MetodoDePago.TARJETA_CREDITO);
+        } else {
+            entity.setMetodoDePago(MetodoDePago.CONSIGNACION);
+        }
         entity.setRealizado(this.realizado);
         return entity;
     }
-    
+
     /**
      * @return El ID del evento
      */
-
     public Long getId() {
         return id;
     }
@@ -86,21 +98,18 @@ public class PagoDTO {
     /**
      * @param id El nuevo ID
      */
-    public void setId(Long id) 
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * @return boolean representando si el pago fue realizado
      */
-
     public Boolean getRealizado() {
         return realizado;
     }
 
-
-     /**
+    /**
      * @param realizado: boolean a asignar si se realizo el pago exitosamente.
      */
     public void setRealizado(Boolean realizado) {
@@ -110,7 +119,6 @@ public class PagoDTO {
     /**
      * @return Estado del proceso de pago
      */
-
     public String getEstado() {
         return estado;
     }

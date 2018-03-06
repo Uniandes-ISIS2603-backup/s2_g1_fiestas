@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
+import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -18,8 +20,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class PagoEntity extends BaseEntity implements Serializable {
 
     private Boolean realizado; /*Boolean que representa si el pago fur realizado*/
-    private String estado;/*Estado actual del pagoo*/
-    private String metodoDePago; /*Metodo de pago actual*/
+    private Estado estado;/*Estado actual del pagoo*/
+    private MetodoDePago metodoDePago; /*Metodo de pago actual*/
     
     @PodamExclude
     @OneToOne
@@ -49,7 +51,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @return estado actual del pago
      */
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
@@ -58,7 +60,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @param estado nuevo del pago
      */
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
@@ -67,7 +69,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @return metodo de pago actual del pago
      */
-    public String getMetodoDePago() {
+    public MetodoDePago getMetodoDePago() {
         return metodoDePago;
     }
 
@@ -76,7 +78,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @param metodoDePago Metodo de pago nuevo del pago
      */
-    public void setMetodoDePago(String metodoDePago) {
+    public void setMetodoDePago(MetodoDePago metodoDePago) {
         this.metodoDePago = metodoDePago;
     }
     
