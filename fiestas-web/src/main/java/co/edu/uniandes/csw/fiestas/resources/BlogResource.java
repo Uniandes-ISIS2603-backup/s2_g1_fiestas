@@ -6,6 +6,8 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.BlogLogic;
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
     /**
  * <pre>Clase que implementa el recurso "blogs".
  * URL: /api/blogs
@@ -35,6 +38,7 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 
 public class BlogResource {
+    private BlogLogic logic;
 
     /**
      * <h1>GET /Blogs : Obtener todos los blogs.</h1>
@@ -49,7 +53,7 @@ public class BlogResource {
      */
     @GET
     public List<BlogDetailDTO> getBlogs() {
-        return new ArrayList<>();
+        return listEntity2DTO(logic.getBlogs());
     }
 
     /**
@@ -71,7 +75,10 @@ public class BlogResource {
     @GET
     @Path("{id: \\d+}")
     public BlogDetailDTO getBlog(@PathParam("id") Long id) {
-        return null;
+        BlogEntity bE=logic.getBlog(id);
+        if(bE==null)
+            throw new WebApplicationException("El blog no existe", 404);
+        return new BlogDetailDTO(bE);
     }
     
         /**
@@ -97,7 +104,7 @@ public class BlogResource {
      */
     @POST
     public BlogDetailDTO createBlog(BlogDetailDTO blog) throws BusinessLogicException {
-        return blog;
+        return new BlogDetailDTO(logic.createBlog(blog.toEntity()));
     }
     
     @PUT
@@ -110,6 +117,21 @@ public class BlogResource {
     @Path("{id:\\d+}")
     public void deleteBlog(@PathParam("id")Long id){
         
+    }
+    
+    /**
+     * Convierte una lista de BlogEntity a una lista de BlogDetailDTO.
+     *
+     * @param entityList Lista de BlogEntity a convertir.
+     * @return Lista de BlogDetailDTO convertida.
+     * 
+     */
+    private List<BlogDetailDTO> listEntity2DTO(List<BlogEntity> entityList) {
+        List<BlogDetailDTO> list = new ArrayList<>();
+        for (BlogEntity entity : entityList) {
+            list.add(new BlogDetailDTO(entity));
+        }
+        return list;
     }
     
 }
