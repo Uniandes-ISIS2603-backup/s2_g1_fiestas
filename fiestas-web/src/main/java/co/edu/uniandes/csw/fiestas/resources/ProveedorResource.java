@@ -207,7 +207,11 @@ public class ProveedorResource {
         proveedorLogic.deleteProveedor(id);
     }
 
+
+    
     /**
+     * <h1>GET /{proveedorId}/contratos/ : Obtener todos los contratos de un proveedor.</h1>
+
      * <h1>GET /{proveedorId}/contratos/ : Obtener todos los contratos de un
      * proveedor.</h1>
      *
@@ -366,9 +370,8 @@ public class ProveedorResource {
     }
 
     /**
-     * <h1>PUT /{proveedorId}/valoraciones: Edita losvaloraciones de un
-     * proveedor..</h1>
-     * <pre> Remplaza las instancias de Valoracion asociadas a una instancia de Editorial
+     * <h1>PUT /{proveedorId}/valoraciones: Edita losvaloraciones de un proveedor..</h1>
+     * <pre> Remplaza las instancias de Valoracion asociadas a una instancia de Proveedor
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -530,10 +533,8 @@ public class ProveedorResource {
     }
 
     /**
-     * <h1>PUT /{proveedorId}/servicios: Edita losservicios de un
-     * proveedor..</h1>
-     * <pre> Remplaza las instancias de Servicio asociadas a una instancia de Editorial
-     *
+     * <h1>PUT /{proveedorId}/servicios: Edita losservicios de un proveedor..</h1>
+     * <pre> Remplaza las instancias de Servicio asociadas a una instancia de Proveedor
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Guardó los servicios del proveedor.
