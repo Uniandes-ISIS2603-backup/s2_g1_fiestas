@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import java.util.List;
 
 
@@ -38,5 +39,15 @@ public class ValoracionDetailDTO extends ValoracionDTO {
      * Constructor por defecto
      */
     public ValoracionDetailDTO() {
+    }
+    
+       /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public ValoracionEntity toEntity() {
+        ValoracionEntity entity = super.toEntity();
+        return entity;
     }
 }

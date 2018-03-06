@@ -24,13 +24,13 @@ public class ServicioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValoracionEntity> valoraciones = new ArrayList<>();
-
+  
     @PodamExclude
-    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoEntity> productos = new ArrayList<>();
-
     @PodamExclude
-    @ManyToMany
+    @ManyToMany(mappedBy = "proveedores")
+
     private List<ProveedorEntity> proveedores = new ArrayList<>();
 
     private String descripcion;
