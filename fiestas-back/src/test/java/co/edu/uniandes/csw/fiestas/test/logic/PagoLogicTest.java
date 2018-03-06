@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
@@ -43,7 +38,7 @@ public class PagoLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<PagoEntity> data = new ArrayList<PagoEntity>();
+    private List<PagoEntity> data = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -106,6 +101,22 @@ public class PagoLogicTest {
         PagoEntity result = pagoLogic.createPago(newEntity);
         Assert.assertNotNull(result);
         PagoEntity entidad = em.find(PagoEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getId(), entidad.getId());
+        Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
+        Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
+        Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+    }
+
+    /**
+     * Prueba para obtener un Pago.
+     *
+     */
+    @Test
+    public void getPagoTest() {
+        PagoEntity newEntity = data.get(0);
+        PagoEntity result = pagoLogic.createPago(newEntity);
+        Assert.assertNotNull(result);
+        PagoEntity entidad = pagoLogic.getPago(newEntity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
         Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
