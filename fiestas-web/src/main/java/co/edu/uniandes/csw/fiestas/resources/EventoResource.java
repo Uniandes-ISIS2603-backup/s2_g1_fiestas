@@ -313,9 +313,8 @@ public class EventoResource {
      * @param contratosId Identificador del contrato que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link ContratoDetailDTO} - El contrato buscado
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la evento o el
-     * contrato.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -Error de lógica 
+     * que se genera cuando no se encuentra la evento o el contrato.
      */
     @GET
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")

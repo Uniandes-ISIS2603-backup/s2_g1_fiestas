@@ -23,7 +23,7 @@ import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
  *      "cuerpo": "Este cumpleaños fue increible, los niños pasaron súper, tuvimos payasos y carro de perros calientes, recomendados ambos",
  *      "likes": 45
  *   }
- *
+ *</pre>
  * @author mc.gonzalez15
  */
 public class BlogDTO {
@@ -67,7 +67,7 @@ public class BlogDTO {
     /**
      * Asigna el identificador
      *
-     * @param id
+     * @param id a asignar
      */
     public void setId(long id) {
         this.id = id;
@@ -85,7 +85,7 @@ public class BlogDTO {
     /**
      * Asigna el titulo
      *
-     * @param titulo
+     * @param titulo a asignar
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -103,7 +103,7 @@ public class BlogDTO {
     /**
      * Asigna el cuerpo
      *
-     * @param cuerpo
+     * @param cuerpo a asignar
      */
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
@@ -121,7 +121,7 @@ public class BlogDTO {
     /**
      * Asigna el numero de likes
      *
-     * @param likes
+     * @param likes a asignar
      */
     public void setLikes(int likes) {
         this.likes = likes;

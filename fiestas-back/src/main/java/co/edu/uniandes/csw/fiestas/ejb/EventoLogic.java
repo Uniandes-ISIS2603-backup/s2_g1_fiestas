@@ -93,7 +93,7 @@ public class EventoLogic {
      *
      * @param entity Instancia de EventoEntity con los nuevos datos.
      * @return Instancia de EventoEntity con los datos actualizados.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * @throws BusinessLogicException - Error de lógica
      */
     public EventoEntity updateEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());

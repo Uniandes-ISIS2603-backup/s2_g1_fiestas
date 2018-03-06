@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.dtos;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,6 +71,7 @@ public class ServicioDetailDTO extends ServicioDTO {
     }
     /**
      * Constructor por defecto
+     * @param e Entidad Servicio para crear el DetailDTO
      */
     public ServicioDetailDTO(ServicioEntity e) 
     {
@@ -90,4 +94,23 @@ public class ServicioDetailDTO extends ServicioDTO {
     {
         this.proveedores = proveedores;
     }
+    
+       /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public ServicioEntity toEntity() {
+        ServicioEntity entity = super.toEntity();
+        List<ProveedorEntity> listProveedores = new ArrayList<ProveedorEntity>();
+        for(ProveedorDTO dto : getProveedores())
+        {
+            ProveedorEntity ent = dto.toEntity();
+            listProveedores.add(ent);
+        }
+        
+        entity.setProveedores(listProveedores);
+        return entity;
+    }
+    
 }

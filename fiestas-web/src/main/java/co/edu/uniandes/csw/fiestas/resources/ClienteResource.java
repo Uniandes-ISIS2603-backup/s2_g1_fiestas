@@ -309,9 +309,8 @@ public class ClienteResource
      * @param eventosId Identificador del evento que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link EventoDetailDTO} - El evento buscado
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la cliente o el
-     * evento.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra la cliente o el evento.
      */
     @GET
     @Path("{clientesId: \\d+}/eventos/{eventosId: \\d+}")

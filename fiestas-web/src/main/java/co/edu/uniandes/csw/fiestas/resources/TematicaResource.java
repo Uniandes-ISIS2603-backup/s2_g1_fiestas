@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import co.edu.uniandes.csw.fiestas.dtos.*;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -43,12 +44,9 @@ import javax.ws.rs.Produces;
 public class TematicaResource 
 {
     
-    public TematicaResource(){
-       
-    }
    
     /**
-    * <h1>GET /tematica : Obtener todos las tematicas.</h1>
+    * <h1>GET /tematicas : Obtener todos las tematicas.</h1>
     * 
     * <pre>Busca y devuelve todos las tematica que existen en la aplicacion.
     * 
@@ -56,16 +54,15 @@ public class TematicaResource
     * <code style="color: mediumseagreen; background-color: #eaffe0;">
     * 200 OK Devuelve todas los productos de la aplicacion.</code> 
     * </pre>
-    * @param lista una lista de todas las tematicas
     * @return JSONArray {@link TematicaDetailDTO} - Las tematicas encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
     */ 
     @GET
-    public List<TematicaDetailDTO> getTematica(List<TematicaDetailDTO> lista){
-      return lista;
+    public List<TematicaDetailDTO> getTematicas(){
+      return new ArrayList<>();
     }
    
     /**
-    * <h1>GET /tematica/{id} : Obtener tematica por id.</h1>
+    * <h1>GET /tematicas/{id} : Obtener tematica por id.</h1>
     * 
     * <pre>Busca la tematica con el id asociado recibido en la URL y lo devuelve.
     * 
@@ -113,7 +110,7 @@ public class TematicaResource
     }
     
     /**
-    * <h1>PUT /tematica/{id} : Actualizar tematica por id.</h1>
+    * <h1>PUT /tematicas/{id} : Actualizar tematica por id.</h1>
     * 
     * <pre>Busca la tematica con el id asociado recibido en la URL, actualiza los paramteros
     * y la devuelve.
@@ -136,7 +133,7 @@ public class TematicaResource
     }
     
     /**
-    * <h1>DELETE /tematica/{id} : Elimina una tematica por id.</h1>
+    * <h1>DELETE /tematicas/{id} : Elimina una tematica por id.</h1>
     * 
     * <pre>Busca la tematica con el id asociado recibido en la URL y lo elimina
     * 
