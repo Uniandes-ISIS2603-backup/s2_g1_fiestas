@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
-import java.beans.PropertyChangeSupport;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,7 +27,7 @@ public class ProveedorEntity extends UsuarioEntity
     private List<ContratoEntity> contratos;
     
     @PodamExclude
-    @ManyToMany(mappedBy = "proveedores")
+    @ManyToMany
     private List<ServicioEntity> servicios;
     
     @PodamExclude

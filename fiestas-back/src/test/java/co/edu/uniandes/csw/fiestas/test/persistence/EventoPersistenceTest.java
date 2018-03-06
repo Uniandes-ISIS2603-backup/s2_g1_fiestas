@@ -124,11 +124,10 @@ public class EventoPersistenceTest {
         EventoEntity creado = eventoPersistence.create(entidad);
 
         Assert.assertNotNull(creado);
-
+        Assert.assertEquals(creado.getDescripcion(), entidad.getDescripcion());
         Assert.assertEquals(creado.getLugar(), entidad.getLugar());
         Assert.assertEquals(creado.getCelebrado(), entidad.getCelebrado());
         Assert.assertEquals(creado.getInvitados(), entidad.getInvitados());
-        Assert.assertEquals(entidad.getFecha(), creado.getFecha());
     }
     /**
      * Prueba para obtener la lista de eventos.
@@ -157,6 +156,7 @@ public class EventoPersistenceTest {
         EventoEntity entidad = data.get(0);
         EventoEntity encontrado = eventoPersistence.find(entidad.getId());
         Assert.assertNotNull(encontrado);
+        Assert.assertEquals(encontrado.getDescripcion(), entidad.getDescripcion());
         Assert.assertEquals(encontrado.getLugar(), entidad.getLugar());
         Assert.assertEquals(encontrado.getCelebrado(), entidad.getCelebrado());
         Assert.assertEquals(encontrado.getInvitados(), entidad.getInvitados());

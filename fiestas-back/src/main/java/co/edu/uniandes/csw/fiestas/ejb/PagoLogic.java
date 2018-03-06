@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.fiestas.ejb;
 
-import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
