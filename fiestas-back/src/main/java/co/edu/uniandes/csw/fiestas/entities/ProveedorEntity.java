@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
-import java.beans.PropertyChangeSupport;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
