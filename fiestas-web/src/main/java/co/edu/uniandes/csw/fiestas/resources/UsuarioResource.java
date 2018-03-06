@@ -1,29 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.resources;
 
-/**
- * <pre>Clase que implementa el recurso "usuarios".
- * URL: /api/usuarios
- * </pre>
- * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
- * este recurso tiene la ruta "usuarios.</i>
- *
- * <h2>Anotaciones </h2>
- * <pre>
- * Path: indica la dirección después de "api" para acceder al recurso
- * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
- * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio). 
- * </pre>
- * @author nm.hernandez10
- */
-
 import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
-import co.edu.uniandes.csw.fiestas.dtos.BlogDTO;
-import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
@@ -40,6 +17,22 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+
+/**
+ * <pre>Clase que implementa el recurso "usuarios".
+ * URL: /api/usuarios
+ * </pre>
+ * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
+ * este recurso tiene la ruta "usuarios.</i>
+ *
+ * <h2>Anotaciones </h2>
+ * <pre>
+ * Path: indica la dirección después de "api" para acceder al recurso
+ * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
+ * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio). 
+ * </pre>
+ * @author nm.hernandez10
+ */
 
 @Path("usuarios")
 @Produces("application/json")
@@ -61,7 +54,7 @@ public class UsuarioResource {
      * @return JSONArray {@link UsuarioDetailDTO} - Los usuarios encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<UsuarioDetailDTO> getusuarios() {
+    public List<UsuarioDetailDTO> getUsuarios() {
         return listEntity2DTO(logic.getUsuarios());
     }
 
@@ -95,6 +88,7 @@ public class UsuarioResource {
      * </pre>
      * @param id Identificador del usuario que se esta buscando. Este debe ser una cadena de dígitos.
      * @return JSON {@link UsuarioDetailDTO} - El usuario buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica si no existe el usuario
      */
     @GET
     @Path("{id: \\d+}")
@@ -126,7 +120,7 @@ public class UsuarioResource {
      * </pre>
      * @param usuario {@link UsuarioDetailDTO} - La ciudad que se desea guardar.
      * @return JSON {@link UsuarioDetailDTO}  - El usuario guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la ciudad.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el usuario.
      */
     @POST
     public UsuarioDetailDTO createUsuario(UsuarioDetailDTO usuario) throws BusinessLogicException {
@@ -175,8 +169,16 @@ public class UsuarioResource {
         return new BlogDetailDTO(be);
     }
     
+    /**
+     * Actualizar blogs en un usuario dado por id.
+     * 
+     * @param id del usuario donde se reemplazan los blogs
+     * @param blogs lista de blogs a actualizar
+     * @return lista de blogs actualizado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     */
     @PUT
-    @Path("{id: \\d+}")
+    @Path("{id: \\d+}/blogs")
     public  List<BlogDetailDTO> replaceBlogs(@PathParam("id")Long id,List<BlogDetailDTO> blogs) throws BusinessLogicException
     {
         return blogListEntity2DTO(logic.replaceBlogs(id,blogListDTO2Entity(blogs)));
@@ -232,6 +234,7 @@ public class UsuarioResource {
      * debe ser una cadena de dígitos.
      * @return JSON {@link BlogDetailDTO} - El blog guardado en la
      * usuario.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
      */
     @POST
     @Path("{usuariosId: \\d+}/blogs/{blogsId: \\d+}")
@@ -256,10 +259,11 @@ public class UsuarioResource {
      * ser una cadena de dígitos.
      * @param blogsId Identificador del blog que se desea guardar. Este
      * debe ser una cadena de dígitos.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
      */
     @DELETE
-    @Path("{usuarioesId: \\d+}/blogs/{blogsId: \\d+}")
-    public void removeBlogs(@PathParam("usuarioesId") Long usuarioesId, @PathParam("blogsId") Long blogsId) throws BusinessLogicException {
-        logic.removeBlog(blogsId, usuarioesId);
+    @Path("{usuarioId: \\d+}/blogs/{blogsId: \\d+}")
+    public void removeBlogs(@PathParam("usuarioId") Long usuarioId, @PathParam("blogsId") Long blogsId) throws BusinessLogicException {
+        logic.removeBlog(blogsId, usuarioId);
     }
 }

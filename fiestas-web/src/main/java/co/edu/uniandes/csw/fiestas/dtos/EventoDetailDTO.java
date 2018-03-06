@@ -23,8 +23,8 @@ public class EventoDetailDTO extends EventoDTO {
     public EventoDetailDTO() {
 
     }
-    
-        /**
+
+    /**
      * Crea un objeto EventoDetailDTO a partir de un objeto EventoEntity
      * incluyendo los atributos de EventoDTO.
      *
@@ -32,11 +32,11 @@ public class EventoDetailDTO extends EventoDTO {
      * objeto.
      *
      */
-    public EventoDetailDTO(EventoEntity entity){
+    public EventoDetailDTO(EventoEntity entity) {
         super(entity);
     }
-    
-     /**
+
+    /**
      * Convierte un objeto EventoDetailDTO a EventoEntity incluyendo los
      * atributos de EventoDTO.
      *
@@ -44,7 +44,7 @@ public class EventoDetailDTO extends EventoDTO {
      *
      */
     @Override
-    public EventoEntity toEntity(){
+    public EventoEntity toEntity() {
         EventoEntity entity = super.toEntity();
         return entity;
     }
@@ -96,11 +96,13 @@ public class EventoDetailDTO extends EventoDTO {
 
     /**
      * Agragar un contrato a la lista asociada al evento.
+     *
      * @param contrato nuevo a agregar
      */
-    public void addContrato(ContratoDTO contrato){
+    public void addContrato(ContratoDTO contrato) {
         contratos.add(contrato);
     }
+
     /**
      * Se retorna la tematica del evento
      *
@@ -112,6 +114,7 @@ public class EventoDetailDTO extends EventoDTO {
 
     /**
      * Asignar la tematica del evento
+     *
      * @param tematica del evento
      */
     public void setTematica(TematicaDTO tematica) {

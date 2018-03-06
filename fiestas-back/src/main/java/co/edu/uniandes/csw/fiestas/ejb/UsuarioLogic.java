@@ -102,6 +102,7 @@ public class UsuarioLogic {
      * @param blogs Lista de blogs que serán los del usuario.
      * @param usuarioId El id del usuario que se quiere actualizar.
      * @return La lista de blogs actualizada.
+     * @throws BusinessLogicException  - Error de lógica
      */
     public List<BlogEntity> replaceBlogs(Long usuarioId, List<BlogEntity> blogs) throws BusinessLogicException 
     {
@@ -115,13 +116,20 @@ public class UsuarioLogic {
             throw new BusinessLogicException("El usuario al que se le quiere reemplazar blogs es nulo");
         }
         
-        if(blogs != null || blogs.size() == 0)
+        if(blogs != null || blogs.isEmpty())
         {
             throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
         }
         return blogs;
     }
 
+    /**
+     * Agrega un blog a un usuario
+     * @param blogId Id del blog a asociar
+     * @param usuarioId id del usuario a agregar el blog
+     * @return Entidad del blog agregado
+     * @throws BusinessLogicException  - Error de lógica si no existe el usuario
+     */
     public BlogEntity addBlog(Long blogId, Long usuarioId) throws BusinessLogicException {
          UsuarioEntity usuarioEntity = getUsuario(usuarioId);
         BlogEntity blogEntity = bLogic.getBlog(blogId);
@@ -141,6 +149,7 @@ public class UsuarioLogic {
      *
      * @param blogId El blog que se desea borrar del usuario.
      * @param usuarioId El usuario de la cual se desea eliminar.
+     * @throws BusinessLogicException  - Error de lógica si no existe el usuario
      */
     public void removeBlog(Long blogId, Long usuarioId) throws BusinessLogicException 
     {

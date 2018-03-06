@@ -20,7 +20,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
+  * <pre>Clase que implementa el recurso "servicios".
+ * URL: /api/servicios
+ * </pre>
+ * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta
+ * "/api" y este recurso tiene la ruta "servicios".</i>
  *
+ * <h2>Anotaciones </h2>
+ * <pre>
+ * Path: indica la dirección después de "api" para acceder al recurso
+ * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
+ * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio).
+ * </pre>
  * @author ls.arias
  */
 
@@ -50,7 +61,7 @@ public class ServicioResource {
      * </pre>
      * @param servicio {@link ServicioDetailDTO} - El servicio que se desea guardar.
      * @return JSON {@link ServicioDetailDTO}  - El servicio guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el servicio.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el servicio.
      */
      @POST
     public ServicioDetailDTO createServicio(ServicioDetailDTO servicio) throws BusinessLogicException {
@@ -110,7 +121,9 @@ public class ServicioResource {
     * </code> 
     * </pre>
     * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
+     * @param servicio servicio a actualizar
     * @return JSON {@link ServicioDetailDTO} - El servicio buscado y actuaizado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
     */
      @PUT
     @Path("{id: \\d+}")

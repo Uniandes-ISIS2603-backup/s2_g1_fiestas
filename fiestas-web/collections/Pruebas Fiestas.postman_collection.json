@@ -1,0 +1,33 @@
+{
+	"info": {
+		"name": "Pruebas Fiestas",
+		"_postman_id": "11b1ddba-824a-13e7-3240-cfcb30797e82",
+		"description": "Pruebas de los servicios del proyecto Fiestas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET eventos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/fiestas-web/api/eventos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiestas-web",
+						"api",
+						"eventos"
+					]
+				},
+				"description": "GET fiestas"
+			},
+			"response": []
+		}
+	]
+}
