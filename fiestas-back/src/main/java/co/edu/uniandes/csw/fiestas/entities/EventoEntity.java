@@ -37,7 +37,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToMany(mappedBy="evento")
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratos = new ArrayList<>();
 
     @PodamExclude
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -212,5 +212,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setTematica(TematicaEntity tematica) {
         this.tematica = tematica;
     }
+    
     
 }

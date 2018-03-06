@@ -28,7 +28,7 @@ public class ProveedorEntity extends UsuarioEntity
     private List<ContratoEntity> contratos;
     
     @PodamExclude
-    @ManyToMany(mappedBy = "proveedores")
+    @ManyToMany
     private List<ServicioEntity> servicios;
     
     @PodamExclude
