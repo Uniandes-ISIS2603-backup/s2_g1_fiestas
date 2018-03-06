@@ -1,10 +1,13 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "valoraciones".
@@ -36,6 +40,23 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class ValoracionResource {
 
+    @Inject
+    ValoracionLogic valoracionLogic;
+    
+        /**
+     * Convierte una lista de ValoracionEntity a una lista de ValoracionDetailDTO.
+     *
+     * @param entityList Lista de ValoracionEntity a convertir.
+     * @return Lista de ValoracionDetailDTO convertida.
+     *
+     */
+    private List<ValoracionDetailDTO> listEntity2DTO(List<ValoracionEntity> entityList) {
+        List<ValoracionDetailDTO> list = new ArrayList<>();
+        for (ValoracionEntity entity : entityList) {
+            list.add(new ValoracionDetailDTO(entity));
+        }
+        return list;
+    }
     /**
      * <h1>POST /valoraciones : Crear un valoracion.</h1>
      *
@@ -64,7 +85,7 @@ public class ValoracionResource {
      */
     @POST
     public ValoracionDetailDTO createValoracion(ValoracionDetailDTO valoracion) throws BusinessLogicException {
-        return valoracion;
+        return new ValoracionDetailDTO(valoracionLogic.createValoracion(valoracion.toEntity()));
     }
 
     /**
@@ -82,7 +103,7 @@ public class ValoracionResource {
      */
     @GET
     public List<ValoracionDetailDTO> getValoraciones() {
-        return new ArrayList<>();
+        return listEntity2DTO(valoracionLogic.getValoraciones());
     }
 
     /**
@@ -102,15 +123,20 @@ public class ValoracionResource {
      * @param id Identificador de la valoracion que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @return JSON {@link ValoracionDetailDTO} - La valoracion buscado
+     * @throws BusinessLogicException{@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} No existe la valoracion
      */
     @GET
     @Path("{id: \\d+}")
-    public ValoracionDetailDTO getValoracion(@PathParam("id") Long id) {
-        return null;
+    public ValoracionDetailDTO getValoracion(@PathParam("id") Long id) throws BusinessLogicException {
+        ValoracionEntity entity=valoracionLogic.getValoracion(id);
+        if (entity == null) {
+            throw new WebApplicationException("La valoracion no existe", 404);
+        }
+        return new ValoracionDetailDTO(entity);
     }
 
     /**
-     * <h1>PUT /valoracion/{id} : Actualizar valoracion por id.</h1>
+     * <h1>PUT /valoraciones/{id} : Actualizar valoracion por id.</h1>
      *
      * <pre>Busca la valoracion con el id asociado recibido en la URL, actualiza los paramteros
      * y la devuelve.
@@ -136,11 +162,17 @@ public class ValoracionResource {
     @PUT
     @Path("{id: \\d+}")
     public ValoracionDetailDTO updateValoracion(@PathParam("id") Long id, ValoracionDetailDTO valoracion) throws BusinessLogicException {
-        return valoracion;
+        ValoracionEntity entity = valoracion.toEntity();
+        entity.setId(id);
+        ValoracionEntity oldEntity=valoracionLogic.getValoracion(id);
+        if (oldEntity == null) {
+            throw new WebApplicationException("La valoracion a actualizar no existe", 404);
+        }
+        return new ValoracionDetailDTO(valoracionLogic.updateValoracion(entity));
     }
 
     /**
-     * <h1>DELETE /valoracion/{id} : Elimina una valoracion por id.</h1>
+     * <h1>DELETE /valoraciones/{id} : Elimina una valoracion por id.</h1>
      *
      * <pre>Busca la valoracion con el id asociado recibido en la URL y lo elimina
      *
@@ -155,11 +187,16 @@ public class ValoracionResource {
      *
      * @param id Identificador de la valoracion que se esta buscando. Este debe
      * ser una cadena de dígitos.
+     * @throws BusinessLogicException{@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} No existe la valoracion
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteValoracion(@PathParam("id") Long id) {
-        // Void
+    public void deleteValoracion(@PathParam("id") Long id) throws BusinessLogicException {
+        ValoracionEntity entity=valoracionLogic.getValoracion(id);
+        if (entity == null) {
+            throw new WebApplicationException("La valoracion no existe", 404);
+        }
+        valoracionLogic.deleteValoracion(id);
     }
 
 }

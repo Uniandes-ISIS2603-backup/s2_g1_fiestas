@@ -67,6 +67,11 @@ public class EventoLogic {
      */
     public EventoEntity createEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
+        
+        EventoEntity buscado=getEvento(entity.getId());
+        if(buscado!=null){
+            throw new BusinessLogicException("Ya existe el evento con este Id");
+        }
 
         //Primera regla de negocio: El evento debe tener plazo minimo de una semana
         int noOfDays = 7;

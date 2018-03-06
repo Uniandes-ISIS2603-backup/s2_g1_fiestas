@@ -41,11 +41,21 @@ public class ValoracionDetailDTO extends ValoracionDTO {
     public ValoracionDetailDTO() {
     }
     
+        
+     /**
+     * Constructor por medio de entity
+     * @param valoracion entidad que se usara para crear el DTO
+     */
+    public ValoracionDetailDTO(ValoracionEntity valoracion) {
+        super(valoracion);
+    }
+    
        /**
      * Convertir DTO a Entity
      *
      * @return Un Entity con los valores del DTO
      */
+    @Override
     public ValoracionEntity toEntity() {
         ValoracionEntity entity = super.toEntity();
         return entity;
