@@ -226,7 +226,7 @@ public class ProveedorResource
 
     /**
      * <h1>PUT /{proveedorId}/horarios: Edita loshorarios de un proveedor..</h1>
-     * <pre> Remplaza las instancias de Horario asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Horario asociadas a una instancia de Proveedor
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -384,7 +384,7 @@ public class ProveedorResource
 
     /**
      * <h1>PUT /{proveedorId}/contratos: Edita loscontratos de un proveedor..</h1>
-     * <pre> Remplaza las instancias de Contrato asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Contrato asociadas a una instancia de Proveedor
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -542,7 +542,7 @@ public class ProveedorResource
 
     /**
      * <h1>PUT /{proveedorId}/valoraciones: Edita losvaloraciones de un proveedor..</h1>
-     * <pre> Remplaza las instancias de Valoracion asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Valoracion asociadas a una instancia de Proveedor
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -700,7 +700,7 @@ public class ProveedorResource
 
     /**
      * <h1>PUT /{proveedorId}/servicios: Edita losservicios de un proveedor..</h1>
-     * <pre> Remplaza las instancias de Servicio asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Servicio asociadas a una instancia de Proveedor
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">

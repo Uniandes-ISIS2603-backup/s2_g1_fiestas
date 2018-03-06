@@ -218,7 +218,7 @@ public class ClienteResource
 
     /**
      * <h1>PUT /{clientesId}/eventos: Edita loseventos de un cliente..</h1>
-     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Cliente
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
