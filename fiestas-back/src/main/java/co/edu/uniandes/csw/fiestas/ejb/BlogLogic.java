@@ -38,9 +38,9 @@ public class BlogLogic {
      * @param id Identificador de la instancia a consultar
      * @return Instancia de BlogEntity con los datos del Blog consultado.
      */
-    public BlogEntity getBlog(Long id) {
+    public BlogEntity getBlog(Long id, Long eventoId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un blog con id = {0}", id);
-        return persistence.find(id);
+        return persistence.find(id, eventoId);
     }
 
     /**

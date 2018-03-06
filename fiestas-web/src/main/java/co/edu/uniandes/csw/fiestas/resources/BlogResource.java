@@ -34,30 +34,15 @@ import javax.ws.rs.WebApplicationException;
  * </pre>
  * @author mc.gonzalez15  
  */
-@Path("blogs")
+@Path("eventos/{eventoId: \\d+}/blog")
 @Produces("application/json")
 
 public class BlogResource {
     private BlogLogic logic;
 
-    /**
-     * <h1>GET /Blogs : Obtener todos los blogs.</h1>
-     * 
-     * <pre>Busca y devuelve todos los Blogs que existen en la aplicacion.
-     * 
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todas los blogs de la aplicacion.</code> 
-     * </pre>
-     * @return JSONArray {@link BlogDetailDTO} - Los blogs encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
-     */
-    @GET
-    public List<BlogDetailDTO> getBlogs() {
-        return listEntity2DTO(logic.getBlogs());
-    }
 
     /**
-     * <h1>GET /blogs/{id} : Obtener blog por id.</h1>
+     * <h1>GET /blog/ : Obtener blog por id.</h1>
      * 
      * <pre>Busca el blog con el id asociado recibido en la URL y lo devuelve.
      * 
@@ -74,14 +59,14 @@ public class BlogResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public BlogDetailDTO getBlog(@PathParam("id") Long id) {
-        BlogEntity bE=logic.getBlog(id);
+    public BlogDetailDTO getBlog(@PathParam("id") Long id, @PathParam("id") Long eventoId) {
+        BlogEntity bE=logic.getBlog(id, eventoId);
         if(bE==null)
             throw new WebApplicationException("El blog no existe", 404);
         return new BlogDetailDTO(bE);
     }
     
-        /**
+    /**
      * <h1>POST /blogs : Crear un blog.</h1>
      * 
      * <pre>Cuerpo de petición: JSON {@link BlogDetailDTO}.
@@ -107,16 +92,48 @@ public class BlogResource {
         return new BlogDetailDTO(logic.createBlog(blog.toEntity()));
     }
     
+    /**
+     * <h1>PUT /api/blogs/{id} : Actualizar autor con el id dado.</h1>
+     * <pre>Cuerpo de petición: JSON {@link AuthorDetailDTO}.
+     *
+     * Actualiza el autor con el id recibido en la URL con la información que se recibe en el cuerpo de la petición.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Actualiza el autor con el id dado con la información enviada como parámetro. Retorna un objeto identico.</code> 
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found. No existe un autor con el id dado.
+     * </code> 
+     * </pre>
+     * @param id Identificador del autor que se desea actualizar. Este debe ser una cadena de dígitos.
+     * @param author {@link AuthorDetailDTO} El autor que se desea guardar.
+     * @return JSON {@link AuthorDetailDTO} - El autor guardado.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} - Error de lógica que se genera cuando no se encuentra el libro a actualizar.
+     */
     @PUT
     @Path("{id: \\d+}")
-    public BlogDetailDTO updateBlog(@PathParam("id")Long id) {
-        return null;
+    public BlogDetailDTO updateBlog(@PathParam("id") Long id, BlogDetailDTO blog) {
+        BlogEntity entity = blog.toEntity();
+        entity.setId(id);
+        BlogEntity oldEntity = logic.getBlog(id);
+        if (oldEntity == null) {
+            throw new WebApplicationException("El blog no existe", 404);
+        }
+        entity.setEvento(oldEntity.getEvento());
+        return new BlogDetailDTO(logic.updateBlog(entity));
     }
-    
+    /**
+     * 
+     * @param id 
+     */
     @DELETE
     @Path("{id:\\d+}")
     public void deleteBlog(@PathParam("id")Long id){
-        
+        BlogEntity entity = logic.getBlog(id);
+        if (entity == null) {
+            throw new WebApplicationException("El blog no existe", 404);
+        }
+       logic.deleteBlog(id);
     }
     
     /**

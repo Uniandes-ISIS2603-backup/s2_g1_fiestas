@@ -28,10 +28,19 @@ public class BlogPersistence {
     @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
     
-    public BlogEntity find(Long id) {
+    public BlogEntity find(Long id, Long eventoId) {
         LOGGER.log(Level.INFO, "Consultando Blog con id={0}", id);
-        return em.find(BlogEntity.class, id);
+        TypedQuery<BlogEntity> q = em.createQuery("select p from BlogEntity p where (p.evetno.id = :eventoId) and (p.id = id)", BlogEntity.class);
+        q.setParameter("id", id);
+        q.setParameter("eventoId", eventoId);
+        BlogEntity bE = q.getSingleResult();
+        return bE;
     }
+    /**
+     * return review;
+     * @param name
+     * @return 
+     */
 
     public BlogEntity findByName(String name) {
         LOGGER.log(Level.INFO, "Consultando blog con name= ", name);
