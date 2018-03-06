@@ -2,6 +2,8 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 
 
 /**
@@ -34,8 +36,8 @@ public class PagoDTO {
 
     private long id;
     private Boolean realizado;
-    private String estado;
-    private String metodoDePago;
+    private Estado estado;
+    private MetodoDePago metodoDePago;
 
     /**
      * Constructor por defecto
@@ -112,7 +114,7 @@ public class PagoDTO {
      */
 
     public String getEstado() {
-        return estado;
+        return estado.toString();
     }
 
     /**
@@ -120,7 +122,7 @@ public class PagoDTO {
      *
      * @param estado nuevo del pago
      */
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
@@ -130,7 +132,7 @@ public class PagoDTO {
      * @return metodo de pago usado en el pago
      */
     public String getMetodoPago() {
-        return metodoDePago;
+        return metodoDePago.toString();
     }
 
     /**
@@ -138,7 +140,7 @@ public class PagoDTO {
      *
      * @param metodo de pago
      */
-    public void setMetodoPago(String metodo) {
+    public void setMetodoPago(MetodoDePago metodo) {
         this.metodoDePago = metodo;
 
     }

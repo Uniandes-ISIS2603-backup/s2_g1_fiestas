@@ -10,5 +10,5 @@ package co.edu.uniandes.csw.fiestas.enums;
  * @author cm.amaya10
  */
 public enum Estado {
-    
+    CONFIRMADO,EN_REVISION,RECHAZADO;
 }

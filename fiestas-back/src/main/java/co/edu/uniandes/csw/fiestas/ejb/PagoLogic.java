@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+import co.edu.uniandes.csw.fiestas.enums.Estado;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.List;
@@ -61,9 +62,13 @@ public class PagoLogic {
      *
      * @param entity Objeto de PagoEntity con los datos nuevos
      * @return Objeto de PagoEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no se cumple reglas de negocio
      */
-    public PagoEntity createPago(PagoEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de crear un pagoo ");
+    public PagoEntity createPago(PagoEntity entity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de crear un pago ");
+        if(entity.isRealizado() && entity.getEstado().equals(Estado.CONFIRMADO)){
+            throw new BusinessLogicException("Incongruencia entre estado y boolean Realizado");
+        }
         return persistence.create(entity);
     }
 
@@ -72,9 +77,13 @@ public class PagoLogic {
      *
      * @param entity Instancia de PagoEntity con los nuevos datos.
      * @return Instancia de PagoEntity con los datos actualizados.
+     *  @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no se cumple reglas de negocio
      */
-    public PagoEntity updatePago(PagoEntity entity) {
+    public PagoEntity updatePago(PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
+         if(entity.isRealizado() && entity.getEstado().equals(Estado.CONFIRMADO)){
+            throw new BusinessLogicException("Incongruencia entre estado y boolean Realizado");
+        }
         PagoEntity newEntity = persistence.update(entity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar evento con id={0}", entity.getId());
         return newEntity;
