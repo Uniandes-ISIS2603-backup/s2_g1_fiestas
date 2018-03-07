@@ -22,6 +22,9 @@ public class BlogLogic {
     @Inject
     private BlogPersistence persistence;
     
+    @Inject
+    private EventoLogic logicEvento;
+    
     /**
      * Obtiene la lista de los registros de Blog.
      *
@@ -74,5 +77,23 @@ public class BlogLogic {
     public void deleteBlog(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un autor ");
         persistence.delete(id);
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return 
+     */
+    public EventoEntity getEvento(Long id){
+        EventoEntity eE= logicEvento.getEvento(id);
+        return eE;
+    }
+    
+    public void addEvento(EventoEntity eE, Long id) throws BusinessLogicException{
+        BlogEntity bE = getBlog(id);
+        if(bE.getEvento()==null)
+        bE.setEvento(eE);
+        else 
+            throw new BusinessLogicException("El blog ya tiene evento.");
     }
 }

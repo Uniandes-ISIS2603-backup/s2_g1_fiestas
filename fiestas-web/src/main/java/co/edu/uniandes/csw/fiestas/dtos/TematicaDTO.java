@@ -65,7 +65,6 @@ public class TematicaDTO {
         return entity;
     }
 
-
     /**
      *
      * @return La descripción de la temática
