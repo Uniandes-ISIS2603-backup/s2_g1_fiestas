@@ -2,12 +2,11 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+import co.edu.uniandes.csw.fiestas.enums.Estado;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -90,6 +89,8 @@ public class PagoLogicTest {
 
         for (int i = 0; i < 3; i++) {
             PagoEntity entity = factory.manufacturePojo(PagoEntity.class);
+            entity.setEstado(Estado.EN_REVISION);
+            entity.setRealizado(false);
             em.persist(entity);
             data.add(entity);
         }
@@ -102,12 +103,16 @@ public class PagoLogicTest {
     @Test
     public void createPagoTest() {
         PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+        newEntity.setEstado(Estado.EN_REVISION);
+        newEntity.setRealizado(false);
+        
         PagoEntity result = new PagoEntity();
         try {
             result = pagoLogic.createPago(newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
+        
         Assert.assertNotNull(result);
         PagoEntity entidad = em.find(PagoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
@@ -115,28 +120,8 @@ public class PagoLogicTest {
         Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
         Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
     }
-
-    /**
-     * Prueba para obtener un Pago.
-     *
-     */
-    @Test
-    public void getPagoTest() {
-        try {
-            PagoEntity newEntity = data.get(0);
-            PagoEntity result = pagoLogic.createPago(newEntity);
-            Assert.assertNotNull(result);
-            PagoEntity entidad = pagoLogic.getPago(newEntity.getId());
-            Assert.assertEquals(newEntity.getId(), entidad.getId());
-            Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
-            Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
-            Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
-        } catch (BusinessLogicException ex) {
-            fail(ex.getMessage());
-        }
-    }
-
-    /**
+    
+        /**
      * Prueba para consultar la lista de pagos
      */
     @Test
@@ -156,6 +141,28 @@ public class PagoLogicTest {
     }
 
     /**
+     * Prueba para obtener un Pago.
+     *
+     */
+    @Test
+    public void getPagoTest() {
+        try {
+            PagoEntity newEntity = data.get(0);
+            PagoEntity result = pagoLogic.createPago(newEntity);
+
+            Assert.assertNotNull(result);
+
+            PagoEntity entidad = pagoLogic.getPago(newEntity.getId());
+            Assert.assertEquals(newEntity.getId(), entidad.getId());
+            Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
+            Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
+            Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    /**
      * Prueba para eliminar un pago
      */
     @Test
@@ -167,24 +174,47 @@ public class PagoLogicTest {
     }
 
     /**
-     * Prueba para actualizar un pago
+     * Prueba exitosa para actualizar un pago
      */
     @Test
     public void updatePagoTest() {
+
+        PagoEntity entity = data.get(0);
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+
+        newEntity.setId(entity.getId());
+        newEntity.setEstado(Estado.EN_REVISION);
+        newEntity.setRealizado(false);
+
         try {
-            PagoEntity entity = data.get(0);
-            PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
-            
-            newEntity.setId(entity.getId());
-            
             pagoLogic.updatePago(newEntity);
-            
-            PagoEntity resp = em.find(PagoEntity.class, entity.getId());
-            Assert.assertEquals(newEntity.getId(), resp.getId());
-            Assert.assertEquals(newEntity.getEstado(), resp.getEstado());
-            Assert.assertEquals(newEntity.isRealizado(), resp.isRealizado());
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
+        }
+        PagoEntity resp = em.find(PagoEntity.class, entity.getId());
+        Assert.assertEquals(newEntity.getId(), resp.getId());
+        Assert.assertEquals(newEntity.getMetodoDePago(), resp.getMetodoDePago());
+        Assert.assertEquals(newEntity.getEstado(), resp.getEstado());
+        Assert.assertEquals(newEntity.isRealizado(), resp.isRealizado());
+    }
+
+    /**
+     * Prueba fallida para actualizar un pago
+     */
+    @Test
+    public void updatePagoFailTest() {
+
+        PagoEntity entity = data.get(0);
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+
+        newEntity.setId(entity.getId());
+        newEntity.setEstado(Estado.EN_REVISION);
+        newEntity.setRealizado(true);
+        try {
+            pagoLogic.updatePago(newEntity);
+            fail("No se debio poder actualizar el pago");
+        } catch (BusinessLogicException ex) {
+            
         }
     }
 }
