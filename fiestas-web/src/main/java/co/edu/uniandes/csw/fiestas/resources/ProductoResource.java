@@ -173,4 +173,27 @@ public class ProductoResource
         productoLogic.deleteProducto(id);
     }
     
+    
+    /**
+     * <h1>GET /api/productos/{id} : Obtener producto por id.</h1>
+     * 
+     * <pre>Busca el producto con el id asociado recibido en la URL y la devuelve.
+     * 
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el servicio correspondiente al id del producto.
+     * </code> 
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un servicio con el id del producto dado.
+     * </code> 
+     * </pre>
+     * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
+     * @return JSON {@link ProductoDetailDTO} - El servicio buscado
+     */
+    @GET
+    @Path("{id: \\d+}")
+    public void getServicio(@PathParam("id") Long id)
+    {
+        productoLogic.getServicio(id);
+    }
 }
