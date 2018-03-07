@@ -40,7 +40,7 @@ public class ClienteDTO extends UsuarioDTO
 {   
     public ClienteDTO()
     {
-        
+        //Constructor vacio
     }
         
     public ClienteDTO(ClienteEntity e)
@@ -57,6 +57,7 @@ public class ClienteDTO extends UsuarioDTO
         }
     }
     
+    @Override
     public ClienteEntity toEntity()
     {
         ClienteEntity e = new ClienteEntity(); 
