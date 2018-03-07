@@ -1,6 +1,5 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
-
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import java.util.Date;
 
@@ -48,7 +47,7 @@ public class EventoDTO {
      * Constructor por defecto
      */
     public EventoDTO() {
-
+        //Constructor vacio
     }
     
      /**

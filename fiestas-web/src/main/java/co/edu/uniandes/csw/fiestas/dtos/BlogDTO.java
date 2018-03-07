@@ -23,7 +23,8 @@ import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
  *      "cuerpo": "Este cumpleaños fue increible, los niños pasaron súper, tuvimos payasos y carro de perros calientes, recomendados ambos",
  *      "likes": 45
  *   }
- *</pre>
+ * </pre>
+ *
  * @author mc.gonzalez15
  */
 public class BlogDTO {
@@ -49,10 +50,27 @@ public class BlogDTO {
     private int likes;
 
     /**
-     * Constructor vacío
+     * Constructor vacío BlogDTO
      */
     public BlogDTO() {
+        //Constructor vacio
+    }
 
+    /**
+     * Crea un objeto BlogDTO a partir de un objeto BlogEntity.
+     *
+     * @param entity Entidad BlogEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */
+    public BlogDTO(BlogEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.titulo = entity.getTitulo();
+            this.cuerpo = entity.getCuerpo();
+            this.likes = entity.getLikes();
+
+        }
     }
 
     /**
@@ -125,23 +143,6 @@ public class BlogDTO {
      */
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    /**
-     * Crea un objeto BlogDTO a partir de un objeto BlogEntity.
-     *
-     * @param entity Entidad BlogEntity desde la cual se va a crear el nuevo
-     * objeto.
-     *
-     */
-    public BlogDTO(BlogEntity entity) {
-        if (entity != null) {
-            this.id = entity.getId();
-            this.titulo = entity.getTitulo();
-            this.cuerpo = entity.getCuerpo();
-            this.likes = entity.getLikes();
-
-        }
     }
 
     /**

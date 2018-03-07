@@ -2,7 +2,6 @@ package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 
-
 /**
  * ContratoDTO Objeto de transferencia de datos de Contratos.
  *
@@ -52,10 +51,25 @@ public class ContratoDTO {
     private String estado;
 
     /**
-     * Método constructor
+     * Método constructor por defecto
      */
     public ContratoDTO() {
+//Constructor vacio
+    }
 
+    /**
+     * Crea un objeto ContratoDTO a partir de un objeto ContratoEntity.
+     *
+     * @param entity Entidad ContratoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */
+    public ContratoDTO(ContratoEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.valor = entity.getValor();
+            this.tyc = entity.getTyc();
+        }
     }
 
     /**
@@ -114,7 +128,7 @@ public class ContratoDTO {
 
     /**
      * Retorna el estado actual del contrato
-     * 
+     *
      * @return estado - el estado actual del contrato
      */
     public String getEstado() {
@@ -123,26 +137,11 @@ public class ContratoDTO {
 
     /**
      * Asigna el estado actual del contrato
-     * 
-     * @param estado el nuevo estado del contrato 
+     *
+     * @param estado el nuevo estado del contrato
      */
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    /**
-     * Crea un objeto ContratoDTO a partir de un objeto ContratoEntity.
-     *
-     * @param entity Entidad ContratoEntity desde la cual se va a crear el nuevo
-     * objeto.
-     *
-     */
-    public ContratoDTO(ContratoEntity entity) {
-        if (entity != null) {
-            this.id = entity.getId();
-            this.valor = entity.getValor();
-            this.tyc = entity.getTyc();
-        }
     }
 
     /**
@@ -160,7 +159,5 @@ public class ContratoDTO {
 
         return entity;
     }
-    
-    
 
 }
