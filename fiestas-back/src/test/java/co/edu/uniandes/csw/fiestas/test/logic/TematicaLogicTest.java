@@ -186,7 +186,7 @@ public class TematicaLogicTest
 
         pojoEntity.setId(entity.getId());
 
-        tematicaLogic.updateTematica(pojoEntity);
+        tematicaLogic.updateTematica(pojoEntity.getId(),pojoEntity);
 
         TematicaEntity resp = em.find(TematicaEntity.class, entity.getId());
 
