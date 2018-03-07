@@ -16,8 +16,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *Clase que implementa la conexion con la persistencia para la entidad de
- * Pago.
+ * Clase que implementa la conexion con la persistencia para la entidad de Pago.
  *
  * @author cm.amaya10
  */
@@ -62,11 +61,12 @@ public class PagoLogic {
      *
      * @param entity Objeto de PagoEntity con los datos nuevos
      * @return Objeto de PagoEntity con los datos nuevos y su ID.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no se cumple reglas de negocio
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
      */
     public PagoEntity createPago(PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un pago ");
-        if(entity.isRealizado() && entity.getEstado().equals(Estado.CONFIRMADO)){
+        if (entity.isRealizado() && entity.getEstado() != Estado.CONFIRMADO) {
             throw new BusinessLogicException("Incongruencia entre estado y boolean Realizado");
         }
         return persistence.create(entity);
@@ -77,11 +77,12 @@ public class PagoLogic {
      *
      * @param entity Instancia de PagoEntity con los nuevos datos.
      * @return Instancia de PagoEntity con los datos actualizados.
-     *  @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no se cumple reglas de negocio
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
      */
     public PagoEntity updatePago(PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
-         if(entity.isRealizado() && entity.getEstado().equals(Estado.CONFIRMADO)){
+        if (entity.isRealizado() && entity.getEstado() != Estado.CONFIRMADO) {
             throw new BusinessLogicException("Incongruencia entre estado y boolean Realizado");
         }
         PagoEntity newEntity = persistence.update(entity);
