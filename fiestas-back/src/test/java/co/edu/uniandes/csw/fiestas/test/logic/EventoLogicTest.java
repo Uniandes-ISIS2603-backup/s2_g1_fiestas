@@ -250,7 +250,36 @@ public class EventoLogicTest {
         Assert.assertEquals(respuesta.getId(), contratoEntity.getId());
         Assert.assertEquals(respuesta.getTyc(), contratoEntity.getTyc());
     }
+    
+    /**
+     * Prueba de obtener la lista de contratos de un evento.
+     */
+    @Test
+    public void getContratosTest() {
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity = contratosData.get(0);
+         List<ContratoEntity> respuesta = eventoLogic.getContratos(entity.getId());
+        Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
+        Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
+    }
 
+        
+    /**
+     * Prueba para reemplzar la lista de contratos de un evento.
+     */
+    @Test
+    public void replaceContratosTest() {
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity = contratosData.get(0);
+        ContratoEntity otherContratoEntity = contratosData.get(1);
+
+        List<ContratoEntity> respuesta = eventoLogic.replaceContratos(entity.getId(), contratosData);
+        Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
+        Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
+        Assert.assertEquals(respuesta.get(1).getId(), otherContratoEntity.getId());
+        Assert.assertEquals(respuesta.get(1).getTyc(), otherContratoEntity.getTyc());
+    }
+    
     /**
      * Prueba para eliminar un contrato
      */
@@ -259,10 +288,8 @@ public class EventoLogicTest {
         EventoEntity entity = data.get(0);
         ContratoEntity contratoEntity = contratosData.get(0);
         eventoLogic.removeContrato(contratoEntity.getId(), entity.getId());
-
-        ContratoEntity respuesta = new ContratoEntity();
         try {
-            respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
+            ContratoEntity respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
             fail("No deberia encontrar el contrato en el evento");
         } catch (BusinessLogicException ex) {
             
