@@ -49,7 +49,7 @@ public class ProductoDTO
      */
     public ProductoDTO()
     {
-        
+        //Solamente instancia el producto, pero no se le asignan valores porque esto hace parte del trabajo que tiene que hacer otra clase. 
     }
     
     /*
@@ -119,7 +119,7 @@ public class ProductoDTO
     /**
      * @param pDesc La nueva descripcion
      */
-    public void setDescripción(String pDesc)
+    public void setDescripcion(String pDesc)
     {
         descripcion = pDesc;
     }

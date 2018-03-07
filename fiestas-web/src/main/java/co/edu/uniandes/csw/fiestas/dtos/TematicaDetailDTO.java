@@ -5,6 +5,9 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +55,7 @@ public class TematicaDetailDTO extends TematicaDTO
     */
     public TematicaDetailDTO()
     {
-        
+        //El constructor vacio solo se usa para instanciar la clase, sin los atributos inicializados, porque esto hace parte del otro tipo de método constructor.
     }
     /***
      * 
@@ -70,5 +73,40 @@ public class TematicaDetailDTO extends TematicaDTO
     {
         serviciosSugeridos = lista;
     }
+    
+     /**
+     * Crea un objeto ProductoDetailDTO a partir de un objeto ProductoEntity
+     * incluyendo los atributos de ProductoDTO.
+     *
+     * @param entity Entidad ProductoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */ 
+    public TematicaDetailDTO(TematicaEntity entity) {
+        super(entity);
+        
+        List<ServicioEntity> list = entity.getServicios();
+        List<ServicioDTO> list2 = new ArrayList<ServicioDTO>();
+        for (ServicioEntity servicioEntity : list) 
+        {
+            list2.add(new ServicioDTO(servicioEntity));
+        }
+        
+        setServicios(list2);
+    }
+    
+    public TematicaEntity toEntity()
+    {
+        TematicaEntity entity = super.toEntity();
+        List<ServicioDTO> list1 = darServiciosSugeridos();
+        ArrayList<ServicioEntity> list2 = new ArrayList<ServicioEntity>();
+        for (ServicioDTO servicioDTO : list1) 
+        {
+            list2.add(servicioDTO.toEntity());
+        }
+        entity.setServicios(list2);
+        return entity;
+    }
+    
     
 }
