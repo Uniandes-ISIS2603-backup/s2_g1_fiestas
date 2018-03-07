@@ -172,7 +172,6 @@ public class PagoResource {
         if (oldEntity != null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        entity.setEvento(oldEntity.getEvento());
         return new PagoDetailDTO(pagoLogic.updatePago(entity));
     }
 
