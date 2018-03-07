@@ -84,10 +84,16 @@ public class BlogLogic {
      * @param id
      * @return 
      */
-    public EventoEntity getEvento(Long id){
+    public EventoEntity getEventoExistente(Long id){
         EventoEntity eE= logicEvento.getEvento(id);
         return eE;
     }
+    
+    public EventoEntity getEvento(Long id){
+        BlogEntity bE=persistence.find(id);
+        return eE;
+    }
+    
     
     public void addEvento(EventoEntity eE, Long id) throws BusinessLogicException{
         BlogEntity bE = getBlog(id);
