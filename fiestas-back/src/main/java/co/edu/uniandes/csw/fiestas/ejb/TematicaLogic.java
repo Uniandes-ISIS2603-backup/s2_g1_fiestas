@@ -60,10 +60,11 @@ public class TematicaLogic {
     /**
      * Actualiza la información de una instancia de Tematica.
      *
+     * @param id
      * @param entity Instancia de TematicaEntity con los nuevos datos.
      * @return Instancia de TematicaEntity con los datos actualizados.
      */
-    public TematicaEntity updateTematica(TematicaEntity entity) {
+    public TematicaEntity updateTematica( Long id ,TematicaEntity entity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar tematica con id={0}", entity.getId());
         TematicaEntity newEntity = persistence.update(entity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar tematica con id={0}", entity.getId());
