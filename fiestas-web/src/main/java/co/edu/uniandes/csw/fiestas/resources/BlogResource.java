@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.EventoDTO;
 import co.edu.uniandes.csw.fiestas.ejb.BlogLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
@@ -152,11 +153,13 @@ public class BlogResource {
         return list;
     }
     
-    /**
-     * 
-     */
+   /**
+    * 
+    * @param eventoId
+    * @param id 
+    */
     public void addEvento(@PathParam("id")Long eventoId, @PathParam("id")Long id) {
-        EventoEntity eE=logic.getEvento(eventoId);
+        EventoEntity eE=logic.getEventoExistente(eventoId);
         try{
             logic.addEvento(eE, id);
         }
@@ -165,4 +168,9 @@ public class BlogResource {
         }
     }
     
+    
+     public EventoDTO getEvento(Long idBlog) {
+        EventoEntity eE=logic.getEvento(idBlog);
+        return new EventoDTO(eE);
+    }
 }
