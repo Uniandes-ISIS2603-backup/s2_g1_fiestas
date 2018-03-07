@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
+
 /**
  * TematicaDTO Objeto de transferencia de datos de la entidad de Tematica. Los DTO contienen las
  * representaciones de los JSON que se transfieren entre el cliente y el servidor.
@@ -35,8 +37,14 @@ public class TematicaDTO
      */
     public TematicaDTO()
     {
+        //Solamente instancia la tematica, pero no se le asignan valores porque esto hace parte del trabajo que tiene que hacer otra clase. 
+    }
+    
+    public TematicaDTO(TematicaEntity entity)
+    {
         
     }
+    
     
     /*
     Getters
@@ -81,6 +89,14 @@ public class TematicaDTO
     public void setDescripcion(String pDesc)
     {
         descripcion = pDesc;
+    }
+    
+    
+    public TematicaEntity toEntity()
+    {
+        TematicaEntity entity = new TematicaEntity();
+        entity.setDescripcion(descripcion);
+        return entity;
     }
 }
 

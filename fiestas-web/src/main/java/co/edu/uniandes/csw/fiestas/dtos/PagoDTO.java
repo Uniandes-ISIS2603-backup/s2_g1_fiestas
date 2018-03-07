@@ -69,6 +69,7 @@ public class PagoDTO {
     public PagoEntity toEntity() {
         PagoEntity entity = new PagoEntity();
         entity.setId(this.id);
+        
         if (this.estado.equalsIgnoreCase(Estado.CONFIRMADO.toString())) {
             entity.setEstado(Estado.CONFIRMADO);
         } else if (this.estado.equalsIgnoreCase(Estado.RECHAZADO.toString())) {
@@ -84,6 +85,7 @@ public class PagoDTO {
         } else {
             entity.setMetodoDePago(MetodoDePago.CONSIGNACION);
         }
+        
         entity.setRealizado(this.realizado);
         return entity;
     }

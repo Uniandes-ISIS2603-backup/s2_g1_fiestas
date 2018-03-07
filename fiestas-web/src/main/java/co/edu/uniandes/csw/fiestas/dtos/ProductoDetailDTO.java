@@ -61,7 +61,6 @@ import java.util.List;
 public class ProductoDetailDTO extends ProductoDTO
 {
 
-private ContratoDTO contrato;
 private ServicioDTO servicio;
 
 /**
@@ -69,21 +68,13 @@ private ServicioDTO servicio;
 */
 public ProductoDetailDTO()
 {
-    
+    //El constructor vacio solo se usa para instanciar la clase, sin los atributos inicializados, porque esto hace parte del otro tipo de método constructor. 
 }
 
 /*
 Getters
 */
 
-/**
- * 
- * @return el Contrato en el cual está el producto 
- */
-private ContratoDTO darContrato()
-{
- return contrato;
-}
 
 /**
  * 
