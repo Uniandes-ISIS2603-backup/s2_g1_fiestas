@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -41,14 +42,17 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "Pago_Id", referencedColumnName = "id")
     private PagoEntity pago;
 
     @PodamExclude
     @ManyToOne
+    @JoinColumn(name = "Cliente_Id", referencedColumnName = "id")
     private ClienteEntity cliente;
 
     @PodamExclude
     @OneToOne
+    @JoinColumn(name = "Tematica_Id", referencedColumnName = "id")
     private TematicaEntity tematica;
 
     /**
