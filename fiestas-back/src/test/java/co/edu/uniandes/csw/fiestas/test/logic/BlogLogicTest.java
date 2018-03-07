@@ -190,6 +190,7 @@ public class BlogLogicTest {
         blogLogic.updateBlog(newEntity);
 
         BlogEntity resp = em.find(BlogEntity.class, entity.getId());
+        
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getTitulo(), resp.getTitulo());
         Assert.assertEquals(newEntity.getCuerpo(), resp.getCuerpo());
@@ -198,4 +199,22 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
         
     }
+    
+    /**
+     * @Test
+    public void updateAuthorTest() {
+        AuthorEntity entity = data.get(0);
+        AuthorEntity pojoEntity = factory.manufacturePojo(AuthorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        authorLogic.updateAuthor(pojoEntity);
+
+        AuthorEntity resp = em.find(AuthorEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getName(), resp.getName());
+        Assert.assertEquals(pojoEntity.getBirthDate(), resp.getBirthDate());
+    }
+     */
 }
