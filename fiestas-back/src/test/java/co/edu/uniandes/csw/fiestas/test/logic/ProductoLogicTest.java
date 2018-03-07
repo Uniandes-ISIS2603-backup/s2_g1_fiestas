@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,5 +155,39 @@ public class ProductoLogicTest
         ProductoEntity resp = em.find(ProductoEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+    }
+    
+    
+    /**
+     * Prueba para actualizar los servicios
+     */
+    @Test
+    public void setServicioTest()
+    {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+        
+        ServicioEntity newServicio = em.find(ServicioEntity.class, entity.getServicio().getId());
+        productoLogic.setServicio(entity.getId(), newServicio.getId());
+        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
+        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
+    }
+    
+    /**
+     * Prueba para revisar el servicio
+     */
+    @Test
+    public void getServicioTest()
+    {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+        
+        ServicioEntity newServicio = em.find(ServicioEntity.class, entity.getServicio().getId());
+        
+        productoLogic.setServicio(entity.getId(), newServicio.getId());
+        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
+        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
     }
 }
