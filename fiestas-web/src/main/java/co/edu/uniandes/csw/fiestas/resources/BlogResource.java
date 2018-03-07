@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.fiestas.resources;
 import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.BlogLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import javax.ws.rs.WebApplicationException;
  * </pre>
  * @author mc.gonzalez15  
  */
-@Path("eventos/{eventoId: \\d+}/blog")
+@Path("/blogs")
 @Produces("application/json")
 
 public class BlogResource {
@@ -60,7 +61,7 @@ public class BlogResource {
     @GET
     @Path("{id: \\d+}")
     public BlogDetailDTO getBlog(@PathParam("id") Long id, @PathParam("id") Long eventoId) {
-        BlogEntity bE=logic.getBlog(id, eventoId);
+        BlogEntity bE=logic.getBlog(id);
         if(bE==null)
             throw new WebApplicationException("El blog no existe", 404);
         return new BlogDetailDTO(bE);
@@ -149,6 +150,19 @@ public class BlogResource {
             list.add(new BlogDetailDTO(entity));
         }
         return list;
+    }
+    
+    /**
+     * 
+     */
+    public void addEvento(@PathParam("id")Long eventoId, @PathParam("id")Long id) {
+        EventoEntity eE=logic.getEvento(eventoId);
+        try{
+            logic.addEvento(eE, id);
+        }
+        catch(BusinessLogicException e){
+            throw  new WebApplicationException(e.getMessage(),404);
+        }
     }
     
 }
