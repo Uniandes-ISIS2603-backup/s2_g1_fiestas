@@ -171,6 +171,7 @@ public class BlogResource {
     
      public EventoDTO getEvento(Long idBlog) {
         EventoEntity eE=logic.getEvento(idBlog);
+        
         return new EventoDTO(eE);
     }
 }

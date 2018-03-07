@@ -91,14 +91,17 @@ public class BlogLogic {
     
     public EventoEntity getEvento(Long id){
         BlogEntity bE=persistence.find(id);
+        EventoEntity eE=bE.getEvento();
         return eE;
     }
     
     
     public void addEvento(EventoEntity eE, Long id) throws BusinessLogicException{
         BlogEntity bE = getBlog(id);
-        if(bE.getEvento()==null)
+        if(bE.getEvento()==null){
         bE.setEvento(eE);
+        persistence.update(bE);
+        }
         else 
             throw new BusinessLogicException("El blog ya tiene evento.");
     }
