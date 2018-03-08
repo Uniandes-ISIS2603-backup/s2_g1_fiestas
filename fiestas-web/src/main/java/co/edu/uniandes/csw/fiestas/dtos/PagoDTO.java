@@ -34,8 +34,9 @@ public class PagoDTO {
 
     private long id;
     private Boolean realizado;
-    private String estado;
-    private String metodoDePago;
+    private Estado estado;
+    private MetodoDePago metodoDePago;
+    private int valor;
 
     /**
      * Constructor por defecto
@@ -54,9 +55,10 @@ public class PagoDTO {
     public PagoDTO(PagoEntity entity) {
         if (entity != null) {
             this.id = entity.getId();
-            this.estado = entity.getEstado().toString();
-            this.metodoDePago = entity.getMetodoDePago().toString();
+            this.estado = entity.getEstado();
+            this.metodoDePago = entity.getMetodoDePago();
             this.realizado = entity.isRealizado();
+            this.valor=entity.getValor();
         }
     }
 
@@ -69,24 +71,10 @@ public class PagoDTO {
     public PagoEntity toEntity() {
         PagoEntity entity = new PagoEntity();
         entity.setId(this.id);
-        
-        if (this.estado.equalsIgnoreCase(Estado.CONFIRMADO.toString())) {
-            entity.setEstado(Estado.CONFIRMADO);
-        } else if (this.estado.equalsIgnoreCase(Estado.RECHAZADO.toString())) {
-            entity.setEstado(Estado.RECHAZADO);
-        } else {
-            entity.setEstado(Estado.EN_REVISION);
-        }
-
-        if (this.metodoDePago.equalsIgnoreCase(MetodoDePago.PSE.toString())) {
-            entity.setMetodoDePago(MetodoDePago.PSE);
-        } else if (this.metodoDePago.equalsIgnoreCase(MetodoDePago.TARJETA_CREDITO.toString())) {
-            entity.setMetodoDePago(MetodoDePago.TARJETA_CREDITO);
-        } else {
-            entity.setMetodoDePago(MetodoDePago.CONSIGNACION);
-        }
-        
+        entity.setEstado(estado);
+        entity.setMetodoDePago(metodoDePago);
         entity.setRealizado(this.realizado);
+        entity.setValor(valor);
         return entity;
     }
 
@@ -121,7 +109,7 @@ public class PagoDTO {
     /**
      * @return Estado del proceso de pago
      */
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
@@ -130,7 +118,7 @@ public class PagoDTO {
      *
      * @param estado nuevo del pago
      */
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
@@ -139,7 +127,7 @@ public class PagoDTO {
      *
      * @return metodo de pago usado en el pago
      */
-    public String getMetodoPago() {
+    public MetodoDePago getMetodoPago() {
         return metodoDePago;
     }
 
@@ -148,8 +136,25 @@ public class PagoDTO {
      *
      * @param metodo de pago
      */
-    public void setMetodoPago(String metodo) {
+    public void setMetodoPago(MetodoDePago metodo) {
         this.metodoDePago = metodo;
-
+    }
+    
+        /**
+     * Retorna el valor del pago
+     *
+     * @return valor del pago
+     */
+    public int getValor(){
+        return valor;
+    }
+   
+     /**
+     * Asigna el valor del pago
+     *
+     * @param valor del pago
+     */
+    public void setValor(int valor){
+        this.valor=valor;
     }
 }
