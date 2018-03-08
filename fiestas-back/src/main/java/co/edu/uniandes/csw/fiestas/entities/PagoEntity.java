@@ -10,7 +10,6 @@ import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -19,12 +18,14 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class PagoEntity extends BaseEntity implements Serializable {
 
-    private Boolean realizado; /*Boolean que representa si el pago fur realizado*/
-    private Estado estado;/*Estado actual del pagoo*/
-    private MetodoDePago metodoDePago; /*Metodo de pago actual*/
-    
-    @PodamExclude
-    @OneToOne(mappedBy="pago")
+    private Boolean realizado;
+    /*Boolean que representa si el pago fur realizado*/
+    private int estado;/*Estado actual del pagoo*/
+    private int metodoDePago;
+    /*Metodo de pago actual*/
+    private int valor;/*Valor del pago*/
+
+    @OneToOne(mappedBy = "pago")
     private EventoEntity evento;
 
     /**
@@ -52,7 +53,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @return estado actual del pago
      */
     public Estado getEstado() {
-        return estado;
+        return Estado.parse(this.estado);
     }
 
     /**
@@ -61,7 +62,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @param estado nuevo del pago
      */
     public void setEstado(Estado estado) {
-        this.estado = estado;
+        this.estado = estado.getValue();
     }
 
     /**
@@ -70,7 +71,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @return metodo de pago actual del pago
      */
     public MetodoDePago getMetodoDePago() {
-        return metodoDePago;
+        return MetodoDePago.parse(metodoDePago);
     }
 
     /**
@@ -79,24 +80,42 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @param metodoDePago Metodo de pago nuevo del pago
      */
     public void setMetodoDePago(MetodoDePago metodoDePago) {
-        this.metodoDePago = metodoDePago;
+        this.metodoDePago = metodoDePago.getValue();
     }
-    
-     /**
+
+    /**
+     * Obtiene el valor a pagar del pago
+     *
+     * @return valor a pagar
+     */
+    public int getValor() {
+        return valor;
+    }
+
+    /**
+     * Establece eel valor a pagar del pago
+     *
+     * @param valor a pagar
+     */
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    /**
      * Obtiene el evento relacionado del pago
      *
      * @return evento relacionado del pago
      */
-    public EventoEntity getEvento(){
+    public EventoEntity getEvento() {
         return evento;
     }
-    
-     /**
+
+    /**
      * Establece el evento al que corresponde el pago
      *
      * @param evento Entidad del evento a asignar al pago
      */
-    public void setEvento(EventoEntity evento){
-        this.evento=evento;
+    public void setEvento(EventoEntity evento) {
+        this.evento = evento;
     }
 }
