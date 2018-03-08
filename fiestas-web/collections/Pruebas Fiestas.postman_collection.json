@@ -7,27 +7,117 @@
 	},
 	"item": [
 		{
-			"name": "GET eventos",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:8080/fiestas-web/api/eventos",
-					"protocol": "http",
-					"host": [
-						"localhost"
+			"name": "Eventos",
+			"description": "",
+			"item": [
+				{
+					"name": "GET ALL eventos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
 					],
-					"port": "8080",
-					"path": [
-						"fiestas-web",
-						"api",
-						"eventos"
-					]
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
 				},
-				"description": "GET fiestas"
-			},
-			"response": []
+				{
+					"name": "GET eventos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"100"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
+				},
+				{
+					"name": "GET FAIL eventos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3305fb99-3251-46af-8dbf-bd4b4418ed4d",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/400",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"400"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
