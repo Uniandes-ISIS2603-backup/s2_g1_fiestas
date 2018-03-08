@@ -6,9 +6,12 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -17,10 +20,13 @@ import javax.persistence.OneToOne;
 @Entity
 public class BlogEntity extends BaseEntity implements Serializable {
 
+    @PodamExclude
     @ManyToOne
     private UsuarioEntity usuario;
 
-    @OneToOne
+
+    @PodamExclude
+    @OneToOne (cascade = CascadeType.PERSIST)
     private EventoEntity evento;
 
     /**

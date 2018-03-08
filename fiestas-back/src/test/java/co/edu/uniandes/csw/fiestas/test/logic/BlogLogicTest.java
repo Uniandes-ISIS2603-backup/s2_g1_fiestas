@@ -46,12 +46,6 @@ public class BlogLogicTest {
     @Inject
     private BlogLogic blogLogic;
     
-    @Inject
-    private UsuarioLogic usuarioLogic;
-    
-    @Inject 
-    private EventoLogic eventoLogic;
-
     @PersistenceContext
     private EntityManager em;
 
@@ -101,6 +95,8 @@ public class BlogLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from BlogEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
 
     /**
@@ -112,19 +108,16 @@ public class BlogLogicTest {
         for (int i = 0; i < 3; i++) {
             EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
             UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-            
+            BlogEntity entity = factory.manufacturePojo(BlogEntity.class); 
+            em.persist(evento);
+            em.persist(usuario);
+            entity.setUsuario(usuario);
+            entity.setEvento(evento);
             Edata.add(evento);
             Udata.add(usuario);
-           
-        }
-        
-        for(int l = 0; l<3;l++)
-        {
-            BlogEntity entity = factory.manufacturePojo(BlogEntity.class);
-            entity.setUsuario(Udata.get(l));
-            entity.setEvento(Edata.get(l));
             em.persist(entity);
             data.add(entity); 
+           
         }
     }
 
@@ -186,6 +179,8 @@ public class BlogLogicTest {
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
 
         newEntity.setId(entity.getId());
+        newEntity.setEvento(entity.getEvento());
+        newEntity.setUsuario(entity.getUsuario());
 
         blogLogic.updateBlog(newEntity);
 
@@ -199,22 +194,4 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
         
     }
-    
-    /**
-     * @Test
-    public void updateAuthorTest() {
-        AuthorEntity entity = data.get(0);
-        AuthorEntity pojoEntity = factory.manufacturePojo(AuthorEntity.class);
-
-        pojoEntity.setId(entity.getId());
-
-        authorLogic.updateAuthor(pojoEntity);
-
-        AuthorEntity resp = em.find(AuthorEntity.class, entity.getId());
-
-        Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getName(), resp.getName());
-        Assert.assertEquals(pojoEntity.getBirthDate(), resp.getBirthDate());
-    }
-     */
 }
