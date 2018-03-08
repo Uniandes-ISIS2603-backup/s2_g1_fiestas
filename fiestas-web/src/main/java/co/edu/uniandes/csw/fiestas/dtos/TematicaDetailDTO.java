@@ -11,24 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* Clase que extiende de {@link TematicaDTO} para manejar los proveedores del negocio con sus relaciones. 
- * Para conocer el contenido de un proveedor vaya a la documentacion de {@link TematicaDTO}.
+ * Clase que extiende de {@link TematicaDTO} para manejar los proveedores del
+ * negocio con sus relaciones. Para conocer el contenido de un proveedor vaya a
+ * la documentacion de {@link TematicaDTO}.
  * <p>
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
  *   {
  *      "id": Integer
  *      "descripcion": String
- *      [ 
- *          { 
+ *      [
+ *          {
  *           "id": Long
-             "descripcion": String
-             "tipo": String
-            }
+ * "descripcion": String
+ * "tipo": String
+ * }
  *      ]
  *   }
- * </pre>
- * Por ejemplo una entidad de Servicio se representa asi:<br>
+ * </pre> Por ejemplo una entidad de Servicio se representa asi:<br>
  * <pre>
  *
  *   {
@@ -36,9 +36,9 @@ import java.util.List;
  *      "descripcion": Boda
  *      [
  *          { "id": 8974262
-             "descripcion": Banquete
-             "tipo": Comida
-            }
+ * "descripcion": Banquete
+ * "tipo": Comida
+ * }
  *      ]
  *   }
  *
@@ -46,42 +46,25 @@ import java.util.List;
  *
  * @author af.losada
  */
-public class TematicaDetailDTO extends TematicaDTO
-{
-    List<ServicioDTO> serviciosSugeridos;
+public class TematicaDetailDTO extends TematicaDTO {
     
+    List<ServicioDTO> serviciosSugeridos;
+
     /*
     * El constructor 
-    */
-    public TematicaDetailDTO()
-    {
+     */
+    public TematicaDetailDTO() {
         //El constructor vacio solo se usa para instanciar la clase, sin los atributos inicializados, porque esto hace parte del otro tipo de método constructor.
     }
-    /***
-     * 
-     * @return La lista de Servicios sugeridos para esta temática
-     */
-    public List<ServicioDTO> darServiciosSugeridos()
-    {
-        return serviciosSugeridos;
-    }
-    /***
-     * 
-     * @param lista Es la nueva lista de serivcios sugeridos
-     */
-    public void setServicios(List<ServicioDTO> lista)
-    {
-        serviciosSugeridos = lista;
-    }
-    
-     /**
-     * Crea un objeto ProductoDetailDTO a partir de un objeto ProductoEntity
-     * incluyendo los atributos de ProductoDTO.
+
+    /**
+     * Crea un objeto TematicaDetailDTO a partir de un objeto TematicaEntity
+     * incluyendo los atributos de TematicaDTO.
      *
-     * @param entity Entidad ProductoEntity desde la cual se va a crear el nuevo
+     * @param entity Entidad TematicaEntity desde la cual se va a crear el nuevo
      * objeto.
      *
-     */ 
+     */
     public TematicaDetailDTO(TematicaEntity entity) {
         super(entity);
         
@@ -94,7 +77,15 @@ public class TematicaDetailDTO extends TematicaDTO
         
         setServicios(list2);
     }
-    
+
+    /**
+     * Convierte un objeto TematicaDetailDTO a TematicaEntity incluyendo los
+     * atributos de TematicaDTO.
+     *
+     * @return Nueva objeto TematicaEntity.
+     *
+     */
+    @Override
     public TematicaEntity toEntity()
     {
         TematicaEntity entity = super.toEntity();
@@ -107,6 +98,22 @@ public class TematicaDetailDTO extends TematicaDTO
         entity.setServicios(list2);
         return entity;
     }
-    
+
+    /**
+     * *
+     *
+     * @return La lista de Servicios sugeridos para esta temática
+     */
+    public List<ServicioDTO> darServiciosSugeridos() {
+        return serviciosSugeridos;
+    }
+
+    /**
+     * 
+     * @param lista Es la nueva lista de serivcios sugeridos
+     */
+    public void setServicios(List<ServicioDTO> lista) {
+        serviciosSugeridos = lista;
+    }     
     
 }

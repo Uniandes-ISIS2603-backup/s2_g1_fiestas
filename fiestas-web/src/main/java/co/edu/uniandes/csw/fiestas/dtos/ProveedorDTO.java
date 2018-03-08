@@ -45,9 +45,7 @@ public class ProveedorDTO extends UsuarioDTO
      */
     public ProveedorDTO()
     {
-        
-        
-        
+        //Constructor vacio
     }      
     private boolean penalizado;
 

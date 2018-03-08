@@ -1,6 +1,8 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class EventoDetailDTO extends EventoDTO {
      * Constructor por defecto
      */
     public EventoDetailDTO() {
-
+        //Constructor vacio
     }
 
     /**
@@ -34,6 +36,16 @@ public class EventoDetailDTO extends EventoDTO {
      */
     public EventoDetailDTO(EventoEntity entity) {
         super(entity);
+        if(entity!=null){
+            contratos=new ArrayList<>();
+            for(ContratoEntity contratoEntity : entity.getContratos()){
+                contratos.add(new ContratoDTO(contratoEntity));
+            }
+            
+            pago=new PagoDTO(entity.getPago());
+            cliente = new ClienteDTO(entity.getCliente());
+            tematica= new TematicaDTO(entity.getTematica());
+        }
     }
 
     /**
@@ -46,6 +58,18 @@ public class EventoDetailDTO extends EventoDTO {
     @Override
     public EventoEntity toEntity() {
         EventoEntity entity = super.toEntity();
+        if(contratos!=null){
+            List<ContratoEntity> contratosEntity= new ArrayList<>();
+            for(ContratoDTO contrato: contratos)
+            {
+                contratosEntity.add(contrato.toEntity());
+            }
+            entity.setContratos(contratosEntity);
+            
+            entity.setPago(pago.toEntity());
+            entity.setCliente(cliente.toEntity());
+            entity.setTematica(tematica.toEntity());
+        }
         return entity;
     }
 

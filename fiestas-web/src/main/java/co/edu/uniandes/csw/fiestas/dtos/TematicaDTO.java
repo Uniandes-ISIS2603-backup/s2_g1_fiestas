@@ -3,8 +3,9 @@ package co.edu.uniandes.csw.fiestas.dtos;
 import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 
 /**
- * TematicaDTO Objeto de transferencia de datos de la entidad de Tematica. Los DTO contienen las
- * representaciones de los JSON que se transfieren entre el cliente y el servidor.
+ * TematicaDTO Objeto de transferencia de datos de la entidad de Tematica. Los
+ * DTO contienen las representaciones de los JSON que se transfieren entre el
+ * cliente y el servidor.
  * <p>
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
@@ -12,8 +13,7 @@ import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
  *      "id": Integer
  *      "descripcion": String
  *   }
- * </pre>
- * Por ejemplo una entidad de Servicio se representa asi:<br>
+ * </pre> Por ejemplo una entidad de Servicio se representa asi:<br>
  * <pre>
  *
  *   {
@@ -25,80 +25,75 @@ import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
  *
  * @author af.losada
  */
-public class TematicaDTO 
-{
-    
+public class TematicaDTO {
+
     private long id;
     private String descripcion;
-    
-    
+
     /**
      * Constructor por defecto
      */
-    public TematicaDTO()
-    {
-        //Solamente instancia la tematica, pero no se le asignan valores porque esto hace parte del trabajo que tiene que hacer otra clase. 
+    public TematicaDTO() {
+        //COnstructor vacio
     }
-    
-    public TematicaDTO(TematicaEntity entity)
-    {
-        
-    }
-    
-    
-    /*
-    Getters
-    */
-    
+
     /**
-     * 
-     * @return La descripción de la temática
+     * Crea un objeto TematicaDTO a partir de un objeto TematicaEntity.
+     *
+     * @param entity Entidad TematicaEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
      */
-    public String darDescripcion()
-    {
-        return descripcion;
+    public TematicaDTO(TematicaEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.descripcion = entity.getDescripcion();
+        }
     }
-    
+
     /**
-     * 
-     * @return La ID de la temática
+     * Convierte un objeto TematicaDetailDTO a TematicaEntity incluyendo los
+     * atributos de TematicaDTO.
+     *
+     * @return Nueva objeto TematicaEntity.
+     *
      */
-    public long darID()
-    {
-        return id;
-    }
-    
-    /*
-    Setters
-    */
-    
-    
-    /**
-     * 
-     * @param pID La nueva ID
-     */
-    public void setID(long pID)
-    {
-        id = pID;
-    }
-    
-    /**
-     * 
-     * @param pDesc La nueva descripción de la temática
-     */
-    public void setDescripcion(String pDesc)
-    {
-        descripcion = pDesc;
-    }
-    
-    
-    public TematicaEntity toEntity()
-    {
+    public TematicaEntity toEntity() {
         TematicaEntity entity = new TematicaEntity();
+        entity.setId(id);
         entity.setDescripcion(descripcion);
         return entity;
     }
+
+    /**
+     *
+     * @return La descripción de la temática
+     */
+    public String darDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     *
+     * @return La ID de la temática
+     */
+    public long darID() {
+        return id;
+    }
+
+    /**
+     *
+     * @param pID La nueva ID
+     */
+    public void setID(long pID) {
+        id = pID;
+    }
+
+    /**
+     *
+     * @param pDesc La nueva descripción de la temática
+     */
+    public void setDescripcion(String pDesc) {
+        descripcion = pDesc;
+    }
 }
-
-
-

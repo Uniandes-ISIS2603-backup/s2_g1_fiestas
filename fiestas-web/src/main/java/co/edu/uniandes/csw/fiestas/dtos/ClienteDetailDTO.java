@@ -71,17 +71,10 @@ public class ClienteDetailDTO extends ClienteDTO
      */
     public ClienteDetailDTO() 
     {
-        
+        //Constructor vacio
     }
-
-    public List<EventoDTO> getEventos() {
-        return eventos;
-    }
-
-    public void setClienteDTO(List<EventoDTO> eventos) {
-        this.eventos = eventos;
-    }     
     
+        
     public ClienteDetailDTO(ClienteEntity entity)
     {
         super(entity);  
@@ -94,12 +87,20 @@ public class ClienteDetailDTO extends ClienteDTO
             }            
         }
     }
+
+    public List<EventoDTO> getEventos() {
+        return eventos;
+    }
+
+    public void setClienteDTO(List<EventoDTO> eventos) {
+        this.eventos = eventos;
+    }     
     
     @Override
     public ClienteEntity toEntity()
     {
         ClienteEntity entity = super.toEntity();
-        List<EventoEntity> listEventos = new ArrayList<EventoEntity>();
+        List<EventoEntity> listEventos = new ArrayList<>();
         for(EventoDTO dto : getEventos())
         {
             EventoEntity ent = dto.toEntity();

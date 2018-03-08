@@ -1,7 +1,9 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,9 @@ public class ProductoLogic
     
     @Inject
     private ProductoPersistence persistence;
+    
+    @Inject
+    private ServicioPersistence perSer;
     
     /**
      * Obtiene la lista de los registros de Producto.
@@ -76,8 +81,28 @@ public class ProductoLogic
         LOGGER.log(Level.INFO, "Termina proceso de borrar producto con id={0}", id);
     }
     
+    /**
+     * Busca el servicio de este producto
+     * @param id
+     * @return ServicioEntity de este producto
+     */
+    public ServicioEntity getServicio(Long id) 
+    {
+        ProductoEntity faind = persistence.find(id);
+        return faind.getServicio();
+    }
     
-    
-    
-    
+    /**
+     * Cambia el servicio del producto
+     * @param id id producto    
+     * @param idSer servicio
+     * @return 
+     */
+    public ServicioEntity setServicio(Long id, Long idSer) 
+    {
+        ServicioEntity find = perSer.find(idSer);
+        ProductoEntity faind = persistence.find(id);
+        faind.setServicio(find);
+        return find;
+    }
 }

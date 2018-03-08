@@ -39,6 +39,27 @@ public class ContratoDetailDTO extends ContratoDTO {
     }
 
     /**
+     * Crea un objeto ContratoDetailDTO a partir de un objeto ContratoEntity
+     * incluyendo los atributos de ContratoDTO.
+     *
+     * @param entity Entidad ContratoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */
+    public ContratoDetailDTO(ContratoEntity entity) {
+        super(entity);
+        if (entity != null) {
+            proveedor = new ProveedorDTO(entity.getProveedor());
+            evento = new EventoDTO(entity.getEvento());
+            productos = new ArrayList<>();
+
+            for (ProductoEntity entityProductos : entity.getProductos()) {
+                productos.add(new ProductoDTO(entityProductos));
+            }
+        }
+    }
+
+    /**
      * Retorna el proveedor
      *
      * @return proveedor
@@ -94,42 +115,20 @@ public class ContratoDetailDTO extends ContratoDTO {
 
     /**
      * Retorna el horario del contrato
-     * 
+     *
      * @return horario el horario
      */
-    
     public HorarioDTO getHorario() {
         return horario;
     }
 
     /**
      * Asigna el un nuevo horario al contrato
-     * 
+     *
      * @param horario el nuevo horario
      */
     public void setHorario(HorarioDTO horario) {
         this.horario = horario;
-    }
-
-    /**
-     * Crea un objeto ContratoDetailDTO a partir de un objeto ContratoEntity
-     * incluyendo los atributos de ContratoDTO.
-     *
-     * @param entity Entidad ContratoEntity desde la cual se va a crear el nuevo
-     * objeto.
-     *
-     */
-    public ContratoDetailDTO(ContratoEntity entity) {
-        super(entity);
-        if (entity != null) {
-            proveedor = new ProveedorDTO(entity.getProveedor());
-            evento = new EventoDTO(entity.getEvento());
-            productos = new ArrayList<>();
-
-            for (ProductoEntity entityProductos : entity.getProductos()) {
-                productos.add(new ProductoDTO(entityProductos));
-            }
-        }
     }
 
     /**
