@@ -111,7 +111,7 @@ public class ProveedorLogicTest
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
-        Assert.assertEquals(newEntity.getName(), entidad.getName());
+        Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
         Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
     }
@@ -165,7 +165,7 @@ public class ProveedorLogicTest
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
-        Assert.assertEquals(newEntity.getName(), entidad.getName());
+        Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
         Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
     }

@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.entities;
 
-import java.beans.PropertyChangeSupport;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -20,8 +12,9 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author df.nino10
  */
 @Entity
-public class UsuarioEntity extends BaseEntity implements Serializable
+public class UsuarioEntity extends BaseEntity 
 {
+    private String nombre;
     private String documento;
     private Long telefono;
     private String correo;
@@ -31,6 +24,22 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs= new ArrayList<>();
+    
+    
+    /**
+     * @return nombre del usuario
+     */
+    public String getNombre() {
+        return documento;
+    }
+
+    /**
+     * @param nombre del usuario a asignar
+     */
+    public void setNombre(String nombre)
+    {
+        this.nombre = nombre;
+    }
 
     /**
      * @return the documento

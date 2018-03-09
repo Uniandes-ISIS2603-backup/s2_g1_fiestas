@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 
 /**
@@ -68,7 +62,7 @@ public class UsuarioDTO
         this.direccion=e.getDireccion();
         this.documento=e.getDocumento();
         this.login=e.getLogin();
-        this.nombre=e.getName();
+        this.nombre=e.getNombre();
         this.telefono=e.getTelefono();
     }
     
@@ -200,7 +194,7 @@ public class UsuarioDTO
         e.setDireccion(this.direccion);
         e.setDocumento(this.documento);
         e.setLogin(this.login);
-        e.setName(this.nombre);
+        e.setNombre(this.nombre);
         e.setTelefono(this.telefono);
         return e;
     }

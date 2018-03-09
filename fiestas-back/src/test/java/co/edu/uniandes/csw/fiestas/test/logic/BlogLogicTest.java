@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.BlogLogic;
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
-import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
@@ -23,11 +17,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -232,7 +223,6 @@ public class BlogLogicTest {
         assertEquals(eventoE1.getId(), eventoE.getId());
         assertEquals(eventoE1.getId(), eventoE.getId());
         assertEquals(eventoE1.getCliente(), eventoE.getCliente());
-        assertEquals(eventoE1.getName(), eventoE.getName());
         assertEquals(eventoE1.getDescripcion(), eventoE.getDescripcion());
         assertEquals(eventoE1.getLugar(), eventoE.getLugar());
     }
@@ -250,7 +240,6 @@ public class BlogLogicTest {
         assertEquals(eventoE1.getId(), eventoE.getId());
         assertEquals(eventoE1.getId(), eventoE.getId());
         assertEquals(eventoE1.getCliente(), eventoE.getCliente());
-        assertEquals(eventoE1.getName(), eventoE.getName());
         assertEquals(eventoE1.getDescripcion(), eventoE.getDescripcion());
         assertEquals(eventoE1.getLugar(), eventoE.getLugar());
     }

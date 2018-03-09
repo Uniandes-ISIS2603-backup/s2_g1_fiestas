@@ -116,6 +116,7 @@ public class ServicioLogicTest {
      * Prueba para crear un Servicio
      *
      *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void createServicioTest() throws BusinessLogicException {
@@ -124,7 +125,6 @@ public class ServicioLogicTest {
         Assert.assertNotNull(result);
         ServicioEntity entity = em.find(ServicioEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
         Assert.assertEquals(newEntity.getValoraciones(), entity.getValoraciones());
  
@@ -161,7 +161,7 @@ public class ServicioLogicTest {
         ServicioEntity resultEntity = servicioLogic.getServicio(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getName(), resultEntity.getName());
+        Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
         Assert.assertEquals(entity.getValoraciones(), resultEntity.getValoraciones());
     }
@@ -196,7 +196,7 @@ public class ServicioLogicTest {
         ServicioEntity resp = em.find(ServicioEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getName(), resp.getName());
+        Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
         Assert.assertEquals(pojoEntity.getValoraciones(), resp.getValoraciones());
     }

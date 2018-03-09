@@ -1,4 +1,3 @@
-
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
@@ -8,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -24,6 +22,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class EventoEntity extends BaseEntity implements Serializable {
 
+    private String nombre;
+    /*Nombre del evento*/
     @Temporal(TemporalType.DATE)
     private Date fecha;
     /*Fecha del evento */
@@ -37,7 +37,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /*Numero de invitados del evento */
 
     @PodamExclude
-    @OneToMany(mappedBy="evento")
+    @OneToMany(mappedBy = "evento")
     private List<ContratoEntity> contratos = new ArrayList<>();
 
     @PodamExclude
@@ -46,13 +46,29 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToOne
-    @JoinColumn(name = "Cliente_Id", referencedColumnName = "id")
     private ClienteEntity cliente;
 
     @PodamExclude
     @OneToOne
-    @JoinColumn(name = "Tematica_Id", referencedColumnName = "id")
     private TematicaEntity tematica;
+
+    /**
+     * Obtiene el atributo nombre
+     *
+     * @return nombre asignado al evento
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Establece el nombre del evento
+     *
+     * @param nombre nuevo del evento
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     /**
      * Obtiene el atributo fecha
@@ -215,6 +231,5 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setTematica(TematicaEntity tematica) {
         this.tematica = tematica;
     }
-    
-    
+
 }

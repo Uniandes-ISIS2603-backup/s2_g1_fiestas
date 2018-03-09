@@ -114,7 +114,7 @@ public class TematicaLogicTest
     /**
      * Prueba para crear un Tematica
      *
-     * @throws co.edu.uniandes.csw.serviciostore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void createTematicaTest() throws BusinessLogicException {
@@ -123,7 +123,7 @@ public class TematicaLogicTest
         Assert.assertNotNull(result);
         TematicaEntity entity = em.find(TematicaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
 
     /**
@@ -157,7 +157,7 @@ public class TematicaLogicTest
         TematicaEntity resultEntity = tematicaLogic.getTematica(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getName(), resultEntity.getName());
+        Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
     }
 
     /**
@@ -191,7 +191,7 @@ public class TematicaLogicTest
         TematicaEntity resp = em.find(TematicaEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getName(), resp.getName());
+        Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
     }
 
     /**
@@ -208,7 +208,7 @@ public class TematicaLogicTest
         ServicioEntity response = tematicaLogic.getServicio(entity.getId(), servicioEntity.getId());
 
         Assert.assertEquals(servicioEntity.getId(), response.getId());
-        Assert.assertEquals(servicioEntity.getName(), response.getName());
+        Assert.assertEquals(servicioEntity.getNombre(), response.getNombre());
         Assert.assertEquals(servicioEntity.getDescripcion(), response.getDescripcion());
         Assert.assertEquals(servicioEntity.getProductos(), response.getProductos());
         Assert.assertEquals(servicioEntity.getProveedores(), response.getProveedores());
