@@ -191,7 +191,7 @@ public class BlogLogicTest {
         
           BlogEntity actualizado=blogLogic.updateBlog(newEntity);
                
-        BlogEntity resp = em.find(BlogEntity.class, 1L);
+        BlogEntity resp = em.find(BlogEntity.class, newEntity.getId());
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getTitulo(), resp.getTitulo());
