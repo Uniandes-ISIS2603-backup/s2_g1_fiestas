@@ -40,6 +40,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy="evento")
     private List<ContratoEntity> contratos = new ArrayList<>();
 
+    @PodamExclude
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private PagoEntity pago;
 

@@ -26,7 +26,6 @@ public class BlogEntity extends BaseEntity implements Serializable {
 
 
     @PodamExclude
-    @OneToOne (cascade = CascadeType.PERSIST)
     private EventoEntity evento;
 
     /**

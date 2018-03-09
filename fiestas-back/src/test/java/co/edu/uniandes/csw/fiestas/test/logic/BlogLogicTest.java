@@ -97,6 +97,7 @@ public class BlogLogicTest {
         em.createQuery("delete from BlogEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
+        data = new ArrayList<>();
     }
 
     /**
@@ -109,13 +110,17 @@ public class BlogLogicTest {
             EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
             UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
             BlogEntity entity = factory.manufacturePojo(BlogEntity.class); 
-            em.persist(evento);
-            em.persist(usuario);
             entity.setUsuario(usuario);
             entity.setEvento(evento);
+            em.persist(evento);
+            ArrayList lista=new ArrayList<>();
+            lista.add(entity);
+            usuario.setBlogs(lista);
+            em.persist(usuario);
             Edata.add(evento);
             Udata.add(usuario);
             em.persist(entity);
+            BlogEntity prueba = em.find(BlogEntity.class, entity.getId());
             data.add(entity); 
            
         }
@@ -182,10 +187,12 @@ public class BlogLogicTest {
         newEntity.setEvento(entity.getEvento());
         newEntity.setUsuario(entity.getUsuario());
 
-        blogLogic.updateBlog(newEntity);
-
-        BlogEntity resp = em.find(BlogEntity.class, entity.getId());
         
+        
+          BlogEntity actualizado=blogLogic.updateBlog(newEntity);
+               
+        BlogEntity resp = em.find(BlogEntity.class, 1L);
+
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getTitulo(), resp.getTitulo());
         Assert.assertEquals(newEntity.getCuerpo(), resp.getCuerpo());
