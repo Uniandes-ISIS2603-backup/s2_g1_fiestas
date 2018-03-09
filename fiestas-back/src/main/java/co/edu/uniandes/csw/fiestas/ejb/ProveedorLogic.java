@@ -177,7 +177,8 @@ public class ProveedorLogic {
          if (list == null) {
             throw new BusinessLogicException("No hay lista nueva.");
         }
-        if (list != null && list.isEmpty()) {
+        if (!list.isEmpty()) {
+        } else {
             throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
         }
         return list;
@@ -247,7 +248,7 @@ public class ProveedorLogic {
         for (ContratoEntity contrato : contratoList) {
             if (contratos.contains(contrato)) {
                 contrato.setProveedor(proveedor);
-            } else if (contrato.getProveedor() != null && contrato.getProveedor().equals(proveedor)) {
+            } else if (null != contrato.getProveedor() && contrato.getProveedor().equals(proveedor)) {
                 contrato.setProveedor(null);
             }
         }

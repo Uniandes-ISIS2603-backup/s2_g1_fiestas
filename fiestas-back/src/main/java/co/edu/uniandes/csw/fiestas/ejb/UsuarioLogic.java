@@ -107,13 +107,13 @@ public class UsuarioLogic {
     public List<BlogEntity> replaceBlogs(Long usuarioId, List<BlogEntity> blogs) throws BusinessLogicException 
     {
         UsuarioEntity usuario = getUsuario(usuarioId);
-        if(usuario != null)
+        if(usuario == null)
         {
-            usuario.setBlogs(blogs);
+            throw new BusinessLogicException("El usuario al que se le quiere reemplazar blogs es nulo");
         }
         else
         {
-            throw new BusinessLogicException("El usuario al que se le quiere reemplazar blogs es nulo");
+            usuario.setBlogs(blogs);
         }
         
         if(blogs == null)
@@ -121,7 +121,7 @@ public class UsuarioLogic {
             throw new BusinessLogicException("No hay lista nueva");
         }
         
-        if(blogs != null && blogs.isEmpty())
+        if(blogs.isEmpty())
         {
             throw new BusinessLogicException("La lista está vacía");
         }
