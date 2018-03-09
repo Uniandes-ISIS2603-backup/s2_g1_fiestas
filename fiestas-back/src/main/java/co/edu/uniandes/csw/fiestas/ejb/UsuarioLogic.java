@@ -116,9 +116,14 @@ public class UsuarioLogic {
             throw new BusinessLogicException("El usuario al que se le quiere reemplazar blogs es nulo");
         }
         
-        if(blogs != null || blogs.isEmpty())
+        if(blogs == null)
         {
-            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
+            throw new BusinessLogicException("No hay lista nueva");
+        }
+        
+        if(blogs != null && blogs.isEmpty())
+        {
+            throw new BusinessLogicException("La lista está vacía");
         }
         return blogs;
     }

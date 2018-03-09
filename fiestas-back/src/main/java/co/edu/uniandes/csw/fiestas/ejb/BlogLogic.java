@@ -85,14 +85,12 @@ public class BlogLogic {
      * @return 
      */
     public EventoEntity getEventoExistente(Long id){
-        EventoEntity eE= logicEvento.getEvento(id);
-        return eE;
+        return logicEvento.getEvento(id);
     }
     
     public EventoEntity getEvento(Long id){
         BlogEntity bE=persistence.find(id);
-        EventoEntity eE=bE.getEvento();
-        return eE;
+        return bE.getEvento();
     }
     
     

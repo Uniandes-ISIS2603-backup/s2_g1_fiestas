@@ -46,6 +46,9 @@ public class BlogLogicTest {
     @Inject
     private BlogLogic blogLogic;
     
+    @Inject
+    private EventoLogic eventoLogic;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -165,6 +168,22 @@ public class BlogLogicTest {
     }
 
     /**
+     * Se prueba el método para obtener un solo blog.
+     */
+    @Test
+    public void getBlogTest(){
+        BlogEntity blogE =data.get(0);
+        BlogEntity blogE1 = blogLogic.getBlog(blogE.getId());
+        assertNotNull(blogE1);
+        Assert.assertEquals(blogE.getId(), blogE1.getId());
+        Assert.assertEquals(blogE.getTitulo(), blogE1.getTitulo());
+        Assert.assertEquals(blogE.getCuerpo(), blogE1.getCuerpo());
+        Assert.assertEquals(blogE.getLikes(), blogE1.getLikes());
+        Assert.assertEquals(blogE.getUsuario(), blogE1.getUsuario());
+        Assert.assertEquals(blogE.getEvento(), blogE1.getEvento());
+        
+    }
+    /**
      * Prueba para eliminar un blog
      */
     @Test
@@ -172,7 +191,7 @@ public class BlogLogicTest {
         BlogEntity entity = data.get(0);
         blogLogic.deleteBlog(entity.getId());
         BlogEntity deleted = em.find(BlogEntity.class, entity.getId());
-        org.junit.Assert.assertNull(deleted);
+        Assert.assertNull(deleted);
     }
 
     /**
@@ -200,5 +219,67 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getUsuario(), resp.getUsuario());
         Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
         
+    }
+    /**
+     * Se prueba consistencia entre los eventos en el blog y los eventos como entidades.
+     */
+    @Test 
+    public void getEventoest(){
+        BlogEntity entity = data.get(0);
+        EventoEntity eventoE= entity.getEvento();
+        EventoEntity eventoE1=eventoLogic.getEvento(eventoE.getId());
+        assertNotNull(eventoE1);
+        assertEquals(eventoE1.getId(), eventoE.getId());
+        assertEquals(eventoE1.getId(), eventoE.getId());
+        assertEquals(eventoE1.getCliente(), eventoE.getCliente());
+        assertEquals(eventoE1.getName(), eventoE.getName());
+        assertEquals(eventoE1.getDescripcion(), eventoE.getDescripcion());
+        assertEquals(eventoE1.getLugar(), eventoE.getLugar());
+    }
+    
+    /**
+     * Se prueba consistencia entre los eventos en el blog y los eventos como entidades.
+     */
+    @Test
+    public void getEventoExistenteTTest(){
+         BlogEntity entity = data.get(0);
+         EventoEntity eventoE = entity.getEvento();
+         EventoEntity eventoE1=blogLogic.getEventoExistente(eventoE.getId());
+        
+        assertNotNull(eventoE1);
+        assertEquals(eventoE1.getId(), eventoE.getId());
+        assertEquals(eventoE1.getId(), eventoE.getId());
+        assertEquals(eventoE1.getCliente(), eventoE.getCliente());
+        assertEquals(eventoE1.getName(), eventoE.getName());
+        assertEquals(eventoE1.getDescripcion(), eventoE.getDescripcion());
+        assertEquals(eventoE1.getLugar(), eventoE.getLugar());
+    }
+    
+    @Test
+    public void addEventoTest(){
+        BlogEntity blogE = data.get(0);
+        blogE.setEvento(null);
+        blogLogic.updateBlog(blogE);
+        EventoEntity evento= factory.manufacturePojo(EventoEntity.class);
+        
+        try{
+            blogLogic.addEvento(evento, blogE.getId());      
+        }
+        catch(BusinessLogicException e){
+            fail("No pudo guardarse el evento. Debería haberse guardado.");
+        }       
+    }
+    
+    @Test
+    public void addEventoFailTest(){
+        BlogEntity blogE = data.get(0);
+        EventoEntity evento= factory.manufacturePojo(EventoEntity.class);
+        
+        try{
+            blogLogic.addEvento(evento, blogE.getId());
+            fail("No pudo guardarse el evento");
+        }
+        catch(BusinessLogicException e){
+        }       
     }
 }
