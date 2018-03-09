@@ -46,12 +46,6 @@ public class BlogLogicTest {
     @Inject
     private BlogLogic blogLogic;
     
-    @Inject
-    private UsuarioLogic usuarioLogic;
-    
-    @Inject 
-    private EventoLogic eventoLogic;
-
     @PersistenceContext
     private EntityManager em;
 
@@ -101,6 +95,9 @@ public class BlogLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from BlogEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        data = new ArrayList<>();
     }
 
     /**
@@ -112,19 +109,20 @@ public class BlogLogicTest {
         for (int i = 0; i < 3; i++) {
             EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
             UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-            
+            BlogEntity entity = factory.manufacturePojo(BlogEntity.class); 
+            entity.setUsuario(usuario);
+            entity.setEvento(evento);
+            em.persist(evento);
+            ArrayList lista=new ArrayList<>();
+            lista.add(entity);
+            usuario.setBlogs(lista);
+            em.persist(usuario);
             Edata.add(evento);
             Udata.add(usuario);
-           
-        }
-        
-        for(int l = 0; l<3;l++)
-        {
-            BlogEntity entity = factory.manufacturePojo(BlogEntity.class);
-            entity.setUsuario(Udata.get(l));
-            entity.setEvento(Edata.get(l));
             em.persist(entity);
+            BlogEntity prueba = em.find(BlogEntity.class, entity.getId());
             data.add(entity); 
+           
         }
     }
 
@@ -186,10 +184,15 @@ public class BlogLogicTest {
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
 
         newEntity.setId(entity.getId());
+        newEntity.setEvento(entity.getEvento());
+        newEntity.setUsuario(entity.getUsuario());
 
-        blogLogic.updateBlog(newEntity);
+        
+        
+          BlogEntity actualizado=blogLogic.updateBlog(newEntity);
+               
+        BlogEntity resp = em.find(BlogEntity.class, 1L);
 
-        BlogEntity resp = em.find(BlogEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getTitulo(), resp.getTitulo());
         Assert.assertEquals(newEntity.getCuerpo(), resp.getCuerpo());

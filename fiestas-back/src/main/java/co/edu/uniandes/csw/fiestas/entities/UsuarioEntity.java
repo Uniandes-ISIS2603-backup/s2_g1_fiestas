@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -27,7 +28,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable
     private String direccion;
     private String login;
     private String contraseña;
-    @OneToMany(mappedBy = "usuario")
+    @PodamExclude
+    @OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs= new ArrayList<>();
 
     /**
