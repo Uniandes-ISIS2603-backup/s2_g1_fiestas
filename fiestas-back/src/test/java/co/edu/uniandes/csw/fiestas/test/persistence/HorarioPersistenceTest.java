@@ -25,12 +25,12 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class HorarioPersistenceTest {
-    
-           /**
+
+    /**
      *
      * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Horario, el descriptor de la
-     * base de datos y el archivo benas.xml para resolver la inyección de
+     * embebido. El jar contiene las clases de Horario, el descriptor de la base
+     * de datos y el archivo benas.xml para resolver la inyección de
      * dependencias.
      */
     @Deployment
@@ -130,10 +130,12 @@ public class HorarioPersistenceTest {
         Assert.assertNotNull(result);
 
         HorarioEntity entity = em.find(HorarioEntity.class, result.getId());
-
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
-        Assert.assertEquals(newEntity.getHoraInicio(), entity.getHoraInicio());
-        Assert.assertEquals(newEntity.getHoraFin(), entity.getHoraFin());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getFecha().getDay(), entity.getFecha().getDay());
+        Assert.assertEquals(newEntity.getHoraInicio().getHours(), entity.getHoraInicio().getHours());
+        Assert.assertEquals(newEntity.getHoraInicio().getMinutes(), entity.getHoraInicio().getMinutes());
+        Assert.assertEquals(newEntity.getHoraFin().getHours(), entity.getHoraFin().getHours());
+        Assert.assertEquals(newEntity.getHoraFin().getMinutes(), entity.getHoraFin().getMinutes());
     }
 
     /**
@@ -166,9 +168,12 @@ public class HorarioPersistenceTest {
         HorarioEntity entity = data.get(0);
         HorarioEntity newEntity = horarioPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
-        Assert.assertEquals(newEntity.getHoraInicio(), entity.getHoraInicio());
-        Assert.assertEquals(newEntity.getHoraFin(), entity.getHoraFin());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getFecha().getDay(), entity.getFecha().getDay());
+        Assert.assertEquals(newEntity.getHoraInicio().getHours(), entity.getHoraInicio().getHours());
+        Assert.assertEquals(newEntity.getHoraInicio().getMinutes(), entity.getHoraInicio().getMinutes());
+        Assert.assertEquals(newEntity.getHoraFin().getHours(), entity.getHoraFin().getHours());
+        Assert.assertEquals(newEntity.getHoraFin().getMinutes(), entity.getHoraFin().getMinutes());
     }
 
     /**
@@ -201,9 +206,11 @@ public class HorarioPersistenceTest {
 
         HorarioEntity resp = em.find(HorarioEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getHoraInicio(), resp.getHoraInicio());
-        Assert.assertEquals(newEntity.getHoraFin(), resp.getHoraFin());
+        Assert.assertEquals(newEntity.getFecha().getDay(), entity.getFecha().getDay());
+        Assert.assertEquals(newEntity.getHoraInicio().getHours(), entity.getHoraInicio().getHours());
+        Assert.assertEquals(newEntity.getHoraInicio().getMinutes(), entity.getHoraInicio().getMinutes());
+        Assert.assertEquals(newEntity.getHoraFin().getHours(), entity.getHoraFin().getHours());
+        Assert.assertEquals(newEntity.getHoraFin().getMinutes(), entity.getHoraFin().getMinutes());
     }
 }
