@@ -121,7 +121,6 @@ public class ProveedorLogic {
     public ServicioEntity getServicio(Long proveedorId, Long serviciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un servicio con id = {0}", serviciosId);
         List<ServicioEntity> list = getProveedor(proveedorId).getServicios();
-        ServicioEntity serv = servicioLogic.getServicio(serviciosId);
         ServicioEntity serviciosEntity = new ServicioEntity();
         serviciosEntity.setId(serviciosId);
         int index = list.indexOf(serviciosEntity);
@@ -175,7 +174,10 @@ public class ProveedorLogic {
             throw new BusinessLogicException("El proveedor al que se le quiere reemplazar servicios es nulo");
         }
 
-        if (list != null || list.isEmpty()) {
+         if (list == null) {
+            throw new BusinessLogicException("No hay lista nueva.");
+        }
+        if (list != null && list.isEmpty()) {
             throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
         }
         return list;
