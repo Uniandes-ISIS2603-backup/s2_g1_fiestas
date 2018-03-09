@@ -174,7 +174,7 @@ public class UsuarioLogicTest {
         Assert.assertEquals(usuario.getDireccion(), usuarioT.getDireccion());
         Assert.assertEquals(usuario.getDocumento(), usuarioT.getDocumento());
         Assert.assertEquals(usuario.getLogin(), usuarioT.getLogin());
-        Assert.assertEquals(usuario.getName(), usuarioT.getName());
+        Assert.assertEquals(usuario.getNombre(), usuarioT.getNombre());
         Assert.assertEquals(usuario.getTelefono(), usuarioT.getTelefono());
         
     }

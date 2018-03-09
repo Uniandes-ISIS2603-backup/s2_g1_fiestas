@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ContratoLogic;
-import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
-import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;

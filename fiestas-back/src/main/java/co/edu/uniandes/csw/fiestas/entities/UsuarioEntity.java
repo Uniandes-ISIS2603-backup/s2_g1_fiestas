@@ -21,6 +21,7 @@ public class UsuarioEntity extends BaseEntity
     private String direccion;
     private String login;
     private String contraseña;
+    
     @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs= new ArrayList<>();
@@ -30,7 +31,7 @@ public class UsuarioEntity extends BaseEntity
      * @return nombre del usuario
      */
     public String getNombre() {
-        return documento;
+        return nombre;
     }
 
     /**

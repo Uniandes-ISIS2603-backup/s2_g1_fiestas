@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.TematicaLogic;
@@ -123,7 +118,7 @@ public class TematicaLogicTest
         Assert.assertNotNull(result);
         TematicaEntity entity = em.find(TematicaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
     }
 
     /**
@@ -157,13 +152,13 @@ public class TematicaLogicTest
         TematicaEntity resultEntity = tematicaLogic.getTematica(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
     }
 
     /**
-     * Prueba para eliminar un Tematica
-     *
+     * Prueba para eliminar un Tematic
      * 
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void deleteTematicaTest() throws BusinessLogicException {
@@ -191,7 +186,7 @@ public class TematicaLogicTest
         TematicaEntity resp = em.find(TematicaEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
     }
 
     /**

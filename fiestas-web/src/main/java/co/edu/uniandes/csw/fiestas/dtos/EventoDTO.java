@@ -11,6 +11,7 @@ import java.util.Date;
  * <pre>
  *   {
  *      "id": number,
+ *      "nombre":string,
  *      "fecha": string,
  *      "descripcion": string,
  *      "celebrado": string,
@@ -23,8 +24,9 @@ import java.util.Date;
  *
  *   {
  *      "id": 165,
+ *      "nombre":"Bautizo de Luciana",
  *      "fecha": "06/12/2017 15:30",
- *      "descripcion": "Bautizo de Luciana",
+ *      "descripcion": "Bautizo y cumpleaños de mi hija Luciana",
  *      "celebrado": "Luciana",
  *      "lugar": "Iglesia del 20 de Julio",
  *      "inventados": 20 
