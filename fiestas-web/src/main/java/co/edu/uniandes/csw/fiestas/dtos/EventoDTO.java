@@ -11,6 +11,7 @@ import java.util.Date;
  * <pre>
  *   {
  *      "id": number,
+ *      "nombre":string,
  *      "fecha": string,
  *      "descripcion": string,
  *      "celebrado": string,
@@ -23,8 +24,9 @@ import java.util.Date;
  *
  *   {
  *      "id": 165,
+ *      "nombre":"Bautizo de Luciana",
  *      "fecha": "06/12/2017 15:30",
- *      "descripcion": "Bautizo de Luciana",
+ *      "descripcion": "Bautizo y cumpleaños de mi hija Luciana",
  *      "celebrado": "Luciana",
  *      "lugar": "Iglesia del 20 de Julio",
  *      "inventados": 20 
@@ -36,6 +38,7 @@ import java.util.Date;
  */
 public class EventoDTO {
 
+    private String nombre;
     private long id;
     private Date fecha;
     private String descripcion;
@@ -60,6 +63,7 @@ public class EventoDTO {
     public EventoDTO(EventoEntity entity){
         if(entity!=null){
             this.id=entity.getId();
+            this.nombre=entity.getNombre();
             this.celebrado=entity.getCelebrado();
             this.fecha=entity.getFecha();
             this.descripcion=entity.getCelebrado();
@@ -76,6 +80,7 @@ public class EventoDTO {
      */
     public EventoEntity toEntity(){
         EventoEntity entity = new EventoEntity();
+        entity.setNombre(this.getNombre());
         entity.setId(this.getId());
         entity.setCelebrado(this.getCelebrado());
         entity.setDescripcion(this.getDescripcion());
@@ -97,6 +102,20 @@ public class EventoDTO {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    /**
+     * @return El nombre del evento
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre El nuevo nombre
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**

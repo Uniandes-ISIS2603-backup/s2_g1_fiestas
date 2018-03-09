@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
@@ -15,6 +10,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
  * <pre>
  *   {
  *      "id": number,
+ *      "nombre": string,
  *      "descripcion": string,
  *      "tipo": string,
  *   }
@@ -24,8 +20,9 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
  * <pre>
  *   {
  *      "id": 542,
- *      "decripcion": "Carrito de perros calientes",
- *      "tipo": "comida",
+ *      "nombre":"Musica"
+ *      "decripcion": "Ofrecemos diferentes interpretes musicales y paquetes",
+ *      "tipo": "Entretenamiento",
  *   }
  *
  * </pre>
@@ -34,6 +31,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 public class ServicioDTO {
     
     private long id;
+    private String nombre;
     private String descripcion;
     private String tipo;
     
@@ -53,6 +51,7 @@ public class ServicioDTO {
      */
     public ServicioDTO(ServicioEntity servicio) {
         this.id = servicio.getId();
+        this.nombre=servicio.getNombre();
         this.descripcion = servicio.getDescripcion();
         this.tipo = servicio.getTipo();
 
@@ -63,6 +62,13 @@ public class ServicioDTO {
      */
     public long getId() {
         return id;
+    }
+
+    /**
+     * @return El nombre del servicio.
+     */
+    public String getNombre() {
+        return nombre;
     }
     
     /**
@@ -84,6 +90,13 @@ public class ServicioDTO {
      */
     public void setId(long id) {
         this.id = id;
+    }
+    
+    /**
+     * @param nombre El nuevo nombre.
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
@@ -107,6 +120,7 @@ public class ServicioDTO {
      */
     public ServicioEntity toEntity() {
         ServicioEntity entity = new ServicioEntity();
+        entity.setNombre(this.nombre);
         entity.setId(this.id);
         entity.setDescripcion(this.descripcion);
         entity.setTipo(this.tipo);

@@ -1,6 +1,5 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
-
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.ArrayList;
@@ -20,11 +19,6 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author cm.amaya10

@@ -52,7 +52,7 @@ public class ClienteDTO extends UsuarioDTO
             setDireccion(e.getDireccion());
             setDocumento(e.getDocumento());
             setLogin(e.getLogin());
-            setNombre(e.getName());
+            setNombre(e.getNombre());
             setTelefono(e.getTelefono());
         }
     }
@@ -66,7 +66,7 @@ public class ClienteDTO extends UsuarioDTO
         e.setDireccion(getDireccion());
         e.setDocumento(getDocumento());
         e.setLogin(getLogin());
-        e.setName(getNombre());
+        e.setNombre(getNombre());
         e.setTelefono(getTelefono());
         return e;
     }

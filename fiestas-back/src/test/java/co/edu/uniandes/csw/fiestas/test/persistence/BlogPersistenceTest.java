@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
@@ -33,13 +28,12 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class BlogPersistenceTest {
-    
-   /**
+
+    /**
      *
      * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Blog, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+     * embebido. El jar contiene las clases de Blog, el descriptor de la base de
+     * datos y el archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
@@ -51,13 +45,13 @@ public class BlogPersistenceTest {
     }
 
     /**
-     * Inyección de la dependencia a la clase BlogPersistence cuyos métodos
-     * se van a probar.
+     * Inyección de la dependencia a la clase BlogPersistence cuyos métodos se
+     * van a probar.
      */
     @Inject
     private BlogPersistence blogPersistence;
 
-     /**
+    /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
      * datos por fuera de los métodos que se están probando.
      */
@@ -139,8 +133,10 @@ public class BlogPersistenceTest {
 
         BlogEntity entity = em.find(BlogEntity.class, result.getId());
 
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-     
+        Assert.assertEquals(newEntity.getTitulo(), entity.getTitulo());
+        Assert.assertEquals(newEntity.getCuerpo(), entity.getCuerpo());
+        Assert.assertEquals(newEntity.getLikes(), entity.getLikes());
+
     }
 
     /**
@@ -173,8 +169,10 @@ public class BlogPersistenceTest {
         BlogEntity entity = data.get(0);
         BlogEntity newEntity = blogPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getName(), newEntity.getName());
-      
+        Assert.assertEquals(entity.getTitulo(), newEntity.getTitulo());
+        Assert.assertEquals(newEntity.getCuerpo(), entity.getCuerpo());
+        Assert.assertEquals(newEntity.getLikes(), entity.getLikes());
+
     }
 
     /**
@@ -199,7 +197,7 @@ public class BlogPersistenceTest {
     public void updateBlogTest() {
         System.out.println("Aqui hay un error");
         BlogEntity entity = data.get(0);
-        
+
         PodamFactory factory = new PodamFactoryImpl();
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
 
@@ -209,7 +207,9 @@ public class BlogPersistenceTest {
 
         BlogEntity resp = em.find(BlogEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getName(), resp.getName());
-      
+        Assert.assertEquals(newEntity.getTitulo(), resp.getTitulo());
+        Assert.assertEquals(newEntity.getCuerpo(), resp.getCuerpo());
+        Assert.assertEquals(newEntity.getLikes(), resp.getLikes());
+
     }
 }

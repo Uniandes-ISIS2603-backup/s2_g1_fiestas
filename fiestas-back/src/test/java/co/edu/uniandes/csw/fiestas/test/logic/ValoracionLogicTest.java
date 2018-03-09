@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
-import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
-import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ValoracionPersistence;
 import java.util.ArrayList;
@@ -115,7 +107,6 @@ public class ValoracionLogicTest {
         ValoracionEntity resultEntity = ValoracionLogic.getValoracion(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getName(), resultEntity.getName());
         Assert.assertEquals(entity.getCalificacion(), resultEntity.getCalificacion());
         Assert.assertEquals(entity.getComentario(), resultEntity.getComentario());
     }

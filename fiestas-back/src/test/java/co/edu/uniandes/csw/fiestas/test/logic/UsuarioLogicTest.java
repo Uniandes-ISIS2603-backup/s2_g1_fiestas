@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
@@ -144,7 +139,7 @@ public class UsuarioLogicTest {
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
-        Assert.assertEquals(newEntity.getName(), entidad.getName());
+        Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
     }
     
@@ -179,7 +174,7 @@ public class UsuarioLogicTest {
         Assert.assertEquals(usuario.getDireccion(), usuarioT.getDireccion());
         Assert.assertEquals(usuario.getDocumento(), usuarioT.getDocumento());
         Assert.assertEquals(usuario.getLogin(), usuarioT.getLogin());
-        Assert.assertEquals(usuario.getName(), usuarioT.getName());
+        Assert.assertEquals(usuario.getNombre(), usuarioT.getNombre());
         Assert.assertEquals(usuario.getTelefono(), usuarioT.getTelefono());
         
     }
@@ -217,6 +212,7 @@ public class UsuarioLogicTest {
 
      /**
      * Prueba para actualizar un usuario
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void updateUsuarioTest() {
@@ -239,7 +235,7 @@ public class UsuarioLogicTest {
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
-        Assert.assertEquals(newEntity.getName(), entidad.getName());
+        Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
     }
     

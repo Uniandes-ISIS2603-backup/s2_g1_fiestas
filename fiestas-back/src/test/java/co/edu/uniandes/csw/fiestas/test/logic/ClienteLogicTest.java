@@ -1,4 +1,3 @@
-
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ClienteLogic;
@@ -100,6 +99,7 @@ public class ClienteLogicTest
     /**
      * Prueba para crear un Cliente
      *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void createClienteTest() throws BusinessLogicException {
@@ -113,7 +113,7 @@ public class ClienteLogicTest
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
-        Assert.assertEquals(newEntity.getName(), entidad.getName());
+        Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
     }
 
@@ -166,7 +166,7 @@ public class ClienteLogicTest
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
         Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
-        Assert.assertEquals(newEntity.getName(), entidad.getName());
+        Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
     }
 }

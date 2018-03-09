@@ -22,19 +22,38 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ServicioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValoracionEntity> valoraciones = new ArrayList<>();
-  
+
     @PodamExclude
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoEntity> productos = new ArrayList<>();
-    
+
     @PodamExclude
     @ManyToMany
     private List<ProveedorEntity> proveedores = new ArrayList<>();
 
+    private String nombre;
     private String descripcion;
     private String tipo;
+
+    /**
+     * Obtiene el atributo nombre
+     *
+     * @return nombre asignado al servicio
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Establece el nombre del servicio
+     *
+     * @param nombre nuevo del servicio
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getDescripcion() {
         return descripcion;

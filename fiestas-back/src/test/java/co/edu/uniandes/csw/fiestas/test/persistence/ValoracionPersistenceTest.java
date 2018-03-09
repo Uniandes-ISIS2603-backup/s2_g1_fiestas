@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -17,13 +12,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -131,7 +122,6 @@ public class ValoracionPersistenceTest {
         Assert.assertNotNull(result);
 
         ValoracionEntity entity = em.find(ValoracionEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
         Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
     }
@@ -166,7 +156,6 @@ public class ValoracionPersistenceTest {
         ValoracionEntity entity = data.get(0);
         ValoracionEntity newEntity = valoracionPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
         Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
     }
@@ -201,7 +190,6 @@ public class ValoracionPersistenceTest {
 
         ValoracionEntity resp = em.find(ValoracionEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getName(), resp.getName());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getComentario(), resp.getComentario());
         Assert.assertEquals(newEntity.getCalificacion(), resp.getCalificacion());
