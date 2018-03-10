@@ -24,7 +24,8 @@ import javax.inject.Inject;
  * @author nm.hernandez10
  */
 @Stateless
-public class ProveedorLogic {
+public class ProveedorLogic 
+{
 
     private static final Logger LOGGER = Logger.getLogger(ProveedorLogic.class.getName());
 
@@ -41,6 +42,7 @@ public class ProveedorLogic {
     private ContratoLogic contratoLogic;
 
     //Logic de apoyo para algunas reglas de negocio.
+    @Inject
     private ClienteLogic clienteLogic;
     
     /**
@@ -206,6 +208,10 @@ public class ProveedorLogic {
      */
     public ServicioEntity getServicio(Long proveedorId, Long serviciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un servicio con id = {0}", serviciosId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para obtener servicio");
+        }
         List<ServicioEntity> list = getProveedor(proveedorId).getServicios();
         ServicioEntity serviciosEntity = new ServicioEntity();
         serviciosEntity.setId(serviciosId);
@@ -228,13 +234,21 @@ public class ProveedorLogic {
      */
     public ServicioEntity addServicio(Long proveedorId, Long serviciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un servicio al proveedor con id = {0}", proveedorId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para agregar servicio");
+        }
         ProveedorEntity ent = getProveedor(proveedorId);
         ServicioEntity entS = servicioLogic.getServicio(serviciosId);
         int index = ent.getServicios().indexOf(entS);
-        if (index >= 0 && entS.equals(ent.getServicios().get(index))) {
-            return servicioLogic.getServicio(serviciosId);
-        } else {
-            throw new BusinessLogicException("No existe dicho servicio en ese proveedor");
+        if (index >= 0 && entS.equals(ent.getServicios().get(index))) 
+        {
+            throw new BusinessLogicException("Ya existe dicho servicio en ese proveedor");
+        } 
+        else 
+        {
+            ent.agregarServicio(entS); 
+            return entS;            
         }
 
     }
@@ -281,11 +295,16 @@ public class ProveedorLogic {
     public void removeServicio(Long proveedorId, Long serviciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un servicio del proveedor con id = {0}", proveedorId);
         ProveedorEntity ent = getProveedor(proveedorId);
+        if(ent == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para agregar servicio");
+        }
         ServicioEntity entS = servicioLogic.getServicio(serviciosId);
         int index = ent.getServicios().indexOf(entS);
         if (index >= 0) {
             ent.removerServicio(entS);
-            if (ent.getServicios().isEmpty()) {
+            if (ent.getServicios().isEmpty()) 
+            {
                 deleteProveedor(proveedorId);
             }
         } else {
@@ -301,11 +320,25 @@ public class ProveedorLogic {
      * contrato.
      * @return El contrato que fue agregado al proveedor.
      */
-    public ContratoEntity addContrato(Long contratoId, Long proveedorId) {
-        ProveedorEntity proveedorEntity = getProveedor(proveedorId);
-        ContratoEntity contratoEntity = contratoLogic.getContrato(contratoId);
-        contratoEntity.setProveedor(proveedorEntity);
-        return contratoEntity;
+    public ContratoEntity addContrato(Long contratoId, Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un contrato al proveedor con id = {0}", proveedorId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para agregar contrato");
+        }
+        ProveedorEntity ent = getProveedor(proveedorId);
+        ContratoEntity entC = contratoLogic.getContrato(contratoId);
+        int index = ent.getContratos().indexOf(entC);
+        if (index >= 0 && entC.equals(ent.getServicios().get(index))) 
+        {
+            throw new BusinessLogicException("Ya existe dicho contrato en ese proveedor");
+        } 
+        else 
+        {
+            ent.getContratos().add(entC); 
+            return entC;            
+        }
     }
 
     /**

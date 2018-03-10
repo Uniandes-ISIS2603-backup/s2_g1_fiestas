@@ -29,6 +29,7 @@ public class ClienteLogic
     private EventoLogic eventoLogic;
     
     //Logic de apoyo para algunas reglas de negocio.
+    @Inject
     private ProveedorLogic proveedorLogic;
     
     public boolean repetidoLogin(String login)
