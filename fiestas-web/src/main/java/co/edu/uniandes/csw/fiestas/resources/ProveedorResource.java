@@ -16,6 +16,8 @@ import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -62,7 +64,8 @@ public class ProveedorResource {
      * @return Lista de ProveedorDetailDTO convertida.
      *
      */
-    private List<ProveedorDetailDTO> listEntity2DTO(List<ProveedorEntity> entityList) {
+    private List<ProveedorDetailDTO> listEntity2DTO(List<ProveedorEntity> entityList) 
+    {
         List<ProveedorDetailDTO> list = new ArrayList<>();
         for (ProveedorEntity entity : entityList) {
             list.add(new ProveedorDetailDTO(entity));
@@ -84,7 +87,8 @@ public class ProveedorResource {
      * encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<ProveedorDetailDTO> getProveedores() {
+    public List<ProveedorDetailDTO> getProveedores() 
+    {
         return listEntity2DTO(proveedorLogic.getProveedores());
     }
 
@@ -108,9 +112,11 @@ public class ProveedorResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public ProveedorDetailDTO getProveedor(@PathParam("id") Long id) {
+    public ProveedorDetailDTO getProveedor(@PathParam("id") Long id) 
+    {
         ProveedorEntity entity = proveedorLogic.getProveedor(id);
-        if (entity == null) {
+        if (entity == null) 
+        {
             throw new WebApplicationException("El proveedor no existe", 404);
         }
         return new ProveedorDetailDTO(entity);
@@ -143,8 +149,16 @@ public class ProveedorResource {
      * - Error de lógica que se genera cuando ya existe el proveedor.
      */
     @POST
-    public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException {
-        return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
+    public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException 
+    {
+        try
+        {
+            return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 412);
+        }       
     }
 
     /**
@@ -170,14 +184,23 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public ProveedorDetailDTO updateProveedor(@PathParam("id") Long id, ProveedorDetailDTO proveedor) {
+    public ProveedorDetailDTO updateProveedor(@PathParam("id") Long id, ProveedorDetailDTO proveedor)
+    {
         ProveedorEntity entity = proveedor.toEntity();
         entity.setId(id);
         ProveedorEntity oldEntity = proveedorLogic.getProveedor(id);
         if (oldEntity == null) {
             throw new WebApplicationException("El proveedor no existe", 404);
         }
-        return new ProveedorDetailDTO(proveedorLogic.updateProveedor(entity));
+        try
+        {
+            return new ProveedorDetailDTO(proveedorLogic.updateProveedor(entity));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 412);
+        }
+        
     }
 
     /**
@@ -199,12 +222,16 @@ public class ProveedorResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteProveedor(@PathParam("id") Long id) {
-        ProveedorEntity entity = proveedorLogic.getProveedor(id);
-        if (entity == null) {
-            throw new WebApplicationException("El proveedor no existe", 404);
+    public void deleteProveedor(@PathParam("id") Long id)
+    {        
+        try
+        {
+            proveedorLogic.deleteProveedor(id);
         }
-        proveedorLogic.deleteProveedor(id);
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }        
     }
 
 
@@ -229,8 +256,16 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/contratos")
-    public List<ContratoDetailDTO> listContratos(@PathParam("proveedorId") Long proveedorId) {
-        return contratosListEntity2DTO(proveedorLogic.getContratos(proveedorId));
+    public List<ContratoDetailDTO> listContratos(@PathParam("proveedorId") Long proveedorId)
+    {
+        try
+        {
+            return contratosListEntity2DTO(proveedorLogic.getContratos(proveedorId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -254,8 +289,16 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{proveedorId: \\d+}/contratos")
-    public List<ContratoDetailDTO> replaceContratos(@PathParam("proveedorId") Long proveedorId, List<ContratoDetailDTO> contratos) throws BusinessLogicException {
-        return contratosListEntity2DTO(proveedorLogic.replaceContratos(proveedorId, contratosListDTO2Entity(contratos)));
+    public List<ContratoDetailDTO> replaceContratos(@PathParam("proveedorId") Long proveedorId, List<ContratoDetailDTO> contratos) 
+    {
+        try
+        {
+            return contratosListEntity2DTO(proveedorLogic.replaceContratos(proveedorId, contratosListDTO2Entity(contratos)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }          
     }
 
     /**
@@ -282,8 +325,16 @@ public class ProveedorResource {
      */
     @POST
     @Path("{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
-    public ContratoDetailDTO addContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
-        return new ContratoDetailDTO(proveedorLogic.addContrato(contratoId, proveedorId));
+    public ContratoDetailDTO addContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) 
+    {        
+        try
+        {
+            return new ContratoDetailDTO(proveedorLogic.addContrato(contratoId, proveedorId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }   
     }
 
     /**
@@ -313,8 +364,17 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
-    public ContratoDetailDTO getContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
-        return new ContratoDetailDTO(proveedorLogic.getContrato(proveedorId, contratoId));
+    public ContratoDetailDTO getContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId)
+    {
+        try
+        {
+            return new ContratoDetailDTO(proveedorLogic.getContrato(proveedorId, contratoId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }   
+        
     }
 
     /**
@@ -324,7 +384,8 @@ public class ProveedorResource {
      * @return Lista de ContratoDetailDTO convertida.
      *
      */
-    private List<ContratoDetailDTO> contratosListEntity2DTO(List<ContratoEntity> entityList) {
+    private List<ContratoDetailDTO> contratosListEntity2DTO(List<ContratoEntity> entityList) 
+    {
         List<ContratoDetailDTO> list = new ArrayList<>();
         for (ContratoEntity entity : entityList) {
             list.add(new ContratoDetailDTO(entity));
@@ -339,7 +400,8 @@ public class ProveedorResource {
      * @return Lista de ContratoEntity convertida.
      *
      */
-    private List<ContratoEntity> contratosListDTO2Entity(List<ContratoDetailDTO> dtos) {
+    private List<ContratoEntity> contratosListDTO2Entity(List<ContratoDetailDTO> dtos) 
+    {
         List<ContratoEntity> list = new ArrayList<>();
         for (ContratoDetailDTO dto : dtos) {
             list.add(dto.toEntity());
@@ -365,8 +427,16 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/valoraciones")
-    public List<ValoracionDTO> listValoraciones(@PathParam("proveedorId") Long proveedorId) {
-        return valoracionesListEntity2DTO(proveedorLogic.getValoraciones(proveedorId));
+    public List<ValoracionDTO> listValoraciones(@PathParam("proveedorId") Long proveedorId) 
+    {
+        try
+        {
+            return valoracionesListEntity2DTO(proveedorLogic.getValoraciones(proveedorId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -390,8 +460,16 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{proveedorId: \\d+}/valoraciones")
-    public List<ValoracionDTO> replaceValoraciones(@PathParam("proveedorId") Long proveedorId, List<ValoracionDTO> valoraciones) throws BusinessLogicException {
-        return valoracionesListEntity2DTO(proveedorLogic.replaceValoraciones(proveedorId, valoracionesListDTO2Entity(valoraciones)));
+    public List<ValoracionDTO> replaceValoraciones(@PathParam("proveedorId") Long proveedorId, List<ValoracionDTO> valoraciones)
+    {
+        try
+        {
+            return valoracionesListEntity2DTO(proveedorLogic.replaceValoraciones(proveedorId, valoracionesListDTO2Entity(valoraciones)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }        
     }
 
     /**
@@ -418,8 +496,16 @@ public class ProveedorResource {
      */
     @POST
     @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public ValoracionDTO addValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId) throws BusinessLogicException {
-        return new ValoracionDTO(proveedorLogic.addValoracion(valoracionId, proveedorId));
+    public ValoracionDTO addValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId) 
+    {
+        try
+        {
+            return new ValoracionDTO(proveedorLogic.addValoracion(valoracionId, proveedorId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -444,8 +530,16 @@ public class ProveedorResource {
      */
     @DELETE
     @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public void removeValoraciones(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId) throws BusinessLogicException {
-        proveedorLogic.removeValoracion(valoracionId, proveedorId);
+    public void removeValoraciones(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId)
+    {
+        try
+        {
+            proveedorLogic.removeValoracion(valoracionId, proveedorId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -474,8 +568,16 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public ValoracionDTO getValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId) throws BusinessLogicException {
-        return new ValoracionDTO(proveedorLogic.getValoracion(proveedorId, valoracionId));
+    public ValoracionDTO getValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId)
+    {
+        try
+        {
+            return new ValoracionDTO(proveedorLogic.getValoracion(proveedorId, valoracionId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }        
     }
 
     /**
@@ -486,7 +588,8 @@ public class ProveedorResource {
      * @return Lista de ValoracionDetailDTO convertida.
      *
      */
-    private List<ValoracionDTO> valoracionesListEntity2DTO(List<ValoracionEntity> entityList) {
+    private List<ValoracionDTO> valoracionesListEntity2DTO(List<ValoracionEntity> entityList) 
+    {
         List<ValoracionDTO> list = new ArrayList<>();
         for (ValoracionEntity entity : entityList) {
             list.add(new ValoracionDTO(entity));
@@ -502,7 +605,8 @@ public class ProveedorResource {
      * @return Lista de ValoracionEntity convertida.
      *
      */
-    private List<ValoracionEntity> valoracionesListDTO2Entity(List<ValoracionDTO> dtos) {
+    private List<ValoracionEntity> valoracionesListDTO2Entity(List<ValoracionDTO> dtos) 
+    {
         List<ValoracionEntity> list = new ArrayList<>();
         for (ValoracionDTO dto : dtos) {
             list.add(dto.toEntity());
@@ -528,8 +632,16 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/servicios")
-    public List<ServicioDetailDTO> listServicios(@PathParam("proveedorId") Long proveedorId) {
-        return serviciosListEntity2DTO(proveedorLogic.listServicios(proveedorId));
+    public List<ServicioDetailDTO> listServicios(@PathParam("proveedorId") Long proveedorId)
+    {
+        try
+        {                  
+            return serviciosListEntity2DTO(proveedorLogic.listServicios(proveedorId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }
     }
 
     /**
@@ -552,8 +664,16 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{proveedorId: \\d+}/servicios")
-    public List<ServicioDetailDTO> replaceServicios(@PathParam("proveedorId") Long proveedorId, List<ServicioDetailDTO> servicios) throws BusinessLogicException {
-        return serviciosListEntity2DTO(proveedorLogic.replaceServicios(proveedorId, serviciosListDTO2Entity(servicios)));
+    public List<ServicioDetailDTO> replaceServicios(@PathParam("proveedorId") Long proveedorId, List<ServicioDetailDTO> servicios)
+    {
+        try
+        {                  
+            return serviciosListEntity2DTO(proveedorLogic.replaceServicios(proveedorId, serviciosListDTO2Entity(servicios)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }        
     }
 
     /**
@@ -580,8 +700,16 @@ public class ProveedorResource {
      */
     @POST
     @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public ServicioDetailDTO addServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long servicioId) throws BusinessLogicException {
-        return new ServicioDetailDTO(proveedorLogic.addServicio(servicioId, proveedorId));
+    public ServicioDetailDTO addServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long servicioId)
+    {
+        try
+        {                  
+            return new ServicioDetailDTO(proveedorLogic.addServicio(servicioId, proveedorId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -599,15 +727,23 @@ public class ProveedorResource {
      *
      * @param proveedorId Identificador del proveedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param serviciosId Identificador del servicio que se desea guardar. Este
+     * @param servicioId Identificador del servicio que se desea guardar. Este
      * debe ser una cadena de dígitos.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * hay errores de logica
      */
     @DELETE
     @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public void removeServicios(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
-        proveedorLogic.removeServicio(serviciosId, proveedorId);
+    public void removeServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("servicioId") Long serviciosId)
+    {
+        try
+        {                  
+            proveedorLogic.removeServicio(serviciosId, proveedorId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -636,8 +772,16 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public ServicioDetailDTO getServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
-        return new ServicioDetailDTO(proveedorLogic.getServicio(proveedorId, serviciosId));
+    public ServicioDetailDTO getServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long serviciosId) 
+    {
+        try
+        {                  
+            return new ServicioDetailDTO(proveedorLogic.getServicio(proveedorId, serviciosId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }         
     }
 
     /**
@@ -681,15 +825,28 @@ public class ProveedorResource {
     @DELETE
     @Path(value = "{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
     public void removeContratos(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "proveedorId") final Long proveedorId, @PathParam(value = "contratoId") final Long contratoId) {
-        executorService.submit(new Runnable() {
-            public void run() {
-                doRemoveContratos(proveedorId, contratoId);
-                asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+        executorService.submit
+        (
+            new Runnable() 
+            {
+                public void run() 
+                {                
+                    doRemoveContratos(proveedorId, contratoId);                    
+                    asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+                }
             }
-        });
+        );
     }
 
-    private void doRemoveContratos(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) {
-        proveedorLogic.removeContrato(contratoId, proveedorId);
+    private void doRemoveContratos(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId)
+    {
+        try
+        {                  
+             proveedorLogic.removeContrato(contratoId, proveedorId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }        
     }
 }

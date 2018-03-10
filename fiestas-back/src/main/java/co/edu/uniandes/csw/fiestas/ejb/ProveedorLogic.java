@@ -206,7 +206,8 @@ public class ProveedorLogic
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no se encuentra el servicio en el proveedor
      */
-    public ServicioEntity getServicio(Long proveedorId, Long serviciosId) throws BusinessLogicException {
+    public ServicioEntity getServicio(Long proveedorId, Long serviciosId) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un servicio con id = {0}", serviciosId);
         if(getProveedor(proveedorId) == null)
         {
@@ -268,18 +269,18 @@ public class ProveedorLogic
     public List<ServicioEntity> replaceServicios(Long proveedorId, List<ServicioEntity> list) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los servicios asocidos al proveedor con id = {0}", proveedorId);
         ProveedorEntity proveedor = getProveedor(proveedorId);
-        if (proveedor != null) {
-            proveedor.setServicios(list);
-        } else {
-            throw new BusinessLogicException("El proveedor al que se le quiere reemplazar servicios es nulo");
-        }
-
+        
          if (list == null) {
             throw new BusinessLogicException("No hay lista nueva.");
         }
         if (!list.isEmpty()) {
         } else {
             throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
+        }
+        if (proveedor != null) {
+            proveedor.setServicios(list);
+        } else {
+            throw new BusinessLogicException("El proveedor al que se le quiere reemplazar servicios es nulo");
         }
         return list;
     }
@@ -297,7 +298,7 @@ public class ProveedorLogic
         ProveedorEntity ent = getProveedor(proveedorId);
         if(ent == null)
         {
-            throw new BusinessLogicException("No existe un proveedor con dicho id para agregar servicio");
+            throw new BusinessLogicException("No existe un proveedor con dicho id para remover servicio");
         }
         ServicioEntity entS = servicioLogic.getServicio(serviciosId);
         int index = ent.getServicios().indexOf(entS);
@@ -330,7 +331,7 @@ public class ProveedorLogic
         ProveedorEntity ent = getProveedor(proveedorId);
         ContratoEntity entC = contratoLogic.getContrato(contratoId);
         int index = ent.getContratos().indexOf(entC);
-        if (index >= 0 && entC.equals(ent.getServicios().get(index))) 
+        if (index >= 0 && entC.equals(ent.getContratos().get(index))) 
         {
             throw new BusinessLogicException("Ya existe dicho contrato en ese proveedor");
         } 
@@ -347,11 +348,21 @@ public class ProveedorLogic
      * @param contratoId El contrato que se desea borrar del proveedor.
      * @param proveedorId El proveedor de la cual se desea eliminar.
      */
-    public void removeContrato(Long contratoId, Long proveedorId) {
-        ProveedorEntity proveedorEntity = getProveedor(proveedorId);
-        ContratoEntity contrato = contratoLogic.getContrato(contratoId);
-        contrato.setProveedor(null);
-        proveedorEntity.getContratos().remove(contrato);
+    public void removeContrato(Long contratoId, Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar un contrato del proveedor con id = {0}", proveedorId);
+        ProveedorEntity ent = getProveedor(proveedorId);
+        if(ent == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para remover contrato");
+        }
+        ContratoEntity entC = contratoLogic.getContrato(contratoId);
+        int index = ent.getContratos().indexOf(entC);
+        if (index >= 0) {
+            ent.getContratos().remove(entC);            
+        } else {
+            throw new BusinessLogicException("El proveedor no tiene ese contrato");
+        }
     }
 
     /**
@@ -361,16 +372,26 @@ public class ProveedorLogic
      * @param proveedorId El id del proveedor que se quiere actualizar.
      * @return La lista de contratos actualizada.
      */
-    public List<ContratoEntity> replaceContratos(Long proveedorId, List<ContratoEntity> contratos) {
+    public List<ContratoEntity> replaceContratos(Long proveedorId, List<ContratoEntity> contratos) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para reemplazar contratos");
+        }
         ProveedorEntity proveedor = getProveedor(proveedorId);
         List<ContratoEntity> contratoList = contratoLogic.getContratos();
-        for (ContratoEntity contrato : contratoList) {
-            if (contratos.contains(contrato)) {
+        for (ContratoEntity contrato : contratoList) 
+        {
+            if (contratos.contains(contrato)) 
+            {
                 contrato.setProveedor(proveedor);
-            } else if (null != contrato.getProveedor() && contrato.getProveedor().equals(proveedor)) {
-                contrato.setProveedor(null);
+            } 
+            else if (null != contrato.getProveedor() && contrato.getProveedor().equals(proveedor)) 
+            {
+                contratoLogic.deleteContrato(contrato.getId());
             }
         }
+        proveedor.setContratos(contratos);
         return contratos;
     }
 
@@ -398,7 +419,12 @@ public class ProveedorLogic
      * @throws BusinessLogicException Si el contrato no se encuentra en la
      * proveedor
      */
-    public ContratoEntity getContrato(Long proveedorId, Long contratoId) throws BusinessLogicException {
+    public ContratoEntity getContrato(Long proveedorId, Long contratoId) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para obtener contrato");
+        }
         List<ContratoEntity> contratos = getProveedor(proveedorId).getContratos();
         ContratoEntity contrato = contratoLogic.getContrato(contratoId);
         int index = contratos.indexOf(contrato);
@@ -417,7 +443,12 @@ public class ProveedorLogic
      * instancia de Proveedor
      *
      */
-    public List<ContratoEntity> listContratos(Long proveedorId) {
+    public List<ContratoEntity> listContratos(Long proveedorId) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar contratos");
+        }
         return getProveedor(proveedorId).getContratos();
     }
 
@@ -431,11 +462,25 @@ public class ProveedorLogic
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no existe la valoracion
      */
-    public ValoracionEntity addValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException {
-        ProveedorEntity proveedorEntity = getProveedor(proveedorId);
-        ValoracionEntity valoracionEntity = valoracionLogic.getValoracion(valoracionId);
-        proveedorEntity.getValoraciones().add(valoracionEntity);
-        return valoracionEntity;
+    public ValoracionEntity addValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar una valoración al proveedor con id = {0}", proveedorId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para agregar una valoración");
+        }
+        ProveedorEntity ent = getProveedor(proveedorId);
+        ValoracionEntity entV = valoracionLogic.getValoracion(valoracionId);
+        int index = ent.getValoraciones().indexOf(entV);
+        if (index >= 0 && entV.equals(ent.getValoraciones().get(index))) 
+        {
+            throw new BusinessLogicException("Ya existe dicha valoración en ese proveedor");
+        } 
+        else 
+        {
+            ent.getValoraciones().add(entV); 
+            return entV;            
+        }
     }
 
     /**
@@ -446,10 +491,24 @@ public class ProveedorLogic
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no existe la valoracion
      */
-    public void removeValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException {
-        ProveedorEntity proveedorEntity = getProveedor(proveedorId);
-        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
-        proveedorEntity.getValoraciones().remove(valoracion);
+    public void removeValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar una valoración del proveedor con id = {0}", proveedorId);
+        ProveedorEntity ent = getProveedor(proveedorId);
+        if(ent == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para remover valoración");
+        }
+        ValoracionEntity entV = valoracionLogic.getValoracion(valoracionId);
+        int index = ent.getValoraciones().indexOf(entV);
+        if (index >= 0) 
+        {
+            ent.getValoraciones().remove(entV);            
+        } 
+        else 
+        {
+            throw new BusinessLogicException("El proveedor no tiene ese contrato");
+        }
     }
 
     /**
@@ -459,8 +518,13 @@ public class ProveedorLogic
      * @param proveedorId El id del proveedor que se quiere actualizar.
      * @return La lista de valoraciones actualizada.
      */
-    public List<ValoracionEntity> replaceValoraciones(Long proveedorId, List<ValoracionEntity> valoraciones) {
-        ProveedorEntity proveedor = getProveedor(proveedorId);
+    public List<ValoracionEntity> replaceValoraciones(Long proveedorId, List<ValoracionEntity> valoraciones) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para reemplazar valoraciones");
+        }
+        ProveedorEntity proveedor = getProveedor(proveedorId);        
         proveedor.setValoraciones(valoraciones);
         return valoraciones;
     }
@@ -489,14 +553,22 @@ public class ProveedorLogic
      * @throws BusinessLogicException Si el valoracion no se encuentra en el
      * proveedor
      */
-    public ValoracionEntity getValoracion(Long proveedorId, Long valoracionId) throws BusinessLogicException {
-        List<ValoracionEntity> valoraciones = getProveedor(proveedorId).getValoraciones();
-        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
-        int index = valoraciones.indexOf(valoracion);
-        if (index >= 0) {
-            return valoraciones.get(index);
+    public ValoracionEntity getValoracion(Long proveedorId, Long valoracionId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar un valoracion con id = {0}", valoracionId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para obtener valoracion");
         }
-        throw new BusinessLogicException("El valoracion no está asociado al proveedor");
+        List<ValoracionEntity> list = getProveedor(proveedorId).getValoraciones();
+        ValoracionEntity valoracionEntity = new ValoracionEntity();
+        valoracionEntity.setId(valoracionId);
+        int index = list.indexOf(valoracionEntity);
+        if (index >= 0 && valoracionEntity.equals(list.get(index))) {
+            return list.get(index);
+        } else {
+            throw new BusinessLogicException("No existe dicha valoración en ese proveedor");
+        }
     }
 
     /**
@@ -508,7 +580,13 @@ public class ProveedorLogic
      * instancia de Proveedor
      *
      */
-    public List<ValoracionEntity> listValoraciones(Long proveedorId) {
+    public List<ValoracionEntity> listValoraciones(Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos las valoraciones del proveedor con id = {0}", proveedorId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar valoraciones");
+        }
         return getProveedor(proveedorId).getValoraciones();
     }
 }

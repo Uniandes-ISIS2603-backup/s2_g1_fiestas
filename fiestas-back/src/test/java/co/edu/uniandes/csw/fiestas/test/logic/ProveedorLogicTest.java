@@ -15,6 +15,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -142,7 +143,15 @@ public class ProveedorLogicTest
     public void deleteProveedor() 
     {
         ProveedorEntity entity = data.get(0);
-        proveedorLogic.deleteProveedor(entity.getId());
+        try
+        {
+            proveedorLogic.deleteProveedor(entity.getId());
+        }
+        catch(BusinessLogicException e)
+        {
+            fail(e.getMessage());
+        }
+        
         ProveedorEntity deleted = em.find(ProveedorEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
@@ -155,10 +164,17 @@ public class ProveedorLogicTest
         ProveedorEntity entity = data.get(0);
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
 
-        newEntity.setId(entity.getId());
-
-        proveedorLogic.updateProveedor(newEntity);
-
+        newEntity.setId(entity.getId());  
+        
+        try
+        {
+            proveedorLogic.updateProveedor(newEntity);
+        }
+        catch(BusinessLogicException e)
+        {
+            fail(e.getMessage());
+        }
+        
         ProveedorEntity entidad = em.find(ProveedorEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());

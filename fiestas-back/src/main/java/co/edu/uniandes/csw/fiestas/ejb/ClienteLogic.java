@@ -158,15 +158,29 @@ public class ClienteLogic
      * Agregar un evento al cliente
      *
      * @param eventoId El id evento a guardar
-     * @param clienteId El id del cliente en la cual se va a guardar el evento.
+     * @param clienteId El id del cliente en la cual se va a guardar el
+     * evento.
      * @return El evento que fue agregado al cliente.
      */
-    public EventoEntity addEvento(Long eventoId, Long clienteId) 
+    public EventoEntity addEvento(Long eventoId, Long clienteId) throws BusinessLogicException 
     {
-        ClienteEntity clienteEntity = getCliente(clienteId);
-        EventoEntity eventoEntity = eventoLogic.getEvento(eventoId);
-        eventoEntity.setCliente(clienteEntity);
-        return eventoEntity;
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un evento al cliente con id = {0}", clienteId);
+        if(getCliente(clienteId) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para agregar evento");
+        }
+        ClienteEntity ent = getCliente(clienteId);
+        EventoEntity entC = eventoLogic.getEvento(eventoId);
+        int index = ent.getEventos().indexOf(entC);
+        if (index >= 0 && entC.equals(ent.getEventos().get(index))) 
+        {
+            throw new BusinessLogicException("Ya existe dicho evento en ese cliente");
+        } 
+        else 
+        {
+            ent.getEventos().add(entC); 
+            return entC;            
+        }
     }
 
     /**
@@ -175,12 +189,21 @@ public class ClienteLogic
      * @param eventoId El evento que se desea borrar del cliente.
      * @param clienteId El cliente de la cual se desea eliminar.
      */
-    public void removeEvento(Long eventoId, Long clienteId) 
+    public void removeEvento(Long eventoId, Long clienteId) throws BusinessLogicException 
     {
-        ClienteEntity clienteEntity = getCliente(clienteId);
-        EventoEntity evento = eventoLogic.getEvento(eventoId);
-        evento.setCliente(null);
-        clienteEntity.getEventos().remove(evento);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar un evento del cliente con id = {0}", clienteId);
+        ClienteEntity ent = getCliente(clienteId);
+        if(ent == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para remover evento");
+        }
+        EventoEntity entC = eventoLogic.getEvento(eventoId);
+        int index = ent.getEventos().indexOf(entC);
+        if (index >= 0) {
+            ent.getEventos().remove(entC);            
+        } else {
+            throw new BusinessLogicException("El cliente no tiene ese evento");
+        }
     }
 
     /**
@@ -190,17 +213,26 @@ public class ClienteLogic
      * @param clienteId El id del cliente que se quiere actualizar.
      * @return La lista de eventos actualizada.
      */
-    public List<EventoEntity> replaceEventos(Long clienteId, List<EventoEntity> eventos) 
+    public List<EventoEntity> replaceEventos(Long clienteId, List<EventoEntity> eventos) throws BusinessLogicException 
     {
+        if(getCliente(clienteId) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para reemplazar eventos");
+        }
         ClienteEntity cliente = getCliente(clienteId);
         List<EventoEntity> eventoList = eventoLogic.getEventos();
-        for (EventoEntity evento : eventoList) {
-            if (eventos.contains(evento)) {
+        for (EventoEntity evento : eventoList) 
+        {
+            if (eventos.contains(evento)) 
+            {
                 evento.setCliente(cliente);
-            } else if (evento.getCliente() != null && evento.getCliente().equals(cliente)) {
-                evento.setCliente(null);
+            } 
+            else if (null != evento.getCliente() && evento.getCliente().equals(cliente)) 
+            {
+                eventoLogic.deleteEvento(evento.getId());
             }
         }
+        cliente.setEventos(eventos);
         return eventos;
     }
 
@@ -216,7 +248,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No existe un cliente con dicho id para enlistar eventos");
         }
-        return getCliente(clienteId).getEventos();        
+        return getCliente(clienteId).getEventos();
     }
 
     /**
@@ -225,9 +257,15 @@ public class ClienteLogic
      * @param clienteId El id del cliente a buscar.
      * @param eventoId El id del evento a buscar
      * @return El evento encontrado dentro del cliente.
-     * @throws BusinessLogicException Si el evento no se encuentra en la cliente
+     * @throws BusinessLogicException Si el evento no se encuentra en la
+     * cliente
      */
-    public EventoEntity getEvento(Long clienteId, Long eventoId) throws BusinessLogicException {
+    public EventoEntity getEvento(Long clienteId, Long eventoId) throws BusinessLogicException 
+    {
+        if(getCliente(clienteId) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para obtener evento");
+        }
         List<EventoEntity> eventos = getCliente(clienteId).getEventos();
         EventoEntity evento = eventoLogic.getEvento(eventoId);
         int index = eventos.indexOf(evento);
@@ -242,8 +280,8 @@ public class ClienteLogic
      * instancia de Cliente
      *
      * @param clienteId Identificador de la instancia de Cliente
-     * @return Colección de instancias de EventoEntity asociadas a la instancia
-     * de Cliente
+     * @return Colección de instancias de EventoEntity asociadas a la
+     * instancia de Cliente
      *
      */
     public List<EventoEntity> listEventos(Long clienteId) throws BusinessLogicException 
