@@ -34,15 +34,15 @@ public class PagoDTO {
 
     private long id;
     private Boolean realizado;
-    private Estado estado;
-    private MetodoDePago metodoDePago;
+    private String estado;
+    private String metodoDePago;
     private int valor;
 
     /**
      * Constructor por defecto
      */
     public PagoDTO() {
-
+        //Constructor vacio
     }
 
     /**
@@ -58,7 +58,7 @@ public class PagoDTO {
             this.estado = entity.getEstado();
             this.metodoDePago = entity.getMetodoDePago();
             this.realizado = entity.isRealizado();
-            this.valor=entity.getValor();
+            this.valor = entity.getValor();
         }
     }
 
@@ -109,16 +109,16 @@ public class PagoDTO {
     /**
      * @return Estado del proceso de pago
      */
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
     /**
      * Asigna el nuevo estado del proceso de pago
      *
-     * @param estado nuevo del pago
+     * @param estado  estado nuevo del pago
      */
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -127,7 +127,7 @@ public class PagoDTO {
      *
      * @return metodo de pago usado en el pago
      */
-    public MetodoDePago getMetodoPago() {
+    public String getMetodoPago() {
         return metodoDePago;
     }
 
@@ -136,25 +136,25 @@ public class PagoDTO {
      *
      * @param metodo de pago
      */
-    public void setMetodoPago(MetodoDePago metodo) {
+    public void setMetodoPago(String metodo) {
         this.metodoDePago = metodo;
     }
-    
-        /**
+
+    /**
      * Retorna el valor del pago
      *
      * @return valor del pago
      */
-    public int getValor(){
+    public int getValor() {
         return valor;
     }
-   
-     /**
+
+    /**
      * Asigna el valor del pago
      *
      * @param valor del pago
      */
-    public void setValor(int valor){
-        this.valor=valor;
+    public void setValor(int valor) {
+        this.valor = valor;
     }
 }
