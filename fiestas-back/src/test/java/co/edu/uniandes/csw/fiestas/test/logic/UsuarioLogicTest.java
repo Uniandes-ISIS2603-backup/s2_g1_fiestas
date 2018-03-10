@@ -348,13 +348,64 @@ public class UsuarioLogicTest {
      * 
      */
     @Test
-    public void replaceBlogsTest(){
+    public void replaceBlogsFailTest(){
         UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
         try{
             usuarioLogic.replaceBlogs(usuario.getId(), null);
             fail("El usuario no existe en persistence.");
         }
         catch (BusinessLogicException e){
+        }
+       
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void replaceBlogsFailTest1(){
+        UsuarioEntity usuario = data.get(0);
+        try{
+            usuarioLogic.replaceBlogs(usuario.getId(), null);
+            fail("La lista es nula.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    /**
+     * 
+     */
+    @Test
+    public void replaceBlogsFailTest2(){
+        UsuarioEntity usuario = data.get(0);
+        List<BlogEntity> lista = new ArrayList<>();
+        try{
+            usuarioLogic.replaceBlogs(usuario.getId(), lista);
+            fail("La lista es vacía.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    
+    
+    /**
+     * 
+     */
+    @Test
+    public void replaceBlogsTest(){
+        UsuarioEntity usuario = data.get(0);
+        List<BlogEntity> lista = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+            lista.add(blog);
+        }
+        try{
+            usuarioLogic.replaceBlogs(usuario.getId(), lista);
+        }
+        catch (BusinessLogicException e){
+            fail("La lista es nula.");
         }
        
     }
