@@ -39,9 +39,6 @@ public class UsuarioLogicTest {
     @Inject
     private UsuarioLogic usuarioLogic;
     
-    @Inject
-    private BlogLogic blogLogic;
-    
     
     @PersistenceContext
     private EntityManager em;
@@ -90,8 +87,8 @@ public class UsuarioLogicTest {
      */
     private void clearData() 
     {
-        em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from BlogEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -106,10 +103,10 @@ public class UsuarioLogicTest {
                 BlogEntity blogE = factory.manufacturePojo(BlogEntity.class);
                 blogE.setUsuario(usuario);
                 listaBlogs.add(blogE);
+                em.persist(blogE);
             }
             usuario.setBlogs(listaBlogs);
             em.persist(usuario);
-            System.out.println("Sí se inserta en data");
             data.add(usuario);
         }
     }
@@ -160,15 +157,15 @@ public class UsuarioLogicTest {
         UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
         Assert.assertNotNull(usuarioT);
         UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
-        Assert.assertEquals(usuario.getId(), resultado.getId());
-        Assert.assertEquals(usuario.getContraseña(), resultado.getContraseña());
-        Assert.assertEquals(usuario.getCorreo(), resultado.getCorreo());
-        Assert.assertEquals(usuario.getDireccion(), resultado.getDireccion());
-        Assert.assertEquals(usuario.getDocumento(), resultado.getDocumento());
-        Assert.assertEquals(usuario.getLogin(), resultado.getLogin());
-        Assert.assertEquals(usuario.getNombre(), resultado.getNombre());
-        Assert.assertEquals(usuario.getTelefono(), resultado.getTelefono());
-        Assert.assertEquals(usuario.getBlogs(), resultado.getBlogs());
+        Assert.assertEquals(usuario.getId(), usuarioT.getId());
+        Assert.assertEquals(usuario.getContraseña(), usuarioT.getContraseña());
+        Assert.assertEquals(usuario.getCorreo(), usuarioT.getCorreo());
+        Assert.assertEquals(usuario.getDireccion(), usuarioT.getDireccion());
+        Assert.assertEquals(usuario.getDocumento(), usuarioT.getDocumento());
+        Assert.assertEquals(usuario.getLogin(), usuarioT.getLogin());
+        Assert.assertEquals(usuario.getNombre(), usuarioT.getNombre());
+        Assert.assertEquals(usuario.getTelefono(), usuarioT.getTelefono());
+        Assert.assertEquals(usuario.getBlogs(), usuarioT.getBlogs());
         
     }
     

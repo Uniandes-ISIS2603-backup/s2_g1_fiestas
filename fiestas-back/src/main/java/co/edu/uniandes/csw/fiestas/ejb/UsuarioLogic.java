@@ -76,7 +76,7 @@ public class UsuarioLogic {
         List<BlogEntity> list = getUsuario(usuarioId).getBlogs();
         List<BlogEntity> list1=bLogic.getBlogs();
         
-        for (BlogEntity blogEntity : list1) {
+        for (BlogEntity blogEntity : list) {
             if(list1.contains(blogEntity)){}
             else throw new BusinessLogicException("Los blogs en la base de datos y en la lista del usuario no son consistentes.");   
         }
