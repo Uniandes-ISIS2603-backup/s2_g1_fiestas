@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.test.logic;
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
@@ -36,6 +37,9 @@ public class ProductoLogicTest
 
     @Inject
     private ProductoLogic productoLogic;
+    
+    @Inject
+    private ServicioLogic servicioLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -167,7 +171,9 @@ public class ProductoLogicTest
         ProductoEntity entity = data.get(0);
         ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
         
-        ServicioEntity newServicio = em.find(ServicioEntity.class, entity.getServicio().getId());
+        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
+        servicioLogic.createServicio(newServicio);
+        
         productoLogic.setServicio(entity.getId(), newServicio.getId());
         productoLogic.setServicio(newEntity.getId(), newServicio.getId());
         
@@ -183,10 +189,12 @@ public class ProductoLogicTest
         ProductoEntity entity = data.get(0);
         ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
         
-        ServicioEntity newServicio = em.find(ServicioEntity.class, entity.getServicio().getId());
+        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
+        servicioLogic.createServicio(newServicio);
         
         productoLogic.setServicio(entity.getId(), newServicio.getId());
         productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
         
         Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
     }
