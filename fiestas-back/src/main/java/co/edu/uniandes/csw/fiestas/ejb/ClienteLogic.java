@@ -30,21 +30,8 @@ public class ClienteLogic
     
     //Logic de apoyo para algunas reglas de negocio.
     @Inject
-    private ProveedorLogic proveedorLogic;
+    private UsuarioLogic usuarioLogic;    
     
-    public boolean repetidoLogin(String login)
-    {
-        List<ClienteEntity> clientes = getClientes();
-        boolean encontrado = false;
-        for(int i = 0; i < clientes.size() && !encontrado ; i++)
-        {
-            if(clientes.get(i).getLogin().equals(login))
-            {
-                encontrado = true;
-            }
-        }
-        return encontrado;
-    }
     
     /**
      * Obtiene la lista de los registros de Cliente.
@@ -73,13 +60,14 @@ public class ClienteLogic
      * @param entity Objeto de ClienteEntity con los datos nuevos
      * @return Objeto de ClienteEntity con los datos nuevos y su ID.
      */
-    public ClienteEntity createCliente(ClienteEntity entity) throws BusinessLogicException {
+    public ClienteEntity createCliente(ClienteEntity entity) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un cliente");
         if(getCliente(entity.getId()) != null)
         {
             throw new BusinessLogicException("Ya existe un cliente con ese id");
         }
-        if(repetidoLogin(entity.getLogin()) || proveedorLogic.repetidoLogin(entity.getLogin()))
+        if(usuarioLogic.repetidoLogin(entity.getLogin()))
         {
             throw new BusinessLogicException("Ya existe un usuario (cliente o cliente) con ese mismo login");
         }

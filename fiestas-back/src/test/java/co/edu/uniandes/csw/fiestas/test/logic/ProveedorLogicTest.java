@@ -165,7 +165,7 @@ public class ProveedorLogicTest
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
 
         newEntity.setId(entity.getId());  
-        
+        newEntity.setLogin(entity.getLogin());
         try
         {
             proveedorLogic.updateProveedor(newEntity);
