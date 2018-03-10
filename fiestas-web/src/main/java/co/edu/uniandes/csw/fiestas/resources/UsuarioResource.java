@@ -155,7 +155,7 @@ public class UsuarioResource {
         UsuarioEntity ent = logic.getUsuario(id);
         if(ent == null)
             throw new BusinessLogicException("El usuario no existe.");
-        return blogListEntity2DTO(logic.getBlogs(ent));
+        return blogListEntity2DTO(logic.getBlogs(id));
     }
     
     @GET
