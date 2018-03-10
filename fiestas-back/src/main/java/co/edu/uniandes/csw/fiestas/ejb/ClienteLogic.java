@@ -17,7 +17,8 @@ import javax.inject.Inject;
  * @author nm.hernandez10
  */
 @Stateless
-public class ClienteLogic {
+public class ClienteLogic 
+{
 
     private static final Logger LOGGER = Logger.getLogger(ClienteLogic.class.getName());
 
@@ -26,7 +27,24 @@ public class ClienteLogic {
 
     @Inject
     private EventoLogic eventoLogic;
-
+    
+    //Logic de apoyo para algunas reglas de negocio.
+    private ProveedorLogic proveedorLogic;
+    
+    public boolean repetidoLogin(String login)
+    {
+        List<ClienteEntity> clientes = getClientes();
+        boolean encontrado = false;
+        for(int i = 0; i < clientes.size() && !encontrado ; i++)
+        {
+            if(clientes.get(i).getLogin().equals(login))
+            {
+                encontrado = true;
+            }
+        }
+        return encontrado;
+    }
+    
     /**
      * Obtiene la lista de los registros de Cliente.
      *
@@ -54,9 +72,32 @@ public class ClienteLogic {
      * @param entity Objeto de ClienteEntity con los datos nuevos
      * @return Objeto de ClienteEntity con los datos nuevos y su ID.
      */
-    public ClienteEntity createCliente(ClienteEntity entity) {
+    public ClienteEntity createCliente(ClienteEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un cliente");
-
+        if(getCliente(entity.getId()) != null)
+        {
+            throw new BusinessLogicException("Ya existe un cliente con ese id");
+        }
+        if(repetidoLogin(entity.getLogin()) || proveedorLogic.repetidoLogin(entity.getLogin()))
+        {
+            throw new BusinessLogicException("Ya existe un usuario (cliente o cliente) con ese mismo login");
+        }
+        if(entity.getNombre() == null || entity.getNombre().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un cliente sin nombre");
+        }
+        if(entity.getDocumento() == null || entity.getDocumento().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un cliente sin documento");
+        }
+        if(entity.getLogin() == null || entity.getLogin().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un cliente sin login");
+        }
+        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un cliente sin contraseña");
+        }
         return persistence.create(entity);
     }
 
@@ -66,8 +107,34 @@ public class ClienteLogic {
      * @param entity Instancia de ClienteEntity con los nuevos datos.
      * @return Instancia de ClienteEntity con los datos actualizados.
      */
-    public ClienteEntity updateCliente(ClienteEntity entity) {
+    public ClienteEntity updateCliente(ClienteEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un cliente");
+        if(getCliente(entity.getId()) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para actualizar");
+        }  
+        String loginAnterior = getCliente(entity.getId()).getLogin();
+        String loginNuevo = entity.getLogin();
+        if(!loginAnterior.equals(loginNuevo))
+        {
+            throw new BusinessLogicException("No puede cambiarse el login del cliente");
+        }
+        if(entity.getNombre() == null || entity.getNombre().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un cliente sin nombre");
+        }
+        if(entity.getDocumento() == null || entity.getDocumento().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un cliente sin documento");
+        }
+        if(entity.getLogin() == null || entity.getLogin().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un cliente sin login");
+        }
+        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un cliente sin contraseña");
+        }
         return persistence.update(entity);
     }
 
@@ -76,8 +143,13 @@ public class ClienteLogic {
      *
      * @param id Identificador de la instancia a eliminar.
      */
-    public void deleteCliente(Long id) {
+    public void deleteCliente(Long id) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un cliente");
+        if(getCliente(id) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para eliminar");
+        }
         persistence.delete(id);
     }
 
@@ -88,7 +160,8 @@ public class ClienteLogic {
      * @param clienteId El id del cliente en la cual se va a guardar el evento.
      * @return El evento que fue agregado al cliente.
      */
-    public EventoEntity addEvento(Long eventoId, Long clienteId) {
+    public EventoEntity addEvento(Long eventoId, Long clienteId) 
+    {
         ClienteEntity clienteEntity = getCliente(clienteId);
         EventoEntity eventoEntity = eventoLogic.getEvento(eventoId);
         eventoEntity.setCliente(clienteEntity);
@@ -101,7 +174,8 @@ public class ClienteLogic {
      * @param eventoId El evento que se desea borrar del cliente.
      * @param clienteId El cliente de la cual se desea eliminar.
      */
-    public void removeEvento(Long eventoId, Long clienteId) {
+    public void removeEvento(Long eventoId, Long clienteId) 
+    {
         ClienteEntity clienteEntity = getCliente(clienteId);
         EventoEntity evento = eventoLogic.getEvento(eventoId);
         evento.setCliente(null);
@@ -115,7 +189,8 @@ public class ClienteLogic {
      * @param clienteId El id del cliente que se quiere actualizar.
      * @return La lista de eventos actualizada.
      */
-    public List<EventoEntity> replaceEventos(Long clienteId, List<EventoEntity> eventos) {
+    public List<EventoEntity> replaceEventos(Long clienteId, List<EventoEntity> eventos) 
+    {
         ClienteEntity cliente = getCliente(clienteId);
         List<EventoEntity> eventoList = eventoLogic.getEventos();
         for (EventoEntity evento : eventoList) {
@@ -134,8 +209,13 @@ public class ClienteLogic {
      * @param clienteId El ID del cliente buscada
      * @return La lista de eventos del cliente
      */
-    public List<EventoEntity> getEventos(Long clienteId) {
-        return getCliente(clienteId).getEventos();
+    public List<EventoEntity> getEventos(Long clienteId) throws BusinessLogicException 
+    {
+        if(getCliente(clienteId) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para enlistar eventos");
+        }
+        return getCliente(clienteId).getEventos();        
     }
 
     /**
@@ -165,7 +245,12 @@ public class ClienteLogic {
      * de Cliente
      *
      */
-    public List<EventoEntity> listEventos(Long clienteId) {
+    public List<EventoEntity> listEventos(Long clienteId) throws BusinessLogicException 
+    {
+        if(getCliente(clienteId) == null)
+        {
+            throw new BusinessLogicException("No existe un cliente con dicho id para enlistar eventos");
+        }
         return getCliente(clienteId).getEventos();
     }
 }

@@ -139,7 +139,8 @@ public class ProveedorLogicTest
      * Prueba para eliminar un proveedor
      */
     @Test
-    public void deleteProveedor() {
+    public void deleteProveedor() 
+    {
         ProveedorEntity entity = data.get(0);
         proveedorLogic.deleteProveedor(entity.getId());
         ProveedorEntity deleted = em.find(ProveedorEntity.class, entity.getId());

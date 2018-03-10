@@ -40,12 +40,36 @@ public class ProveedorLogic {
     @Inject
     private ContratoLogic contratoLogic;
 
+    //Logic de apoyo para algunas reglas de negocio.
+    private ClienteLogic clienteLogic;
+    
+    /**
+     * Determina si hay o no un proveedor con el login de parámetro.
+     * 
+     * @param login Login a revisar.
+     * @return Si hay o no un proveedor con el login parámetro.
+     */
+    public boolean repetidoLogin(String login)
+    {
+        List<ProveedorEntity> proveedores = getProveedores();
+        boolean encontrado = false;
+        for(int i = 0; i < proveedores.size() && !encontrado ; i++)
+        {
+            if(proveedores.get(i).getLogin().equals(login))
+            {
+                encontrado = true;
+            }
+        }
+        return encontrado;
+    }
+    
     /**
      * Obtiene la lista de los registros de Proveedor.
      *
      * @return Colección de objetos de ProveedorEntity.
      */
-    public List<ProveedorEntity> getProveedores() {
+    public List<ProveedorEntity> getProveedores() 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los proveedores");
         return persistence.findAll();
     }
@@ -57,7 +81,8 @@ public class ProveedorLogic {
      * @return Instancia de ProveedorEntity con los datos del Proveedor
      * consultado.
      */
-    public ProveedorEntity getProveedor(Long id) {
+    public ProveedorEntity getProveedor(Long id)
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un proveedor con id = {0}", id);
         return persistence.find(id);
     }
@@ -68,9 +93,33 @@ public class ProveedorLogic {
      * @param entity Objeto de ProveedorEntity con los datos nuevos
      * @return Objeto de ProveedorEntity con los datos nuevos y su ID.
      */
-    public ProveedorEntity createProveedor(ProveedorEntity entity) {
+    public ProveedorEntity createProveedor(ProveedorEntity entity) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un proveedor ");
-
+        if(getProveedor(entity.getId()) != null)
+        {
+            throw new BusinessLogicException("Ya existe un proveedor con ese id");
+        }
+        if(repetidoLogin(entity.getLogin()) || clienteLogic.repetidoLogin(entity.getLogin()))
+        {
+            throw new BusinessLogicException("Ya existe un usuario (proveedor o cliente) con ese mismo login");
+        }
+        if(entity.getNombre() == null || entity.getNombre().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un proveedor sin nombre");
+        }
+        if(entity.getDocumento() == null || entity.getDocumento().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un proveedor sin documento");
+        }
+        if(entity.getLogin() == null || entity.getLogin().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un proveedor sin login");
+        }
+        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        {
+            throw new BusinessLogicException("No puede crear un proveedor sin contraseña");
+        }
         return persistence.create(entity);
     }
 
@@ -80,8 +129,35 @@ public class ProveedorLogic {
      * @param entity Instancia de ProveedorEntity con los nuevos datos.
      * @return Instancia de ProveedorEntity con los datos actualizados.
      */
-    public ProveedorEntity updateProveedor(ProveedorEntity entity) {
+    public ProveedorEntity updateProveedor(ProveedorEntity entity) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un proveedor ");
+        if(getProveedor(entity.getId()) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para actualizar");
+        }  
+        String loginAnterior = getProveedor(entity.getId()).getLogin();
+        String loginNuevo = entity.getLogin();
+        if(!loginAnterior.equals(loginNuevo))
+        {
+            throw new BusinessLogicException("No puede cambiarse el login del proveedor");
+        }
+        if(entity.getNombre() == null || entity.getNombre().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un proveedor sin nombre");
+        }
+        if(entity.getDocumento() == null || entity.getDocumento().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un proveedor sin documento");
+        }
+        if(entity.getLogin() == null || entity.getLogin().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un proveedor sin login");
+        }
+        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        {
+            throw new BusinessLogicException("No puede actualizar a un proveedor sin contraseña");
+        }
         return persistence.update(entity);
     }
 
@@ -90,8 +166,13 @@ public class ProveedorLogic {
      *
      * @param id Identificador de la instancia a eliminar.
      */
-    public void deleteProveedor(Long id) {
+    public void deleteProveedor(Long id) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un proveedor ");
+        if(getProveedor(id) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para eliminar");
+        }
         persistence.delete(id);
     }
 
@@ -103,8 +184,13 @@ public class ProveedorLogic {
      * @return Colección de instancias de ServicioEntity asociadas a la
      * instancia de Proveedor
      */
-    public List<ServicioEntity> listServicios(Long proveedorId) {
+    public List<ServicioEntity> listServicios(Long proveedorId) throws BusinessLogicException 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los servicios del proveedor con id = {0}", proveedorId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar servicios");
+        }
         return getProveedor(proveedorId).getServicios();
     }
 
@@ -261,7 +347,12 @@ public class ProveedorLogic {
      * @param proveedorId El ID del proveedor buscada
      * @return La lista de contratos del proveedor
      */
-    public List<ContratoEntity> getContratos(Long proveedorId) {
+    public List<ContratoEntity> getContratos(Long proveedorId) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar contratos");
+        }
         return getProveedor(proveedorId).getContratos();
     }
 
@@ -347,7 +438,12 @@ public class ProveedorLogic {
      * @param proveedorId El ID del proveedor buscada
      * @return La lista de valoraciones del proveedor
      */
-    public List<ValoracionEntity> getValoraciones(Long proveedorId) {
+    public List<ValoracionEntity> getValoraciones(Long proveedorId) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar valoraciones");
+        }
         return getProveedor(proveedorId).getValoraciones();
     }
 
