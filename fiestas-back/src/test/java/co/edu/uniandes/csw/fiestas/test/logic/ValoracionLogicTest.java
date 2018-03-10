@@ -30,7 +30,7 @@ public class ValoracionLogicTest {
     private PodamFactory factory = new PodamFactoryImpl();
     
     @Inject
-    private ValoracionLogic ValoracionLogic;
+    private ValoracionLogic valoracionLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -98,17 +98,85 @@ public class ValoracionLogicTest {
  
     /**
      * Prueba para consultar una Valoracion por su id
+     * 
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     
     @Test
     public void getValoracionTest() throws BusinessLogicException {
+        try {
         ValoracionEntity entity = data.get(0);
-        ValoracionEntity resultEntity = ValoracionLogic.getValoracion(entity.getId());
+        ValoracionEntity resultEntity = valoracionLogic.getValoracion(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getCalificacion(), resultEntity.getCalificacion());
         Assert.assertEquals(entity.getComentario(), resultEntity.getComentario());
+        }
+        catch(BusinessLogicException e) {
+        }
+    }
+    
+    
+    /**
+     * Prueba para consultar la lista de Valoraciones
+     *
+     *
+     */
+    @Test
+    public void getValoracionesTest() {
+        List<ValoracionEntity> list = valoracionLogic.getValoraciones();
+        Assert.assertEquals(data.size(), list.size());
+        for (ValoracionEntity entity : list) {
+            boolean found = false;
+            for (ValoracionEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+  
+    /**
+     * Prueba para crear un Valoracion
+     *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     */
+    @Test
+    public void createValoracionTest() throws BusinessLogicException {
+        try {
+        ValoracionEntity newEntity = factory.manufacturePojo(ValoracionEntity.class);
+        ValoracionEntity result = valoracionLogic.createValoracion(newEntity);
+        Assert.assertNotNull(result);
+        ValoracionEntity entity = em.find(ValoracionEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
+        Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
+        }
+        catch(BusinessLogicException e) {
+        }
+    }
+    
+    /**
+     * Prueba para actualizar un Valoracion
+     *
+     *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     */
+    @Test
+    public void updateValoracionTest() throws BusinessLogicException {
+        ValoracionEntity entity = data.get(0);
+        ValoracionEntity pojoEntity = factory.manufacturePojo(ValoracionEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        valoracionLogic.updateValoracion(pojoEntity);
+
+        ValoracionEntity resp = em.find(ValoracionEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getCalificacion(), resp.getCalificacion());
+        Assert.assertEquals(pojoEntity.getComentario(), resp.getComentario());
     }
     
     /**
@@ -119,9 +187,9 @@ public class ValoracionLogicTest {
     @Test
     public void deleteValoracionTest() {
         ValoracionEntity entity = data.get(0);
-        ValoracionLogic.deleteValoracion(entity.getId());
+        valoracionLogic.deleteValoracion(entity.getId());
         ValoracionEntity deleted = em.find(ValoracionEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }
+    }  
     
 }

@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.List;
@@ -66,7 +62,19 @@ public class PagoLogic {
      */
     public PagoEntity createPago(PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un pago ");
-        if (entity.isRealizado() && entity.getEstado() != Estado.CONFIRMADO) {
+        String newEstado=verifyEstado(entity.getEstado());
+        if (newEstado==null) {
+            throw new BusinessLogicException("No existe el estado ingresado para el pago");
+        } else {
+            entity.setEstado(newEstado);
+        }
+        String newMetodo=verifyMetodoPago(entity.getMetodoDePago());
+        if (newMetodo==null) {
+            throw new BusinessLogicException("No existe el metodo de pago ingresado para el pago");
+        } else {
+            entity.setMetodoDePago(newMetodo);
+        }
+        if (entity.isRealizado() && !entity.getEstado().equals(Estado.CONFIRMADO.toString())) {
             throw new BusinessLogicException("Incongruencia entre estado y boolean Realizado");
         }
         return persistence.create(entity);
@@ -82,7 +90,19 @@ public class PagoLogic {
      */
     public PagoEntity updatePago(PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
-        if (entity.isRealizado() && entity.getEstado() != Estado.CONFIRMADO) {
+        String newEstado=verifyEstado(entity.getEstado());
+        if (newEstado==null) {
+            throw new BusinessLogicException("No existe el estado ingresado para el pago");
+        } else {
+            entity.setEstado(newEstado);
+        }
+        String newMetodo=verifyMetodoPago(entity.getMetodoDePago());
+        if (newMetodo==null) {
+            throw new BusinessLogicException("No existe el metodo de pago ingresado para el pago");
+        } else {
+            entity.setMetodoDePago(newMetodo);
+        }
+        if (entity.isRealizado() && !entity.getEstado().equals(Estado.CONFIRMADO.toString())) {
             throw new BusinessLogicException("Incongruencia entre estado y boolean Realizado");
         }
         PagoEntity newEntity = persistence.update(entity);
@@ -99,6 +119,42 @@ public class PagoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar pago con id={0}", id);
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar pago con id={0}", id);
+    }
+
+    /**
+     * Verifica el estado de pago ingresado.
+     *
+     * @param estado String de estado a evaluar
+     * @return la cadena correspondiente si se encuentra coincidencia, null de lo contrario
+     */
+    public String verifyEstado(String estado) {
+        if (estado.equalsIgnoreCase(Estado.CONFIRMADO.toString())) {
+            return Estado.CONFIRMADO.toString();
+        } else if (estado.equalsIgnoreCase(Estado.EN_REVISION.toString())) {
+            return Estado.EN_REVISION.toString();
+        } else if (estado.equalsIgnoreCase(Estado.RECHAZADO.toString())) {
+            return Estado.RECHAZADO.toString();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Verifica el metodo de pago ingresado.
+     *
+     * @param metodo String de metodo de pago a evaluar
+     * @return la cadena correspondiente si se encuentra coincidencia, null de lo contrario
+     */
+    public String verifyMetodoPago(String metodo) {
+        if (metodo.equalsIgnoreCase(MetodoDePago.CONSIGNACION.toString())) {
+            return MetodoDePago.CONSIGNACION.toString();
+        } else if (metodo.equalsIgnoreCase(MetodoDePago.PSE.toString())) {
+            return MetodoDePago.PSE.toString();
+        } else if (metodo.equalsIgnoreCase(MetodoDePago.TARJETA_CREDITO.toString())) {
+            return MetodoDePago.TARJETA_CREDITO.toString();
+        } else {
+            return null;
+        }
     }
 
 }

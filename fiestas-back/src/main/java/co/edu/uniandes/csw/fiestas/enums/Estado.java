@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.enums;
 
 /**
@@ -11,28 +6,28 @@ package co.edu.uniandes.csw.fiestas.enums;
  * @author cm.amaya10
  */
 public enum Estado {
-    CONFIRMADO(300), EN_REVISION(100), RECHAZADO(200);
+    CONFIRMADO("Confirmado"), EN_REVISION("En Revision"), RECHAZADO("Rechazado");
 
-    private int value;
+    public static String toSting() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    Estado(int value) {
+    private final String value;
+
+    /**
+     * 
+     * @param value 
+     */
+    Estado(final String value) {
         this.value = value;
     }
 
-    public int getValue() {
+    /**
+     * 
+     * @return string
+     */
+    @Override
+    public String toString(){
         return value;
     }
-
-    public static Estado parse(int id) {
-        Estado estado = null;
-        for (Estado item : Estado.values()) {
-            if (item.getValue() == id) {
-                estado = item;
-                break;
-            }
-
-        }
-        return estado;
-    }
-
 }
