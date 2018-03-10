@@ -73,6 +73,10 @@ public class UsuarioLogic {
     }
 
     public List<BlogEntity> getBlogs(Long usuarioId) throws BusinessLogicException {
+        UsuarioEntity usuario = getUsuario(usuarioId);
+        if(usuario==null)
+            throw new BusinessLogicException("El usuario no se encuentra.");
+        
         List<BlogEntity> list = getUsuario(usuarioId).getBlogs();
         List<BlogEntity> list1=bLogic.getBlogs();
         

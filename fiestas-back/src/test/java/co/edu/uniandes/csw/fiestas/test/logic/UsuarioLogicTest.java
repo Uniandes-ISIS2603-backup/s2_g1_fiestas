@@ -114,6 +114,7 @@ public class UsuarioLogicTest {
      /**
      * Prueba para crear un Usuario
      *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void createUsuarioTest() throws BusinessLogicException {
@@ -156,7 +157,7 @@ public class UsuarioLogicTest {
         UsuarioEntity usuario = data.get(0);
         UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
         Assert.assertNotNull(usuarioT);
-        UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
+        //UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
         Assert.assertEquals(usuario.getId(), usuarioT.getId());
         Assert.assertEquals(usuario.getContraseña(), usuarioT.getContraseña());
         Assert.assertEquals(usuario.getCorreo(), usuarioT.getCorreo());
@@ -165,7 +166,16 @@ public class UsuarioLogicTest {
         Assert.assertEquals(usuario.getLogin(), usuarioT.getLogin());
         Assert.assertEquals(usuario.getNombre(), usuarioT.getNombre());
         Assert.assertEquals(usuario.getTelefono(), usuarioT.getTelefono());
-        Assert.assertEquals(usuario.getBlogs(), usuarioT.getBlogs());
+        List<BlogEntity> lista=usuario.getBlogs();
+        List<BlogEntity> lista1=usuarioT.getBlogs();
+        assertNotNull(lista);
+        assertNotNull(lista1);
+        //Assert.assertEquals(lista, lista1);
+        assertTrue(lista.size()==lista1.size());
+        for (int i = 0; i < lista.size(); i++) {
+            assertTrue(lista.get(i).getId()==lista1.get(i).getId());
+        }
+        
         
     }
     
@@ -255,7 +265,11 @@ public class UsuarioLogicTest {
         try{
         List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuario.getId());
         assertNotNull(blogsT);
-        Assert.assertEquals(blogsT, blogs);
+        assertNotNull(blogs);
+        assertNotNull(blogsT);
+        for (int i = 0; i < blogs.size(); i++) {
+            assertTrue(blogsT.get(i).getId()==blogs.get(i).getId());
+        }
 
         }
         catch(BusinessLogicException e){
@@ -291,7 +305,7 @@ public class UsuarioLogicTest {
         try{
             UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
             List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuarioT.getId());
-            fail("Debería fallar porque hay incosnsistencias");
+            assertNotEquals(usuario.getBlogs(), blogsT);
         }
         catch(BusinessLogicException e){
             
