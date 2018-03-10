@@ -106,10 +106,10 @@ public class UsuarioLogicTest {
                 BlogEntity blogE = factory.manufacturePojo(BlogEntity.class);
                 blogE.setUsuario(usuario);
                 listaBlogs.add(blogE);
-                em.persist(blogE);
             }
             usuario.setBlogs(listaBlogs);
             em.persist(usuario);
+            System.out.println("Sí se inserta en data");
             data.add(usuario);
         }
     }
