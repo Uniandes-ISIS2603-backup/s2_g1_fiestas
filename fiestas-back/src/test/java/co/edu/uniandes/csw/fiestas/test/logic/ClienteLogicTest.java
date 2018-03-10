@@ -15,6 +15,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -142,7 +143,16 @@ public class ClienteLogicTest
     @Test
     public void deleteCliente() {
         ClienteEntity entity = data.get(0);
-        clienteLogic.deleteCliente(entity.getId());
+        
+        try
+        {
+           clienteLogic.deleteCliente(entity.getId());
+        }
+        catch(BusinessLogicException e)
+        {
+            fail(e.getMessage());
+        }
+        
         ClienteEntity deleted = em.find(ClienteEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
@@ -155,10 +165,16 @@ public class ClienteLogicTest
         ClienteEntity entity = data.get(0);
         ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
 
-        newEntity.setId(entity.getId());
-
-        clienteLogic.updateCliente(newEntity);
-
+        newEntity.setId(entity.getId());        
+        newEntity.setLogin(entity.getLogin());
+        try
+        {
+           clienteLogic.updateCliente(newEntity);
+        }
+        catch(BusinessLogicException e)
+        {
+            fail(e.getMessage());
+        }
         ClienteEntity entidad = em.find(ClienteEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
