@@ -43,27 +43,7 @@ public class ProveedorLogic
 
     //Logic de apoyo para algunas reglas de negocio.
     @Inject
-    private ClienteLogic clienteLogic;
-    
-    /**
-     * Determina si hay o no un proveedor con el login de parámetro.
-     * 
-     * @param login Login a revisar.
-     * @return Si hay o no un proveedor con el login parámetro.
-     */
-    public boolean repetidoLogin(String login)
-    {
-        List<ProveedorEntity> proveedores = getProveedores();
-        boolean encontrado = false;
-        for(int i = 0; i < proveedores.size() && !encontrado ; i++)
-        {
-            if(proveedores.get(i).getLogin().equals(login))
-            {
-                encontrado = true;
-            }
-        }
-        return encontrado;
-    }
+    private UsuarioLogic usuarioLogic;   
     
     /**
      * Obtiene la lista de los registros de Proveedor.
@@ -102,7 +82,7 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("Ya existe un proveedor con ese id");
         }
-        if(repetidoLogin(entity.getLogin()) || clienteLogic.repetidoLogin(entity.getLogin()))
+        if(usuarioLogic.repetidoLogin(entity.getLogin()))
         {
             throw new BusinessLogicException("Ya existe un usuario (proveedor o cliente) con ese mismo login");
         }
@@ -331,6 +311,10 @@ public class ProveedorLogic
         ProveedorEntity ent = getProveedor(proveedorId);
         ContratoEntity entC = contratoLogic.getContrato(contratoId);
         int index = ent.getContratos().indexOf(entC);
+        if(ent.isPenalizado())
+        {
+            throw new BusinessLogicException("El proveedor está penalizado, no puede adquirir contratos");
+        }
         if (index >= 0 && entC.equals(ent.getContratos().get(index))) 
         {
             throw new BusinessLogicException("Ya existe dicho contrato en ese proveedor");
@@ -355,6 +339,10 @@ public class ProveedorLogic
         if(ent == null)
         {
             throw new BusinessLogicException("No existe un proveedor con dicho id para remover contrato");
+        }
+        if(ent.isPenalizado())
+        {
+            throw new BusinessLogicException("El proveedor está penalizado, no puede adquirir contratos");
         }
         ContratoEntity entC = contratoLogic.getContrato(contratoId);
         int index = ent.getContratos().indexOf(entC);

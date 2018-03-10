@@ -297,7 +297,14 @@ public class ProveedorResource {
         }
         catch(BusinessLogicException e)
         {
-            throw new WebApplicationException(e.getMessage(), 404);
+            if(e.getMessage().equals("El proveedor está penalizado, no puede adquirir contratos"))
+            {
+                throw new WebApplicationException(e.getMessage(), 412);
+            }
+            else
+            {
+                throw new WebApplicationException(e.getMessage(), 404);
+            } 
         }          
     }
 
@@ -333,7 +340,14 @@ public class ProveedorResource {
         }
         catch(BusinessLogicException e)
         {
-            throw new WebApplicationException(e.getMessage(), 404);
+            if(e.getMessage().equals("El proveedor está penalizado, no puede adquirir contratos"))
+            {
+                throw new WebApplicationException(e.getMessage(), 412);
+            }
+            else
+            {
+                throw new WebApplicationException(e.getMessage(), 404);
+            }            
         }   
     }
 

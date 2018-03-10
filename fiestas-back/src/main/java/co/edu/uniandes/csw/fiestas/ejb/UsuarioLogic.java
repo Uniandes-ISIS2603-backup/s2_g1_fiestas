@@ -30,7 +30,27 @@ public class UsuarioLogic {
     
     @Inject
     private BlogLogic bLogic;
-
+    
+    /**
+     * Determina si hay o no un proveedor con el login de parámetro.
+     * 
+     * @param login Login a revisar.
+     * @return Si hay o no un proveedor con el login parámetro.
+     */    
+    public boolean repetidoLogin(String login)
+    {
+        List<UsuarioEntity> usuarios = getUsuarios();
+        boolean encontrado = false;
+        for(int i = 0; i < usuarios.size() && !encontrado ; i++)
+        {
+            if(usuarios.get(i).getLogin().equals(login))
+            {
+                encontrado = true;
+            }
+        }
+        return encontrado;
+    }
+    
     public List<UsuarioEntity> getUsuarios(){
         LOGGER.info("Inicia proceso de obtener todos los usuarios del sistema.");
         List<UsuarioEntity> usuarios=persistence.findAll();
