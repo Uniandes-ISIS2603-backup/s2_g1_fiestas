@@ -166,7 +166,7 @@ public class ClienteLogicTest
         ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
 
         newEntity.setId(entity.getId());        
-
+        newEntity.setLogin(entity.getLogin());
         try
         {
            clienteLogic.updateCliente(newEntity);
