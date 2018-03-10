@@ -8,17 +8,16 @@ import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *  Entidad Pago.
+ * Entidad Pago.
+ *
  * @author cm.amaya10
  */
 @Entity
 public class PagoEntity extends BaseEntity implements Serializable {
 
-    private Boolean realizado;
-    /*Boolean que representa si el pago fur realizado*/
-    private int estado;/*Estado actual del pagoo*/
-    private int metodoDePago;
-    /*Metodo de pago actual*/
+    private Boolean realizado;/*Boolean que representa si el pago fur realizado*/
+    private String estado;/*Estado actual del pagoo*/
+    private String metodoDePago;/*Metodo de pago actual*/
     private int valor;/*Valor del pago*/
 
     @PodamExclude
@@ -49,8 +48,8 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @return estado actual del pago
      */
-    public Estado getEstado() {
-        return Estado.parse(this.estado);
+    public String getEstado() {
+        return estado;
     }
 
     /**
@@ -58,17 +57,18 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @param estado nuevo del pago
      */
-    public void setEstado(Estado estado) {
-        this.estado = estado.getValue();
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
+
 
     /**
      * Obtiene el metodo de pago del pago
      *
-     * @return metodo de pago actual del pago
+     * @return id del metodo de pago actual del pago
      */
-    public MetodoDePago getMetodoDePago() {
-        return MetodoDePago.parse(metodoDePago);
+    public String getMetodoDePago() {
+        return metodoDePago;
     }
 
     /**
@@ -76,8 +76,8 @@ public class PagoEntity extends BaseEntity implements Serializable {
      *
      * @param metodoDePago Metodo de pago nuevo del pago
      */
-    public void setMetodoDePago(MetodoDePago metodoDePago) {
-        this.metodoDePago = metodoDePago.getValue();
+    public void setMetodoDePago(String metodoDePago) {
+        this.metodoDePago = metodoDePago;
     }
 
     /**

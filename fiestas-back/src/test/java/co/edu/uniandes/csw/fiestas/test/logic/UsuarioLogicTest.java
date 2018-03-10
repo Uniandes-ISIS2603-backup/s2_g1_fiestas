@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
+import co.edu.uniandes.csw.fiestas.ejb.BlogLogic;
 import co.edu.uniandes.csw.fiestas.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
@@ -37,6 +38,7 @@ public class UsuarioLogicTest {
     
     @Inject
     private UsuarioLogic usuarioLogic;
+    
     
     @PersistenceContext
     private EntityManager em;
@@ -79,28 +81,13 @@ public class UsuarioLogicTest {
             }
         }
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() 
     {
+        em.createQuery("delete from BlogEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
     /**
@@ -114,6 +101,7 @@ public class UsuarioLogicTest {
             UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
             for (int j = 0; j < 2; j++) {
                 BlogEntity blogE = factory.manufacturePojo(BlogEntity.class);
+                blogE.setUsuario(usuario);
                 listaBlogs.add(blogE);
                 em.persist(blogE);
             }
@@ -126,6 +114,7 @@ public class UsuarioLogicTest {
      /**
      * Prueba para crear un Usuario
      *
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void createUsuarioTest() throws BusinessLogicException {
@@ -168,6 +157,7 @@ public class UsuarioLogicTest {
         UsuarioEntity usuario = data.get(0);
         UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
         Assert.assertNotNull(usuarioT);
+        UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
         Assert.assertEquals(usuario.getId(), usuarioT.getId());
         Assert.assertEquals(usuario.getContraseña(), usuarioT.getContraseña());
         Assert.assertEquals(usuario.getCorreo(), usuarioT.getCorreo());
@@ -176,6 +166,15 @@ public class UsuarioLogicTest {
         Assert.assertEquals(usuario.getLogin(), usuarioT.getLogin());
         Assert.assertEquals(usuario.getNombre(), usuarioT.getNombre());
         Assert.assertEquals(usuario.getTelefono(), usuarioT.getTelefono());
+        List<BlogEntity> lista=usuario.getBlogs();
+        List<BlogEntity> lista1=usuarioT.getBlogs();
+        assertNotNull(lista);
+        assertNotNull(lista1);
+        assertTrue(lista.size()==lista1.size());
+        for (int i = 0; i < lista.size(); i++) {
+            assertTrue(lista.contains(lista1.get(i)));
+        }
+        
         
     }
     
@@ -263,15 +262,55 @@ public class UsuarioLogicTest {
         List<BlogEntity> blogs = usuario.getBlogs();
         
         try{
-        List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuario);
+        List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuario.getId());
         assertNotNull(blogsT);
-        Assert.assertEquals(blogsT, blogs);
+        assertNotNull(blogs);
+            assertTrue(blogs.size()== blogsT.size());
+        for (int i = 0; i < blogs.size(); i++) {
+            assertTrue(blogsT.contains(blogs.get(i)));
+        }
 
         }
         catch(BusinessLogicException e){
             fail("No debería fallar al buscar los blogs.");
         }
     }
+    
+    /**
+     * 
+     */
+    @Test
+    public void getBlogsFailTest1(){
+        UsuarioEntity usuario = data.get(0);
+        UsuarioEntity usuarioT = factory.manufacturePojo(UsuarioEntity.class);
+        
+        try{
+        List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuarioT.getId());
+        assertTrue(blogsT.isEmpty());
+        }
+        catch(BusinessLogicException e){
+            
+        }
+    }
+    /**
+     * 
+     */
+    @Test
+    public void getBlogsFailTest2(){
+        UsuarioEntity usuario = data.get(0);
+        BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+        usuario.getBlogs().add(blog);
+        
+        try{
+            UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
+            List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuarioT.getId());
+            assertNotEquals(usuario.getBlogs(), blogsT);
+        }
+        catch(BusinessLogicException e){
+            
+        }
+    }
+    
     
     @Test
     public void getBlogTest(){

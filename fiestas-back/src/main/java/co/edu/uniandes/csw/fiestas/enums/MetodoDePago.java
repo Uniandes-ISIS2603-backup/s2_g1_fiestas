@@ -5,27 +5,20 @@ package co.edu.uniandes.csw.fiestas.enums;
  * @author cm.amaya10
  */
 public enum MetodoDePago {
-    PSE(100),TARJETA_CREDITO(200),CONSIGNACION(300);
+    PSE("PSE"),TARJETA_CREDITO("Tarjeta de Credito"),CONSIGNACION("Consignacion");
     
-     private int value;
+     private final String value;
 
-    MetodoDePago(int value) {
+    MetodoDePago(final String value) {
         this.value = value;
     }
 
-    public int getValue() {
+    /**
+     * 
+     * @return string
+     */
+    @Override
+    public String toString(){
         return value;
-    }
-
-    public static MetodoDePago parse(int id) {
-        MetodoDePago metodo = null;
-        for (MetodoDePago item : MetodoDePago.values()) {
-            if (item.getValue() == id) {
-                metodo = item;
-                break;
-            }
-
-        }
-        return metodo;
     }
 }
