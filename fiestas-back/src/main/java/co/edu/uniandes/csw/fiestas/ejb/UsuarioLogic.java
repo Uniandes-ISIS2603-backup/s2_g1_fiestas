@@ -72,13 +72,13 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO,"Termina el proceso de borrar el usuario con el id={0}", id);
     }
 
-    public List<BlogEntity> getBlogs(UsuarioEntity ent) throws BusinessLogicException {
-        List<BlogEntity> list = ent.getBlogs();
+    public List<BlogEntity> getBlogs(Long usuarioId) throws BusinessLogicException {
+        List<BlogEntity> list = getUsuario(usuarioId).getBlogs();
         List<BlogEntity> list1=bLogic.getBlogs();
-        for(BlogEntity e: list){
-            int index = list1.indexOf(e);
-        if(index<0&&!e.equals(list1.get(index)))
-            throw new BusinessLogicException("Los blogs en la base de datos y en la lista del usuario no son consistentes.");
+        
+        for (BlogEntity blogEntity : list1) {
+            if(list1.contains(blogEntity)){}
+            else throw new BusinessLogicException("Los blogs en la base de datos y en la lista del usuario no son consistentes.");   
         }
         return list;
     }
@@ -87,7 +87,7 @@ public class UsuarioLogic {
     public BlogEntity getBlog(UsuarioEntity ent, Long blogId) throws BusinessLogicException {
         BlogEntity bE = bLogic.getBlog(blogId);
         if(bE == null)
-            throw new BusinessLogicException("El blog a agregar no existe.");
+            throw new BusinessLogicException("El blog a buscar no existe.");
         int index= ent.getBlogs().indexOf(bE);
         if(index<0 && !ent.getBlogs().get(index).equals(bE))
         {
@@ -136,11 +136,12 @@ public class UsuarioLogic {
      * @throws BusinessLogicException  - Error de lógica si no existe el usuario
      */
     public BlogEntity addBlog(Long blogId, Long usuarioId) throws BusinessLogicException {
-         UsuarioEntity usuarioEntity = getUsuario(usuarioId);
+        UsuarioEntity usuarioEntity = getUsuario(usuarioId);
         BlogEntity blogEntity = bLogic.getBlog(blogId);
         if(usuarioEntity != null && blogEntity != null)
         {
             usuarioEntity.agregarBlog(blogEntity);
+            updateUsuario(usuarioEntity);
         }
         else
         {
