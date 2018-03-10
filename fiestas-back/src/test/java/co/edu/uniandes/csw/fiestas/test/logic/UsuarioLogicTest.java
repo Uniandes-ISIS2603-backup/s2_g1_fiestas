@@ -286,7 +286,7 @@ public class UsuarioLogicTest {
         
         try{
         List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuarioT.getId());
-        assertTrue(blogsT.isEmpty());
+        fail("No debería permitir encontrar los blogs de ese usuario.");
         }
         catch(BusinessLogicException e){
             
@@ -300,18 +300,18 @@ public class UsuarioLogicTest {
         UsuarioEntity usuario = data.get(0);
         BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
         usuario.getBlogs().add(blog);
-        
         try{
             UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
             List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuarioT.getId());
-            assertNotEquals(usuario.getBlogs(), blogsT);
+            assertTrue(usuarioT.getBlogs().size()==2);
         }
-        catch(BusinessLogicException e){
-            
+        catch(BusinessLogicException e){            
         }
     }
     
-    
+    /**
+     * 
+     */
     @Test
     public void getBlogTest(){
         UsuarioEntity usuario = data.get(0);
@@ -326,4 +326,37 @@ public class UsuarioLogicTest {
             fail("No debería fallar añ obtener el blog.");
         }
     }
+    
+    /**
+     * 
+     */
+    @Test
+    public void getBlogFailTest(){
+        UsuarioEntity usuario = data.get(0);
+        BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+        
+        try{
+            BlogEntity blogT = usuarioLogic.getBlog(usuario, blog.getId());
+            fail("Debería fallar al obtener el blog.");
+        }
+        catch(BusinessLogicException e){
+
+        }
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void replaceBlogsTest(){
+        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+        try{
+            usuarioLogic.replaceBlogs(usuario.getId(), null);
+            fail("El usuario no existe en persistence.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    
 }
