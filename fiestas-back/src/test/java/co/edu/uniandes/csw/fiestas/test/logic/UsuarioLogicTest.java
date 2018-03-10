@@ -157,7 +157,7 @@ public class UsuarioLogicTest {
         UsuarioEntity usuario = data.get(0);
         UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
         Assert.assertNotNull(usuarioT);
-        //UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
+        UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
         Assert.assertEquals(usuario.getId(), usuarioT.getId());
         Assert.assertEquals(usuario.getContraseña(), usuarioT.getContraseña());
         Assert.assertEquals(usuario.getCorreo(), usuarioT.getCorreo());
@@ -170,10 +170,9 @@ public class UsuarioLogicTest {
         List<BlogEntity> lista1=usuarioT.getBlogs();
         assertNotNull(lista);
         assertNotNull(lista1);
-        //Assert.assertEquals(lista, lista1);
         assertTrue(lista.size()==lista1.size());
         for (int i = 0; i < lista.size(); i++) {
-            assertTrue(lista.get(i).getId()==lista1.get(i).getId());
+            assertTrue(lista.contains(lista1.get(i)));
         }
         
         
@@ -266,9 +265,9 @@ public class UsuarioLogicTest {
         List<BlogEntity> blogsT=usuarioLogic.getBlogs(usuario.getId());
         assertNotNull(blogsT);
         assertNotNull(blogs);
-        assertNotNull(blogsT);
+            assertTrue(blogs.size()== blogsT.size());
         for (int i = 0; i < blogs.size(); i++) {
-            assertTrue(blogsT.get(i).getId()==blogs.get(i).getId());
+            assertTrue(blogsT.contains(blogs.get(i)));
         }
 
         }
