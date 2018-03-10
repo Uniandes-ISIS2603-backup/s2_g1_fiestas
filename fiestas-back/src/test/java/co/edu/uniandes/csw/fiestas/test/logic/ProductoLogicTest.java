@@ -169,7 +169,8 @@ public class ProductoLogicTest
     public void setServicioTest()
     {
         ProductoEntity entity = data.get(0);
-        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);        
+        productoLogic.createProducto(newEntity);
         
         ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
         servicioLogic.createServicio(newServicio);
@@ -188,6 +189,7 @@ public class ProductoLogicTest
     {
         ProductoEntity entity = data.get(0);
         ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+        productoLogic.createProducto(newEntity);
         
         ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
         servicioLogic.createServicio(newServicio);
