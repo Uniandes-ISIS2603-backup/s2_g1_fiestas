@@ -77,11 +77,11 @@ public class UsuarioLogic {
         if(usuario==null)
             throw new BusinessLogicException("El usuario no se encuentra.");
         
-        List<BlogEntity> list = getUsuario(usuarioId).getBlogs();
+        List<BlogEntity> list = usuario.getBlogs();
         List<BlogEntity> list1=bLogic.getBlogs();
         
         for (BlogEntity blogEntity : list) {
-            if(list1.contains(blogEntity)){}
+            if(list1.contains(blogEntity)){/** Se deja vacío porque nececita revisar toda la lista y luego sí retornar*/}
             else throw new BusinessLogicException("Los blogs en la base de datos y en la lista del usuario no son consistentes.");   
         }
         return list;
@@ -115,19 +115,19 @@ public class UsuarioLogic {
         {
             throw new BusinessLogicException("El usuario al que se le quiere reemplazar blogs es nulo");
         }
-        else
-        {
-            usuario.setBlogs(blogs);
-        }
-        
-        if(blogs == null)
+              
+        else if(blogs == null)
         {
             throw new BusinessLogicException("No hay lista nueva");
         }
         
-        if(blogs.isEmpty())
+        else if(blogs.isEmpty())
         {
             throw new BusinessLogicException("La lista está vacía");
+        }
+        else
+        {
+            usuario.setBlogs(blogs);
         }
         return blogs;
     }
