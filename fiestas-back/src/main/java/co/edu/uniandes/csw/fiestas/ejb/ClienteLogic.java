@@ -19,7 +19,6 @@ import javax.inject.Inject;
 @Stateless
 public class ClienteLogic 
 {
-
     private static final Logger LOGGER = Logger.getLogger(ClienteLogic.class.getName());
 
     @Inject
@@ -49,7 +48,8 @@ public class ClienteLogic
      * @param id Identificador de la instancia a consultar
      * @return Instancia de ClienteEntity con los datos del Cliente consultado.
      */
-    public ClienteEntity getCliente(Long id) {
+    public ClienteEntity getCliente(Long id) 
+    {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un cliente con id = {0}", id);
         return persistence.find(id);
     }
@@ -166,7 +166,8 @@ public class ClienteLogic
         } 
         else 
         {
-            ent.getEventos().add(entC); 
+            ent.addEvento(entC);
+            updateCliente(ent);
             return entC;            
         }
     }
@@ -187,9 +188,13 @@ public class ClienteLogic
         }
         EventoEntity entC = eventoLogic.getEvento(eventoId);
         int index = ent.getEventos().indexOf(entC);
-        if (index >= 0) {
-            ent.getEventos().remove(entC);            
-        } else {
+        if (index >= 0) 
+        {
+            ent.getEventos().remove(entC); 
+            updateCliente(ent);
+        } 
+        else 
+        {
             throw new BusinessLogicException("El cliente no tiene ese evento");
         }
     }
@@ -221,6 +226,7 @@ public class ClienteLogic
             }
         }
         cliente.setEventos(eventos);
+        updateCliente(cliente);
         return eventos;
     }
 
@@ -257,27 +263,13 @@ public class ClienteLogic
         List<EventoEntity> eventos = getCliente(clienteId).getEventos();
         EventoEntity evento = eventoLogic.getEvento(eventoId);
         int index = eventos.indexOf(evento);
-        if (index >= 0) {
+        if (index >= 0)
+        {
             return eventos.get(index);
         }
-        throw new BusinessLogicException("El evento no está asociado al cliente");
-    }
-
-    /**
-     * Obtiene una colección de instancias de EventoEntity asociadas a una
-     * instancia de Cliente
-     *
-     * @param clienteId Identificador de la instancia de Cliente
-     * @return Colección de instancias de EventoEntity asociadas a la
-     * instancia de Cliente
-     *
-     */
-    public List<EventoEntity> listEventos(Long clienteId) throws BusinessLogicException 
-    {
-        if(getCliente(clienteId) == null)
+        else
         {
-            throw new BusinessLogicException("No existe un cliente con dicho id para enlistar eventos");
-        }
-        return getCliente(clienteId).getEventos();
-    }
+            throw new BusinessLogicException("El evento no está asociado al cliente");
+        }        
+    }   
 }
