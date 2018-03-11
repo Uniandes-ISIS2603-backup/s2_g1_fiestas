@@ -123,9 +123,9 @@ public class ContratoLogic {
     public ProductoEntity getProducto(Long contratoId, Long ProductosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un producto con id = {0}", ProductosId);
         List<ProductoEntity> list = getContrato(contratoId).getProductos();
-        ProductoEntity ProductosEntity = new ProductoEntity();
-        ProductosEntity.setId(ProductosId);
-        int index = list.indexOf(ProductosEntity);
+        ProductoEntity productosEntity = new ProductoEntity();
+        productosEntity.setId(ProductosId);
+        int index = list.indexOf(productosEntity);
         if (index >= 0) {
             return list.get(index);
         }
@@ -176,7 +176,6 @@ public class ContratoLogic {
         ContratoEntity contrato = getContrato(contratoId);
         ProductoEntity producto = getProducto(contratoId, ProductosId);
         contrato.getProductos().remove(producto);
-
     }
     
     /**
@@ -184,14 +183,14 @@ public class ContratoLogic {
      * 
      * @param contratoId Identificador de la instancia de Contrato
      * @param entity Identificador de la instancia de Producto
+     * @return 
      */
-    public void replaceHorario(Long contratoId, HorarioEntity entity)
+    public HorarioEntity replaceHorario(Long contratoId, HorarioEntity entity)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de reemplazar el horario del contrato con id = {0}", contratoId);
         ContratoEntity contrato = getContrato(contratoId);
-        HorarioEntity borrar = horarioLogic.getHorario(contrato.getHorario().getId());
         contrato.setHorario(entity);
-        horarioLogic.deleteHorario(borrar.getId());
+        return contrato.getHorario();
         
     }
 
