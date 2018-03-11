@@ -646,11 +646,11 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/servicios")
-    public List<ServicioDetailDTO> listServicios(@PathParam("proveedorId") Long proveedorId)
+    public List<ServicioDetailDTO> getServicios(@PathParam("proveedorId") Long proveedorId)
     {
         try
         {                  
-            return serviciosListEntity2DTO(proveedorLogic.listServicios(proveedorId));
+            return serviciosListEntity2DTO(proveedorLogic.getServicios(proveedorId));
         }
         catch(BusinessLogicException e)
         {
