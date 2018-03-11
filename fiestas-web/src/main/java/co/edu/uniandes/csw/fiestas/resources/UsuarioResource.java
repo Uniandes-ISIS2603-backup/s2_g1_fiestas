@@ -149,7 +149,7 @@ public class UsuarioResource {
              throw new BusinessLogicException("El usuario no existe.");
         logic.deleteUsuario(id);
     }
-    
+    /*
     @GET
     @Path("{id:\\d+}/blogs")
     public List<BlogDetailDTO> getBlogsUsuario(@PathParam("id")Long id) throws BusinessLogicException{
@@ -177,7 +177,7 @@ public class UsuarioResource {
      * @param blogs lista de blogs a actualizar
      * @return lista de blogs actualizado
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
-     */
+     
     @PUT
     @Path("{id: \\d+}/blogs")
     public  List<BlogDetailDTO> replaceBlogs(@PathParam("id")Long id,List<BlogDetailDTO> blogs) throws BusinessLogicException
@@ -191,7 +191,7 @@ public class UsuarioResource {
      * @param entityList Lista de BlogEntity a convertir.
      * @return Lista de BlogDetailDTO convertida.
      *
-     */
+     
     private List<BlogDetailDTO> blogListEntity2DTO(List<BlogEntity> entityList) {
         List<BlogDetailDTO> list = new ArrayList<>();
         for (BlogEntity entity : entityList) {
@@ -206,7 +206,7 @@ public class UsuarioResource {
      * @param dtos Lista de BlogDetailDTO a convertir.
      * @return Lista de BlogEntity convertida.
      *
-     */
+     
     private List<BlogEntity> blogListDTO2Entity(List<BlogDetailDTO> dtos) {
         List<BlogEntity> list = new ArrayList<>();
         for (BlogDetailDTO dto : dtos) {
@@ -236,7 +236,7 @@ public class UsuarioResource {
      * @return JSON {@link BlogDetailDTO} - El blog guardado en la
      * usuario.
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
-     */
+     
     @POST
     @Path("{usuariosId: \\d+}/blogs/{blogsId: \\d+}")
     public BlogDetailDTO addBlog(@PathParam("usuariosId") Long usuariosId, @PathParam("blogsId") Long blogId) throws BusinessLogicException {
@@ -261,10 +261,11 @@ public class UsuarioResource {
      * @param blogsId Identificador del blog que se desea guardar. Este
      * debe ser una cadena de dígitos.
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
-     */
+     
     @DELETE
     @Path("{usuarioId: \\d+}/blogs/{blogsId: \\d+}")
     public void removeBlogs(@PathParam("usuarioId") Long usuarioId, @PathParam("blogsId") Long blogsId) throws BusinessLogicException {
         logic.removeBlog(blogsId, usuarioId);
     }
+    */
 }

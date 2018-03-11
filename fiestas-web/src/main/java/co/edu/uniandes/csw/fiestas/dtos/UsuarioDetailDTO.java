@@ -77,12 +77,14 @@ public class UsuarioDetailDTO extends UsuarioDTO
     public UsuarioDetailDTO(UsuarioEntity entity) 
     {
         super();
-        for(BlogEntity u : entity.getBlogs())
+        /**for(BlogEntity u : entity.getBlogs())
         {
             BlogDTO b= new BlogDTO(u);
             blogs.add(b);
         }
+        */
     }
+
     
     /**
      * @return La lista de blogs del usuario.
