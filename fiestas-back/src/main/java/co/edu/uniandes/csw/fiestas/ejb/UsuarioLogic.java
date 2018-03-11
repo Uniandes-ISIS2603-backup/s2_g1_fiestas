@@ -30,7 +30,27 @@ public class UsuarioLogic {
     
     @Inject
     private BlogLogic bLogic;
-
+    
+    /**
+     * Determina si hay o no un proveedor con el login de parámetro.
+     * 
+     * @param login Login a revisar.
+     * @return Si hay o no un proveedor con el login parámetro.
+     */    
+    public boolean repetidoLogin(String login)
+    {
+        List<UsuarioEntity> usuarios = getUsuarios();
+        boolean encontrado = false;
+        for(int i = 0; i < usuarios.size() && !encontrado ; i++)
+        {
+            if(usuarios.get(i).getLogin().equals(login))
+            {
+                encontrado = true;
+            }
+        }
+        return encontrado;
+    }
+    
     public List<UsuarioEntity> getUsuarios(){
         LOGGER.info("Inicia proceso de obtener todos los usuarios del sistema.");
         List<UsuarioEntity> usuarios=persistence.findAll();
@@ -72,13 +92,17 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO,"Termina el proceso de borrar el usuario con el id={0}", id);
     }
 
-    public List<BlogEntity> getBlogs(UsuarioEntity ent) throws BusinessLogicException {
-        List<BlogEntity> list = ent.getBlogs();
+    public List<BlogEntity> getBlogs(Long usuarioId) throws BusinessLogicException {
+        UsuarioEntity usuario = getUsuario(usuarioId);
+        if(usuario==null)
+            throw new BusinessLogicException("El usuario no se encuentra.");
+        
+        List<BlogEntity> list = usuario.getBlogs();
         List<BlogEntity> list1=bLogic.getBlogs();
-        for(BlogEntity e: list){
-            int index = list1.indexOf(e);
-        if(index<0&&!e.equals(list1.get(index)))
-            throw new BusinessLogicException("Los blogs en la base de datos y en la lista del usuario no son consistentes.");
+        
+        for (BlogEntity blogEntity : list) {
+            if(list1.contains(blogEntity)){/** Se deja vacío porque nececita revisar toda la lista y luego sí retornar*/}
+            else throw new BusinessLogicException("Los blogs en la base de datos y en la lista del usuario no son consistentes.");   
         }
         return list;
     }
@@ -87,7 +111,7 @@ public class UsuarioLogic {
     public BlogEntity getBlog(UsuarioEntity ent, Long blogId) throws BusinessLogicException {
         BlogEntity bE = bLogic.getBlog(blogId);
         if(bE == null)
-            throw new BusinessLogicException("El blog a agregar no existe.");
+            throw new BusinessLogicException("El blog a buscar no existe.");
         int index= ent.getBlogs().indexOf(bE);
         if(index<0 && !ent.getBlogs().get(index).equals(bE))
         {
@@ -102,32 +126,47 @@ public class UsuarioLogic {
      * @param blogs Lista de blogs que serán los del usuario.
      * @param usuarioId El id del usuario que se quiere actualizar.
      * @return La lista de blogs actualizada.
+     * @throws BusinessLogicException  - Error de lógica
      */
     public List<BlogEntity> replaceBlogs(Long usuarioId, List<BlogEntity> blogs) throws BusinessLogicException 
     {
         UsuarioEntity usuario = getUsuario(usuarioId);
-        if(usuario != null)
-        {
-            usuario.setBlogs(blogs);
-        }
-        else
+        if(usuario == null)
         {
             throw new BusinessLogicException("El usuario al que se le quiere reemplazar blogs es nulo");
         }
-        
-        if(blogs != null || blogs.size() == 0)
+              
+        else if(blogs == null)
         {
-            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
+            throw new BusinessLogicException("No hay lista nueva");
+        }
+        
+        else if(blogs.isEmpty())
+        {
+            throw new BusinessLogicException("La lista está vacía");
+        }
+        else
+        {
+            usuario.setBlogs(blogs);
         }
         return blogs;
     }
 
+    /**
+     * Agrega un blog a un usuario
+     * @param blogId Id del blog a asociar
+     * @param usuarioId id del usuario a agregar el blog
+     * @return Entidad del blog agregado
+     * @throws BusinessLogicException  - Error de lógica si no existe el usuario
+     */
     public BlogEntity addBlog(Long blogId, Long usuarioId) throws BusinessLogicException {
-         UsuarioEntity usuarioEntity = getUsuario(usuarioId);
+        UsuarioEntity usuarioEntity = getUsuario(usuarioId);
         BlogEntity blogEntity = bLogic.getBlog(blogId);
         if(usuarioEntity != null && blogEntity != null)
         {
             usuarioEntity.agregarBlog(blogEntity);
+            blogEntity.setUsuario(usuarioEntity);
+            updateUsuario(usuarioEntity);
         }
         else
         {
@@ -141,18 +180,19 @@ public class UsuarioLogic {
      *
      * @param blogId El blog que se desea borrar del usuario.
      * @param usuarioId El usuario de la cual se desea eliminar.
+     * @throws BusinessLogicException  - Error de lógica si no existe el usuario
      */
     public void removeBlog(Long blogId, Long usuarioId) throws BusinessLogicException 
     {
         UsuarioEntity usuarioEntity = getUsuario(usuarioId);
         BlogEntity blog = bLogic.getBlog(blogId);
-        if(usuarioEntity != null)
+        if(usuarioEntity != null && blog!= null)
         {
             usuarioEntity.removerBlog(blog);
         }
         else
         {
-            throw new BusinessLogicException("El usuario al que se le quiere remover el blog es nulo");
+            throw new BusinessLogicException("El usuario o el blog es nulo.");
         }        
         
     }

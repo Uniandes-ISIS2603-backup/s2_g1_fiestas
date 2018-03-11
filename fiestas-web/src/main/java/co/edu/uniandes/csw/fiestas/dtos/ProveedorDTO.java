@@ -45,9 +45,7 @@ public class ProveedorDTO extends UsuarioDTO
      */
     public ProveedorDTO()
     {
-        
-        
-        
+        //Constructor vacio
     }      
     private boolean penalizado;
 
@@ -83,7 +81,7 @@ public class ProveedorDTO extends UsuarioDTO
         e.setDireccion(getDireccion());
         e.setDocumento(getDocumento());
         e.setLogin(getLogin());
-        e.setName(getNombre());
+        e.setNombre(getNombre());
         e.setTelefono(getTelefono());
         e.setPenalizado(isPenalizado());
         return e;

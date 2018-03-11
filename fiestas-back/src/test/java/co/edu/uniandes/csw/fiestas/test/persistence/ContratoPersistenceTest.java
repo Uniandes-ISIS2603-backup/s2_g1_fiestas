@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
@@ -24,14 +19,13 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 /**
  *
  * @author mc.gonzalez15
  */
 @RunWith(Arquillian.class)
 public class ContratoPersistenceTest {
-    
+
     /**
      *
      * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
@@ -55,7 +49,7 @@ public class ContratoPersistenceTest {
     @Inject
     private ContratoPersistence ContratoPersistence;
 
-     /**
+    /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
      * datos por fuera de los métodos que se están probando.
      */
@@ -137,8 +131,8 @@ public class ContratoPersistenceTest {
 
         ContratoEntity entity = em.find(ContratoEntity.class, result.getId());
 
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-     
+        Assert.assertEquals(newEntity.getTyc(), entity.getTyc());
+        Assert.assertEquals(newEntity.getValor(), entity.getValor());
     }
 
     /**
@@ -171,8 +165,9 @@ public class ContratoPersistenceTest {
         ContratoEntity entity = data.get(0);
         ContratoEntity newEntity = ContratoPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getName(), newEntity.getName());
-      
+        Assert.assertEquals(newEntity.getTyc(), entity.getTyc());
+        Assert.assertEquals(newEntity.getValor(), entity.getValor());
+
     }
 
     /**
@@ -197,7 +192,7 @@ public class ContratoPersistenceTest {
     public void updateContratoTest() {
         System.out.println("Aqui hay un error");
         ContratoEntity entity = data.get(0);
-        
+
         PodamFactory factory = new PodamFactoryImpl();
         ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
 
@@ -207,7 +202,8 @@ public class ContratoPersistenceTest {
 
         ContratoEntity resp = em.find(ContratoEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getName(), resp.getName());
-      
+        Assert.assertEquals(newEntity.getTyc(), resp.getTyc());
+        Assert.assertEquals(newEntity.getValor(), resp.getValor());
+
     }
 }

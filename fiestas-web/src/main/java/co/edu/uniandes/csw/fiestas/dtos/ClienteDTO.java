@@ -40,7 +40,7 @@ public class ClienteDTO extends UsuarioDTO
 {   
     public ClienteDTO()
     {
-        
+        //Constructor vacio
     }
         
     public ClienteDTO(ClienteEntity e)
@@ -52,11 +52,12 @@ public class ClienteDTO extends UsuarioDTO
             setDireccion(e.getDireccion());
             setDocumento(e.getDocumento());
             setLogin(e.getLogin());
-            setNombre(e.getName());
+            setNombre(e.getNombre());
             setTelefono(e.getTelefono());
         }
     }
     
+    @Override
     public ClienteEntity toEntity()
     {
         ClienteEntity e = new ClienteEntity(); 
@@ -65,7 +66,7 @@ public class ClienteDTO extends UsuarioDTO
         e.setDireccion(getDireccion());
         e.setDocumento(getDocumento());
         e.setLogin(getLogin());
-        e.setName(getNombre());
+        e.setNombre(getNombre());
         e.setTelefono(getTelefono());
         return e;
     }

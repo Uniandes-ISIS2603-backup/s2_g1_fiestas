@@ -7,9 +7,13 @@ package co.edu.uniandes.csw.fiestas.resources;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import co.edu.uniandes.csw.fiestas.dtos.*;
+import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import static javax.ws.rs.HttpMethod.DELETE;
@@ -20,7 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 /**
- * <pre>Clase que implementa el recurso "cities".
+ * <pre>Clase que implementa el recurso "productos".
  * URL: /api/productos
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
@@ -35,12 +39,16 @@ import javax.ws.rs.Produces;
  * @author af.losada  
  * @version 1.0
  */
-@Path("cities")
+@Path("productos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class ProductoResource 
 {
+    
+    @Inject
+    ProductoLogic productoLogic;
+    
         /**
      * <h1>GET /api/productos/{id} : Obtener producto por id.</h1>
      * 
@@ -59,8 +67,9 @@ public class ProductoResource
      */
     @GET
     @Path("{id: \\d+}")
-    public ProductoDetailDTO getProdcuto(@PathParam("id") Long id){
-      return null;
+    public ProductoDetailDTO getProducto(@PathParam("id") Long id)
+    {
+      return new ProductoDetailDTO(productoLogic.getProducto(id));
     }
     
     /**
@@ -75,8 +84,17 @@ public class ProductoResource
      * @return JSONArray {@link ProductoDetailDTO} - Los productos encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<ProductoDetailDTO> getProductos(){
-      return null;
+    public List<ProductoDetailDTO> getProductos()
+    {
+        List<ProductoEntity> lista = productoLogic.getProductos();
+        ArrayList<ProductoDetailDTO> nuevaList = new ArrayList<ProductoDetailDTO>();
+        
+        for (ProductoEntity productoEntity : lista) 
+        {
+            nuevaList.add(new ProductoDetailDTO(productoEntity));
+        }
+        
+        return nuevaList;
     }
     
     /**
@@ -102,6 +120,9 @@ public class ProductoResource
      */
     @POST
     public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
+        
+        productoLogic.createProducto(producto.toEntity());
+        
         return producto;
     }
     
@@ -126,11 +147,13 @@ public class ProductoResource
     @PUT
     @Path("{id: \\d+}")
     public ProductoDetailDTO updateProducto(@PathParam("id") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
+         
+        productoLogic.updateProducto(producto.toEntity());
         return producto;
     }
     
     /**
-     * <h1>DELETE /api/cities/{id} : Borrar producto por id.</h1>
+     * <h1>DELETE /api/productos/{id} : Borrar producto por id.</h1>
      * 
      * <pre>Borra el producto con el id asociado recibido en la URL.
      * 
@@ -145,9 +168,9 @@ public class ProductoResource
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteHorario(@PathParam("id") Long id)
+    public void deleteProducto(@PathParam("id") Long id)
     {
-        
+        productoLogic.deleteProducto(id);
     }
     
 }

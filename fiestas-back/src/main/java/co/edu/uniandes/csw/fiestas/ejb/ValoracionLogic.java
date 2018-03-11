@@ -17,7 +17,9 @@ import javax.inject.Inject;
  */
 @Stateless
 public class ValoracionLogic {
-
+    
+    private static final Logger LOGGER = Logger.getLogger(ValoracionLogic.class.getName());
+    
     @Inject
     private ValoracionPersistence persistence;
 
@@ -27,6 +29,7 @@ public class ValoracionLogic {
      * @return Lista de entidades de tipo valoracion
      */
     public List<ValoracionEntity> getValoraciones() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las valoraciones.");
         List<ValoracionEntity> valoraciones = persistence.findAll();
         return valoraciones;
     }
@@ -37,9 +40,10 @@ public class ValoracionLogic {
      * @param id Identificador de la instancia a consultar
      * @return Instancia de ValoracionEntity con los datos de la Valoracion
      * consultada.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * @throws BusinessLogicException  - Error de lógica si no existe la valoracion
      */
     public ValoracionEntity getValoracion(Long id) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la valoracion con el id dado.");
         if (persistence.find(id) == null) {
             throw new BusinessLogicException("La valoración no existe");
         }
@@ -51,9 +55,10 @@ public class ValoracionLogic {
      *
      * @param entity Instancia de ValoracionEntity a crear
      * @return nstancia de ValoracionEntity creada
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * @throws BusinessLogicException - Error de lógica si no se cumple la regla de negocio
      */
     public ValoracionEntity createValoracion(ValoracionEntity entity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de crear una valoracion");
         if (entity.getCalificacion() > 5.0 || entity.getCalificacion() < 1.0) {
             throw new BusinessLogicException("La calificación debe estar entre 1.0 y 5.0");
         }
@@ -67,6 +72,7 @@ public class ValoracionLogic {
      * @return Instancia de ValoracionEntity actualizada
      */
     public ValoracionEntity updateValoracion(ValoracionEntity entity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar una valoracion.");
         ValoracionEntity newValoracion = persistence.update(entity);
         return newValoracion;
     }
@@ -77,6 +83,7 @@ public class ValoracionLogic {
      * @param id Identificador de la instancia a eliminar.
      */
     public void deleteValoracion(Long id) {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar una valoracion");
         persistence.delete(id);
     }
 

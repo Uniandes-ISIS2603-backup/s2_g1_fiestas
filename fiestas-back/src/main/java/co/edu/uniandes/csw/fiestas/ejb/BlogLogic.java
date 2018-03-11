@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
-import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.BlogPersistence;
 import java.util.*;
@@ -26,6 +20,9 @@ public class BlogLogic {
 
     @Inject
     private BlogPersistence persistence;
+    
+    @Inject
+    private EventoLogic logicEvento;
     
     /**
      * Obtiene la lista de los registros de Blog.
@@ -79,5 +76,30 @@ public class BlogLogic {
     public void deleteBlog(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un autor ");
         persistence.delete(id);
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return 
+     */
+    public EventoEntity getEventoExistente(Long id){
+        return logicEvento.getEvento(id);
+    }
+    
+    public EventoEntity getEvento(Long id){
+        BlogEntity bE=persistence.find(id);
+        return bE.getEvento();
+    }
+    
+    
+    public void addEvento(EventoEntity eE, Long id) throws BusinessLogicException{
+        BlogEntity bE = getBlog(id);
+        if(bE.getEvento()==null){
+        bE.setEvento(eE);
+        persistence.update(bE);
+        }
+        else 
+            throw new BusinessLogicException("El blog ya tiene evento.");
     }
 }

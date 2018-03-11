@@ -1,11 +1,5 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.UsuarioPersistence;
 import java.util.ArrayList;
@@ -18,13 +12,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -142,7 +132,7 @@ public class UsuarioPersistenceTest {
 
         UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
 
-        Assert.assertEquals(newEntity.getName(), entity.getName());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
         Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
         Assert.assertEquals(newEntity.getContraseña(), entity.getContraseña());
@@ -181,7 +171,7 @@ public class UsuarioPersistenceTest {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity newEntity = usuarioPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getName(), entity.getName());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
         Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
         Assert.assertEquals(newEntity.getContraseña(), entity.getContraseña());
@@ -220,7 +210,7 @@ public class UsuarioPersistenceTest {
 
         UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getName(), resp.getName());
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getDocumento(), resp.getDocumento());
         Assert.assertEquals(newEntity.getDireccion(), resp.getDireccion());

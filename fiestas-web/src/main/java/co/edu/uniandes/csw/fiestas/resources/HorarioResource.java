@@ -127,6 +127,7 @@ public class HorarioResource {
      * </code> 
      * </pre>
      * @param id Identificador del horario que se desea actualizar.Este debe ser una cadena de dígitos.
+     * @param horario horario a actualizar
      * @return JSON {@link HorarioDetailDTO} - El horario guardado
      */
     @PUT
@@ -138,7 +139,6 @@ public class HorarioResource {
         HorarioEntity oldEntity = logic.getHorario(id);
         if(oldEntity == null)
             throw new WebApplicationException("El horario no existe.",404);
-        entity.setEventos(oldEntity.getEventos());
         return new HorarioDetailDTO(logic.updateHorario(entity));
     }
     
@@ -170,19 +170,5 @@ public class HorarioResource {
         for(HorarioEntity entity : horarios)
             lista.add(new HorarioDetailDTO(entity));
         return lista;
-    }
-    
-    @Path("{horariosId: \\d+}/eventos")
-    public void getHorarioEventosResource(@PathParam("id") Long id){
-        HorarioEntity entity = logic.getHorario(id);
-        if(entity == null)
-            throw new WebApplicationException("El recurso /horarios/"+id+" no existe.",404);
-            
-        entity.getEventos();
-    }
-    
-    @POST
-    public HorarioDetailDTO addEventoHorario(EventoDTO evento) throws BusinessLogicException {
-        return null;
     }
 }

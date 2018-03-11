@@ -5,9 +5,10 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
-import java.beans.PropertyChangeSupport;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -22,15 +23,15 @@ public class ProveedorEntity extends UsuarioEntity
     
     
     @PodamExclude
-    @OneToMany
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContratoEntity> contratos;
     
     @PodamExclude
-    @OneToMany
+    @ManyToMany
     private List<ServicioEntity> servicios;
     
     @PodamExclude
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValoracionEntity> valoraciones;
     
 
@@ -100,5 +101,25 @@ public class ProveedorEntity extends UsuarioEntity
     public void removerServicio(ServicioEntity pServicio)
     {
         servicios.remove(pServicio);
+    }
+    
+    public void agregarContrato(ContratoEntity pContrato)
+    {
+        contratos.add(pContrato);
+    }
+    
+    public void removerContrato(ContratoEntity pContrato)
+    {
+        contratos.remove(pContrato);
+    }
+    
+    public void agregarValoracion(ValoracionEntity pValoracion)
+    {
+        valoraciones.add(pValoracion);
+    }
+    
+    public void removerValoracion(ValoracionEntity pValoracion)
+    {
+        valoraciones.remove(pValoracion);
     }
 }

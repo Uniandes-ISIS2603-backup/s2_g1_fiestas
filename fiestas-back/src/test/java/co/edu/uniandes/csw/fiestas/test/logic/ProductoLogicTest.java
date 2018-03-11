@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
+
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +33,9 @@ public class ProductoLogicTest
 
     @Inject
     private ProductoLogic productoLogic;
+    
+    @Inject
+    private ServicioLogic servicioLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -127,7 +128,7 @@ public class ProductoLogicTest
             Assert.assertTrue(encontrado);
         }
     }
-
+    
     /**
      * Prueba para eliminar un producto
      */
@@ -155,4 +156,45 @@ public class ProductoLogicTest
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
     }
+    
+    
+    /**
+     * Prueba para actualizar los servicios
+     */
+    @Test
+    public void setServicioTest()
+    {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);        
+        productoLogic.createProducto(newEntity);
+        
+        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
+        servicioLogic.createServicio(newServicio);
+        
+        productoLogic.setServicio(entity.getId(), newServicio.getId());
+        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
+        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
+    }
+    
+    /**
+     * Prueba para revisar el servicio
+     */
+    @Test
+    public void getServicioTest()
+    {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+        productoLogic.createProducto(newEntity);
+        
+        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
+        servicioLogic.createServicio(newServicio);
+        
+        productoLogic.setServicio(entity.getId(), newServicio.getId());
+        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
+        
+        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
+    }
+
 }

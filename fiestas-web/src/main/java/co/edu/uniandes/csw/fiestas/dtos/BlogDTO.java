@@ -23,6 +23,7 @@ import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
  *      "cuerpo": "Este cumpleaños fue increible, los niños pasaron súper, tuvimos payasos y carro de perros calientes, recomendados ambos",
  *      "likes": 45
  *   }
+ * </pre>
  *
  * @author mc.gonzalez15
  */
@@ -49,82 +50,10 @@ public class BlogDTO {
     private int likes;
 
     /**
-     * Constructor vacío
+     * Constructor vacío BlogDTO
      */
     public BlogDTO() {
-
-    }
-
-    /**
-     * Retorna el identificador
-     *
-     * @return id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Asigna el identificador
-     *
-     * @param id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Retorna el titulo
-     *
-     * @return titulo
-     */
-    public String getTitulo() {
-        return titulo;
-    }
-
-    /**
-     * Asigna el titulo
-     *
-     * @param titulo
-     */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    /**
-     * Retorna el cuerpo
-     *
-     * @return cuerpo
-     */
-    public String getCuerpo() {
-        return cuerpo;
-    }
-
-    /**
-     * Asigna el cuerpo
-     *
-     * @param cuerpo
-     */
-    public void setCuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
-    }
-
-    /**
-     * Retorna el numero de likes
-     *
-     * @return likes
-     */
-    public int getLikes() {
-        return likes;
-    }
-
-    /**
-     * Asigna el numero de likes
-     *
-     * @param likes
-     */
-    public void setLikes(int likes) {
-        this.likes = likes;
+        //Constructor vacio
     }
 
     /**
@@ -142,6 +71,78 @@ public class BlogDTO {
             this.likes = entity.getLikes();
 
         }
+    }
+
+    /**
+     * Retorna el identificador
+     *
+     * @return id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Asigna el identificador
+     *
+     * @param id a asignar
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * Retorna el titulo
+     *
+     * @return titulo
+     */
+    public String getTitulo() {
+        return titulo;
+    }
+
+    /**
+     * Asigna el titulo
+     *
+     * @param titulo a asignar
+     */
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    /**
+     * Retorna el cuerpo
+     *
+     * @return cuerpo
+     */
+    public String getCuerpo() {
+        return cuerpo;
+    }
+
+    /**
+     * Asigna el cuerpo
+     *
+     * @param cuerpo a asignar
+     */
+    public void setCuerpo(String cuerpo) {
+        this.cuerpo = cuerpo;
+    }
+
+    /**
+     * Retorna el numero de likes
+     *
+     * @return likes
+     */
+    public int getLikes() {
+        return likes;
+    }
+
+    /**
+     * Asigna el numero de likes
+     *
+     * @param likes a asignar
+     */
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     /**

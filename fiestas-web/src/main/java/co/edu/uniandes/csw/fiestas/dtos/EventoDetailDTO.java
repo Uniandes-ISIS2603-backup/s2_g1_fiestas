@@ -1,6 +1,8 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +23,10 @@ public class EventoDetailDTO extends EventoDTO {
      * Constructor por defecto
      */
     public EventoDetailDTO() {
-
+        //Constructor vacio
     }
-    
-        /**
+
+    /**
      * Crea un objeto EventoDetailDTO a partir de un objeto EventoEntity
      * incluyendo los atributos de EventoDTO.
      *
@@ -32,11 +34,21 @@ public class EventoDetailDTO extends EventoDTO {
      * objeto.
      *
      */
-    public EventoDetailDTO(EventoEntity entity){
+    public EventoDetailDTO(EventoEntity entity) {
         super(entity);
+        if(entity!=null){
+            contratos=new ArrayList<>();
+            for(ContratoEntity contratoEntity : entity.getContratos()){
+                contratos.add(new ContratoDTO(contratoEntity));
+            }
+            
+            pago=new PagoDTO(entity.getPago());
+            cliente = new ClienteDTO(entity.getCliente());
+            tematica= new TematicaDTO(entity.getTematica());
+        }
     }
-    
-     /**
+
+    /**
      * Convierte un objeto EventoDetailDTO a EventoEntity incluyendo los
      * atributos de EventoDTO.
      *
@@ -44,8 +56,20 @@ public class EventoDetailDTO extends EventoDTO {
      *
      */
     @Override
-    public EventoEntity toEntity(){
+    public EventoEntity toEntity() {
         EventoEntity entity = super.toEntity();
+        if(contratos!=null){
+            List<ContratoEntity> contratosEntity= new ArrayList<>();
+            for(ContratoDTO contrato: contratos)
+            {
+                contratosEntity.add(contrato.toEntity());
+            }
+            entity.setContratos(contratosEntity);
+            
+            entity.setPago(pago.toEntity());
+            entity.setCliente(cliente.toEntity());
+            entity.setTematica(tematica.toEntity());
+        }
         return entity;
     }
 
@@ -96,11 +120,13 @@ public class EventoDetailDTO extends EventoDTO {
 
     /**
      * Agragar un contrato a la lista asociada al evento.
+     *
      * @param contrato nuevo a agregar
      */
-    public void addContrato(ContratoDTO contrato){
+    public void addContrato(ContratoDTO contrato) {
         contratos.add(contrato);
     }
+
     /**
      * Se retorna la tematica del evento
      *
@@ -112,6 +138,7 @@ public class EventoDetailDTO extends EventoDTO {
 
     /**
      * Asignar la tematica del evento
+     *
      * @param tematica del evento
      */
     public void setTematica(TematicaDTO tematica) {

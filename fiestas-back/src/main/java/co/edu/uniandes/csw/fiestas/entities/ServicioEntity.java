@@ -18,36 +18,56 @@ import uk.co.jemos.podam.common.PodamExclude;
  *
  * @author ls.arias
  */
-@Entity 
-public class ServicioEntity extends BaseEntity implements Serializable{
-    
+@Entity
+public class ServicioEntity extends BaseEntity implements Serializable {
+
+    @PodamExclude
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ValoracionEntity> valoraciones = new ArrayList<>();
+
     @PodamExclude
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ValoracionEntity> valoraciones = new ArrayList<>();
-    @OneToMany
     private List<ProductoEntity> productos = new ArrayList<>();
+
+    @PodamExclude
     @ManyToMany
     private List<ProveedorEntity> proveedores = new ArrayList<>();
+
+    private String nombre;
     private String descripcion;
     private String tipo;
-    
-    public String getDescripcion()
-    {
+
+    /**
+     * Obtiene el atributo nombre
+     *
+     * @return nombre asignado al servicio
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Establece el nombre del servicio
+     *
+     * @param nombre nuevo del servicio
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
         return descripcion;
     }
-    
-    public String getTipo()
-    {
+
+    public String getTipo() {
         return tipo;
     }
-    
-    public void setDescripcion(String pDescripcion)
-    {
+
+    public void setDescripcion(String pDescripcion) {
         this.descripcion = pDescripcion;
     }
-    
-    public void setTipo(String pTipo)
-    {
+
+    public void setTipo(String pTipo) {
         this.tipo = pTipo;
     }
 
@@ -74,5 +94,5 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     public void setProveedores(List<ProveedorEntity> proveedores) {
         this.proveedores = proveedores;
     }
-    
+
 }

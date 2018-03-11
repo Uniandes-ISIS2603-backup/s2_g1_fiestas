@@ -67,6 +67,11 @@ public class EventoLogic {
      */
     public EventoEntity createEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
+        
+        EventoEntity buscado=getEvento(entity.getId());
+        if(buscado!=null){
+            throw new BusinessLogicException("Ya existe el evento con este Id");
+        }
 
         //Primera regla de negocio: El evento debe tener plazo minimo de una semana
         int noOfDays = 7;
@@ -93,7 +98,7 @@ public class EventoLogic {
      *
      * @param entity Instancia de EventoEntity con los nuevos datos.
      * @return Instancia de EventoEntity con los datos actualizados.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * @throws BusinessLogicException - Error de lógica
      */
     public EventoEntity updateEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());

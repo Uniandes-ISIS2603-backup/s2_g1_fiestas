@@ -1,10 +1,10 @@
-
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -22,6 +22,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class EventoEntity extends BaseEntity implements Serializable {
 
+    private String nombre;
+    /*Nombre del evento*/
     @Temporal(TemporalType.DATE)
     private Date fecha;
     /*Fecha del evento */
@@ -35,11 +37,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /*Numero de invitados del evento */
 
     @PodamExclude
-    @OneToMany(mappedBy="evento")
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    @OneToMany(mappedBy = "evento")
+    private List<ContratoEntity> contratos = new ArrayList<>();
 
     @PodamExclude
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private PagoEntity pago;
 
     @PodamExclude
@@ -49,6 +51,24 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne
     private TematicaEntity tematica;
+
+    /**
+     * Obtiene el atributo nombre
+     *
+     * @return nombre asignado al evento
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Establece el nombre del evento
+     *
+     * @param nombre nuevo del evento
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     /**
      * Obtiene el atributo fecha
@@ -211,5 +231,5 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setTematica(TematicaEntity tematica) {
         this.tematica = tematica;
     }
-    
+
 }

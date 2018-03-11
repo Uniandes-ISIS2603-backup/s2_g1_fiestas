@@ -9,9 +9,13 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import co.edu.uniandes.csw.fiestas.dtos.*;
+import co.edu.uniandes.csw.fiestas.ejb.TematicaLogic;
+import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.DELETE;
@@ -21,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "tematica".
@@ -42,13 +47,11 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class TematicaResource 
 {
-    
-    public TematicaResource(){
-       
-    }
+    @Inject
+    TematicaLogic tematicaLogic;
    
     /**
-    * <h1>GET /tematica : Obtener todos las tematicas.</h1>
+    * <h1>GET /tematicas : Obtener todos las tematicas.</h1>
     * 
     * <pre>Busca y devuelve todos las tematica que existen en la aplicacion.
     * 
@@ -56,16 +59,22 @@ public class TematicaResource
     * <code style="color: mediumseagreen; background-color: #eaffe0;">
     * 200 OK Devuelve todas los productos de la aplicacion.</code> 
     * </pre>
-    * @param lista una lista de todas las tematicas
     * @return JSONArray {@link TematicaDetailDTO} - Las tematicas encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
     */ 
     @GET
-    public List<TematicaDetailDTO> getTematica(List<TematicaDetailDTO> lista){
-      return lista;
+    public List<TematicaDetailDTO> getTematicas(){
+        
+        List<TematicaEntity> list1 = tematicaLogic.getTematicas();
+        ArrayList<TematicaDetailDTO> list2 = new ArrayList<TematicaDetailDTO>();
+        for (TematicaEntity tematicaEntity : list1) 
+        {
+            list2.add(new TematicaDetailDTO(tematicaEntity));
+        }
+        return list2;
     }
    
     /**
-    * <h1>GET /tematica/{id} : Obtener tematica por id.</h1>
+    * <h1>GET /tematicas/{id} : Obtener tematica por id.</h1>
     * 
     * <pre>Busca la tematica con el id asociado recibido en la URL y lo devuelve.
     * 
@@ -83,7 +92,8 @@ public class TematicaResource
     @GET
     @Path("{id: \\d+}")
     public TematicaDetailDTO getTematica(@PathParam("id") Long id){
-      return null;
+        
+        return new TematicaDetailDTO(tematicaLogic.getTematica(id));
     }
    
     /**
@@ -109,11 +119,13 @@ public class TematicaResource
     */ 
     @POST 
     public TematicaDetailDTO createTematica(TematicaDetailDTO tematica) throws BusinessLogicException{
+        
+        tematicaLogic.createTematica(tematica.toEntity());
         return tematica;
     }
     
     /**
-    * <h1>PUT /tematica/{id} : Actualizar tematica por id.</h1>
+    * <h1>PUT /tematicas/{id} : Actualizar tematica por id.</h1>
     * 
     * <pre>Busca la tematica con el id asociado recibido en la URL, actualiza los paramteros
     * y la devuelve.
@@ -127,16 +139,20 @@ public class TematicaResource
     * </code> 
     * </pre>
     * @param id Identificador de la tematica que se esta buscando. Este debe ser una cadena de dígitos.
+    * @param tematica La nueva tematica que se quiere actualizar
     * @return JSON {@link TematicaDetailDTO} - La tematica buscada y actuaizada
+    * @thows WebApplicationException
     */
     @PUT 
     @Path("{id: \\d+}")
-    public TematicaDetailDTO updateTematica(@PathParam("id") Long id){
-        return null;
+    public TematicaDetailDTO updateTematica(@PathParam("id") Long id, TematicaDetailDTO tematica){
+       tematica.darID();
+       TematicaEntity entity = tematicaLogic.getTematica(id);
+        return new TematicaDetailDTO(tematicaLogic.updateTematica(id, tematica.toEntity()));
     }
     
     /**
-    * <h1>DELETE /tematica/{id} : Elimina una tematica por id.</h1>
+    * <h1>DELETE /tematicas/{id} : Elimina una tematica por id.</h1>
     * 
     * <pre>Busca la tematica con el id asociado recibido en la URL y lo elimina
     * 
@@ -152,6 +168,8 @@ public class TematicaResource
     */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteTematica(@PathParam("id") Long id){
+    public void deleteTematica(@PathParam("id") Long id)
+    {
+        tematicaLogic.deleteTematica(id);
     }
 }

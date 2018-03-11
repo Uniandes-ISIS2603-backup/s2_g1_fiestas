@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
@@ -26,6 +21,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,8 +30,8 @@ import org.junit.Test;
  * @author cm.amaya10
  */
 @RunWith(Arquillian.class)
-public class EventoLogicTest {
-
+public class EventoLogicTest 
+{
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -102,6 +98,7 @@ public class EventoLogicTest {
         }
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+
             int noOfDays = 8;
             Date dateOfOrder = new Date();
             Calendar calendar = Calendar.getInstance();
@@ -109,20 +106,39 @@ public class EventoLogicTest {
             calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
             Date date = calendar.getTime();
             entity.setFecha(date);
+            entity.setInvitados(10);
+
             em.persist(entity);
             data.add(entity);
+
+            if (i == 0) {
+                contratosData.get(i).setEvento(entity);
+            }
         }
     }
 
     /**
-     * Prueba para crear un Evento
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * Prueba exitosa para crear un Evento.
      */
     @Test
-    public void createEventoTest() throws BusinessLogicException {
+    public void createEventoTest() {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
-        EventoEntity result = eventoLogic.createEvento(newEntity);
+
+        int noOfDays = 8;
+        Date dateOfOrder = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateOfOrder);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date date = calendar.getTime();
+        newEntity.setFecha(date);
+        newEntity.setInvitados(10);
+
+        EventoEntity result = new EventoEntity();
+        try {
+            result = eventoLogic.createEvento(newEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
         Assert.assertNotNull(result);
         EventoEntity entidad = em.find(EventoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
@@ -132,7 +148,51 @@ public class EventoLogicTest {
     }
 
     /**
-     * Prueba para consultar la lista de eventos
+     * Prueba fallida para crear un Evento 1.
+     *
+     * Falla por que el evento o cumple el plazo
+     */
+    @Test
+    public void createEventoTestFail1() {
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setFecha(new Date());
+        newEntity.setInvitados(10);
+        EventoEntity result;
+        try {
+            result = eventoLogic.createEvento(newEntity);
+            fail("No se debio haber creado el evento");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+
+    /**
+     * Prueba fallida para crear un Evento 2.
+     *
+     * Falla por que el evento tiene un numero de invitados negativo.
+     */
+    @Test
+    public void createEventoTestFail2() {
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        int noOfDays = 8;
+        Date dateOfOrder = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateOfOrder);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date date = calendar.getTime();
+        newEntity.setFecha(date);
+        newEntity.setFecha(new Date());
+        EventoEntity result;
+        try {
+            result = eventoLogic.createEvento(newEntity);
+            fail("No se debio haber creado el evento");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+
+    /**
+     * Prueba para consultar la lista de eventos.
      */
     @Test
     public void getEventosTest() {
@@ -151,44 +211,141 @@ public class EventoLogicTest {
     }
 
     /**
-     * Prueba para eliminar un evento
+     * Prueba para eliminar un evento.
      */
     @Test
     public void deleteEventoTest() {
         EventoEntity entity = data.get(0);
-        eventoLogic.removeContrato(contratosData.get(0).getId(),entity.getId());
+        eventoLogic.removeContrato(contratosData.get(0).getId(), entity.getId());
         eventoLogic.deleteEvento(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
-    
+
+    /**
+     * Prueba de agregar un contrato de un evento.
+     */
     @Test
-    public void getContratosTest() throws BusinessLogicException{
+    public void addContratoTest() {
         EventoEntity entity = data.get(0);
-        ContratoEntity contratoEntity= contratosData.get(0);
-        ContratoEntity respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
-        
-        Assert.assertEquals(respuesta.getId(), contratoEntity.getId());
-        Assert.assertEquals(respuesta.getTyc(), contratoEntity.getTyc());
+        ContratoEntity contratoEntity = contratosData.get(0);
+        ContratoEntity creado = eventoLogic.addContrato(contratoEntity.getId(), entity.getId());
+        Assert.assertEquals(creado.getId(), contratoEntity.getId());
+        Assert.assertEquals(creado.getTyc(), contratoEntity.getTyc());
     }
 
     /**
-     * Prueba para actualizar un evento
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     * Prueba de obtener un contrato de un evento.
      */
     @Test
-    public void updateEventoTest() throws BusinessLogicException {
+    public void getContratoTest() {
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity = contratosData.get(0);
+        ContratoEntity respuesta = new ContratoEntity();
+        try {
+            respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+        Assert.assertEquals(respuesta.getId(), contratoEntity.getId());
+        Assert.assertEquals(respuesta.getTyc(), contratoEntity.getTyc());
+    }
+    
+    /**
+     * Prueba de obtener la lista de contratos de un evento.
+     */
+    @Test
+    public void getContratosTest() {
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity = contratosData.get(0);
+         List<ContratoEntity> respuesta = eventoLogic.getContratos(entity.getId());
+        Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
+        Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
+    }
+
+        
+    /**
+     * Prueba para reemplzar la lista de contratos de un evento.
+     */
+    @Test
+    public void replaceContratosTest() {
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity = contratosData.get(0);
+        ContratoEntity otherContratoEntity = contratosData.get(1);
+
+        List<ContratoEntity> respuesta = eventoLogic.replaceContratos(entity.getId(), contratosData);
+        Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
+        Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
+        Assert.assertEquals(respuesta.get(1).getId(), otherContratoEntity.getId());
+        Assert.assertEquals(respuesta.get(1).getTyc(), otherContratoEntity.getTyc());
+    }
+    
+    /**
+     * Prueba para eliminar un contrato
+     */
+    @Test
+    public void removeContratoTest() {
+        EventoEntity entity = data.get(0);
+        ContratoEntity contratoEntity = contratosData.get(0);
+        eventoLogic.removeContrato(contratoEntity.getId(), entity.getId());
+        try {
+            ContratoEntity respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
+            fail("No deberia encontrar el contrato en el evento");
+        } catch (BusinessLogicException ex) {
+            
+        }
+    }
+
+    /**
+     * Prueba Exitosa para actualizar un evento.
+     *
+     * Se actualiza un evento cumpliendo las reglas de negocio
+     */
+    @Test
+    public void updateEventoTest() {
         EventoEntity entity = data.get(0);
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
 
+        int noOfDays = 8;
+        Date dateOfOrder = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateOfOrder);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date date = calendar.getTime();
+        newEntity.setFecha(date);
         newEntity.setId(entity.getId());
 
-        eventoLogic.updateEvento(newEntity);
+        newEntity.setInvitados(10);
+
+        try {
+            eventoLogic.updateEvento(newEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
 
         EventoEntity resp = em.find(EventoEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getCelebrado(), resp.getCelebrado());
         Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
         Assert.assertEquals(newEntity.getLugar(), resp.getLugar());
+    }
+
+    /**
+     * Prueba fallida para actualizar un evento
+     *
+     * No se cumple la primera regla de negocio
+     */
+    @Test
+    public void updateFailEventoTest() {
+        EventoEntity entity = data.get(0);
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        Date date = new Date();
+        newEntity.setFecha(date);
+        newEntity.setId(entity.getId());
+        try {
+            eventoLogic.updateEvento(newEntity);
+            fail("El evento se actualizo no cumpliendo las reglas de negocio");
+        } catch (BusinessLogicException ex) {
+        }
     }
 }

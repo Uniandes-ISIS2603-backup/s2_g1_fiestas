@@ -1,8 +1,8 @@
-
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
-
+import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 
 /**
  * EventoDTO Objeto de transferencia de datos de Eventos.
@@ -36,49 +36,51 @@ public class PagoDTO {
     private Boolean realizado;
     private String estado;
     private String metodoDePago;
+    private int valor;
 
     /**
      * Constructor por defecto
      */
     public PagoDTO() {
-
+        //Constructor vacio
     }
 
-     /**
+    /**
      * Crea un objeto PagoDTO a partir de un objeto PagoEntity.
      *
      * @param entity Entidad PagoEntity desde la cual se va a crear el nuevo
      * objeto.
-     * 
+     *
      */
-    public PagoDTO(PagoEntity entity){
-         if(entity!=null){
-             this.id=entity.getId();
-             this.estado=entity.getEstado();
-             this.metodoDePago=entity.getMetodoDePago();
-             this.realizado=entity.isRealizado();
-         }
+    public PagoDTO(PagoEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.estado = entity.getEstado();
+            this.metodoDePago = entity.getMetodoDePago();
+            this.realizado = entity.isRealizado();
+            this.valor = entity.getValor();
+        }
     }
 
     /**
      * Convierte un objeto PagoDTO a PagoEntity.
      *
      * @return Nueva objeto PagoEntity.
-     * 
+     *
      */
-    public PagoEntity toEntity(){
-        PagoEntity entity=new PagoEntity();
+    public PagoEntity toEntity() {
+        PagoEntity entity = new PagoEntity();
         entity.setId(this.id);
-        entity.setEstado(this.estado);
-        entity.setMetodoDePago(this.metodoDePago);
+        entity.setEstado(estado);
+        entity.setMetodoDePago(metodoDePago);
         entity.setRealizado(this.realizado);
+        entity.setValor(valor);
         return entity;
     }
-    
+
     /**
      * @return El ID del evento
      */
-
     public Long getId() {
         return id;
     }
@@ -86,21 +88,18 @@ public class PagoDTO {
     /**
      * @param id El nuevo ID
      */
-    public void setId(Long id) 
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * @return boolean representando si el pago fue realizado
      */
-
     public Boolean getRealizado() {
         return realizado;
     }
 
-
-     /**
+    /**
      * @param realizado: boolean a asignar si se realizo el pago exitosamente.
      */
     public void setRealizado(Boolean realizado) {
@@ -110,7 +109,6 @@ public class PagoDTO {
     /**
      * @return Estado del proceso de pago
      */
-
     public String getEstado() {
         return estado;
     }
@@ -118,7 +116,7 @@ public class PagoDTO {
     /**
      * Asigna el nuevo estado del proceso de pago
      *
-     * @param estado nuevo del pago
+     * @param estado  estado nuevo del pago
      */
     public void setEstado(String estado) {
         this.estado = estado;
@@ -140,6 +138,23 @@ public class PagoDTO {
      */
     public void setMetodoPago(String metodo) {
         this.metodoDePago = metodo;
+    }
 
+    /**
+     * Retorna el valor del pago
+     *
+     * @return valor del pago
+     */
+    public int getValor() {
+        return valor;
+    }
+
+    /**
+     * Asigna el valor del pago
+     *
+     * @param valor del pago
+     */
+    public void setValor(int valor) {
+        this.valor = valor;
     }
 }

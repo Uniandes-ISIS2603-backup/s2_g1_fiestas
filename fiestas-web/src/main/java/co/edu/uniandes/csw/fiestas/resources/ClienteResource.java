@@ -74,7 +74,8 @@ public class ClienteResource
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<ClienteDetailDTO> getClientes() {
+    public List<ClienteDetailDTO> getClientes() 
+    {
         return listEntity2DTO(clienteLogic.getClientes());
     }
 
@@ -102,7 +103,7 @@ public class ClienteResource
         ClienteEntity entity = clienteLogic.getCliente(id);
         if (entity == null) {
             throw new WebApplicationException("El cliente no existe", 404);
-        }
+        }        
         return new ClienteDetailDTO(entity);
     }
 
@@ -132,8 +133,17 @@ public class ClienteResource
      * - Error de lógica que se genera cuando ya existe el cliente.
      */
     @POST
-    public ClienteDetailDTO createCliente(ClienteDetailDTO cliente) throws BusinessLogicException {
-        return new ClienteDetailDTO(clienteLogic.createCliente(cliente.toEntity()));
+    public ClienteDetailDTO createCliente(ClienteDetailDTO cliente) throws BusinessLogicException 
+    {
+        try
+        {
+            return new ClienteDetailDTO(clienteLogic.createCliente(cliente.toEntity()));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 412);
+        } 
+        
     }
 
     /**
@@ -158,14 +168,25 @@ public class ClienteResource
      */
     @PUT
     @Path("{id: \\d+}")
-    public ClienteDetailDTO updateCliente(@PathParam("id") Long id, ClienteDetailDTO cliente) {
+    public ClienteDetailDTO updateCliente(@PathParam("id") Long id, ClienteDetailDTO cliente) throws BusinessLogicException
+    {
         ClienteEntity entity = cliente.toEntity();
-        entity.setId(id);
-        ClienteEntity oldEntity = clienteLogic.getCliente(id);
-        if (oldEntity == null) {
-            throw new WebApplicationException("El cliente no existe", 404);
+        try
+        {
+            return new ClienteDetailDTO(clienteLogic.updateCliente(entity));
         }
-        return new ClienteDetailDTO(clienteLogic.updateCliente(entity));
+        catch(BusinessLogicException e)
+        {
+            if(e.getMessage().equals("No existe un cliente con dicho id para actualizar"))
+            {
+                throw new WebApplicationException(e.getMessage(), 404);
+            }            
+            else
+            {
+                throw new WebApplicationException(e.getMessage(), 412);
+            }
+        }   
+        
     }
 
     /**
@@ -187,12 +208,16 @@ public class ClienteResource
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteCliente(@PathParam("id") Long id) {
-        ClienteEntity entity = clienteLogic.getCliente(id);
-        if (entity == null) {
-            throw new WebApplicationException("El cliente no existe", 404);
+    public void deleteCliente(@PathParam("id") Long id)
+    {        
+        try
+        {
+            clienteLogic.deleteCliente(id);
         }
-        clienteLogic.deleteCliente(id);
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }        
     }
 
     /**
@@ -212,13 +237,21 @@ public class ClienteResource
      */
     @GET
     @Path("{clientesId: \\d+}/eventos")
-    public List<EventoDetailDTO> listEventos(@PathParam("clientesId") Long clientesId) {
-        return eventosListEntity2DTO(clienteLogic.getEventos(clientesId));
+    public List<EventoDetailDTO> listEventos(@PathParam("clientesId") Long clientesId) throws BusinessLogicException
+    {        
+        try
+        {
+            return eventosListEntity2DTO(clienteLogic.getEventos(clientesId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
     }
 
     /**
      * <h1>PUT /{clientesId}/eventos: Edita loseventos de un cliente..</h1>
-     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Editorial
+     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Cliente
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -235,8 +268,16 @@ public class ClienteResource
      */
     @PUT
     @Path("{clientesId: \\d+}/eventos")
-    public List<EventoDetailDTO> replaceEventos(@PathParam("clientesId") Long clientesId, List<EventoDetailDTO> eventos) {
-        return eventosListEntity2DTO(clienteLogic.replaceEventos(clientesId, eventosListDTO2Entity(eventos)));
+    public List<EventoDetailDTO> replaceEventos(@PathParam("clientesId") Long clientesId, List<EventoDetailDTO> eventos) 
+    {        
+        try
+        {
+            return eventosListEntity2DTO(clienteLogic.replaceEventos(clientesId, eventosListDTO2Entity(eventos)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
     }
     
         /**
@@ -261,8 +302,16 @@ public class ClienteResource
      */
     @POST
     @Path("{clientesId: \\d+}/eventos/{eventosId: \\d+}")
-    public EventoDetailDTO addEvento(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long eventoId) {
-        return new EventoDetailDTO(clienteLogic.addEvento(eventoId, clientesId));
+    public EventoDetailDTO addEvento(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long eventoId)
+    {        
+        try
+        {
+            return new EventoDetailDTO(clienteLogic.addEvento(eventoId, clientesId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
     }
 
         /**
@@ -285,8 +334,17 @@ public class ClienteResource
      */
     @DELETE
     @Path("{clientesId: \\d+}/eventos/{eventosId: \\d+}")
-    public void removeEventos(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long eventosId) {
-        clienteLogic.removeEvento(eventosId, clientesId);
+    public void removeEventos(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long eventosId) 
+    {
+        try
+        {
+            clienteLogic.removeEvento(eventosId, clientesId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+        
     }
     
         /**
@@ -309,14 +367,22 @@ public class ClienteResource
      * @param eventosId Identificador del evento que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link EventoDetailDTO} - El evento buscado
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la cliente o el
-     * evento.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra la cliente o el evento.
      */
     @GET
     @Path("{clientesId: \\d+}/eventos/{eventosId: \\d+}")
-    public EventoDetailDTO getEvento(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
-        return new EventoDetailDTO(clienteLogic.getEvento(clientesId, eventosId));
+    public EventoDetailDTO getEvento(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long eventosId)
+    {
+        try
+        {
+            return new EventoDetailDTO(clienteLogic.getEvento(clientesId, eventosId));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException("El evento no existe", 404);
+        }
+        
     }
     
     /**

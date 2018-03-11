@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +42,7 @@ public class PagoLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<PagoEntity> data = new ArrayList<PagoEntity>();
+    private List<PagoEntity> data = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -91,6 +90,9 @@ public class PagoLogicTest {
 
         for (int i = 0; i < 3; i++) {
             PagoEntity entity = factory.manufacturePojo(PagoEntity.class);
+            entity.setEstado(Estado.EN_REVISION.toString());
+            entity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+            entity.setRealizado(false);
             em.persist(entity);
             data.add(entity);
         }
@@ -103,13 +105,88 @@ public class PagoLogicTest {
     @Test
     public void createPagoTest() {
         PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
-        PagoEntity result = pagoLogic.createPago(newEntity);
+        newEntity.setEstado(Estado.EN_REVISION.toString());
+        newEntity.setRealizado(false);
+        newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+
+        PagoEntity result = new PagoEntity();
+        try {
+            result = pagoLogic.createPago(newEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+
         Assert.assertNotNull(result);
         PagoEntity entidad = em.find(PagoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
         Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
         Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+    }
+
+    /**
+     * Prueba de fallo para crear un Pago.
+     *
+     * No se cumple que el pago para ser realizado, su estado debe ser
+     * Completado.
+     *
+     */
+    @Test
+    public void createPagoFailTest() {
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+        newEntity.setEstado(Estado.EN_REVISION.toString());
+        newEntity.setRealizado(true);
+        newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+        PagoEntity result = new PagoEntity();
+        try {
+            result = pagoLogic.createPago(newEntity);
+            fail("No se debio crear el pago");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+    
+        /**
+     * Prueba de fallo para crear un Pago.
+     *
+     * No se cumple que el estado exista en sistema
+     *
+     */
+    @Test
+    public void createPagoFailTest1() {
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+        newEntity.setEstado("En Proceso");
+        newEntity.setRealizado(false);
+        newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+        PagoEntity result = new PagoEntity();
+        try {
+            result = pagoLogic.createPago(newEntity);
+            fail("No se debio crear el pago");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+    
+        
+        /**
+     * Prueba de fallo para crear un Pago.
+     *
+     * No se cumple que el metodo exista en sistema
+     *
+     */
+    @Test
+    public void createPagoFailTest2() {
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+        newEntity.setEstado(Estado.CONFIRMADO.toString());
+        newEntity.setRealizado(true);
+        newEntity.setMetodoDePago("Efecty");
+        PagoEntity result = new PagoEntity();
+        try {
+            result = pagoLogic.createPago(newEntity);
+            fail("No se debio crear el pago");
+        } catch (BusinessLogicException ex) {
+
+        }
     }
 
     /**
@@ -132,6 +209,28 @@ public class PagoLogicTest {
     }
 
     /**
+     * Prueba para obtener un Pago.
+     *
+     */
+    @Test
+    public void getPagoTest() {
+        try {
+            PagoEntity newEntity = data.get(0);
+            PagoEntity result = pagoLogic.createPago(newEntity);
+
+            Assert.assertNotNull(result);
+
+            PagoEntity entidad = pagoLogic.getPago(newEntity.getId());
+            Assert.assertEquals(newEntity.getId(), entidad.getId());
+            Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
+            Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
+            Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    /**
      * Prueba para eliminar un pago
      */
     @Test
@@ -143,20 +242,99 @@ public class PagoLogicTest {
     }
 
     /**
-     * Prueba para actualizar un pago
+     * Prueba exitosa para actualizar un pago
      */
     @Test
     public void updatePagoTest() {
+
         PagoEntity entity = data.get(0);
         PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
 
         newEntity.setId(entity.getId());
+        newEntity.setEstado(Estado.EN_REVISION.toString());
+        newEntity.setRealizado(false);
+        newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
 
-        pagoLogic.updatePago(newEntity);
-
+        try {
+            pagoLogic.updatePago(newEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
         PagoEntity resp = em.find(PagoEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), resp.getId());
+        Assert.assertEquals(newEntity.getMetodoDePago(), resp.getMetodoDePago());
         Assert.assertEquals(newEntity.getEstado(), resp.getEstado());
         Assert.assertEquals(newEntity.isRealizado(), resp.isRealizado());
+    }
+
+    /**
+     * Prueba fallida para actualizar un pago.
+     *
+     * Esto por que se pone el pago como finalizado, cuando aun esta en
+     * revision.
+     */
+    @Test
+    public void updatePagoFailTest1() {
+
+        PagoEntity entity = data.get(0);
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+
+        newEntity.setId(entity.getId());
+        newEntity.setEstado(Estado.EN_REVISION.toString());
+        newEntity.setRealizado(true);
+        newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+
+        try {
+            pagoLogic.updatePago(newEntity);
+            fail("No se debio poder actualizar el pago");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+
+    /**
+     * Prueba fallida para actualizar un pago.
+     *
+     * Esto por que se pone un estado no existente.
+     */
+    @Test
+    public void updatePagoFailTest2() {
+
+        PagoEntity entity = data.get(0);
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+
+        newEntity.setId(entity.getId());
+        newEntity.setEstado("Aun en revision");
+        newEntity.setRealizado(true);
+        newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+        try {
+            pagoLogic.updatePago(newEntity);
+            fail("No se debio poder actualizar el pago");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+
+    /**
+     * Prueba fallida para actualizar un pago.
+     *
+     * Esto por que se pone un metodo de pago no existente.
+     */
+    @Test
+    public void updatePagoFailTest3() {
+
+        PagoEntity entity = data.get(0);
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+
+        newEntity.setId(entity.getId());
+        newEntity.setEstado(Estado.CONFIRMADO.toString());
+        newEntity.setRealizado(true);
+        newEntity.setMetodoDePago("Tarjeta de Debito");
+        try {
+            pagoLogic.updatePago(newEntity);
+            fail("No se debio poder actualizar el pago");
+        } catch (BusinessLogicException ex) {
+
+        }
     }
 }

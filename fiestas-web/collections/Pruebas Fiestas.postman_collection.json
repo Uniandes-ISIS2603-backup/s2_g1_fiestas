@@ -1,0 +1,946 @@
+{
+	"info": {
+		"name": "Pruebas Fiestas",
+		"_postman_id": "11b1ddba-824a-13e7-3240-cfcb30797e82",
+		"description": "Pruebas de los servicios del proyecto Fiestas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Eventos",
+			"description": "",
+			"item": [
+				{
+					"name": "Prueba GET All Eventos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba GET Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"100"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 404 para GET Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3305fb99-3251-46af-8dbf-bd4b4418ed4d",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/400",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"400"
+							]
+						},
+						"description": "GET evento no existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba POST Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 400,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos"
+							]
+						},
+						"description": "POST evento exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 para POST Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4513bc0d-3363-4525-be22-607e92984550",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 100,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos"
+							]
+						},
+						"description": "POST evento con mismo id"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba DELETE Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aff332f1-f932-44f4-a81d-7a2c2662d110",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"300"
+							]
+						},
+						"description": "DELETE evento exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 404 para DELETE Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac129ee7-f505-4305-be1b-96359c17929c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"300"
+							]
+						},
+						"description": "DELETE evento no existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba UPDATE Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"100"
+							]
+						},
+						"description": "UPDATE evento existoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 404 para UPDATE Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a36775d1-0960-4932-b963-7f4c6d933cfb",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 400,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/400",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"400"
+							]
+						},
+						"description": "UPDATE evento no existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 de  UPDATE Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"eventos",
+								"100"
+							]
+						},
+						"description": "UPDATE evento fallido, por numero de invitados negativo"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagos",
+			"description": null,
+			"item": [
+				{
+					"name": "Prueba GET All Pagos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos"
+							]
+						},
+						"description": "GET ALL pagos"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba GET Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"100"
+							]
+						},
+						"description": "GET pagos exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 404 para GET Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65ec3b86-4931-4da5-b0f1-bbc39c3b69b1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/400",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"400"
+							]
+						},
+						"description": "GET pago no existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba POST Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 400,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos"
+							]
+						},
+						"description": "POST pago exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 para POST Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86213f39-8998-4aa7-9b45-8113f13945a0",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos"
+							]
+						},
+						"description": "POST pago con id existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 para POST Pago (Estado)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86213f39-8998-4aa7-9b45-8113f13945a0",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n\t\"estado\": \"Todavia en Revision\",\n    \"id\": 400,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos"
+							]
+						},
+						"description": "POST pago fallido por la condicion de estado"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 para POST Pago (Metodo De Pago)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86213f39-8998-4aa7-9b45-8113f13945a0",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 500,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": false,\n    \"valor\": 5000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos"
+							]
+						},
+						"description": "POST pago fallido por la condicion de metodo de pago"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba DELETE Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aff332f1-f932-44f4-a81d-7a2c2662d110",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"300"
+							]
+						},
+						"description": "DELETE pago exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 404 para DELETE Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65ec3b86-4931-4da5-b0f1-bbc39c3b69b1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"300"
+							]
+						},
+						"description": "DELETE pago no existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba UPDATE Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1e5a958-1628-4033-86fd-4270f1060d64",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estado\":\"Confirmado\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"100"
+							]
+						},
+						"description": "UPDATE pago exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 404 para UPDATE Pago",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a36775d1-0960-4932-b963-7f4c6d933cfb",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estado\": \"EN_REVISION\",\n    \"id\": 400,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/400",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"400"
+							]
+						},
+						"description": "UPDATE pago no existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 de UPDATE Pago (Estado)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4cf8fe07-c5b0-4af3-82a7-2e1dc5404553",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estado\":\"En Proceso\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"100"
+							]
+						},
+						"description": "UPDATE pago fallido por estado que no cumple la condicion"
+					},
+					"response": []
+				},
+				{
+					"name": "Error 412 de UPDATE Pago (Metodo De Pago)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4cf8fe07-c5b0-4af3-82a7-2e1dc5404553",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estado\":\"Confirmado\",\n    \"id\": 100,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"pagos",
+								"100"
+							]
+						},
+						"description": "UPDATE pago fallido por que el metodo de pago no cumple la condicion"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

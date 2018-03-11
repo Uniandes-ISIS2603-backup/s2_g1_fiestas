@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.dtos.PagoDetailDTO;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -130,9 +126,10 @@ public class PagoResource {
      * @param pago {@link PagoDetailDTO} - El pago que se desea guardar.
      * @return JSON {@link PagoDetailDTO} - El pago guardado con el atributo id
      * autogenerado.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
      */
     @POST
-    public PagoDetailDTO createPago(PagoDetailDTO pago) {
+    public PagoDetailDTO createPago(PagoDetailDTO pago) throws BusinessLogicException {
         PagoEntity entity = pagoLogic.getPago(pago.getId());
         if (entity != null) {
             throw new WebApplicationException("El pago existe", 412);
@@ -159,17 +156,17 @@ public class PagoResource {
      * cadena de dígitos.
      * @param pago pago a actualizar
      * @return JSON {@link PagoDetailDTO} - El pago buscado y actuaizado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica.
      */
     @PUT
     @Path("{id: \\d+}")
-    public PagoDetailDTO updatePago(@PathParam("id") Long id, PagoDetailDTO pago) {
+    public PagoDetailDTO updatePago(@PathParam("id") Long id, PagoDetailDTO pago) throws BusinessLogicException {
         PagoEntity entity = pago.toEntity();
         entity.setId(id);
         PagoEntity oldEntity = pagoLogic.getPago(id);
-        if (oldEntity != null) {
+        if (oldEntity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        entity.setEvento(oldEntity.getEvento());
         return new PagoDetailDTO(pagoLogic.updatePago(entity));
     }
 
