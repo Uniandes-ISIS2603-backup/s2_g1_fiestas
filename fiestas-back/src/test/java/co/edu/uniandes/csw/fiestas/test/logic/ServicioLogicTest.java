@@ -86,8 +86,8 @@ public class ServicioLogicTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
+        em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ValoracionEntity").executeUpdate();
     }
 
@@ -98,30 +98,29 @@ public class ServicioLogicTest {
      *
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++) {
+       List<ProveedorEntity> listaProveedor = new ArrayList<ProveedorEntity>();
+       for (int i = 0; i < 3; i++) {
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
             em.persist(proveedor);
             proveedorData.add(proveedor);
-            
+            listaProveedor.add(proveedor);
         }
-        
-        
-        for (int i = 0; i < 3; i++) {
+       List<ValoracionEntity> listaValoracion = new ArrayList<ValoracionEntity>();
+       for (int i = 0; i < 3; i++) {
             ValoracionEntity valoracion = factory.manufacturePojo(ValoracionEntity.class);
             em.persist(valoracion);
             valoracionData.add(valoracion);
+            listaValoracion.add(valoracion);
         }
-        for (int i = 0; i < 3; i++) {
+       
+        for (int i = 0; i < 3; i++) 
+        {
             ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
-            entity.setProveedores(proveedorData);
-            entity.setValoraciones(valoracionData);
-            
-            ProveedorEntity proveedor = proveedorData.get(i);
-            proveedor.agregarServicio(entity);
-
+            entity.setProveedores(listaProveedor);
+            entity.setValoraciones(listaValoracion);
             em.persist(entity);
             data.add(entity);
-        }
+        } 
         
     }
 
@@ -228,7 +227,6 @@ public class ServicioLogicTest {
         ProveedorEntity response = servicioLogic.getProveedor(entity.getId(), proveedorEntity.getId());
 
         Assert.assertEquals(proveedorEntity.getId(), response.getId());
-        Assert.assertEquals(proveedorEntity.getId(), response.getId());
         Assert.assertEquals(proveedorEntity.getNombre(), response.getNombre());
         Assert.assertEquals(proveedorEntity.getLogin(), response.getLogin());
         Assert.assertEquals(proveedorEntity.getDocumento(), response.getDocumento());
@@ -274,7 +272,7 @@ public class ServicioLogicTest {
         servicioLogic.replaceProveedores(entity.getId(), list);
 
         entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertFalse(entity.getProveedores().contains(proveedorData.get(0)));
+        Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(0)));
         Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(1)));
         Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(2)));
     }

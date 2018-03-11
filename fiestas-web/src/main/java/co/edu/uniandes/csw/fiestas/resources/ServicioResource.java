@@ -6,10 +6,13 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -41,7 +44,12 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class ServicioResource {
     
+    public ServicioResource(){
+        
+    }
     
+    @Inject
+    private ServicioLogic logic;
      /**
      * <h1>POST /servicios : Crear un servicio.</h1>
      * 
@@ -65,6 +73,9 @@ public class ServicioResource {
      */
      @POST
     public ServicioDetailDTO createServicio(ServicioDetailDTO servicio) throws BusinessLogicException {
+        if(logic.getServicio(servicio.getId())!=null)
+            throw new BusinessLogicException("El servicio ya existe.");
+        logic.createServicio(servicio.toEntity());
         return servicio;
     }
     
@@ -81,7 +92,22 @@ public class ServicioResource {
      */
     @GET
     public List<ServicioDetailDTO> getServicios() {
-        return new ArrayList<>();
+        return listEntity2DTO(logic.getServicios());
+    }
+    
+     /**
+     * Convierte una lista de ServicioiEntity a una lista de ServicioDetailDTO.
+     *
+     * @param entityList Lista de ServicioEntity a convertir.
+     * @return Lista de ServicioDetailDTO convertida.
+     *
+     */
+    private List<ServicioDetailDTO> listEntity2DTO(List<ServicioEntity> entityList) {
+        List<ServicioDetailDTO> list = new ArrayList<>();
+        for (ServicioEntity entity : entityList) {
+            list.add(new ServicioDetailDTO(entity));
+        }
+        return list;
     }
     
     /**
@@ -99,11 +125,17 @@ public class ServicioResource {
      * </pre>
      * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
      * @return JSON {@link ServicioDetailDTO} - El servicio buscado
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @GET
     @Path("{id: \\d+}")
-    public ServicioDetailDTO getServicio(@PathParam("id") Long id) {
-        return null;
+    public ServicioDetailDTO getServicio(@PathParam("id") Long id) throws BusinessLogicException {
+        ServicioEntity e = logic.getServicio(id);
+        if(e == null)
+        {
+            throw new BusinessLogicException("El servicio con el id buscado no existe.");
+        }
+        return new ServicioDetailDTO(e);
     }
     
     /**
@@ -128,7 +160,11 @@ public class ServicioResource {
      @PUT
     @Path("{id: \\d+}")
     public ServicioDetailDTO updateServicio(@PathParam("id") Long id, ServicioDetailDTO servicio) throws BusinessLogicException {
-        return servicio;
+       ServicioEntity ent =logic.getServicio(id);
+        if(ent == null)
+            throw new BusinessLogicException("El servicio no existe.");
+        logic.updateServicio(ent);
+        return new ServicioDetailDTO(ent);
     }
     
     /**
@@ -145,10 +181,14 @@ public class ServicioResource {
     * </code> 
     * </pre>
     * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
     */
     @DELETE
     @Path("{id: \\d+}")
-     public void deleteServicio(@PathParam("id") Long id) {
-        // Void
+     public void deleteServicio(@PathParam("id") Long id) throws BusinessLogicException {
+         ServicioEntity ent =logic.getServicio(id);
+        if(ent == null)
+             throw new BusinessLogicException("El servicio no existe.");
+        logic.deleteServicio(id);
     }
 }
