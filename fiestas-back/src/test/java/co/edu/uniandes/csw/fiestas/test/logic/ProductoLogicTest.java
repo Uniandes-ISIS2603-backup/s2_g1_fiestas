@@ -3,6 +3,7 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
 import java.util.List;
