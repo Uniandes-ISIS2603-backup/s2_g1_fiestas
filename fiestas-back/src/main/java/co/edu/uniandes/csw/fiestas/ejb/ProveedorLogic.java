@@ -390,6 +390,7 @@ public class ProveedorLogic
             if (contratos.contains(contrato)) 
             {
                 contrato.setProveedor(proveedor);
+                contratoLogic.updateContrato(contrato);
             } 
             else if (null != contrato.getProveedor() && contrato.getProveedor().equals(proveedor)) 
             {

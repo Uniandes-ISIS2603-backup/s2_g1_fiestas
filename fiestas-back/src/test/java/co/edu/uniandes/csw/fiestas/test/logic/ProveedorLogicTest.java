@@ -93,10 +93,10 @@ public class ProveedorLogicTest
      */
     private void clearData() 
     {
-        em.createQuery("delete from ProveedorEntity").executeUpdate();
-        em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from ValoracionEntity").executeUpdate();
         em.createQuery("delete from ServicioEntity").executeUpdate();
+        em.createQuery("delete from ContratoEntity").executeUpdate();
+        em.createQuery("delete from ProveedorEntity").executeUpdate();       
     }
 
     /**
@@ -105,11 +105,10 @@ public class ProveedorLogicTest
      */
     private void insertData() 
     {
-        for (int i = 0; i < 3; i++) {
-            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);
-            ContratoEntity entityC = factory.manufacturePojo(ContratoEntity.class);
-            ValoracionEntity entityV = factory.manufacturePojo(ValoracionEntity.class);
-            ServicioEntity entityS = factory.manufacturePojo(ServicioEntity.class);
+        for (int i = 0; i < 3; i++) 
+        {
+            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);     
+            
             if(i == 0)
             {
                 entity.setPenalizado(false);
@@ -118,13 +117,25 @@ public class ProveedorLogicTest
             {
                 entity.setPenalizado(true);
             }
-            em.persist(entity);
+            em.persist(entity);       
+            data.add(entity);   
+        }
+        for (int i = 0; i< 3; i++)
+        {
+            ContratoEntity entityC = factory.manufacturePojo(ContratoEntity.class);
             em.persist(entityC);
-            em.persist(entityV);
-            em.persist(entityS);
-            data.add(entity);
             contratosData.add(entityC);
+        }
+        for (int i = 0; i< 3; i++)
+        {
+            ValoracionEntity entityV = factory.manufacturePojo(ValoracionEntity.class);
+            em.persist(entityV);
             valoracionesData.add(entityV);
+        }
+        for (int i = 0; i< 3; i++)
+        {
+            ServicioEntity entityS = factory.manufacturePojo(ServicioEntity.class);
+            em.persist(entityS);
             serviciosData.add(entityS);
         }
     }
