@@ -87,32 +87,28 @@ public class ContratoLogicTest {
      */
     private void insertData() {
 
-       /** ArrayList<ProductoEntity> x = new ArrayList<>();
-        for (int m = 0; m < 3; m++) {
-            ProveedorEntity entitya = factory.manufacturePojo(ProveedorEntity.class);
-            EventoEntity entityb = factory.manufacturePojo(EventoEntity.class);
-            for (int l = 0; l < 2; l++) {
-                ProductoEntity entityc = factory.manufacturePojo(ProductoEntity.class);
-                x.add(entityc);
-
-            }
-            em.persist(entitya);
-            em.persist(entityb);
-            proveedorData.add(entitya);
-            eventoData.add(entityb);
-            productoData.add(x);
-        }*/
-
+        /**
+         * ArrayList<ProductoEntity> x = new ArrayList<>(); for (int m = 0; m <
+         * 3; m++) { ProveedorEntity entitya =
+         * factory.manufacturePojo(ProveedorEntity.class); EventoEntity entityb
+         * = factory.manufacturePojo(EventoEntity.class); for (int l = 0; l < 2;
+         * l++) { ProductoEntity entityc =
+         * factory.manufacturePojo(ProductoEntity.class); x.add(entityc);
+         *
+         * }
+         * em.persist(entitya); em.persist(entityb); proveedorData.add(entitya);
+         * eventoData.add(entityb); productoData.add(x); }
+         */
         for (int i = 0; i < 3; i++) {
 
             ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
-             EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
+            EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
             HorarioEntity horario = factory.manufacturePojo(HorarioEntity.class);
             contrato.setEvento(evento);
             contrato.setProveedor(proveedor);
             contrato.setHorario(horario);
-            ArrayList<ProductoEntity>productos = new ArrayList<>();
+            ArrayList<ProductoEntity> productos = new ArrayList<>();
             for (int l = 0; l < 2; l++) {
                 ProductoEntity producto = factory.manufacturePojo(ProductoEntity.class);
                 productos.add(producto);
@@ -138,17 +134,27 @@ public class ContratoLogicTest {
     public void createContratoTest() throws BusinessLogicException {
         ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
         HorarioEntity horario = factory.manufacturePojo(HorarioEntity.class);
-        ContratoEntity result = contratoLogic.createContrato(newEntity, horario);
-        Assert.assertNotNull(result);
-        ContratoEntity entidad = em.find(ContratoEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getValor(), entidad.getValor());
-        Assert.assertEquals(newEntity.getTyc(), entidad.getTyc());
-        Assert.assertEquals(newEntity.getProveedor(), entidad.getProveedor());
-        Assert.assertEquals(newEntity.getEvento(), entidad.getEvento());
-        Assert.assertEquals(newEntity.getProductos(), entidad.getProductos());
+        try {
+            horario.setHoraInicio(new Date(2018, 5, 20, 20, 15, 0));
+            horario.setHoraFin(new Date(2018, 5, 20, 20, 22, 0));
+            ContratoEntity result = contratoLogic.createContrato(newEntity, horario);
+                    
+            ContratoEntity entidad = em.find(ContratoEntity.class, result.getId());
+            Assert.assertEquals(newEntity.getId(), entidad.getId());
+            Assert.assertEquals(newEntity.getValor(), entidad.getValor());
+            Assert.assertEquals(newEntity.getTyc(), entidad.getTyc());
+            Assert.assertEquals(newEntity.getProveedor(), entidad.getProveedor());
+            Assert.assertEquals(newEntity.getEvento(), entidad.getEvento());
+            Assert.assertEquals(newEntity.getProductos(), entidad.getProductos());
+
+        } catch (Exception e) {
+            
+            Assert.fail("No debería lanzar excepcion");
+
+        }
         
        
+
     }
 
     /**
@@ -194,13 +200,13 @@ public class ContratoLogicTest {
         contratoLogic.updateContrato(newEntity);
 
         ContratoEntity resp = em.find(ContratoEntity.class, entity.getId());
-        
+
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getValor(), resp.getValor());
         Assert.assertEquals(newEntity.getTyc(), resp.getTyc());
         Assert.assertEquals(newEntity.getProveedor(), resp.getProveedor());
         Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
         Assert.assertEquals(newEntity.getProductos(), resp.getProductos());
-       
+
     }
 }
