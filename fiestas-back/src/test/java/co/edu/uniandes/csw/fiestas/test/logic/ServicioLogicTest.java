@@ -1,7 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
-import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -47,8 +46,7 @@ public class ServicioLogicTest {
     private List<ProveedorEntity> proveedorData = new ArrayList();
     
     private List<ValoracionEntity> valoracionData = new ArrayList();
-    
-    private List<ProductoEntity> productoData = new ArrayList();
+
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -91,7 +89,6 @@ public class ServicioLogicTest {
         em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
         em.createQuery("delete from ValoracionEntity").executeUpdate();
-        em.createQuery("delete from ProductoEntity").executeUpdate();
     }
 
     /**
@@ -107,11 +104,6 @@ public class ServicioLogicTest {
             proveedorData.add(proveedor);
         }
         
-        for (int i = 0; i < 3; i++) {
-            ProductoEntity producto = factory.manufacturePojo(ProductoEntity.class);
-            em.persist(producto);
-            productoData.add(producto);
-        }
         
         for (int i = 0; i < 3; i++) {
             ValoracionEntity valoracion = factory.manufacturePojo(ValoracionEntity.class);
@@ -121,7 +113,6 @@ public class ServicioLogicTest {
         for (int i = 0; i < 3; i++) {
             ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
             entity.setProveedores(proveedorData);
-            entity.setProductos(productoData);
             entity.setValoraciones(valoracionData);
 
             em.persist(entity);
@@ -369,84 +360,4 @@ public class ServicioLogicTest {
     }
     
     
-    
-    
-    
-    /**
-     * Prueba para obtener una instancia de Producto asociada a una instancia
-     * Servicio
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void getProductoTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ProductoEntity productoEntity = productoData.get(0);
-        ProductoEntity response = servicioLogic.getProducto(entity.getId(), productoEntity.getId());
-
-        Assert.assertEquals(productoEntity.getId(), response.getId());
-        Assert.assertEquals(productoEntity.getNombre(), response.getNombre());
-        Assert.assertEquals(productoEntity.getDescripcion(), response.getDescripcion());
-        Assert.assertEquals(productoEntity.getIncluye(), response.getIncluye());
-        Assert.assertEquals(productoEntity.getPrecio(), response.getPrecio());
-        Assert.assertEquals(productoEntity.getPersonal(), response.getPersonal());
-        Assert.assertEquals(productoEntity.getServicio(), response.getServicio());
-    }
-    
-    /**
-     * Prueba para obtener una colección de instancias de Productos asociadas a una
-     * instancia Servicio
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void getProductosTest() throws BusinessLogicException {
-        List<ProductoEntity> list = servicioLogic.getProductos(data.get(0).getId());
-        Assert.assertEquals(1, list.size());
-    }
-    
-    /**
-     * Prueba para asociar un Producto existente a un Servicio
-     *
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void addProductoTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ProductoEntity productoEntity = productoData.get(1);
-        ProductoEntity response = servicioLogic.addProducto(productoEntity.getId(), entity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(productoEntity.getId(), response.getId());
-    }
-    
-    /**
-     * Prueba para remplazar las instancias de Producto asociadas a una instancia
-     * de Servicio
-     *
-     * 
-     */
-    @Test
-    public void replaceProductosTest() {
-        ServicioEntity entity = data.get(0);
-        List<ProductoEntity> list = productoData.subList(1, 3);
-        servicioLogic.replaceProductos(entity.getId(), list);
-
-        entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertFalse(entity.getProductos().contains(productoData.get(0)));
-        Assert.assertTrue(entity.getProductos().contains(productoData.get(1)));
-        Assert.assertTrue(entity.getProductos().contains(productoData.get(2)));
-    }
-    
-    /**
-     * Prueba para desasociar un Producto existente de un Editorial existente
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void removeProductoesTest() throws BusinessLogicException {
-        servicioLogic.removeProducto(data.get(0).getId(), productoData.get(0).getId());
-        ProductoEntity response = servicioLogic.getProducto(data.get(0).getId(), productoData.get(0).getId());
-    }
 }

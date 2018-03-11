@@ -30,8 +30,7 @@ public class ValoracionLogic {
      */
     public List<ValoracionEntity> getValoraciones() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las valoraciones.");
-        List<ValoracionEntity> valoraciones = persistence.findAll();
-        return valoraciones;
+        return persistence.findAll();
     }
 
     /**
@@ -73,8 +72,7 @@ public class ValoracionLogic {
      */
     public ValoracionEntity updateValoracion(ValoracionEntity entity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una valoracion.");
-        ValoracionEntity newValoracion = persistence.update(entity);
-        return newValoracion;
+        return persistence.update(entity);
     }
 
     /**
