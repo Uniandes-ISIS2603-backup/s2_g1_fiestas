@@ -101,8 +101,7 @@ public class ProveedorLogicTest
         em.createQuery("delete from ProveedorEntity").executeUpdate();        
         em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ContratoEntity").executeUpdate();
-       // em.createQuery("delete from ValoracionEntity").executeUpdate();
-              
+        em.createQuery("delete from ValoracionEntity").executeUpdate();              
     }
 
     /**
@@ -147,7 +146,7 @@ public class ProveedorLogicTest
             }
             else
             {                
-                entity.setPenalizado(true);
+                entity.setPenalizado(true);                             
             }
                       
             em.persist(entity);   
@@ -163,7 +162,7 @@ public class ProveedorLogicTest
     public void createProveedorTest()
     {
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
-        ProveedorEntity result = new ProveedorEntity();
+        ProveedorEntity result = new ProveedorEntity();        
         try
         {
             result = proveedorLogic.createProveedor(newEntity);
@@ -184,7 +183,12 @@ public class ProveedorLogicTest
         Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
         Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
+        Assert.assertEquals(newEntity.getServicios().size(), entidad.getServicios().size());
+        Assert.assertEquals(newEntity.getContratos().size(), entidad.getContratos().size());
+        Assert.assertEquals(newEntity.getValoraciones().size(), entidad.getValoraciones().size());
     }
+    
+    
 
     /**
      * Prueba para consultar la lista de provedoores
@@ -943,12 +947,12 @@ public class ProveedorLogicTest
     }
     
     /**
-     * Prueba para remover servicio a un Proveedor.
+     * Prueba para remover servicio a un Proveedor 1.
      *
      * Falla si se remueve el único servicio de un proveedor y éste sigue teniendo servicios
      */
     @Test
-    public void removeServicioTest() 
+    public void removeServicioTest1() 
     {       
         try 
         {            
@@ -959,7 +963,7 @@ public class ProveedorLogicTest
         {
             fail(x.getMessage());
         }
-    }
+    }   
     
     /**
      * Prueba de falla para remover servicio a un Proveedor 1.
@@ -990,7 +994,7 @@ public class ProveedorLogicTest
     {            
         try 
         {            
-            proveedorLogic.removeServicio(serviciosData.get(1).getId(), data.get(0).getId());
+            proveedorLogic.removeServicio(data.get(1).getId(), serviciosData.get(0).getId());
             fail("Se removió un servicio de un proveedor que no tiene dicho servicio");
         } 
         catch (BusinessLogicException x) 

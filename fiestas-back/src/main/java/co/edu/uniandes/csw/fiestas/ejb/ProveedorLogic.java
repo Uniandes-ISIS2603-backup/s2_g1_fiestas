@@ -254,11 +254,15 @@ public class ProveedorLogic
         LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los servicios asocidos al proveedor con id = {0}", proveedorId);
         ProveedorEntity proveedor = getProveedor(proveedorId);
         
-         if (list == null) {
+        if (list == null) 
+        {
             throw new BusinessLogicException("No hay lista nueva.");
         }
-        if (!list.isEmpty()) {
-        } else {
+        if (!list.isEmpty()) 
+        {
+        } 
+        else 
+        {
             throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
         }
         if (proveedor != null)
@@ -292,11 +296,7 @@ public class ProveedorLogic
         int index = ent.getServicios().indexOf(entS);
         if (index >= 0) 
         {
-            ent.removerServicio(entS);            
-            if (ent.getServicios().isEmpty()) 
-            {
-                deleteProveedor(proveedorId);
-            }
+            ent.removerServicio(entS);         
             updateProveedor(ent);
         } 
         else 
