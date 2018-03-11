@@ -1,7 +1,9 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ContratoPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,6 +24,9 @@ public class ContratoLogic {
 
     @Inject
     private ProductoLogic productoLogic;
+    
+    @Inject
+    private HorarioLogic horarioLogic;
 
     /**
      * Obtiene la lista de los registros de Contrato.
@@ -49,11 +54,27 @@ public class ContratoLogic {
      * Se encarga de crear un Contrato en la base de datos.
      *
      * @param entity Objeto de ContratoEntity con los datos nuevos
+     * @param entityH
      * @return Objeto de ContratoEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public ContratoEntity createContrato(ContratoEntity entity) {
+    public ContratoEntity createContrato(ContratoEntity entity, HorarioEntity entityH) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un contrato ");
-
+        
+        if(entity.getValor() < 0)
+        {
+            throw new BusinessLogicException("El valor del contrato no puede ser menor a cero");
+        }
+        
+        if(entity.getTyc().isEmpty() || entity.getTyc().equals(" "))
+        {
+            throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
+        }
+        
+        entity.setHorario(entityH);
+       
+        horarioLogic.createHorario(entityH);
+        
         return persistence.create(entity);
     }
 
@@ -156,6 +177,22 @@ public class ContratoLogic {
         ProductoEntity producto = getProducto(contratoId, ProductosId);
         contrato.getProductos().remove(producto);
 
+    }
+    
+    /**
+     * Actualiza la informacion de un Horario existente de un Contrato Existente
+     * 
+     * @param contratoId Identificador de la instancia de Contrato
+     * @param entity Identificador de la instancia de Producto
+     */
+    public void replaceHorario(Long contratoId, HorarioEntity entity)
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar el horario del contrato con id = {0}", contratoId);
+        ContratoEntity contrato = getContrato(contratoId);
+        HorarioEntity borrar = horarioLogic.getHorario(contrato.getHorario().getId());
+        contrato.setHorario(entity);
+        horarioLogic.deleteHorario(borrar.getId());
+        
     }
 
 }
