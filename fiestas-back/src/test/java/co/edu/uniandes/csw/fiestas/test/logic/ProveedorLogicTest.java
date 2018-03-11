@@ -420,7 +420,7 @@ public class ProveedorLogicTest
         try 
         {            
             proveedorLogic.removeContrato(contratosData.get(0).getId(), data.get(0).getId());
-            Assert.assertEquals(0, em.find(ProveedorEntity.class, data.get(0).getId()).getContratos().size());
+            Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getContratos().size());
         } 
         catch (BusinessLogicException x) 
         {
@@ -687,7 +687,7 @@ public class ProveedorLogicTest
         try 
         {           
             proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
-            Assert.assertEquals(0, em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().size());
+            Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().size());
         } 
         catch (BusinessLogicException x) 
         {
@@ -724,7 +724,7 @@ public class ProveedorLogicTest
     {            
         try 
         {            
-            proveedorLogic.removeValoracion(valoracionesData.get(1).getId(), data.get(0).getId());
+            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(1).getId());
             fail("Se removió una valoración de un proveedor que no tiene dicha valoración");
         } 
         catch (BusinessLogicException x) 
@@ -871,7 +871,7 @@ public class ProveedorLogicTest
     {            
         try 
         {            
-            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
+            proveedorLogic.getValoracion( data.get(1).getId(), valoracionesData.get(0).getId());
             fail("Se obtiene una valoración de un proveedor que no tiene dicha valoración");
         } 
         catch (BusinessLogicException x) 
@@ -914,7 +914,7 @@ public class ProveedorLogicTest
     {            
         try 
         {           
-            proveedorLogic.addServicio(serviciosData.get(0).getId(), Long(999999)); 
+            proveedorLogic.addServicio(Long(999999),serviciosData.get(0).getId()); 
             fail("No debe agregarse el servicio a un proveedor inexistente");
         } 
         catch (BusinessLogicException x) 
@@ -952,7 +952,7 @@ public class ProveedorLogicTest
     {       
         try 
         {            
-            proveedorLogic.removeServicio(serviciosData.get(0).getId(), data.get(0).getId());
+            proveedorLogic.removeServicio (data.get(0).getId(), serviciosData.get(0).getId());
             Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getServicios().size());
         } 
         catch (BusinessLogicException x) 
@@ -1055,7 +1055,14 @@ public class ProveedorLogicTest
         try 
         {
             List<ServicioEntity> obtenida = proveedorLogic.getServicios(data.get(0).getId());
-            Assert.assertEquals(data.get(0).getServicios(), obtenida);            
+            for(ServicioEntity so : obtenida)
+            {
+                if(!data.get(0).getServicios().contains(so))
+                {
+                   fail("Alguno de los servicios que debería estar persistido en la lista relación de proveedor no lo está");
+                }
+            }
+            passed();           
         } 
         catch (BusinessLogicException x) 
         {
@@ -1130,7 +1137,7 @@ public class ProveedorLogicTest
     {            
         try 
         {            
-            proveedorLogic.removeServicio(serviciosData.get(1).getId(), data.get(0).getId());
+            proveedorLogic.removeServicio(data.get(1).getId(), serviciosData.get(0).getId());
             fail("Se obtiene un servicio de un proveedor que no tiene dicho servicio");
         } 
         catch (BusinessLogicException x) 
