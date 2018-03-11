@@ -11,6 +11,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -409,5 +414,72 @@ public class UsuarioLogicTest {
         }
        
     }
+    
+    /**
+     * 
+     */
+    @Test
+    public void addBlogFailTest(){
+        UsuarioEntity usuario = data.get(0);
+        BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+        blog.setUsuario(usuario);
+        try{
+            usuarioLogic.addBlog(blog.getId(), usuario.getId());
+            fail("No agregar el blog");
+        }
+        catch(BusinessLogicException e){
+
+        }
+    }
+    
+     @Test
+    public void addBlogTest() throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+        UsuarioEntity usuario = data.get(0);
+        BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+        blog.setUsuario(usuario);
+        utx.begin();
+        em.persist(blog);
+        utx.commit();
+        try{
+            usuarioLogic.addBlog(blog.getId(), usuario.getId());
+        }
+        catch(BusinessLogicException e){
+            fail("Debería agregar el blog.");
+        }
+    }
+    
+    
+    @Test
+    public void removeBlogFailTest(){
+        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+        BlogEntity blog = data.get(0).getBlogs().get(0);
+        try{usuarioLogic.removeBlog(blog.getId(),usuario.getId());
+        fail("No debería remover el blog");}
+        catch(BusinessLogicException e){
+            
+        }
+    }
+    
+    
+    @Test
+    public void removeBlogFailTest1(){
+        UsuarioEntity usuario =data.get(0);
+        BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+        try{usuarioLogic.removeBlog(blog.getId(),usuario.getId());
+        fail("No debería remover el blog");}
+        catch(BusinessLogicException e){
+            
+        }
+    }
+    
+    @Test
+    public void removeBlogTest(){
+        UsuarioEntity usuario =data.get(0);
+        BlogEntity blog = data.get(0).getBlogs().get(0);
+        try{
+            usuarioLogic.removeBlog(blog.getId(),usuario.getId());}
+        catch(BusinessLogicException e){
+            fail("Debería remover el blog");}
+        }
     
 }
