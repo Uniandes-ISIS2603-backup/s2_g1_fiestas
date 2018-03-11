@@ -32,7 +32,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author nm.hernandez10
  */
 @RunWith(Arquillian.class)
-public class ProveedorLogicTest {
+public class ProveedorLogicTest 
+{
 
     private PodamFactory factory = new PodamFactoryImpl();
 
@@ -54,7 +55,8 @@ public class ProveedorLogicTest {
     private List<ServicioEntity> serviciosData;
 
     @Deployment
-    public static JavaArchive createDeployment() {
+    public static JavaArchive createDeployment() 
+    {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ProveedorEntity.class.getPackage())
                 .addPackage(ProveedorLogic.class.getPackage())
@@ -68,7 +70,8 @@ public class ProveedorLogicTest {
      * Configuración inicial de la prueba.
      */
     @Before
-    public void configTest() {
+    public void configTest() 
+    {
         try {
             utx.begin();
             clearData();
@@ -87,7 +90,8 @@ public class ProveedorLogicTest {
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
-    private void clearData() {;
+    private void clearData() 
+    {
         em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
         em.createQuery("delete from ServicioEntity").executeUpdate();
@@ -128,8 +132,14 @@ public class ProveedorLogicTest {
                 entity.setContratos(contratosData);
                 entity.setValoraciones(valoracionesData);
                 entity.setServicios(serviciosData);
-            } else {
+            } 
+            else if (i == 1)
+            {
                 entity.setPenalizado(true);
+            }
+            else
+            {
+                entity.setPenalizado(false);
             }
 
             em.persist(entity);
@@ -145,14 +155,22 @@ public class ProveedorLogicTest {
     public void createProveedorTest() {
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
         newEntity.setPenalizado(false);
-        newEntity.setContratos(contratosData);
+        ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
+        contrato.setProveedor(newEntity);
+        List<ContratoEntity> contratos = new ArrayList<>();
+        contratos.add(contrato);
+        
+        newEntity.setContratos(contratos);
         newEntity.setValoraciones(valoracionesData);
         newEntity.setServicios(serviciosData);
 
         ProveedorEntity result = new ProveedorEntity();
-        try {
+        try 
+        {
             result = proveedorLogic.createProveedor(newEntity);
-        } catch (BusinessLogicException e) {
+        } 
+        catch (BusinessLogicException e) 
+        {
             fail(e.getMessage());
         }
 
@@ -195,11 +213,15 @@ public class ProveedorLogicTest {
      * Prueba para eliminar un proveedor
      */
     @Test
-    public void deleteProveedor() {
+    public void deleteProveedor() 
+    {
         ProveedorEntity entity = data.get(0);
-        try {
+        try 
+        {
             proveedorLogic.deleteProveedor(entity.getId());
-        } catch (BusinessLogicException e) {
+        } 
+        catch (BusinessLogicException e) 
+        {
             fail(e.getMessage());
         }
 
@@ -211,7 +233,8 @@ public class ProveedorLogicTest {
      * Prueba para actualizar un proveedor
      */
     @Test
-    public void updateProveedorTest() {
+    public void updateProveedorTest() 
+    {
         ProveedorEntity entity = data.get(0);
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
         newEntity.setPenalizado(false);
@@ -221,7 +244,8 @@ public class ProveedorLogicTest {
 
         newEntity.setId(entity.getId());
         newEntity.setLogin(entity.getLogin());
-        try {
+        try 
+        {
             proveedorLogic.updateProveedor(newEntity);
         } catch (BusinessLogicException e) {
             fail(e.getMessage());
@@ -249,7 +273,9 @@ public class ProveedorLogicTest {
     public void createProveedorTestFail1() {
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
         ProveedorEntity result = new ProveedorEntity();
-        try {
+        try 
+        {
+            result = proveedorLogic.createProveedor(newEntity);
             result = proveedorLogic.createProveedor(newEntity);
             fail("No se debio haber creado el proveedor");
         } catch (BusinessLogicException x) {
@@ -334,25 +360,29 @@ public class ProveedorLogicTest {
      * Se agregan los tres contratos creados a los tres proveedors creados
      */
     @Test
-    public void addContratoTest() {
-        try {
-            ProveedorEntity entity = data.get(0);
-            ContratoEntity newContrato = factory.manufacturePojo(ContratoEntity.class);
-            newContrato.setProveedor(entity);
+    public void addContratoTest()
+    {
+        try 
+        {            
+            ContratoEntity newContrato = contratosData.get(0);
+            newContrato.setProveedor(data.get(2));            
+            newContrato = proveedorLogic.addContrato(newContrato.getId(), data.get(2).getId());
             
-            proveedorLogic.addContrato(newContrato.getId(), entity.getId());
-            
-            ProveedorEntity result = em.find(ProveedorEntity.class, entity.getId());
+           
+            ProveedorEntity result = em.find(ProveedorEntity.class, data.get(0).getId());
             boolean encontrado=false;
-            for(ContratoEntity contrato: result.getContratos()){
-                if(contrato.getId().equals(newContrato.getId()))
+            for(ContratoEntity contrato: result.getContratos())
+            {
+                if(contrato.getId() == newContrato.getId())
                 {
                     encontrado=true;
                     break;
                 }
             }
             Assert.assertTrue(encontrado);
-        } catch (BusinessLogicException x) {
+        } 
+        catch (BusinessLogicException x) 
+        {
             fail(x.getMessage());
         }
     }
