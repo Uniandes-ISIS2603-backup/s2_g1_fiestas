@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class ProductoLogicTest
 
     @Inject
     private ProductoLogic productoLogic;
+    
+    @Inject
+    private ServicioLogic servicioLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -122,6 +126,74 @@ public class ProductoLogicTest
             }
             Assert.assertTrue(encontrado);
         }
+    }
+    
+    /**
+     * Prueba para eliminar un producto
+     */
+    @Test
+    public void deleteProducto() {
+        ProductoEntity entity = data.get(0);
+        productoLogic.deleteProducto(entity.getId());
+        ProductoEntity deleted = em.find(ProductoEntity.class, entity.getId());
+        org.junit.Assert.assertNull(deleted);
+    }
+
+    /**
+     * Prueba para actualizar un producto
+     */
+    @Test
+    public void updateProductoTest() {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        productoLogic.updateProducto(newEntity);
+
+        ProductoEntity resp = em.find(ProductoEntity.class, entity.getId());
+        Assert.assertEquals(newEntity.getId(), resp.getId());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+    }
+    
+    
+    /**
+     * Prueba para actualizar los servicios
+     */
+    @Test
+    public void setServicioTest()
+    {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);        
+        productoLogic.createProducto(newEntity);
+        
+        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
+        servicioLogic.createServicio(newServicio);
+        
+        productoLogic.setServicio(entity.getId(), newServicio.getId());
+        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
+        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
+    }
+    
+    /**
+     * Prueba para revisar el servicio
+     */
+    @Test
+    public void getServicioTest()
+    {
+        ProductoEntity entity = data.get(0);
+        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
+        productoLogic.createProducto(newEntity);
+        
+        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
+        servicioLogic.createServicio(newServicio);
+        
+        productoLogic.setServicio(entity.getId(), newServicio.getId());
+        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        
+        
+        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
     }
 
 }
