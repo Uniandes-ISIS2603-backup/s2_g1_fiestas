@@ -233,8 +233,6 @@ public class ProveedorResource {
 
     
     /**
-     * <h1>GET /{proveedorId}/contratos/ : Obtener todos los contratos de un proveedor.</h1>
-
      * <h1>GET /{proveedorId}/contratos/ : Obtener todos los contratos de un
      * proveedor.</h1>
      *

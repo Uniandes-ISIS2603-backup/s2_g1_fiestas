@@ -82,11 +82,19 @@ public class UsuarioDTO
         this.id = id;
     }
 
-    public String getContraseña() {
+    /**
+     * @return La contraseña del usuario
+     */
+    public String getContraseña()
+    {
         return contraseña;
     }
-
-    public void setContraseña(String contraseña) {
+    
+    /**
+     * @param contraseña La nueva contraseña
+     */
+    public void setContraseña(String contraseña) 
+    {
         this.contraseña = contraseña;
     }
 
@@ -186,6 +194,10 @@ public class UsuarioDTO
         this.login = login;
     }
     
+    /**
+     * Método que transforma la clase UsuarioDTO a UsuarioEntity.
+     * @return UsuarioEntity instancia.
+     */
     public UsuarioEntity toEntity()
     {
         UsuarioEntity e = new UsuarioEntity(); 
