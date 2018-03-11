@@ -165,6 +165,7 @@ public class UsuarioLogic {
         if(usuarioEntity != null && blogEntity != null)
         {
             usuarioEntity.agregarBlog(blogEntity);
+            blogEntity.setUsuario(usuarioEntity);
             updateUsuario(usuarioEntity);
         }
         else
@@ -185,13 +186,13 @@ public class UsuarioLogic {
     {
         UsuarioEntity usuarioEntity = getUsuario(usuarioId);
         BlogEntity blog = bLogic.getBlog(blogId);
-        if(usuarioEntity != null)
+        if(usuarioEntity != null && blog!= null)
         {
             usuarioEntity.removerBlog(blog);
         }
         else
         {
-            throw new BusinessLogicException("El usuario al que se le quiere remover el blog es nulo");
+            throw new BusinessLogicException("El usuario o el blog es nulo.");
         }        
         
     }
