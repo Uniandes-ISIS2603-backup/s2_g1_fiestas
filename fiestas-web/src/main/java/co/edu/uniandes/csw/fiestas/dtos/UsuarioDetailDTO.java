@@ -73,7 +73,10 @@ public class UsuarioDetailDTO extends UsuarioDTO
     {
         
     }
-
+    /**
+     * Constructor que transforma una instancia UsuarioEntity a UsuarioDetailDTO.
+     * @param entity UsuarioEntity que dará los atributos necesarios al DTO.
+     */
     public UsuarioDetailDTO(UsuarioEntity entity) 
     {
         super();
