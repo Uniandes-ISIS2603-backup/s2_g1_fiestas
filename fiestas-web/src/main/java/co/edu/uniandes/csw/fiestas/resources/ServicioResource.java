@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.fiestas.resources;
 
+import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -190,5 +192,140 @@ public class ServicioResource {
         if(ent == null)
              throw new BusinessLogicException("El servicio no existe.");
         logic.deleteServicio(id);
+    }
+     
+     
+     
+     //Proveedores
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws BusinessLogicException
+     */    
+     @GET
+    @Path("{id:\\d+}/proveedores")
+    public List<ProveedorDetailDTO> getProveedoresServicio(@PathParam("id")Long id) throws BusinessLogicException{
+        ServicioEntity ent = logic.getServicio(id);
+        if(ent == null)
+            throw new BusinessLogicException("El servicio no existe.");
+        return proveedorListEntity2DTO(logic.listProveedores(id));
+    }
+    
+    /**
+     *
+     * @param id
+     * @param proveedorId
+     * @return
+     * @throws BusinessLogicException
+     */
+    @GET
+    @Path("{id:\\d+}/proveedores/{proveedorId:\\d+}")
+    public ProveedorDetailDTO getServicioProveedor(@PathParam("id")Long id, @PathParam("proveedorId")Long proveedorId) throws BusinessLogicException
+    {
+        ServicioEntity e = logic.getServicio(id);
+        if(e==null)
+            throw new BusinessLogicException("El servicio no existe.");
+        ProveedorEntity be= logic.getProveedor(e.getId(), proveedorId);
+        return new ProveedorDetailDTO(be);
+    }
+    
+    /**
+     * Actualizar proveedores en un servicio dado por id.
+     * 
+     * @param id del servicio donde se reemplazan los proveedores
+     * @param proveedores lista de proveedores a actualizar
+     * @return lista de proveedores actualizado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     */
+    @PUT
+    @Path("{id: \\d+}/proveedores")
+    public  List<ProveedorDetailDTO> replaceProveedores(@PathParam("id")Long id,List<ProveedorDetailDTO> proveedores) throws BusinessLogicException
+    {
+        return proveedorListEntity2DTO(logic.replaceProveedores(id,proveedorListDTO2Entity(proveedores)));
+    }
+    
+    /**
+     * Convierte una lista de ProveedorEntity a una lista de ProveedorDetailDTO.
+     *
+     * @param entityList Lista de ProveedorEntity a convertir.
+     * @return Lista de ProveedorDetailDTO convertida.
+     *
+     */
+    private List<ProveedorDetailDTO> proveedorListEntity2DTO(List<ProveedorEntity> entityList) {
+        List<ProveedorDetailDTO> list = new ArrayList<>();
+        for (ProveedorEntity entity : entityList) {
+            list.add(new ProveedorDetailDTO(entity));
+        }
+        return list;
+    }
+    
+     /**
+     * Convierte una lista de ProveedorDetailDTO a una lista de ProveedorEntity.
+     *
+     * @param dtos Lista de ProveedorDetailDTO a convertir.
+     * @return Lista de ProveedorEntity convertida.
+     *
+     */
+    private List<ProveedorEntity> proveedorListDTO2Entity(List<ProveedorDetailDTO> dtos) {
+        List<ProveedorEntity> list = new ArrayList<>();
+        for (ProveedorDetailDTO dto : dtos) {
+            list.add(dto.toEntity());
+        }
+        return list;
+    }
+    
+    
+    /**
+     * <h1>POST /{serviciosId}/proveedores/{proveedoresId} : Guarda un
+     * proveedor dentro del servicio.</h1>
+     *
+     * <pre> Guarda un proveedor dentro de un servicio con la informacion que
+     * recibe el la URL. Se devuelve el proveedor que se guarda en el servicio.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo proveedor .
+     * </code>
+     * </pre>
+     *
+     * @param serviciosId Identificador del servicio que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param proveedorId Identificador del proveedor que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link ProveedorDetailDTO} - El proveedor guardado en la
+     * servicio.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     */
+    @POST
+    @Path("{serviciosId: \\d+}/proveedores/{proveedoresId: \\d+}")
+    public ProveedorDetailDTO addProveedor(@PathParam("serviciosId") Long serviciosId, @PathParam("proveedoresId") Long proveedorId) throws BusinessLogicException {
+        return new ProveedorDetailDTO(logic.addProveedor(proveedorId, serviciosId));
+    }
+    
+    /**
+     * <h1>DELETE /{servicioId}/proveedores/{proveedorId} : Elimina un
+     * proveedor dentro del servicio.</h1>
+     *
+     * <pre> Elimina la referencia del proveedor asociado al ID dentro del servicio
+     * con la informacion que recibe el la URL.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Se eliminó la referencia del proveedor.
+     * </code>
+     * </pre>
+     *
+     * @param servicioId Identificador del servicio que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param proveedoresId Identificador del proveedor que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     */
+    @DELETE
+    @Path("{servicioId: \\d+}/proveedores/{proveedoresId: \\d+}")
+    public void removeProveedores(@PathParam("servicioId") Long servicioId, @PathParam("proveedoresId") Long proveedoresId) throws BusinessLogicException {
+        logic.removeProveedor(proveedoresId, servicioId);
     }
 }

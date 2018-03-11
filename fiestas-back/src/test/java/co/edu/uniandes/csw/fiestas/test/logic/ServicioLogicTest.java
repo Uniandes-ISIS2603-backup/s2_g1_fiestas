@@ -11,12 +11,18 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,6 +126,11 @@ public class ServicioLogicTest {
             entity.setValoraciones(listaValoracion);
             em.persist(entity);
             data.add(entity);
+            
+            if (i == 0) {
+                proveedorData.get(i).setServicios(data);
+            }
+            
         } 
         
     }
@@ -248,37 +259,92 @@ public class ServicioLogicTest {
      * Prueba para asociar un Proveedor existente a un Servicio
      *
      * 
+     * @throws javax.transaction.NotSupportedException
+     * @throws javax.transaction.SystemException
+     * @throws javax.transaction.RollbackException
+     * @throws javax.transaction.HeuristicMixedException
+     * @throws javax.transaction.HeuristicRollbackException
      */
-    @Test
-    public void addProveedorTest() {
-        ServicioEntity entity = data.get(0);
-        ProveedorEntity proveedorEntity = proveedorData.get(1);
-        ProveedorEntity response = servicioLogic.addProveedor(proveedorEntity.getId(), entity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(proveedorEntity.getId(), response.getId());
+   @Test
+    public void addProveedorTest() throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+        ServicioEntity servicio = data.get(0);
+        ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
+        proveedor.setServicios(data);
+        utx.begin();
+        em.persist(proveedor);
+        utx.commit();
+        servicioLogic.addProveedor(servicio.getId(), proveedor.getId());
+       
     }
     
     /**
-     * Prueba para remplazar las instancias de Proveedores asociadas a una instancia
-     * de Servicio
-     *
+     * 
      * 
      */
     @Test
-    public void replaceProveedoresTest() {
+    public void replaceProveedoresFailTest(){
+        ServicioEntity servicio = factory.manufacturePojo(ServicioEntity.class);
+        try{
+            servicioLogic.replaceProveedores(servicio.getId(), null);
+            fail("El servicio no existe en persistence.");
+        }
+        catch(BusinessLogicException e)
+        {
+            
+        }
+       
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void replaceProveedoresFailTest1(){
+        ServicioEntity servicio = data.get(0);
+        try{
+            servicioLogic.replaceProveedores(servicio.getId(), null);
+            fail("La lista es nula.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    /**
+     * 
+     */
+    @Test
+    public void replaceProveedoresFailTest2(){
+        ServicioEntity servicio = data.get(0);
+        List<ProveedorEntity> lista = new ArrayList<>();
+        try{
+            servicioLogic.replaceProveedores(servicio.getId(), lista);
+            fail("La lista es vacía.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    
+    
+    /**
+     * 
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     */
+    @Test
+    public void replaceProveedoresTest() throws BusinessLogicException{
+
         ServicioEntity entity = data.get(0);
         List<ProveedorEntity> list = proveedorData.subList(1, 3);
         servicioLogic.replaceProveedores(entity.getId(), list);
 
         entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(0)));
+        Assert.assertFalse(entity.getProveedores().contains(proveedorData.get(0)));
         Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(1)));
         Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(2)));
-    }
-    
+       
+    }    
     /**
-     * Prueba para desasociar un Proveedor existente de un Editorial existente
+     * Prueba para desasociar un Proveedor existente de un Servicio existente
      *
      * 
      */
@@ -314,7 +380,7 @@ public class ServicioLogicTest {
     @Test
     public void getValoracionesTest() throws BusinessLogicException {
         List<ValoracionEntity> list = servicioLogic.getValoraciones(data.get(0).getId());
-        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(3, list.size());
     }
     
     /**
@@ -352,7 +418,7 @@ public class ServicioLogicTest {
     }
     
     /**
-     * Prueba para desasociar un Valoracion existente de un Editorial existente
+     * Prueba para desasociar un Valoracion existente de un Servicio existente
      *
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
