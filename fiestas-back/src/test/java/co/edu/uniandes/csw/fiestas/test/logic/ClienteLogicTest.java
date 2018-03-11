@@ -90,6 +90,7 @@ public class ClienteLogicTest
     private void clearData() 
     {
         em.createQuery("delete from ClienteEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
     /**
@@ -418,15 +419,25 @@ public class ClienteLogicTest
         }
     }
     
+    /**
+     * Prueba para remover evento a un Cliente.
+     *
+     * Falla si se reemplaza todos los elementos de la lista y estos son diferentes a la lista despues de ser reemplazada
+     */
     @Test
     public void replaceEventosTest() 
     {       
         try 
         {
             clienteLogic.replaceEventos(data.get(0).getId(), eventosData);
-            Assert.assertEquals(eventosData.get(0).getId(), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(0).getId());
-            Assert.assertEquals(eventosData.get(1).getId(), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(1).getId());
-            Assert.assertEquals(eventosData.get(2).getId(), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(2).getId());
+            for(EventoEntity ee : eventosData)
+            {
+                if(!em.find(ClienteEntity.class, data.get(0).getId()).getEventos().contains(ee))
+                {
+                    fail("No está alguno de los eventos reemplazados en la nueva lista del cliente");
+                }
+            }
+            passed();
         } 
         catch (BusinessLogicException x) 
         {
@@ -435,12 +446,12 @@ public class ClienteLogicTest
     }
     
     /**
-     * Prueba de falla para remover evento a un Cliente 1.
+     * Prueba de falla para remover evento a un Cliente.
      *
      * Falla si se reemplazan eventos de un cliente inexistente 
      */
     @Test
-    public void replaceEventosFail1() 
+    public void replaceEventosTestFail() 
     {            
         try 
         {            
@@ -453,4 +464,99 @@ public class ClienteLogicTest
         }
     }    
     
+    /**
+     * Prueba obtener eventos de un Cliente.
+     *
+     * Falla si se obtienen eventos diferentes a los que se tiene
+     */    
+    @Test
+    public void getEventosTest() 
+    {       
+        try 
+        {
+            List<EventoEntity> obtenida = clienteLogic.getEventos(data.get(0).getId());
+            Assert.assertEquals(data.get(0).getEventos(), obtenida);            
+        } 
+        catch (BusinessLogicException x) 
+        {
+            fail(x.getMessage());
+        }
+    }
+    
+    /**
+     * Prueba de falla para obtener eventos de un Cliente.
+     *
+     * Falla si se obtienen eventos de un cliente inexistente 
+     */
+    @Test
+    public void getEventosTestFail() 
+    {            
+        try 
+        {            
+            List<EventoEntity> obtenida = clienteLogic.getEventos(Long(99999999));
+            fail("Se removió un evento de un cliente inexistente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }  
+    
+    /**
+     * Prueba obtener evento de un Cliente.
+     *
+     * Falla si se obtiene evento diferente al que se tiene
+     */    
+    @Test
+    public void getEventoTest() 
+    {       
+        try 
+        {
+            clienteLogic.addEvento(eventosData.get(0).getId(), data.get(0).getId());
+            EventoEntity obtenida = clienteLogic.getEvento(data.get(0).getId(),eventosData.get(0).getId());
+            Assert.assertEquals(eventosData.get(0), obtenida);            
+        } 
+        catch (BusinessLogicException x) 
+        {
+            fail(x.getMessage());
+        }
+    }
+    
+    /**
+     * Prueba de falla para obtene evento de un Cliente 1.
+     *
+     * Falla si se obtiene un evento de un cliente inexistente 
+     */
+    @Test
+    public void getEventoTestFail1() 
+    {            
+        try 
+        {            
+            EventoEntity obtenida = clienteLogic.getEvento(eventosData.get(0).getId(), Long(9999999));
+            fail("Se removió un evento de un cliente inexistente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba de falla para obtener evento de un Cliente 2.
+     *
+     * Falla si se obtiene un evento de un cliente que no lo tiene
+     */
+    @Test
+    public void getEventoTestFail2() 
+    {            
+        try 
+        {            
+            clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(0).getId());
+            fail("Se obtiene un evento de un cliente que no tiene dicho evento");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
 }

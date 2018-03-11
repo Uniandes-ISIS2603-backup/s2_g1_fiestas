@@ -168,6 +168,7 @@ public class ClienteLogic
         else 
         {
             ent.addEvento(entC);
+            updateCliente(ent);
             return entC;            
         }
     }
@@ -190,7 +191,8 @@ public class ClienteLogic
         int index = ent.getEventos().indexOf(entC);
         if (index >= 0) 
         {
-            ent.getEventos().remove(entC);            
+            ent.getEventos().remove(entC); 
+            updateCliente(ent);
         } 
         else 
         {
@@ -225,6 +227,7 @@ public class ClienteLogic
             }
         }
         cliente.setEventos(eventos);
+        updateCliente(cliente);
         return eventos;
     }
 
@@ -261,27 +264,13 @@ public class ClienteLogic
         List<EventoEntity> eventos = getCliente(clienteId).getEventos();
         EventoEntity evento = eventoLogic.getEvento(eventoId);
         int index = eventos.indexOf(evento);
-        if (index >= 0) {
+        if (index >= 0)
+        {
             return eventos.get(index);
         }
-        throw new BusinessLogicException("El evento no está asociado al cliente");
-    }
-
-    /**
-     * Obtiene una colección de instancias de EventoEntity asociadas a una
-     * instancia de Cliente
-     *
-     * @param clienteId Identificador de la instancia de Cliente
-     * @return Colección de instancias de EventoEntity asociadas a la
-     * instancia de Cliente
-     *
-     */
-    public List<EventoEntity> listEventos(Long clienteId) throws BusinessLogicException 
-    {
-        if(getCliente(clienteId) == null)
+        else
         {
-            throw new BusinessLogicException("No existe un cliente con dicho id para enlistar eventos");
-        }
-        return getCliente(clienteId).getEventos();
-    }
+            throw new BusinessLogicException("El evento no está asociado al cliente");
+        }        
+    }   
 }
