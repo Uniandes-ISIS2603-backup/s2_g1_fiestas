@@ -185,24 +185,7 @@ public class ServicioLogic {
         proveedoresEntity.setId(proveedoresId);
         entity.getProveedores().remove(proveedoresEntity);
     }
-    
-        /**
-     * Agregar un valoracion al servicio
-     *
-     * @param valoracionId El id valoracion a guardar
-     * @param servicioId El id del servicio en la cual se va a guardar el
-     * valoracion.
-     * @return El valoracion que fue agregado al servicio.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no existe la valoracion
-     */
-    public ValoracionEntity addValoracion(Long valoracionId, Long servicioId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar una valoracion al servicio");
-        ServicioEntity servicioEntity = getServicio(servicioId);
-        ValoracionEntity valoracionEntity = valoracionLogic.getValoracion(valoracionId);
-        servicioEntity.getValoraciones().add(valoracionEntity);
-        return valoracionEntity;
-    }
-    
+     
     /**
     * Obtiene la lista de los registros de Valoracion que pertenecen a un Servicio.
      *
@@ -222,36 +205,7 @@ public class ServicioLogic {
        return servicio.getValoraciones();
     }
     
-    
-    /**
-     * Borrar un valoracion de un servicio
-     *
-     * @param valoracionId El valoracion que se desea borrar del proveedor.
-     * @param servicioId El servicio del cual se desea eliminar.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no existe la valoracion
-     */
-    public void removeValoracion(Long valoracionId, Long servicioId) throws BusinessLogicException  {
-        LOGGER.log(Level.INFO, "Inicia proceso de eliminar la valoracion asociada al servicio");
-        ServicioEntity servicio = getServicio(servicioId);
-        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
-        servicio.getValoraciones().remove(valoracion);
-    }
-
-    /**
-     * Remplazar valoraciones de un servicio
-     *
-     * @param valoraciones Lista de valoraciones que serán los del proveedor.
-     * @param servicioId El id del servicio que se quiere actualizar.
-     * @return La lista de valoraciones actualizada.
-     */
-    public List<ValoracionEntity> replaceValoraciones(Long servicioId, List<ValoracionEntity> valoraciones){
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la lista de valoraciones asociada a un servicio");
-        ServicioEntity servicio = getServicio(servicioId);
-        servicio.setValoraciones(valoraciones);
-        return valoraciones;
-    }
-    
-        /**
+     /**
      * Retorna un valoracion asociado a un servicio
      *
      * @param servicioId El id del servicio a buscar.
@@ -269,7 +223,5 @@ public class ServicioLogic {
         }
         throw new BusinessLogicException("El valoracion no está asociado al proveedor");
     }
-    
-    
     
 }

@@ -383,50 +383,5 @@ public class ServicioLogicTest {
         Assert.assertEquals(3, list.size());
     }
     
-    /**
-     * Prueba para asociar un Valoracion existente a un Servicio
-     *
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void addValoracionTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ValoracionEntity valoracionEntity = valoracionData.get(1);
-        ValoracionEntity response = servicioLogic.addValoracion(valoracionEntity.getId(), entity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(valoracionEntity.getId(), response.getId());
-    }
-    
-    /**
-     * Prueba para remplazar las instancias de Valoraciones asociadas a una instancia
-     * de Servicio
-     *
-     * 
-     */
-    @Test
-    public void replaceValoracionesTest() {
-        ServicioEntity entity = data.get(0);
-        List<ValoracionEntity> list = valoracionData.subList(1, 3);
-        servicioLogic.replaceValoraciones(entity.getId(), list);
-
-        entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertFalse(entity.getValoraciones().contains(valoracionData.get(0)));
-        Assert.assertTrue(entity.getValoraciones().contains(valoracionData.get(1)));
-        Assert.assertTrue(entity.getValoraciones().contains(valoracionData.get(2)));
-    }
-    
-    /**
-     * Prueba para desasociar un Valoracion existente de un Servicio existente
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void removeValoracionesTest() throws BusinessLogicException {
-        servicioLogic.removeValoracion(data.get(0).getId(), valoracionData.get(0).getId());
-        ValoracionEntity response = servicioLogic.getValoracion(data.get(0).getId(), valoracionData.get(0).getId());
-    }
-    
     
 }

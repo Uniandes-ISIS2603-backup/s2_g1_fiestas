@@ -7,9 +7,11 @@ package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -328,4 +330,46 @@ public class ServicioResource {
     public void removeProveedores(@PathParam("servicioId") Long servicioId, @PathParam("proveedoresId") Long proveedoresId) throws BusinessLogicException {
         logic.removeProveedor(proveedoresId, servicioId);
     }
+    
+    
+    
+    //Valoraciones
+    
+    /**
+     *
+     * @param id
+     * @return
+     * @throws BusinessLogicException
+     */    
+     @GET
+    @Path("{id:\\d+}/proveedores")
+    public List<ValoracionDetailDTO> getPValoracionesServicio(@PathParam("id")Long id) throws BusinessLogicException{
+        ServicioEntity ent = logic.getServicio(id);
+        if(ent == null)
+            throw new BusinessLogicException("El servicio no existe.");
+        return valoracionListEntity2DTO(logic.getValoraciones(id));
+    }
+    private List<ValoracionDetailDTO> valoracionListEntity2DTO(List<ValoracionEntity> entityList) {
+        List<ValoracionDetailDTO> list = new ArrayList<>();
+        for (ValoracionEntity entity : entityList) {
+            list.add(new ValoracionDetailDTO(entity));
+        }
+        return list;
+    }
+    
+     /**
+     * Convierte una lista de ValoracionDetailDTO a una lista de ValoracionEntity.
+     *
+     * @param dtos Lista de ValoracionDetailDTO a convertir.
+     * @return Lista de ValoracionEntity convertida.
+     *
+     */
+    private List<ValoracionEntity> valoracionListDTO2Entity(List<ValoracionDetailDTO> dtos) {
+        List<ValoracionEntity> list = new ArrayList<>();
+        for (ValoracionDetailDTO dto : dtos) {
+            list.add(dto.toEntity());
+        }
+        return list;
+    }
+    
 }
