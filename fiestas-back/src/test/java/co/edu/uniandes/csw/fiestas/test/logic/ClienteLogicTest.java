@@ -1,7 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ClienteLogic;
-import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
@@ -39,9 +38,6 @@ public class ClienteLogicTest
     @Inject
     private ClienteLogic clienteLogic;
     
-    @Inject
-    private EventoLogic eventoLogic;
-
     @PersistenceContext
     private EntityManager em;
 
@@ -110,6 +106,10 @@ public class ClienteLogicTest
         for (int i = 0; i < 3; i++) 
         {
             ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            if (i == 0)
+            {
+                entity.setEventos(eventosData);
+            }
             em.persist(entity);
             data.add(entity);
         }
@@ -309,12 +309,10 @@ public class ClienteLogicTest
     {            
         try 
         {
-            for(int i = 0; i <3; i++)
+            for(int i = 1; i <3; i++)
             {
                 clienteLogic.addEvento(eventosData.get(i).getId(), data.get(i).getId());
-            }      
-            
-            Assert.assertEquals(eventosData.get(0), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(0));
+            }            
             Assert.assertEquals(eventosData.get(1), em.find(ClienteEntity.class, data.get(1).getId()).getEventos().get(0));
             Assert.assertEquals(eventosData.get(2), em.find(ClienteEntity.class, data.get(2).getId()).getEventos().get(0));
         } 
@@ -352,8 +350,7 @@ public class ClienteLogicTest
     public void addEventoTestFail2() 
     {            
         try 
-        {           
-            clienteLogic.addEvento(eventosData.get(0).getId(), data.get(0).getId()); 
+        {               
             clienteLogic.addEvento(eventosData.get(0).getId(), data.get(0).getId()); 
             fail("No debe agregarse un evento a un cliente que ya tiene dicho evento");
         } 
@@ -372,10 +369,9 @@ public class ClienteLogicTest
     public void removeEventoTest() 
     {       
         try 
-        {
-            clienteLogic.addEvento(eventosData.get(0).getId(),data.get(0).getId());
+        {            
             clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(0).getId());
-            Assert.assertEquals(0, em.find(ClienteEntity.class, data.get(0).getId()).getEventos().size());
+            Assert.assertEquals(2, em.find(ClienteEntity.class, data.get(0).getId()).getEventos().size());
         } 
         catch (BusinessLogicException x) 
         {
@@ -412,7 +408,7 @@ public class ClienteLogicTest
     {            
         try 
         {            
-            clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(0).getId());
+            clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(1).getId());
             fail("Se removió un evento de un cliente que no tiene dicho evento");
         } 
         catch (BusinessLogicException x) 
@@ -431,7 +427,7 @@ public class ClienteLogicTest
     {       
         try 
         {
-            clienteLogic.replaceEventos(data.get(0).getId(), eventosData);
+            clienteLogic.replaceEventos(data.get(1).getId(), eventosData);
             for(EventoEntity ee : eventosData)
             {
                 if(!em.find(ClienteEntity.class, data.get(0).getId()).getEventos().contains(ee))
@@ -477,7 +473,14 @@ public class ClienteLogicTest
         try 
         {
             List<EventoEntity> obtenida = clienteLogic.getEventos(data.get(0).getId());
-            Assert.assertEquals(data.get(0).getEventos(), obtenida);            
+            for(EventoEntity ee : obtenida)
+            {
+                if(!data.get(0).getEventos().contains(ee))
+                {
+                    fail("Algún evento que debe tener en el cliente no está persistido correctamente en la lista relación");
+                }
+            }
+            passed();          
         } 
         catch (BusinessLogicException x) 
         {
@@ -513,8 +516,7 @@ public class ClienteLogicTest
     public void getEventoTest() 
     {       
         try 
-        {
-            clienteLogic.addEvento(eventosData.get(0).getId(), data.get(0).getId());
+        {            
             EventoEntity obtenida = clienteLogic.getEvento(data.get(0).getId(),eventosData.get(0).getId());
             Assert.assertEquals(eventosData.get(0), obtenida);            
         } 
@@ -534,7 +536,7 @@ public class ClienteLogicTest
     {            
         try 
         {            
-            EventoEntity obtenida = clienteLogic.getEvento(eventosData.get(0).getId(), Long(9999999));
+            EventoEntity obtenida = clienteLogic.getEvento( Long(9999999), eventosData.get(0).getId());
             fail("Se removió un evento de un cliente inexistente");
         } 
         catch (BusinessLogicException x) 
@@ -553,7 +555,7 @@ public class ClienteLogicTest
     {            
         try 
         {            
-            clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(0).getId());
+            clienteLogic.getEvento( data.get(1).getId(),eventosData.get(0).getId());
             fail("Se obtiene un evento de un cliente que no tiene dicho evento");
         } 
         catch (BusinessLogicException x) 
