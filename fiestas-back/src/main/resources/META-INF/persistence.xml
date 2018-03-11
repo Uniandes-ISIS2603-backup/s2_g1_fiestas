@@ -6,6 +6,7 @@
     <class>co.edu.uniandes.csw.fiestas.entities</class>
     <class>co.edu.uniandes.csw.fiestas.entities.EventoEntity</class>
     <class>co.edu.uniandes.csw.fiestas.entities.PagoEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ProveedorServicio</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
