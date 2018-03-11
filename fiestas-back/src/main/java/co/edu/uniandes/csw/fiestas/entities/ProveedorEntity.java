@@ -102,4 +102,24 @@ public class ProveedorEntity extends UsuarioEntity
     {
         servicios.remove(pServicio);
     }
+    
+    public void agregarContrato(ContratoEntity pContrato)
+    {
+        contratos.add(pContrato);
+    }
+    
+    public void removerContrato(ContratoEntity pContrato)
+    {
+        contratos.remove(pContrato);
+    }
+    
+    public void agregarValoracion(ValoracionEntity pValoracion)
+    {
+        valoraciones.add(pValoracion);
+    }
+    
+    public void removerValoracion(ValoracionEntity pValoracion)
+    {
+        valoraciones.remove(pValoracion);
+    }
 }

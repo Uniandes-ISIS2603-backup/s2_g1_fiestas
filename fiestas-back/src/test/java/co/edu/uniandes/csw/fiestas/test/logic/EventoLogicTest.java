@@ -30,8 +30,8 @@ import org.junit.Test;
  * @author cm.amaya10
  */
 @RunWith(Arquillian.class)
-public class EventoLogicTest {
-
+public class EventoLogicTest 
+{
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
