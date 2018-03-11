@@ -137,7 +137,8 @@ public class ContratoLogicTest {
     @Test
     public void createContratoTest() throws BusinessLogicException {
         ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-        ContratoEntity result = contratoLogic.createContrato(newEntity);
+        HorarioEntity horario = factory.manufacturePojo(HorarioEntity.class);
+        ContratoEntity result = contratoLogic.createContrato(newEntity, horario);
         Assert.assertNotNull(result);
         ContratoEntity entidad = em.find(ContratoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
