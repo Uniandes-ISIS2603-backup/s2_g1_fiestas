@@ -19,7 +19,6 @@ import javax.inject.Inject;
 @Stateless
 public class ClienteLogic 
 {
-
     private static final Logger LOGGER = Logger.getLogger(ClienteLogic.class.getName());
 
     @Inject

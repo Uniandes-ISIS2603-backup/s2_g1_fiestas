@@ -46,13 +46,13 @@ public class ProveedorLogicTest
     @Inject
     private UserTransaction utx;
 
-    private List<ProveedorEntity> data = new ArrayList<ProveedorEntity>();
+    private List<ProveedorEntity> data; 
     
-    private List<ContratoEntity> contratosData = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratosData; 
     
-    private List<ValoracionEntity> valoracionesData = new ArrayList<ValoracionEntity>();
+    private List<ValoracionEntity> valoracionesData; 
     
-    private List<ServicioEntity> serviciosData = new ArrayList<ServicioEntity>();
+    private List<ServicioEntity> serviciosData; 
 
     @Deployment
     public static JavaArchive createDeployment() 
@@ -78,11 +78,16 @@ public class ProveedorLogicTest
             clearData();
             insertData();
             utx.commit();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
-            try {
+            try 
+            {
                 utx.rollback();
-            } catch (Exception e1) {
+            } 
+            catch (Exception e1) 
+            {
                 e1.printStackTrace();
             }
         }
@@ -104,22 +109,12 @@ public class ProveedorLogicTest
      * pruebas.
      */
     private void insertData() 
-    {
-        for (int i = 0; i < 3; i++) 
-        {
-            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);     
-            
-            if(i == 0)
-            {
-                entity.setPenalizado(false);
-            }
-            else
-            {
-                entity.setPenalizado(true);
-            }
-            em.persist(entity);       
-            data.add(entity);   
-        }
+    {        
+        contratosData = new ArrayList<ContratoEntity>();
+        valoracionesData = new ArrayList<ValoracionEntity>();
+        serviciosData = new ArrayList<ServicioEntity>();
+        data = new ArrayList<ProveedorEntity>();
+        
         for (int i = 0; i< 3; i++)
         {
             ContratoEntity entityC = factory.manufacturePojo(ContratoEntity.class);
@@ -137,6 +132,24 @@ public class ProveedorLogicTest
             ServicioEntity entityS = factory.manufacturePojo(ServicioEntity.class);
             em.persist(entityS);
             serviciosData.add(entityS);
+        }
+        for (int i = 0; i < 3; i++) 
+        {
+            ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);     
+            
+            if(i == 0)
+            {
+                entity.setPenalizado(false);
+            }
+            else
+            {
+                entity.setPenalizado(true);
+            }
+            entity.setContratos(contratosData);
+            entity.setValoraciones(valoracionesData);
+            entity.setServicios(serviciosData);           
+            em.persist(entity);   
+            data.add(entity); 
         }
     }
 
@@ -175,7 +188,8 @@ public class ProveedorLogicTest
      * Prueba para consultar la lista de provedoores
      */
     @Test
-    public void getProveedoresTest() {
+    public void getProveedoresTest() 
+    {
         List<ProveedorEntity> lista = proveedorLogic.getProveedores();
         Assert.assertEquals(data.size(), lista.size());
         for (ProveedorEntity entity : lista) {
@@ -214,7 +228,8 @@ public class ProveedorLogicTest
      * Prueba para actualizar un proveedor
      */
     @Test
-    public void updateProveedorTest() {
+    public void updateProveedorTest() 
+    {
         ProveedorEntity entity = data.get(0);
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
 

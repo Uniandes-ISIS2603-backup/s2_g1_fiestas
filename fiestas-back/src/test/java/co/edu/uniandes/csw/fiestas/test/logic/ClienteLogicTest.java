@@ -48,9 +48,9 @@ public class ClienteLogicTest
     @Inject
     private UserTransaction utx;
 
-    private List<ClienteEntity> data = new ArrayList<ClienteEntity>();
+    private List<ClienteEntity> data;
     
-    private List<EventoEntity> eventosData = new ArrayList<EventoEntity>();
+    private List<EventoEntity> eventosData;
 
     @Deployment
     public static JavaArchive createDeployment() 
@@ -99,6 +99,8 @@ public class ClienteLogicTest
      */
     private void insertData() 
     {
+        data = new ArrayList<ClienteEntity>();
+        eventosData = new ArrayList<EventoEntity>();
         for (int i = 0; i < 3; i++) 
         {
             EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
