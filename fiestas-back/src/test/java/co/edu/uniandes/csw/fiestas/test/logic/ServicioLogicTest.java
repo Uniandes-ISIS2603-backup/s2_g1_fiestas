@@ -102,6 +102,7 @@ public class ServicioLogicTest {
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
             em.persist(proveedor);
             proveedorData.add(proveedor);
+            
         }
         
         
@@ -114,10 +115,14 @@ public class ServicioLogicTest {
             ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
             entity.setProveedores(proveedorData);
             entity.setValoraciones(valoracionData);
+            
+            ProveedorEntity proveedor = proveedorData.get(i);
+            proveedor.agregarServicio(entity);
 
             em.persist(entity);
             data.add(entity);
         }
+        
     }
 
     /**
