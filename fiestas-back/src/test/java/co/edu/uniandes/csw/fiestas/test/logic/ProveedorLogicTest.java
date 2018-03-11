@@ -1,7 +1,10 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import java.util.ArrayList;
@@ -41,6 +44,12 @@ public class ProveedorLogicTest
     private UserTransaction utx;
 
     private List<ProveedorEntity> data = new ArrayList<ProveedorEntity>();
+    
+    private List<ContratoEntity> contratosData = new ArrayList<ContratoEntity>();
+    
+    private List<ValoracionEntity> valoracionesData = new ArrayList<ValoracionEntity>();
+    
+    private List<ServicioEntity> serviciosData = new ArrayList<ServicioEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() 
@@ -91,8 +100,17 @@ public class ProveedorLogicTest
     {
         for (int i = 0; i < 3; i++) {
             ProveedorEntity entity = factory.manufacturePojo(ProveedorEntity.class);
+            ContratoEntity entityC = factory.manufacturePojo(ContratoEntity.class);
+            ValoracionEntity entityV = factory.manufacturePojo(ValoracionEntity.class);
+            ServicioEntity entityS = factory.manufacturePojo(ServicioEntity.class);
             em.persist(entity);
+            em.persist(entityC);
+            em.persist(entityV);
+            em.persist(entityS);
             data.add(entity);
+            contratosData.add(entityC);
+            valoracionesData.add(entityV);
+            serviciosData.add(entityS);
         }
     }
 

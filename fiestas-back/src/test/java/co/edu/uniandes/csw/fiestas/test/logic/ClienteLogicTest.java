@@ -1,9 +1,12 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ClienteLogic;
+import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
+import static com.ctc.wstx.util.DataUtil.Long;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -12,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import static org.jboss.arquillian.test.spi.TestResult.passed;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
@@ -34,6 +38,9 @@ public class ClienteLogicTest
 
     @Inject
     private ClienteLogic clienteLogic;
+    
+    @Inject
+    private EventoLogic eventoLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -42,6 +49,8 @@ public class ClienteLogicTest
     private UserTransaction utx;
 
     private List<ClienteEntity> data = new ArrayList<ClienteEntity>();
+    
+    private List<EventoEntity> eventosData = new ArrayList<EventoEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() 
@@ -52,7 +61,6 @@ public class ClienteLogicTest
                 .addPackage(ClientePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-
     }
 
     /**
@@ -90,7 +98,14 @@ public class ClienteLogicTest
      */
     private void insertData() 
     {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) 
+        {
+            EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
+            em.persist(evento);
+            eventosData.add(evento);
+        }
+        for (int i = 0; i < 3; i++) 
+        {
             ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
             em.persist(entity);
             data.add(entity);
@@ -103,7 +118,8 @@ public class ClienteLogicTest
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
-    public void createClienteTest() throws BusinessLogicException {
+    public void createClienteTest() throws BusinessLogicException 
+    {
         ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
         ClienteEntity result = clienteLogic.createCliente(newEntity);
         Assert.assertNotNull(result);
@@ -185,4 +201,256 @@ public class ClienteLogicTest
         Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
     }
+    
+    /**
+     * Prueba fallida para crear un Cliente 1.
+     *
+     * Falla por que un segundo cliente a crear se va a guardar con id de uno ya existente
+     */
+    @Test
+    public void createClienteTestFail1() 
+    {
+        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);        
+        ClienteEntity result = new ClienteEntity();
+        
+        try 
+        {
+            result = clienteLogic.createCliente(newEntity);
+            result = clienteLogic.createCliente(newEntity);
+            fail("No se debio haber creado el cliente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba fallida para crear un Cliente 2.
+     *
+     * Falla por que un cliente se crea con una contraseña vacía
+     */
+    @Test
+    public void createClienteTestFail2() 
+    {
+        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);        
+        ClienteEntity result = new ClienteEntity();
+        newEntity.setContraseña("");
+        
+        try 
+        {
+            result = clienteLogic.createCliente(newEntity);
+            fail("No se debio haber creado el cliente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba fallida para actualizar un Cliente 1.
+     *
+     * Falla por que un cliente se actualiza cambiando un login
+     */
+    @Test
+    public void updateClienteTestFail1() 
+    {
+        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);        
+        ClienteEntity result = new ClienteEntity();        
+        
+        try 
+        {
+            result = clienteLogic.createCliente(newEntity);
+            newEntity.setLogin("Soy diferente");
+            result = clienteLogic.updateCliente(newEntity);
+            fail("No se debio haber creado el cliente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba fallida para actualizar un Cliente 2.
+     *
+     * Falla por que un cliente se actualiza cambiando la contraseña a vacío
+     */
+    @Test
+    public void updateClienteTestFail2() 
+    {
+        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);        
+        ClienteEntity result = new ClienteEntity();        
+        
+        try 
+        {
+            result = clienteLogic.createCliente(newEntity);
+            newEntity.setContraseña("");
+            result = clienteLogic.updateCliente(newEntity);
+            fail("No se debio haber creado el cliente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba para agregar evento a un Cliente.
+     *
+     * Se agregan los tres eventos creados a los tres clientes creados
+     */
+    @Test
+    public void addEventoTest() 
+    {            
+        try 
+        {
+            for(int i = 0; i <3; i++)
+            {
+                clienteLogic.addEvento(eventosData.get(i).getId(), data.get(i).getId());
+            }      
+            
+            Assert.assertEquals(eventosData.get(0), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(0));
+            Assert.assertEquals(eventosData.get(1), em.find(ClienteEntity.class, data.get(1).getId()).getEventos().get(0));
+            Assert.assertEquals(eventosData.get(2), em.find(ClienteEntity.class, data.get(2).getId()).getEventos().get(0));
+        } 
+        catch (BusinessLogicException x) 
+        {
+            fail(x.getMessage());
+        }
+    }
+    
+    /**
+     * Prueba de falla para agregar evento a un Cliente 1.
+     *
+     * Falla si se agrega un evento a un cliente inexistente
+     */
+    @Test
+    public void addEventoTestFail1() 
+    {            
+        try 
+        {           
+            clienteLogic.addEvento(eventosData.get(0).getId(), Long(999999)); 
+            fail("No debe agregarse el evento a un cliente inexistente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba de falla para agregar evento a un Cliente 2.
+     *
+     * Falla si se agrega un evento a un cliente que ya tiene ese evento
+     */
+    @Test
+    public void addEventoTestFail2() 
+    {            
+        try 
+        {           
+            clienteLogic.addEvento(eventosData.get(0).getId(), data.get(0).getId()); 
+            clienteLogic.addEvento(eventosData.get(0).getId(), data.get(0).getId()); 
+            fail("No debe agregarse un evento a un cliente que ya tiene dicho evento");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba para remover evento a un Cliente.
+     *
+     * Falla si se remueve el único evento de un cliente y éste sigue teniendo eventos
+     */
+    @Test
+    public void removeEventoTest() 
+    {       
+        try 
+        {
+            clienteLogic.addEvento(eventosData.get(0).getId(),data.get(0).getId());
+            clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(0).getId());
+            Assert.assertEquals(0, em.find(ClienteEntity.class, data.get(0).getId()).getEventos().size());
+        } 
+        catch (BusinessLogicException x) 
+        {
+            fail(x.getMessage());
+        }
+    }
+    
+    /**
+     * Prueba de falla para remover evento a un Cliente 1.
+     *
+     * Falla si se remueve un evento de un cliente inexistente 
+     */
+    @Test
+    public void removeEventoTestFail1() 
+    {            
+        try 
+        {            
+            clienteLogic.removeEvento(eventosData.get(0).getId(), Long(99999999));
+            fail("Se removió un evento de un cliente inexistente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba de falla para remover evento a un Cliente 2.
+     *
+     * Falla si se remueve un evento de un cliente que no lo tiene
+     */
+    @Test
+    public void removeEventoTestFail2() 
+    {            
+        try 
+        {            
+            clienteLogic.removeEvento(eventosData.get(0).getId(), data.get(0).getId());
+            fail("Se removió un evento de un cliente que no tiene dicho evento");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }
+    
+    @Test
+    public void replaceEventosTest() 
+    {       
+        try 
+        {
+            clienteLogic.replaceEventos(data.get(0).getId(), eventosData);
+            Assert.assertEquals(eventosData.get(0).getId(), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(0).getId());
+            Assert.assertEquals(eventosData.get(1).getId(), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(1).getId());
+            Assert.assertEquals(eventosData.get(2).getId(), em.find(ClienteEntity.class, data.get(0).getId()).getEventos().get(2).getId());
+        } 
+        catch (BusinessLogicException x) 
+        {
+            fail(x.getMessage());
+        }
+    }
+    
+    /**
+     * Prueba de falla para remover evento a un Cliente 1.
+     *
+     * Falla si se reemplazan eventos de un cliente inexistente 
+     */
+    @Test
+    public void replaceEventosFail1() 
+    {            
+        try 
+        {            
+            clienteLogic.replaceEventos(Long(99999999),eventosData );
+            fail("Se removió un evento de un cliente inexistente");
+        } 
+        catch (BusinessLogicException x) 
+        {
+            passed();
+        }
+    }    
+    
 }

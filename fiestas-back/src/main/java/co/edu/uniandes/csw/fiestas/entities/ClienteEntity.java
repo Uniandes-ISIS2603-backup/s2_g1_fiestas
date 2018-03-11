@@ -35,4 +35,13 @@ public class ClienteEntity extends UsuarioEntity
         this.eventos = eventos;
     }
     
+    public void addEvento(EventoEntity e)
+    {
+        eventos.add(e);
+    }
+    
+    public void removeEvento(EventoEntity e)
+    {
+        eventos.remove(e);
+    }
 }
