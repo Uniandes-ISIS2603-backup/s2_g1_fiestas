@@ -24,7 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 /**
- * <pre>Clase que implementa el recurso "cities".
+ * <pre>Clase que implementa el recurso "productos".
  * URL: /api/productos
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
@@ -39,7 +39,7 @@ import javax.ws.rs.Produces;
  * @author af.losada  
  * @version 1.0
  */
-@Path("cities")
+@Path("productos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -153,7 +153,7 @@ public class ProductoResource
     }
     
     /**
-     * <h1>DELETE /api/cities/{id} : Borrar producto por id.</h1>
+     * <h1>DELETE /api/productos/{id} : Borrar producto por id.</h1>
      * 
      * <pre>Borra el producto con el id asociado recibido en la URL.
      * 
