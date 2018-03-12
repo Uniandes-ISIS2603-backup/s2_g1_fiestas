@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
@@ -22,7 +17,7 @@ public class BlogEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToOne
-    private UsuarioEntity usuario;
+    private ClienteEntity cliente;
 
 
     @PodamExclude
@@ -68,12 +63,12 @@ public class BlogEntity extends BaseEntity implements Serializable {
         this.likes = likes;
     }
 
-    public UsuarioEntity getUsuario() {
-        return usuario;
+    public ClienteEntity getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(UsuarioEntity usuario) {
-        this.usuario = usuario;
+    public void setCliente(ClienteEntity cliente) {
+        this.cliente = cliente;
     }
 
     public EventoEntity getEvento() {

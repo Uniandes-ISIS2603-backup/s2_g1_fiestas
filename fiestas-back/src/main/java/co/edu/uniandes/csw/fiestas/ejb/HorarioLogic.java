@@ -3,6 +3,7 @@ package co.edu.uniandes.csw.fiestas.ejb;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.HorarioPersistence;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,8 +38,22 @@ public class HorarioLogic
 
     public HorarioEntity createHorario(HorarioEntity entity)throws BusinessLogicException {
         LOGGER.info("Inicia proceso de creación del horario con id={0}");
+        
         if(persistence.find(entity.getId())!= null)
-            throw new BusinessLogicException("El horario con el id\""+ entity.getId()+"\" ya existe");
+        {    throw new BusinessLogicException("El horario con el id\""+ entity.getId()+"\" ya existe");
+        
+        }
+        
+        if(entity.getHoraInicio().after(entity.getHoraFin()))
+        {
+            throw new BusinessLogicException("La hora de fin no puede ser antes de la hora de inicio");
+        }
+        
+        if(entity.getHoraInicio().before(new Date()))
+        {
+            throw new BusinessLogicException("La hora de inicio no puede ser una fecha que ya ocurrió");
+        }
+        
         
         LOGGER.info("Termina proceso de creación del horario");
         return persistence.create(entity);

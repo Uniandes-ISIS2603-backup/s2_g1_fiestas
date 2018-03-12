@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -74,6 +75,7 @@ public class ProveedorLogic
      *
      * @param entity Objeto de ProveedorEntity con los datos nuevos
      * @return Objeto de ProveedorEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public ProveedorEntity createProveedor(ProveedorEntity entity) throws BusinessLogicException 
     {
@@ -110,6 +112,7 @@ public class ProveedorLogic
      *
      * @param entity Instancia de ProveedorEntity con los nuevos datos.
      * @return Instancia de ProveedorEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public ProveedorEntity updateProveedor(ProveedorEntity entity) throws BusinessLogicException 
     {
@@ -147,6 +150,7 @@ public class ProveedorLogic
      * Elimina una instancia de Proveedor de la base de datos.
      *
      * @param id Identificador de la instancia a eliminar.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public void deleteProveedor(Long id) throws BusinessLogicException 
     {
@@ -165,6 +169,7 @@ public class ProveedorLogic
      * @param proveedorId Identificador de la instancia de Proveedor
      * @return Colección de instancias de ServicioEntity asociadas a la
      * instancia de Proveedor
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public List<ServicioEntity> getServicios(Long proveedorId) throws BusinessLogicException 
     {
@@ -407,6 +412,7 @@ public class ProveedorLogic
      *
      * @param proveedorId El ID del proveedor buscada
      * @return La lista de contratos del proveedor
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public List<ContratoEntity> getContratos(Long proveedorId) throws BusinessLogicException 
     {
@@ -443,5 +449,127 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("El contrato no está asociado al proveedor");
         }        
+    }
+
+    /**
+     * Agregar un valoracion al proveedor
+     *
+     * @param valoracionId El id valoracion a guardar
+     * @param proveedorId El id del proveedor en la cual se va a guardar el
+     * valoracion.
+     * @return El valoracion que fue agregado al proveedor.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no existe la valoracion
+     */
+    public ValoracionEntity addValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar una valoración al proveedor con id = {0}", proveedorId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para agregar una valoración");
+        }
+        ProveedorEntity ent = getProveedor(proveedorId);
+        ValoracionEntity entV = valoracionLogic.getValoracion(valoracionId);
+        int index = ent.getValoraciones().indexOf(entV);
+        if (index >= 0 && entV.equals(ent.getValoraciones().get(index))) 
+        {
+            throw new BusinessLogicException("Ya existe dicha valoración en ese proveedor");
+        } 
+        else 
+        {
+            ent.agregarValoracion(entV); 
+            updateProveedor(ent);
+            return entV;            
+        }
+    }
+
+    /**
+     * Borrar un valoracion de un proveedor
+     *
+     * @param valoracionId El valoracion que se desea borrar del proveedor.
+     * @param proveedorId El proveedor de la cual se desea eliminar.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no existe la valoracion
+     */
+    public void removeValoracion(Long valoracionId, Long proveedorId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar una valoración del proveedor con id = {0}", proveedorId);
+        ProveedorEntity ent = getProveedor(proveedorId);
+        if(ent == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para remover valoración");
+        }
+        ValoracionEntity entV = valoracionLogic.getValoracion(valoracionId);
+        int index = ent.getValoraciones().indexOf(entV);
+        if (index >= 0) 
+        {
+            ent.removerValoracion(entV); 
+            updateProveedor(ent);
+        } 
+        else 
+        {
+            throw new BusinessLogicException("El proveedor no tiene ese contrato");
+        }
+    }
+
+    /**
+     * Remplazar valoraciones de un proveedor
+     *
+     * @param valoraciones Lista de valoraciones que serán los del proveedor.
+     * @param proveedorId El id del proveedor que se quiere actualizar.
+     * @return La lista de valoraciones actualizada.
+     */
+    public List<ValoracionEntity> replaceValoraciones(Long proveedorId, List<ValoracionEntity> valoraciones) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para reemplazar valoraciones");
+        }
+        ProveedorEntity proveedor = getProveedor(proveedorId);        
+        proveedor.setValoraciones(valoraciones);
+        updateProveedor(proveedor);
+        return valoraciones;
+    }
+
+    /**
+     * Retorna todos los valoraciones asociados a un proveedor
+     *
+     * @param proveedorId El ID del proveedor buscada
+     * @return La lista de valoraciones del proveedor
+     */
+    public List<ValoracionEntity> getValoraciones(Long proveedorId) throws BusinessLogicException 
+    {
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar valoraciones");
+        }
+        return getProveedor(proveedorId).getValoraciones();
+    }
+
+    /**
+     * Retorna un valoracion asociado a un proveedor
+     *
+     * @param proveedorId El id del proveedor a buscar.
+     * @param valoracionId El id del valoracion a buscar
+     * @return El valoracion encontrado dentro del proveedor.
+     * @throws BusinessLogicException Si el valoracion no se encuentra en el
+     * proveedor
+     */
+    public ValoracionEntity getValoracion(Long proveedorId, Long valoracionId) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar un valoracion con id = {0}", valoracionId);
+        if(getProveedor(proveedorId) == null)
+        {
+            throw new BusinessLogicException("No existe un proveedor con dicho id para obtener valoracion");
+        }
+        List<ValoracionEntity> list = getProveedor(proveedorId).getValoraciones();
+        ValoracionEntity valoracionEntity = new ValoracionEntity();
+        valoracionEntity.setId(valoracionId);
+        int index = list.indexOf(valoracionEntity);
+        if (index >= 0 && valoracionEntity.equals(list.get(index))) {
+            return list.get(index);
+        } else {
+            throw new BusinessLogicException("No existe dicha valoración en ese proveedor");
+        }
     }   
 }

@@ -73,16 +73,21 @@ public class UsuarioDetailDTO extends UsuarioDTO
     {
         
     }
-
+    /**
+     * Constructor que transforma una instancia UsuarioEntity a UsuarioDetailDTO.
+     * @param entity UsuarioEntity que dará los atributos necesarios al DTO.
+     */
     public UsuarioDetailDTO(UsuarioEntity entity) 
     {
         super();
-        for(BlogEntity u : entity.getBlogs())
+        /**for(BlogEntity u : entity.getBlogs())
         {
             BlogDTO b= new BlogDTO(u);
             blogs.add(b);
         }
+        */
     }
+
     
     /**
      * @return La lista de blogs del usuario.
