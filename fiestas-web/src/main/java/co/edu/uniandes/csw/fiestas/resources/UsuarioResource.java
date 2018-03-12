@@ -101,7 +101,7 @@ public class UsuarioResource {
         return new UsuarioDetailDTO(e);
     }
     
-        /**
+    /**
      * <h1>POST /usuarios : Crear un usuario.</h1>
      * 
      * <pre>Cuerpo de petición: JSON {@link UsuarioDetailDTO}.
@@ -130,6 +130,24 @@ public class UsuarioResource {
         return usuario;
     }
     
+    /**
+     * <h1>PUT /usuarios/{id} : Actualizar usuario por id.</h1>
+     *
+     * <pre>Busca el usuario con el id asociado recibido en la URL, actualiza los paramteros
+     * y lo devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el usuario correspondiente al id, despues de actualizado.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un usuario con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador del usuario que se esta buscando. Este debe ser
+     * una cadena de dígitos.    
+     */
     @PUT
     @Path("{id: \\d+}")
     public UsuarioDetailDTO updateUsuario(@PathParam("id")Long id) throws BusinessLogicException {
@@ -140,6 +158,23 @@ public class UsuarioResource {
         return new UsuarioDetailDTO(ent);
     }
     
+    /**
+     * <h1>DELETE /usuarios/{id} : Elimina un usuario por id.</h1>
+     *
+     * <pre>Busca el usuario con el id asociado recibido en la URL y lo elimina
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK El usuario fue eliminado exitosamente
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un usuario con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador del usuario que se esta buscando. Este debe ser
+     * una cadena de dígitos.
+     */
     @DELETE
     @Path("{id:\\d+}")
     public void deleteUsuario(@PathParam("id")Long id) throws BusinessLogicException{
@@ -148,6 +183,23 @@ public class UsuarioResource {
              throw new BusinessLogicException("El usuario no existe.");
         logic.deleteUsuario(id);
     }
+    
+    /**
+     * <h1>GET /{usuarioId}/blogs/ : Obtener todos los blogs de un
+     * usuario.</h1>
+     *
+     * <pre>Busca y devuelve todos los blogs que existen en el usuario.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve todos los blogs del usuario.</code>
+     * </pre>
+     *
+     * @param usuarioId Identificador del usuario que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSONArray {@link BlogDetailDTO} - Los blogs encontrados
+     * en el usuario. Si no hay ninguno retorna una lista vacía.
+     */
     
     @GET
     @Path("{id:\\d+}/blogs")
@@ -158,6 +210,23 @@ public class UsuarioResource {
         return blogListEntity2DTO(logic.getBlogs(id));
     }
     
+    /**
+     * <h1>GET /{usuarioId}/blogs/{blogId} : Obtener un blog de un
+     * usuario.</h1>
+     *
+     * <pre>Busca y devuelve un blog con id en el usuario.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve un blog con id del usuario.</code>
+     * </pre>
+     *
+     * @param id Identificador del usuario que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @param blogId Identificador del blog que se está buscando.
+     * @return JSON {@link BlogDetailDTO} - En blog encontrado
+     * en el usuario.
+     */
     @GET
     @Path("{id:\\d+}/blogs/{blogId:\\d+}")
     public BlogDetailDTO getUsuarioBlog(@PathParam("id")Long id, @PathParam("blogId")Long blogId) throws BusinessLogicException

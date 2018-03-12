@@ -7,7 +7,9 @@ delete from ProductoEntity;
 delete from UsuarioEntity;
 delete from ServicioEntity;
 delete from TematicaEntity;
-Delete from ValoracionEntity;
+delete from ValoracionEntity;
+delete from ProveedorEntity;
+delete from ClienteEntity;
 
 
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10001,0,'En Revision','PSE',100000);
@@ -26,3 +28,11 @@ insert into UsuarioEntity(id, nombre, documento, telefono, correo, direccion, lo
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
+
+insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña, penalizado) values(10011, 'Jesús Pradilla', 1012345678, 3212121212, 'j.pradilla@hotmail.com', 'cll.2 #20-32','j.pradilla','hola123', false);
+insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña, penalizado) values(10012, 'Diana Fernández Galán', 1012345679, 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','df.galan','hola1234', false);
+insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña, penalizado) values(10013, 'Andrés Felip Segura Hernández', 1012345670, 3212121214, 'andresillo@hotmail.com', 'cll.2 #20-34','af.segura10','hola', true);
+
+insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10011, 'Nicolás Hernández', 1012345681, 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
+insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10012, 'Sofía Arias', 1012345682, 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
+insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10013, 'Cristian Amaya', 1012345683, 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
