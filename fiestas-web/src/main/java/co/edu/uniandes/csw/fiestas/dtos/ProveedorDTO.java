@@ -202,6 +202,10 @@ public class ProveedorDTO
         this.penalizado = penalizado;
     }
     
+    /**
+     * Convierte un ProveedorEntity en un ProveedorDTO
+     * @param e ClienteEntity instancia
+     */
     public ProveedorDTO(ProveedorEntity e)
     {        
         if (e != null)
@@ -217,7 +221,10 @@ public class ProveedorDTO
         }
     }
     
-    
+    /**
+     * Método que transforma la clase ProveedorDTO a ProveedorEntity.
+     * @return ProveedorEntity instancia.
+     */
     public ProveedorEntity toEntity()
     {
         ProveedorEntity e = new ProveedorEntity(); 
