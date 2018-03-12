@@ -441,5 +441,4 @@ public class ProveedorLogic
             throw new BusinessLogicException("El contrato no está asociado al proveedor");
         }        
     }
-
 }

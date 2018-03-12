@@ -208,7 +208,10 @@ public class ValoracionLogic {
         return proveedorLogic.getProveedor(proveedorId).getValoraciones();
     }
 
-    /**
+
+    
+
+    /*
      * Retorna un valoracion asociado a un proveedor
      *
      * @param proveedorId El id del proveedor a buscar.
@@ -234,4 +237,5 @@ public class ValoracionLogic {
             throw new BusinessLogicException("No existe dicha valoración en ese proveedor");
         }
     }   
+
 }
