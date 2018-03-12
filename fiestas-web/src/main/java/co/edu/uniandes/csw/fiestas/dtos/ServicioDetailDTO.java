@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
-import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,10 @@ import java.util.List;
  * @author ls.arias
  */
 public class ServicioDetailDTO extends ServicioDTO {
-     /**
+    
+    private List<ProveedorDTO> proveedores;
+    
+    /**
      * Constructor por defecto
      */
     public ServicioDetailDTO() 
@@ -77,7 +79,6 @@ public class ServicioDetailDTO extends ServicioDTO {
     {
         super(e);
     }
-     private List<ProveedorDTO> proveedores;
      
     /**
      * @return La lista de proveedores del servicio
@@ -95,14 +96,15 @@ public class ServicioDetailDTO extends ServicioDTO {
         this.proveedores = proveedores;
     }
     
-       /**
+    /**
      * Convertir DTO a Entity
      *
      * @return Un Entity con los valores del DTO
      */
+    @Override
     public ServicioEntity toEntity() {
         ServicioEntity entity = super.toEntity();
-        List<ProveedorEntity> listProveedores = new ArrayList<ProveedorEntity>();
+        List<ProveedorEntity> listProveedores = new ArrayList<>();
         for(ProveedorDTO dto : getProveedores())
         {
             ProveedorEntity ent = dto.toEntity();

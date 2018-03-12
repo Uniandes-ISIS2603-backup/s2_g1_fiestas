@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
-import java.util.logging.Logger;
 
 /**
  * ValoracionDTO Objeto tranferencia para la valoracion. Los DTO contienen las
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
  *   {
  *      "id": number,
  *      "comentario": string,
- *      "calificacion": number,
+ *      "calificacion": number
  *   }
  * </pre>
  * Por ejemplo, una valoracion se representa asi:<br>
@@ -28,7 +27,7 @@ import java.util.logging.Logger;
  *   {
  *      "id": 542,
  *      "comentario": "Me encanta el servicio de fiestas.",
- *      "calificacion": "4.5",
+ *      "calificacion": "4.5"
  *   }
  *
  * </pre>

@@ -1,7 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
-import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -12,12 +11,18 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,8 +52,7 @@ public class ServicioLogicTest {
     private List<ProveedorEntity> proveedorData = new ArrayList();
     
     private List<ValoracionEntity> valoracionData = new ArrayList();
-    
-    private List<ProductoEntity> productoData = new ArrayList();
+
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -88,10 +92,9 @@ public class ServicioLogicTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
+        em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ValoracionEntity").executeUpdate();
-        em.createQuery("delete from ProductoEntity").executeUpdate();
     }
 
     /**
@@ -101,32 +104,35 @@ public class ServicioLogicTest {
      *
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++) {
+       List<ProveedorEntity> listaProveedor = new ArrayList<ProveedorEntity>();
+       for (int i = 0; i < 3; i++) {
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
             em.persist(proveedor);
             proveedorData.add(proveedor);
+            listaProveedor.add(proveedor);
         }
-        
-        for (int i = 0; i < 3; i++) {
-            ProductoEntity producto = factory.manufacturePojo(ProductoEntity.class);
-            em.persist(producto);
-            productoData.add(producto);
-        }
-        
-        for (int i = 0; i < 3; i++) {
+       List<ValoracionEntity> listaValoracion = new ArrayList<ValoracionEntity>();
+       for (int i = 0; i < 3; i++) {
             ValoracionEntity valoracion = factory.manufacturePojo(ValoracionEntity.class);
             em.persist(valoracion);
             valoracionData.add(valoracion);
+            listaValoracion.add(valoracion);
         }
-        for (int i = 0; i < 3; i++) {
+       
+        for (int i = 0; i < 3; i++) 
+        {
             ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
-            entity.setProveedores(proveedorData);
-            entity.setProductos(productoData);
-            entity.setValoraciones(valoracionData);
-
+            entity.setProveedores(listaProveedor);
+            entity.setValoraciones(listaValoracion);
             em.persist(entity);
             data.add(entity);
-        }
+            
+            if (i == 0) {
+                proveedorData.get(i).setServicios(data);
+            }
+            
+        } 
+        
     }
 
     /**
@@ -232,7 +238,6 @@ public class ServicioLogicTest {
         ProveedorEntity response = servicioLogic.getProveedor(entity.getId(), proveedorEntity.getId());
 
         Assert.assertEquals(proveedorEntity.getId(), response.getId());
-        Assert.assertEquals(proveedorEntity.getId(), response.getId());
         Assert.assertEquals(proveedorEntity.getNombre(), response.getNombre());
         Assert.assertEquals(proveedorEntity.getLogin(), response.getLogin());
         Assert.assertEquals(proveedorEntity.getDocumento(), response.getDocumento());
@@ -254,25 +259,80 @@ public class ServicioLogicTest {
      * Prueba para asociar un Proveedor existente a un Servicio
      *
      * 
+     * @throws javax.transaction.NotSupportedException
+     * @throws javax.transaction.SystemException
+     * @throws javax.transaction.RollbackException
+     * @throws javax.transaction.HeuristicMixedException
+     * @throws javax.transaction.HeuristicRollbackException
      */
-    @Test
-    public void addProveedorTest() {
-        ServicioEntity entity = data.get(0);
-        ProveedorEntity proveedorEntity = proveedorData.get(1);
-        ProveedorEntity response = servicioLogic.addProveedor(proveedorEntity.getId(), entity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(proveedorEntity.getId(), response.getId());
+   @Test
+    public void addProveedorTest() throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+        ServicioEntity servicio = data.get(0);
+        ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
+        proveedor.setServicios(data);
+        utx.begin();
+        em.persist(proveedor);
+        utx.commit();
+        servicioLogic.addProveedor(servicio.getId(), proveedor.getId());
+       
     }
     
     /**
-     * Prueba para remplazar las instancias de Proveedores asociadas a una instancia
-     * de Servicio
-     *
+     * 
      * 
      */
     @Test
-    public void replaceProveedoresTest() {
+    public void replaceProveedoresFailTest(){
+        ServicioEntity servicio = factory.manufacturePojo(ServicioEntity.class);
+        try{
+            servicioLogic.replaceProveedores(servicio.getId(), null);
+            fail("El servicio no existe en persistence.");
+        }
+        catch(BusinessLogicException e)
+        {
+            
+        }
+       
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void replaceProveedoresFailTest1(){
+        ServicioEntity servicio = data.get(0);
+        try{
+            servicioLogic.replaceProveedores(servicio.getId(), null);
+            fail("La lista es nula.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    /**
+     * 
+     */
+    @Test
+    public void replaceProveedoresFailTest2(){
+        ServicioEntity servicio = data.get(0);
+        List<ProveedorEntity> lista = new ArrayList<>();
+        try{
+            servicioLogic.replaceProveedores(servicio.getId(), lista);
+            fail("La lista es vacía.");
+        }
+        catch (BusinessLogicException e){
+        }
+       
+    }
+    
+    
+    /**
+     * 
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
+     */
+    @Test
+    public void replaceProveedoresTest() throws BusinessLogicException{
+
         ServicioEntity entity = data.get(0);
         List<ProveedorEntity> list = proveedorData.subList(1, 3);
         servicioLogic.replaceProveedores(entity.getId(), list);
@@ -281,10 +341,10 @@ public class ServicioLogicTest {
         Assert.assertFalse(entity.getProveedores().contains(proveedorData.get(0)));
         Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(1)));
         Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(2)));
-    }
-    
+       
+    }    
     /**
-     * Prueba para desasociar un Proveedor existente de un Editorial existente
+     * Prueba para desasociar un Proveedor existente de un Servicio existente
      *
      * 
      */
@@ -320,133 +380,8 @@ public class ServicioLogicTest {
     @Test
     public void getValoracionesTest() throws BusinessLogicException {
         List<ValoracionEntity> list = servicioLogic.getValoraciones(data.get(0).getId());
-        Assert.assertEquals(1, list.size());
-    }
-    
-    /**
-     * Prueba para asociar un Valoracion existente a un Servicio
-     *
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void addValoracionTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ValoracionEntity valoracionEntity = valoracionData.get(1);
-        ValoracionEntity response = servicioLogic.addValoracion(valoracionEntity.getId(), entity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(valoracionEntity.getId(), response.getId());
-    }
-    
-    /**
-     * Prueba para remplazar las instancias de Valoraciones asociadas a una instancia
-     * de Servicio
-     *
-     * 
-     */
-    @Test
-    public void replaceValoracionesTest() {
-        ServicioEntity entity = data.get(0);
-        List<ValoracionEntity> list = valoracionData.subList(1, 3);
-        servicioLogic.replaceValoraciones(entity.getId(), list);
-
-        entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertFalse(entity.getValoraciones().contains(valoracionData.get(0)));
-        Assert.assertTrue(entity.getValoraciones().contains(valoracionData.get(1)));
-        Assert.assertTrue(entity.getValoraciones().contains(valoracionData.get(2)));
-    }
-    
-    /**
-     * Prueba para desasociar un Valoracion existente de un Editorial existente
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void removeValoracionesTest() throws BusinessLogicException {
-        servicioLogic.removeValoracion(data.get(0).getId(), valoracionData.get(0).getId());
-        ValoracionEntity response = servicioLogic.getValoracion(data.get(0).getId(), valoracionData.get(0).getId());
+        Assert.assertEquals(3, list.size());
     }
     
     
-    
-    
-    
-    /**
-     * Prueba para obtener una instancia de Producto asociada a una instancia
-     * Servicio
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void getProductoTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ProductoEntity productoEntity = productoData.get(0);
-        ProductoEntity response = servicioLogic.getProducto(entity.getId(), productoEntity.getId());
-
-        Assert.assertEquals(productoEntity.getId(), response.getId());
-        Assert.assertEquals(productoEntity.getNombre(), response.getNombre());
-        Assert.assertEquals(productoEntity.getDescripcion(), response.getDescripcion());
-        Assert.assertEquals(productoEntity.getIncluye(), response.getIncluye());
-        Assert.assertEquals(productoEntity.getPrecio(), response.getPrecio());
-        Assert.assertEquals(productoEntity.getPersonal(), response.getPersonal());
-        Assert.assertEquals(productoEntity.getServicio(), response.getServicio());
-    }
-    
-    /**
-     * Prueba para obtener una colección de instancias de Productos asociadas a una
-     * instancia Servicio
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void getProductosTest() throws BusinessLogicException {
-        List<ProductoEntity> list = servicioLogic.getProductos(data.get(0).getId());
-        Assert.assertEquals(1, list.size());
-    }
-    
-    /**
-     * Prueba para asociar un Producto existente a un Servicio
-     *
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void addProductoTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ProductoEntity productoEntity = productoData.get(1);
-        ProductoEntity response = servicioLogic.addProducto(productoEntity.getId(), entity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(productoEntity.getId(), response.getId());
-    }
-    
-    /**
-     * Prueba para remplazar las instancias de Producto asociadas a una instancia
-     * de Servicio
-     *
-     * 
-     */
-    @Test
-    public void replaceProductosTest() {
-        ServicioEntity entity = data.get(0);
-        List<ProductoEntity> list = productoData.subList(1, 3);
-        servicioLogic.replaceProductos(entity.getId(), list);
-
-        entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertFalse(entity.getProductos().contains(productoData.get(0)));
-        Assert.assertTrue(entity.getProductos().contains(productoData.get(1)));
-        Assert.assertTrue(entity.getProductos().contains(productoData.get(2)));
-    }
-    
-    /**
-     * Prueba para desasociar un Producto existente de un Editorial existente
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void removeProductoesTest() throws BusinessLogicException {
-        servicioLogic.removeProducto(data.get(0).getId(), productoData.get(0).getId());
-        ProductoEntity response = servicioLogic.getProducto(data.get(0).getId(), productoData.get(0).getId());
-    }
 }
