@@ -216,7 +216,7 @@ public class ServicioLogic {
     public ValoracionEntity getValoracion(Long servicioId, Long valoracionId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar la valoracion asociada al servicio");
         List<ValoracionEntity> valoraciones = getServicio(servicioId).getValoraciones();
-        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
+        ValoracionEntity valoracion = valoracionLogic.getValoracion(servicioId, valoracionId);
         int index = valoraciones.indexOf(valoracion);
         if (index >= 0) {
             return valoraciones.get(index);
