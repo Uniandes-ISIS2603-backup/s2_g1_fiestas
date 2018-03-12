@@ -332,7 +332,8 @@ public class ClienteLogic
         return blogs;
     }
 
-    public void removeBlog(Long blogsId, Long clientesId) throws BusinessLogicException {
+    public void removeBlog(Long blogsId, Long clientesId) throws BusinessLogicException 
+    {
         ClienteEntity cliente = getCliente(clientesId);
         BlogEntity blog = blogLogic.getBlog(blogsId);
         if(blog==null)
@@ -342,7 +343,5 @@ public class ClienteLogic
         cliente.getBlogs().remove(blog);
         updateCliente(cliente);
         blogLogic.deleteBlog(blogsId);
-    }
-
-    
+    }   
 }
