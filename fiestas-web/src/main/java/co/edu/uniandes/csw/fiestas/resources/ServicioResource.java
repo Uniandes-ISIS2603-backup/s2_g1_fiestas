@@ -341,7 +341,7 @@ public class ServicioResource {
      * @throws BusinessLogicException
      */    
      @GET
-    @Path("{id:\\d+}/proveedores")
+    @Path("{id:\\d+}/valoraciones")
     public List<ValoracionDetailDTO> getValoracionesServicio(@PathParam("id")Long id) throws BusinessLogicException{
         ServicioEntity ent = logic.getServicio(id);
         if(ent == null)

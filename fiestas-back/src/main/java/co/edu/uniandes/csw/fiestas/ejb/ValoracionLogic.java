@@ -80,6 +80,7 @@ public class ValoracionLogic {
             throw new BusinessLogicException("La calificación debe estar entre 1.0 y 5.0");
         }
         ServicioEntity servicio = servicioLogic.getServicio(servicioId);
+        servicio.getValoraciones().add(entity);
         entity.setServicio(servicio);
         return persistence.create(entity);
     }

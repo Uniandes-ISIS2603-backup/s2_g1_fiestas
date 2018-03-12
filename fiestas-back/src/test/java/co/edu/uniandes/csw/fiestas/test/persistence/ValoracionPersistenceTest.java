@@ -99,11 +99,11 @@ public class ValoracionPersistenceTest {
         }
         for (int i = 0; i < 3; i++) {
             ValoracionEntity entity = factory.manufacturePojo(ValoracionEntity.class);
-            if (i == 0) {
-                entity.setServicio(dataServicio.get(0));
-            }
             em.persist(entity);
             data.add(entity);
+            if(i==0){
+                dataServicio.get(0).getValoraciones().add(entity);
+            }
         }
     }
 
