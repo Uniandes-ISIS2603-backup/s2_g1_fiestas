@@ -61,8 +61,8 @@ public class ValoracionResource {
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando no se encuentra el servicio.
      */
     @GET
-    public List<ValoracionDTO> getValoracions(@PathParam("idServicio") Long idServicio) throws BusinessLogicException {
-        return listEntity2DTO(valoracionLogic.getValoraciones(idServicio));
+    public List<ValoracionDTO> getValoracionesServicio(@PathParam("idServicio") Long idServicio) throws BusinessLogicException {
+        return listEntity2DTO(valoracionLogic.getValoracionesServicio(idServicio));
     }
 
     /**
@@ -85,8 +85,8 @@ public class ValoracionResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public ValoracionDTO getValoracion(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id) throws BusinessLogicException {
-        ValoracionEntity entity = valoracionLogic.getValoracion(idServicio, id);
+    public ValoracionDTO getValoracionServicio(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id) throws BusinessLogicException {
+        ValoracionEntity entity = valoracionLogic.getValoracionServicio(idServicio, id);
         if (entity == null) {
             throw new WebApplicationException("El recurso /servicios/" + idServicio + "/valoraciones/" + id + " no existe.", 404);
         }
@@ -116,8 +116,8 @@ public class ValoracionResource {
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la valoracion.
      */
     @POST
-    public ValoracionDTO createValoracion(@PathParam("idServicio") Long idServicio, ValoracionDTO valoracion) throws BusinessLogicException {
-        return new ValoracionDTO(valoracionLogic.createValoracion(idServicio, valoracion.toEntity()));
+    public ValoracionDTO createValoracionServicio(@PathParam("idServicio") Long idServicio, ValoracionDTO valoracion) throws BusinessLogicException {
+        return new ValoracionDTO(valoracionLogic.createValoracionServicio(idServicio, valoracion.toEntity()));
     }
 
     /**
@@ -146,11 +146,11 @@ public class ValoracionResource {
     @Path("{id: \\d+}")
     public ValoracionDTO updateValoracion(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id, ValoracionDTO valoracion) throws BusinessLogicException {
         valoracion.setId(id);
-        ValoracionEntity entity = valoracionLogic.getValoracion(idServicio, id);
+        ValoracionEntity entity = valoracionLogic.getValoracionServicio(idServicio, id);
         if (entity == null) {
             throw new WebApplicationException("El recurso /servicios/" + idServicio + "/valoraciones/" + id + " no existe.", 404);
         }
-        return new ValoracionDTO(valoracionLogic.updateValoracion(idServicio, valoracion.toEntity()));
+        return new ValoracionDTO(valoracionLogic.updateValoracionServicio(idServicio, valoracion.toEntity()));
 
     }
 
@@ -172,12 +172,12 @@ public class ValoracionResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteValoracion(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id) throws BusinessLogicException {
-        ValoracionEntity entity = valoracionLogic.getValoracion(idServicio, id);
+    public void deleteValoracionServicio(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id) throws BusinessLogicException {
+        ValoracionEntity entity = valoracionLogic.getValoracionServicio(idServicio, id);
         if (entity == null) {
             throw new WebApplicationException("El recurso /servicios/" + idServicio + "/valoraciones/" + id + " no existe.", 404);
         }
-        valoracionLogic.deleteValoracion(idServicio, id);
+        valoracionLogic.deleteValoracionServicio(idServicio, id);
     }
 
     private List<ValoracionDTO> listEntity2DTO(List<ValoracionEntity> entityList) {
