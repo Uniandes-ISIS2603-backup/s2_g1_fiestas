@@ -469,7 +469,7 @@ public class ProveedorLogic
             throw new BusinessLogicException("No existe un proveedor con dicho id para agregar una valoración");
         }
         ProveedorEntity ent = getProveedor(proveedorId);
-        ValoracionEntity entV = valoracionLogic.getValoracion(valoracionId);
+        ValoracionEntity entV = valoracionLogic.getValoracionProveedor(proveedorId, valoracionId);
         int index = ent.getValoraciones().indexOf(entV);
         if (index >= 0 && entV.equals(ent.getValoraciones().get(index))) 
         {
@@ -499,7 +499,7 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No existe un proveedor con dicho id para remover valoración");
         }
-        ValoracionEntity entV = valoracionLogic.getValoracion(valoracionId);
+        ValoracionEntity entV = valoracionLogic.getValoracionProveedor(proveedorId, valoracionId);
         int index = ent.getValoraciones().indexOf(entV);
         if (index >= 0) 
         {

@@ -112,4 +112,20 @@ public class ValoracionLogic {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    /**
+     * Obtiene los datos de una instancia de Valoracion a partir de su ID.
+     *
+     * @param proveedorId identificador del proveedor del que se requiere la valoracion
+     * @param valoracionId Identificador de la instancia a consultar
+     * @return Instancia de ValoracionEntity con los datos de la Valoracion
+     * consultada.
+     * @throws BusinessLogicException  - Error de lógica si no existe la valoracion
+     */
+    public ValoracionEntity getValoracionProveedor(Long proveedorId, Long valoracionId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la valoracion con el id dado.");
+        if (persistence.find(proveedorId, valoracionId)==null){
+            throw new BusinessLogicException("La valoración no existe");
+        }
+        return persistence.find(proveedorId, valoracionId);
+    }
 }
