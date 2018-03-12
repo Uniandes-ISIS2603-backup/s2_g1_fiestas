@@ -74,6 +74,7 @@ public class ProveedorLogic
      *
      * @param entity Objeto de ProveedorEntity con los datos nuevos
      * @return Objeto de ProveedorEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public ProveedorEntity createProveedor(ProveedorEntity entity) throws BusinessLogicException 
     {
@@ -110,6 +111,7 @@ public class ProveedorLogic
      *
      * @param entity Instancia de ProveedorEntity con los nuevos datos.
      * @return Instancia de ProveedorEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public ProveedorEntity updateProveedor(ProveedorEntity entity) throws BusinessLogicException 
     {
@@ -147,6 +149,7 @@ public class ProveedorLogic
      * Elimina una instancia de Proveedor de la base de datos.
      *
      * @param id Identificador de la instancia a eliminar.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public void deleteProveedor(Long id) throws BusinessLogicException 
     {
@@ -165,6 +168,7 @@ public class ProveedorLogic
      * @param proveedorId Identificador de la instancia de Proveedor
      * @return Colección de instancias de ServicioEntity asociadas a la
      * instancia de Proveedor
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public List<ServicioEntity> getServicios(Long proveedorId) throws BusinessLogicException 
     {
@@ -407,6 +411,7 @@ public class ProveedorLogic
      *
      * @param proveedorId El ID del proveedor buscada
      * @return La lista de contratos del proveedor
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public List<ContratoEntity> getContratos(Long proveedorId) throws BusinessLogicException 
     {

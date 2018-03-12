@@ -127,8 +127,21 @@ public class BlogResource {
         return new BlogDetailDTO(logic.updateBlog(entity));
     }
     /**
-     * 
-     * @param id 
+     * <h1>DELETE /blogs/{id} : Elimina un blog por id.</h1>
+     *
+     * <pre>Busca el blog con el id asociado recibido en la URL y lo elimina
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK El blog fue eliminado exitosamente
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un blog con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador del blog que se esta buscando. Este debe ser
+     * una cadena de dígitos.
      */
     @DELETE
     @Path("{id:\\d+}")
@@ -156,10 +169,27 @@ public class BlogResource {
     }
     
    /**
-    * 
-    * @param eventoId
-    * @param id 
-    */
+     * <h1>POST /{blogId}/eventos/{eventosId} : Guarda un
+     * evento dentro del blog.</h1>
+     *
+     * <pre> Guarda un evento dentro de un blog con la informacion que
+     * recibe el la URL. Se devuelve el evento que se guarda en el blog.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo evento .
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador del blog que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param eventoId Identificador del evento que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BlogDetailDTO} - El evento guardado en la
+     * blog.
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     */
+    @POST
     public void addEvento(@PathParam("id")Long eventoId, @PathParam("id")Long id) {
         EventoEntity eE=logic.getEventoExistente(eventoId);
         try{
@@ -170,7 +200,24 @@ public class BlogResource {
         }
     }
     
-    
+    /**
+     * <h1>GET /{blogId}/eventos/{eventoId} : Obtener un evento de un
+     * blog.</h1>
+     *
+     * <pre>Busca y devuelve un evento con id en el blog.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve un evento con id del blog.</code>
+     * </pre>
+     *
+     * @param id Identificador del blog que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @param eventoId Identificador del evento que se está buscando.
+     * @return JSON {@link BlogDetailDTO} - En evento encontrado
+     * en el blog.
+     */
+    @GET
      public EventoDTO getEvento(Long idBlog) {
         EventoEntity eE=logic.getEvento(idBlog);
         
