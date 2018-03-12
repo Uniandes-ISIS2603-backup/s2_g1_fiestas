@@ -37,6 +37,15 @@ public class BlogPersistence {
          BlogEntity entity = em.find(BlogEntity.class, id);
         return entity;
     }
+    
+        public List<BlogEntity> findAllC(Long clienteId) {
+        LOGGER.log(Level.INFO, "Consultando Blog cuyo dueño es el cliente con id={0}", clienteId);
+        TypedQuery<BlogEntity> q = em.createQuery("select p from BlogEntity p where (p.cliene.id = :clienteId)", BlogEntity.class);
+        q.setParameter("id", clienteId);
+        List<BlogEntity> bE = q.getResultList();
+        return bE;
+    }
+        
     /**
      * return review;
      * @param name

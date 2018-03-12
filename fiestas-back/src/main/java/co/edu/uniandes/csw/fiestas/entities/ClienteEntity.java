@@ -19,6 +19,10 @@ public class ClienteEntity extends UsuarioEntity
     @PodamExclude
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BlogEntity> blogs = new ArrayList<BlogEntity>();
 
     /**
      * @return eventos
@@ -43,5 +47,21 @@ public class ClienteEntity extends UsuarioEntity
     public void removeEvento(EventoEntity e)
     {
         eventos.remove(e);
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public List<BlogEntity> getBlogs() {
+        return blogs;
+    }
+
+    /**
+     * 
+     * @param blogs 
+     */
+    public void setBlogs(List<BlogEntity> blogs) {
+        this.blogs = blogs;
     }
 }

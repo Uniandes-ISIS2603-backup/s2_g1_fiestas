@@ -17,7 +17,7 @@ public class BlogEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToOne
-    private UsuarioEntity usuario;
+    private ClienteEntity cliente;
 
 
     @PodamExclude
@@ -63,12 +63,12 @@ public class BlogEntity extends BaseEntity implements Serializable {
         this.likes = likes;
     }
 
-    public UsuarioEntity getUsuario() {
-        return usuario;
+    public ClienteEntity getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(UsuarioEntity usuario) {
-        this.usuario = usuario;
+    public void setCliente(ClienteEntity cliente) {
+        this.cliente = cliente;
     }
 
     public EventoEntity getEvento() {
