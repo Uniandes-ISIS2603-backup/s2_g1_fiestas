@@ -308,8 +308,10 @@ public class ClienteLogic
 
     public BlogEntity addBlog(BlogEntity blog, Long clientesId) throws BusinessLogicException {
         ClienteEntity cliente = getCliente(clientesId);
-        BlogEntity blogT = blogLogic.getBlog(blog.getId());
-        if(blog!= null)
+        if(blog== null)
+            throw new BusinessLogicException("No se envió un blog.");
+        BlogEntity blogT = blogLogic.getBlog(blog.getId());        
+        if(blogT== null)
             throw new BusinessLogicException("El blog con ese id ya existe.");
         blog.setCliente(cliente);
         blogLogic.createBlog(blog);
