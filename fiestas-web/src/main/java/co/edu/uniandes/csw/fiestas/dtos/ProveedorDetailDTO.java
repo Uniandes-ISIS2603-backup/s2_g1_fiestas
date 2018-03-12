@@ -121,6 +121,10 @@ public class ProveedorDetailDTO extends ProveedorDTO
         this.contratos = contratos;
     }
     
+    /**
+     * Convierte un ProveedorEntity en un ProveedorDetailDTO
+     * @param entity ProveedorEntity instancia
+     */ 
     public ProveedorDetailDTO(ProveedorEntity entity)
     {
         super(entity); 
@@ -145,6 +149,10 @@ public class ProveedorDetailDTO extends ProveedorDTO
         }
     }
     
+    /**
+     * Método que transforma la clase ProveedorDetailDTO a ProveedorEntity.
+     * @return ProveedorEntity instancia.
+     */
     @Override
     public ProveedorEntity toEntity()
     {
