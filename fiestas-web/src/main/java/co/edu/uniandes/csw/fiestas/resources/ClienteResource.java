@@ -1,10 +1,13 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
 
+import co.edu.uniandes.csw.fiestas.dtos.BlogDTO;
+import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ClienteDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.EventoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ClienteDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ClienteLogic;
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
@@ -413,5 +416,232 @@ public class ClienteResource
             list.add(dto.toEntity());
         }
         return list;
+    }
+    
+    /**
+    * Convierte una lista de BlogEntity a una lista de BlogDTO.
+    *
+    * @param entityList Lista de BlogEntity a convertir.
+    * @return Lista de BlogDTO convertida.
+    *
+    */
+    private List<BlogDTO> blogsListEntity2DTO(List<BlogEntity> blogList) {
+        List<BlogDTO> list = new ArrayList<>();
+        for (BlogEntity entity : blogList) {
+            list.add(new BlogDTO(entity));
+        }
+        return list;
+    }
+    
+    /**
+     * <h1>GET /{clientesId}/blogs/ : Obtener todos los blogs de un cliente.</h1>
+     *
+     * <pre>Busca y devuelve todos los blogs que blogs en el cliente.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve todos los blogs del cliente.</code>
+     * </pre>
+     *
+     * @param clientesId Identificador del cliente que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSONArray {@link BlogDTO} - Los blogs encontrados
+     * en el cliente. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    @Path("{clientesId: \\d+}/blogs")
+    public List<BlogDTO> listBlogs(@PathParam("clientesId") Long clientesId) throws BusinessLogicException
+    {       
+        ClienteEntity cliente = clienteLogic.getCliente(clientesId);
+        if(cliente == null)
+            throw new WebApplicationException("El cliente especificado no existe.", 404);
+        
+        return blogsListEntity2DTO(clienteLogic.getBlogs(clientesId));
+    }
+    
+    /**
+     * <h1>GET /{clientesId}/blogs/{blogId} : Obtener
+     * blog por id del cliente por id.</h1>
+     *
+     * <pre>Busca el blog con el id asociado dentro del cliente con id asociado.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el blog correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un blog con el id dado dentro del cliente.
+     * </code>
+     * </pre>
+     *
+     * @param clientesId Identificador del cliente que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param blogId Identificador del blog que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BlogDTO} - El blog buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra la cliente o el blog.
+     */
+    @GET
+    @Path("{clientesId: \\d+}/blogs/{blogId: \\d+}")
+    public BlogDTO getBlogC(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long blogId)
+    {
+        ClienteEntity cliente = clienteLogic.getCliente(clientesId);
+        if(cliente == null)
+            throw new WebApplicationException("El cliente no existe", 404);
+        
+        try{return new BlogDTO(clienteLogic.getBlogC(blogId, clientesId));}
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+      
+    /**
+     * <h1>GET /blogs/{blogId} : Obtener
+     * blog por id.</h1>
+     *
+     * <pre>Busca el blog con el id .
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el blog correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un blog con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param blogId Identificador del blog que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BlogDTO} - El blog buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra el blog.
+     */
+    @GET
+    @Path("blogs/{blogId: \\d+}")
+    public BlogDTO getBlog(@PathParam("eventosId") Long blogId)
+    {
+        try{return new BlogDTO(clienteLogic.getBlog(blogId));}
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+    
+
+    /**
+     * <h1>POST /{clientesId}/blogs/{blogsId} : Guarda un
+     * blog dentro del cliente.</h1>
+     *
+     * <pre> Guarda un blog dentro de un cliente con la informacion que
+     * recibe el la URL. Se devuelve el blog que se guarda en la cliente.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo blog .
+     * </code>
+     * </pre>
+     *
+     * @param clientesId Identificador del cliente que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param blogDTO El blog que se desea guardar. Este
+     * debe ser la representación de un blog en JSON.
+     * @return JSON {@link BlogDetailDTO} - El blog guardado en la
+     * cliente.
+     */
+    @POST
+    @Path("{clientesId: \\d+}")
+    public BlogDTO addBlog(@PathParam("clientesId") Long clientesId, BlogDTO blog)
+    {        
+        ClienteEntity cliente = clienteLogic.getCliente(clientesId);
+        if (cliente == null)
+            throw new WebApplicationException("El cliente no existe.", 404);
+        try{
+            BlogEntity blogE = blog.toEntity();
+            if(blogE == null)
+                throw new WebApplicationException("El blog no se creó correctamente.", 404);            
+            return new BlogDTO(clienteLogic.addBlog(blogE, clientesId));
+        }
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+    
+        /**
+     * <h1>PUT /{clientesId}/blogs: Edita los blogs de un cliente..</h1>
+     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Cliente
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó los blogs del cliente.
+     * </code>
+     * </pre>
+     *
+     * @param clientesId Identificador del cliente que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param blogs JSONArray {@link BlogDetailDTO} El arreglo de
+     * blogs nuevo para la cliente.
+     * @return JSON {@link EventoDetailDTO} - El arreglo de blogs guardado
+     * en la cliente.
+     */
+    @PUT
+    @Path("{clientesId: \\d+}/blogs")
+    public List<BlogDTO> replaceBlogs(@PathParam("clientesId") Long clientesId, List<BlogDetailDTO> blogs) 
+    {        
+        ClienteEntity cliente = clienteLogic.getCliente(clientesId);
+        if(cliente == null){
+            throw new WebApplicationException("El cliente no existe.", 404);
+        }
+        try
+        {
+            return blogsListEntity2DTO(clienteLogic.replaceBlogs(clientesId, blogsListDTO2Entity(blogs)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+
+    private List<BlogEntity> blogsListDTO2Entity(List<BlogDetailDTO> blogs) {
+        List<BlogEntity> lista = new ArrayList<>();
+        for (BlogDetailDTO blogD : blogs) {
+            BlogEntity ent = blogD.toEntity();
+            lista.add(ent);
+        }
+        return lista;
+    }
+    
+    /**
+     * <h1>DELETE /{clientesId}/blogs/{blogId} : Elimina un
+     * blog dentro del cliente.</h1>
+     *
+     * <pre> Elimina la referencia del blog asociado al ID dentro del cliente
+     * con la informacion que recibe el la URL.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Se eliminó la referencia del blog.
+     * </code>
+     * </pre>
+     *
+     * @param clientesId Identificador del cliente que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param blogsId Identificador del blog que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     */
+    @DELETE
+    @Path("{clientesId: \\d+}/blogs/{blogsId: \\d+}")
+    public void removeBlog(@PathParam("clientesId") Long clientesId, @PathParam("blogsId") Long blogsId) 
+    {
+        if (clienteLogic.getCliente(clientesId)==null)
+            throw new WebApplicationException("El cliente no existe", 404);
+        try
+        {
+            clienteLogic.removeBlog(blogsId, clientesId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+        
     }
 }

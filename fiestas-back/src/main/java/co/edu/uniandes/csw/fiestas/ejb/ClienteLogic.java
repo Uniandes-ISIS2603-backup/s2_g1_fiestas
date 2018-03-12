@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
+
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
@@ -30,6 +32,9 @@ public class ClienteLogic
     //Logic de apoyo para algunas reglas de negocio.
     @Inject
     private UsuarioLogic usuarioLogic;    
+    
+    @Inject
+    private BlogLogic blogLogic;
     
     
     /**
@@ -272,4 +277,72 @@ public class ClienteLogic
             throw new BusinessLogicException("El evento no está asociado al cliente");
         }        
     }   
+
+    /**
+     * 
+     * @param clientesId
+     * @return 
+     */
+    public List<BlogEntity> getBlogs(Long clientesId) {
+       ClienteEntity cliente = getCliente(clientesId);
+       return blogLogic.getBlogs(clientesId);
+    }
+
+    public BlogEntity getBlogC(Long blogId, Long clienteId) throws BusinessLogicException {
+       ClienteEntity cliente = getCliente(clienteId);
+       BlogEntity blog = blogLogic.getBlog(blogId);
+       if(blog.getCliente().getId()!=cliente.getId())
+           throw new BusinessLogicException("El blog a buscar existe, pero el cliente no corresponde");
+       if(blog==null)
+           throw new BusinessLogicException("El blog a buscar no existe.");
+       return blog;
+    }
+    
+    
+    public BlogEntity getBlog(Long blogId) throws BusinessLogicException {
+       BlogEntity blog = blogLogic.getBlog(blogId);
+       if(blog==null)
+           throw new BusinessLogicException("El blog a buscar no existe.");
+       return blog;
+    }
+
+    public BlogEntity addBlog(BlogEntity blog, Long clientesId) throws BusinessLogicException {
+        ClienteEntity cliente = getCliente(clientesId);
+        BlogEntity blogT = blogLogic.getBlog(blog.getId());
+        if(blog!= null)
+            throw new BusinessLogicException("El blog con ese id ya existe.");
+        blog.setCliente(cliente);
+        blogLogic.createBlog(blog);
+        cliente.getBlogs().add(blog);
+        updateCliente(cliente);
+        return blog;
+    }
+
+    public List<BlogEntity> replaceBlogs(Long clientesId, List<BlogEntity> blogs) throws BusinessLogicException {
+        ClienteEntity cliente = getCliente(clientesId);
+        
+        for (BlogEntity blog : blogs) {
+            if(blogLogic.getBlog(blog.getId())!=null)
+                throw new BusinessLogicException("Se quiere añadir blog que ya existe");
+            blog.setCliente(cliente);
+            blogLogic.createBlog(blog);
+        }
+        cliente.setBlogs(blogs);
+        updateCliente(cliente);
+        return blogs;
+    }
+
+    public void removeBlog(Long blogsId, Long clientesId) throws BusinessLogicException {
+        ClienteEntity cliente = getCliente(clientesId);
+        BlogEntity blog = blogLogic.getBlog(blogsId);
+        if(blog==null)
+            throw new BusinessLogicException("No se encuentra el blog especificado.");
+        if(blog.getCliente().getId()!=cliente.getId())
+            throw new BusinessLogicException("No puede eliminarse un blog de otro usuario.");
+        cliente.getBlogs().remove(blog);
+        updateCliente(cliente);
+        blogLogic.deleteBlog(blogsId);
+    }
+
+    
 }

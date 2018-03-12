@@ -4,7 +4,7 @@ import co.edu.uniandes.csw.fiestas.ejb.BlogLogic;
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
-import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.BlogPersistence;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class BlogLogicTest {
 
     private List<BlogEntity> data = new ArrayList<>();
     
-    private List<UsuarioEntity> Udata = new ArrayList<>();
+    private List<ClienteEntity> Udata = new ArrayList<>();
     
     private List<EventoEntity> Edata = new ArrayList<>();
     
@@ -90,8 +90,7 @@ public class BlogLogicTest {
     private void clearData() {
         em.createQuery("delete from BlogEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
-        em.createQuery("delete from UsuarioEntity").executeUpdate();
-        data = new ArrayList<>();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
 
     /**
@@ -102,17 +101,17 @@ public class BlogLogicTest {
 
         for (int i = 0; i < 3; i++) {
             EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
-            UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+            ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
             BlogEntity entity = factory.manufacturePojo(BlogEntity.class); 
-            entity.setUsuario(usuario);
+            entity.setCliente(cliente);
             entity.setEvento(evento);
             em.persist(evento);
             ArrayList lista=new ArrayList<>();
             lista.add(entity);
-            usuario.setBlogs(lista);
-            em.persist(usuario);
+            cliente.setBlogs(lista);
+            em.persist(cliente);
             Edata.add(evento);
-            Udata.add(usuario);
+            Udata.add(cliente);
             em.persist(entity);
             BlogEntity prueba = em.find(BlogEntity.class, entity.getId());
             data.add(entity); 
@@ -135,7 +134,7 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getTitulo(), entidad.getTitulo());
         Assert.assertEquals(newEntity.getCuerpo(), entidad.getCuerpo());
         Assert.assertEquals(newEntity.getLikes(), entidad.getLikes());
-        Assert.assertEquals(newEntity.getUsuario(), entidad.getUsuario());
+        Assert.assertEquals(newEntity.getCliente(), entidad.getCliente());
         Assert.assertEquals(newEntity.getEvento(), entidad.getEvento());
     }
 
@@ -170,7 +169,7 @@ public class BlogLogicTest {
         Assert.assertEquals(blogE.getTitulo(), blogE1.getTitulo());
         Assert.assertEquals(blogE.getCuerpo(), blogE1.getCuerpo());
         Assert.assertEquals(blogE.getLikes(), blogE1.getLikes());
-        Assert.assertEquals(blogE.getUsuario(), blogE1.getUsuario());
+        Assert.assertEquals(blogE.getCliente(), blogE1.getCliente());
         Assert.assertEquals(blogE.getEvento(), blogE1.getEvento());
         
     }
@@ -195,7 +194,7 @@ public class BlogLogicTest {
 
         newEntity.setId(entity.getId());
         newEntity.setEvento(entity.getEvento());
-        newEntity.setUsuario(entity.getUsuario());
+        newEntity.setCliente(entity.getCliente());
 
         
         
@@ -207,7 +206,7 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getTitulo(), resp.getTitulo());
         Assert.assertEquals(newEntity.getCuerpo(), resp.getCuerpo());
         Assert.assertEquals(newEntity.getLikes(), resp.getLikes());
-        Assert.assertEquals(newEntity.getUsuario(), resp.getUsuario());
+        Assert.assertEquals(newEntity.getCliente(), resp.getCliente());
         Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
         
     }

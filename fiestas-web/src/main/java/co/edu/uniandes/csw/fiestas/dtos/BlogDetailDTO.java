@@ -11,9 +11,9 @@ import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 public class BlogDetailDTO extends BlogDTO {
     
     /**
-     * Usuario dueño del blog
+     * Cliente dueño del blog
      */
-    private UsuarioDTO usuario;
+    private ClienteDTO cliente;
     
     /**
      * Evento del que se escribe
@@ -39,7 +39,7 @@ public class BlogDetailDTO extends BlogDTO {
     public BlogDetailDTO (BlogEntity entity) 
     {
         super(entity);
-        usuario = new UsuarioDTO(entity.getUsuario());
+        cliente = new ClienteDTO(entity.getCliente());
         evento = new EventoDTO(entity.getEvento());
        
     }
@@ -54,7 +54,7 @@ public class BlogDetailDTO extends BlogDTO {
     @Override
     public BlogEntity toEntity() {
         BlogEntity entity = super.toEntity();
-        entity.setUsuario(this.usuario.toEntity());
+        entity.setCliente(this.cliente.toEntity());
         entity.setEvento(this.evento.toEntity());
         
         return entity;
@@ -64,16 +64,16 @@ public class BlogDetailDTO extends BlogDTO {
      * Retorna el usuario 
      * @return usuario
      */
-    public UsuarioDTO getUsuario() {
-        return usuario;
+    public ClienteDTO getCliente() {
+        return cliente;
     }
 
     /**
      * Asigna el usuario
-     * @param usuario - Es el usuario dueño del Blog 
+     * @param cliente - Es el usuario dueño del Blog 
      */
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
     }
 
     /**
