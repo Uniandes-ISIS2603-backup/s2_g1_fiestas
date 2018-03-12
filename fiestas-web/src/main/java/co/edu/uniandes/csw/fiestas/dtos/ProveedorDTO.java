@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 
 /**
  * Clase que extiende de {@link UsuarioDTO} para manejar los proveedores del negocio. Para conocer el
@@ -37,9 +38,145 @@ import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
  * </pre>
  * @author nm.hernandez10
  */
-public class ProveedorDTO extends UsuarioDTO
+public class ProveedorDTO
 {    
+    private Long id;
+    private String nombre;
+    private String documento;
+    private Long telefono;
+    private String correo;
+    private String direccion;
+    private String login;
+    private String contraseña;
+    private boolean penalizado;   
     
+    /**
+     * @return El id del usuario.
+     */
+    public Long getId() 
+    {
+        return id;
+    }
+
+    /**
+     * @param id El nuevo id.
+     */
+    public void setId(Long id) 
+    {
+        this.id = id;
+    }
+
+    /**
+     * @return La contraseña del usuario
+     */
+    public String getContraseña()
+    {
+        return contraseña;
+    }
+    
+    /**
+     * @param contraseña La nueva contraseña
+     */
+    public void setContraseña(String contraseña) 
+    {
+        this.contraseña = contraseña;
+    }
+
+    /**
+     * @return El nombre del usuario.
+     */
+    public String getNombre()
+    {
+        return nombre;
+    }
+
+    /**
+     * @param nombre El nuevo nombre.
+     */
+    public void setNombre(String nombre) 
+    {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return El documento del usuario.
+     */
+    public String getDocumento()
+    {
+        return documento;
+    }
+
+    /**
+     * @param documento El nuevo documento.
+     */
+    public void setDocumento(String documento)
+    {
+        this.documento = documento;
+    }
+
+    /**
+     * @return El número de teléfono del usuario.
+     */
+    public Long getTelefono() 
+    {
+        return telefono;
+    }
+
+    /**
+     * @param telefono El nuevo número de teléfono.
+     */
+    public void setTelefono(Long telefono) 
+    {
+        this.telefono = telefono;
+    }
+
+    /**
+     * @return El correo del usuario.
+     */
+    public String getCorreo()
+    {
+        return correo;
+    }
+
+    /**
+     * @param correo El nuevo correo.
+     */
+    public void setCorreo(String correo) 
+    {
+        this.correo = correo;
+    }
+
+    /**
+     * @return La dirección del usuario.
+     */
+    public String getDireccion() 
+    {
+        return direccion;
+    }
+
+    /**
+     * @param direccion La nueva dirección.
+     */
+    public void setDireccion(String direccion) 
+    {
+        this.direccion = direccion;
+    }
+
+    /**
+     * @return El login de teléfono del usuario.
+     */
+    public String getLogin() 
+    {
+        return login;
+    }
+
+    /**
+     * @param login El nuevo login.
+     */
+    public void setLogin(String login) 
+    {
+        this.login = login;
+    }
     /**
      * Constructor por defecto
      */
@@ -47,32 +184,47 @@ public class ProveedorDTO extends UsuarioDTO
     {
         //Constructor vacio
     }      
-    private boolean penalizado;
+   
 
     /**
      * @return the penalizado
      */
-    public boolean isPenalizado() {
+    public boolean isPenalizado() 
+    {
         return penalizado;
     }
 
     /**
      * @param penalizado the penalizado to set
      */
-    public void setPenalizado(boolean penalizado) {
+    public void setPenalizado(boolean penalizado) 
+    {
         this.penalizado = penalizado;
     }
     
-    public ProveedorDTO(ProveedorEntity entity)
-    {
-        super(entity);
-        if (entity != null)
-        {            
-            this.penalizado = entity.isPenalizado();             
+    /**
+     * Convierte un ProveedorEntity en un ProveedorDTO
+     * @param e ClienteEntity instancia
+     */
+    public ProveedorDTO(ProveedorEntity e)
+    {        
+        if (e != null)
+        {    
+            this.contraseña=e.getContraseña();
+            this.correo=e.getCorreo();
+            this.direccion=e.getDireccion();
+            this.documento=e.getDocumento();
+            this.login=e.getLogin();
+            this.nombre=e.getNombre();
+            this.telefono=e.getTelefono();
+            this.penalizado = e.isPenalizado();             
         }
     }
     
-    @Override
+    /**
+     * Método que transforma la clase ProveedorDTO a ProveedorEntity.
+     * @return ProveedorEntity instancia.
+     */
     public ProveedorEntity toEntity()
     {
         ProveedorEntity e = new ProveedorEntity(); 

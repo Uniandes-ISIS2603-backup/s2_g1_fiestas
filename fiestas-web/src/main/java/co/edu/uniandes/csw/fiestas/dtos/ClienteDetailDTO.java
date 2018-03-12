@@ -74,7 +74,10 @@ public class ClienteDetailDTO extends ClienteDTO
         //Constructor vacio
     }
     
-        
+    /**
+     * Convierte un CLienteEntity en un ClienteDetailDTO
+     * @param entity ClienteEntity instancia
+     */    
     public ClienteDetailDTO(ClienteEntity entity)
     {
         super(entity);  
@@ -88,14 +91,25 @@ public class ClienteDetailDTO extends ClienteDTO
         }
     }
 
+    /**
+     * @return Los eventos del cliente.
+     */
     public List<EventoDTO> getEventos() {
         return eventos;
     }
 
-    public void setClienteDTO(List<EventoDTO> eventos) {
+    /**
+     * @param eventos Los nuevos eventos.
+     */
+    public void setClienteDTO(List<EventoDTO> eventos) 
+    {
         this.eventos = eventos;
     }     
     
+    /**
+     * Método que transforma la clase ClienteDetailDTO a ClienteEntity.
+     * @return ClienteEntity instancia.
+     */
     @Override
     public ClienteEntity toEntity()
     {

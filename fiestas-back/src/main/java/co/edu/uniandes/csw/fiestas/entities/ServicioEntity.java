@@ -23,15 +23,15 @@ public class ServicioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ValoracionEntity> valoraciones = new ArrayList<>();
+    private List<ValoracionEntity> valoraciones;
 
     @PodamExclude
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductoEntity> productos = new ArrayList<>();
+    private List<ProductoEntity> productos;
 
     @PodamExclude
-    @ManyToMany
-    private List<ProveedorEntity> proveedores = new ArrayList<>();
+    @ManyToMany(mappedBy = "servicios")
+    private List<ProveedorEntity> proveedores;
 
     private String nombre;
     private String descripcion;
