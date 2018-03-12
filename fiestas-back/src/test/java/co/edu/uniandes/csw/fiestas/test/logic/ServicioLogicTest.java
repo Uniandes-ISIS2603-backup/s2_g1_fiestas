@@ -186,7 +186,7 @@ public class ServicioLogicTest {
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
-        Assert.assertEquals(entity.getValoraciones(), resultEntity.getValoraciones());
+        Assert.assertEquals(entity.getValoraciones().size(), resultEntity.getValoraciones().size());
     }
 
     /**
@@ -353,35 +353,8 @@ public class ServicioLogicTest {
         servicioLogic.removeProveedor(data.get(0).getId(), proveedorData.get(0).getId());
         ProveedorEntity response = servicioLogic.getProveedor(data.get(0).getId(), proveedorData.get(0).getId());
     }
+   
     
-    /**
-     * Prueba para obtener una instancia de Valoracion asociada a una instancia
-     * Servicio
-     * 
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void getValoracionTest() throws BusinessLogicException {
-        ServicioEntity entity = data.get(0);
-        ValoracionEntity valoracionEntity = valoracionData.get(0);
-        ValoracionEntity response = servicioLogic.getValoracion(entity.getId(), valoracionEntity.getId());
 
-        Assert.assertEquals(valoracionEntity.getId(), response.getId());
-        Assert.assertEquals(valoracionEntity.getCalificacion(), response.getCalificacion());
-        Assert.assertEquals(valoracionEntity.getComentario(), response.getComentario());
-    }
-    
-    /**
-     * Prueba para obtener una colección de instancias de Valoraciones asociadas a una
-     * instancia Servicio
-     *
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     */
-    @Test
-    public void getValoracionesTest() throws BusinessLogicException {
-        List<ValoracionEntity> list = servicioLogic.getValoraciones(data.get(0).getId());
-        Assert.assertEquals(3, list.size());
-    }
-    
     
 }
