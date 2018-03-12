@@ -30,3 +30,12 @@ insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, 
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10011, 'Nicolás Hernández', 1012345681, 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10012, 'Sofía Arias', 1012345682, 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10013, 'Cristian Amaya', 1012345683, 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
+
+insert into ServicioEntity(id,descripcion,tipo) values(10019,'Carrito de perros calientes','comida');
+insert into ServicioEntity(id,descripcion,tipo) values(10020,'Show de magia para niños','entretenimiento');
+insert into ServicioEntity(id,descripcion,tipo) values(10021,'Stripers',200000, 'despedida de soltero');
+
+
+insert into ValoracionEntity(id,calificacion,comentario) values(10022,5,'Excelente servicio');
+insert into ValoracionEntity(id,calificacion,comentario) values(10023,4,'Me encanto');
+insert into ValoracionEntity(id,calificacion,comentario) values(10024,2,200000, 'Pesimo servicio');
