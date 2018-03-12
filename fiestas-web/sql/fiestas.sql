@@ -30,3 +30,10 @@ insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, 
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10011, 'Nicolás Hernández', 1012345681, 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10012, 'Sofía Arias', 1012345682, 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10013, 'Cristian Amaya', 1012345683, 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
+
+insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10016,'Servicio de comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros', 'tambien opciones vegetarianas',4);
+insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10017,'Servicio de audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes', 'incluye varios estilos de musica',6);
+insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10018,'Servicio de recreaciones para boda',200000, 'Recreadores para mantener activa a la gente','Incluye lo que necesiten los recreadores', 'tambien opciones para niños',2);
+
+insert into TematicaEntity(id, descripcion) values(10014,'Bodas');
+insert into TematicaEntity(id, descripcion) values(10015,'Fiestas Infantiles');
