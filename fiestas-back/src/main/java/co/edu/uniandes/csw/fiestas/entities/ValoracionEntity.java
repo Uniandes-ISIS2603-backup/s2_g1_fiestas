@@ -15,10 +15,33 @@ public class ValoracionEntity extends BaseEntity implements Serializable{
  
     private String comentario;
     private Integer calificacion;
+    
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ServicioEntity servicio;
-
+    
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private ProveedorEntity proveedor;
+    
+     /**
+     * Obtiene el proveedor correspondiente a la valoracion
+     *
+     * @return proveedor
+     */
+    public ProveedorEntity getProveedor() {
+        return proveedor;
+    }
+    
+    /**
+     * Establece el proveedor de la valoracion
+     *
+     * @param proveedor nuevo de la valoracion
+     */
+    public void setProveedor(ProveedorEntity proveedor) {
+        this.proveedor = proveedor;
+    }
+    
     /**
      * Obtiene el servicio correspondiente a la valoracion
      *

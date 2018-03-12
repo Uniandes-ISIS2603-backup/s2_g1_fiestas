@@ -1,13 +1,7 @@
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
-import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
@@ -35,9 +29,6 @@ public class ProveedorLogic
 
     @Inject
     private ServicioLogic servicioLogic;
-
-    @Inject
-    private ValoracionLogic valoracionLogic;
 
     @Inject
     private ContratoLogic contratoLogic;
@@ -451,6 +442,7 @@ public class ProveedorLogic
         }        
     }
 
+<<<<<<< HEAD
     /**
      * Agregar un valoracion al proveedor
      *
@@ -572,4 +564,6 @@ public class ProveedorLogic
             throw new BusinessLogicException("No existe dicha valoración en ese proveedor");
         }
     }   
+=======
+>>>>>>> origin/master
 }

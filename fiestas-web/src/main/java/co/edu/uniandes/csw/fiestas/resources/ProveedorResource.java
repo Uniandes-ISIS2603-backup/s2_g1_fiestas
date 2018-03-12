@@ -6,6 +6,7 @@ import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -53,6 +54,9 @@ public class ProveedorResource {
     @Inject
     private ProveedorLogic proveedorLogic;
 
+    @Inject
+    private ValoracionLogic valoracionLogic;
+    
     /**
      * Convierte una lista de ProveedorEntity a una lista de ProveedorDetailDTO.
      *
@@ -439,7 +443,7 @@ public class ProveedorResource {
     {
         try
         {
-            return valoracionesListEntity2DTO(proveedorLogic.getValoraciones(proveedorId));
+            return valoracionesListEntity2DTO(valoracionLogic.getValoracionesProveedor(proveedorId));
         }
         catch(BusinessLogicException e)
         {
@@ -472,7 +476,7 @@ public class ProveedorResource {
     {
         try
         {
-            return valoracionesListEntity2DTO(proveedorLogic.replaceValoraciones(proveedorId, valoracionesListDTO2Entity(valoraciones)));
+            return valoracionesListEntity2DTO(valoracionLogic.replaceValoracionesProveedor(proveedorId, valoracionesListDTO2Entity(valoraciones)));
         }
         catch(BusinessLogicException e)
         {
@@ -508,7 +512,7 @@ public class ProveedorResource {
     {
         try
         {
-            return new ValoracionDTO(proveedorLogic.addValoracion(valoracionId, proveedorId));
+            return new ValoracionDTO(valoracionLogic.addValoracionProveedor(valoracionId, proveedorId));
         }
         catch(BusinessLogicException e)
         {
@@ -542,7 +546,7 @@ public class ProveedorResource {
     {
         try
         {
-            proveedorLogic.removeValoracion(valoracionId, proveedorId);
+            valoracionLogic.removeValoracionProveedor(valoracionId, proveedorId);
         }
         catch(BusinessLogicException e)
         {
@@ -580,7 +584,7 @@ public class ProveedorResource {
     {
         try
         {
-            return new ValoracionDTO(proveedorLogic.getValoracion(proveedorId, valoracionId));
+            return new ValoracionDTO(valoracionLogic.getValoracionProveedor(proveedorId, valoracionId));
         }
         catch(BusinessLogicException e)
         {
