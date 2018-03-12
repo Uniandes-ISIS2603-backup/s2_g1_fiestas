@@ -22,11 +22,6 @@ public class UsuarioEntity extends BaseEntity
     private String login;
     private String contraseña;
     
-    @PodamExclude
-    @OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL, orphanRemoval = true)
-    private List<BlogEntity> blogs= new ArrayList<>();
-    
-    
     /**
      * @return nombre del usuario
      */
@@ -55,14 +50,6 @@ public class UsuarioEntity extends BaseEntity
     public void setDocumento(String documento)
     {
         this.documento = documento;
-    }
-
-    public List<BlogEntity> getBlogs() {
-        return blogs;
-    }
-
-    public void setBlogs(List<BlogEntity> blogs) {
-        this.blogs = blogs;
     }
 
     /**
@@ -142,12 +129,5 @@ public class UsuarioEntity extends BaseEntity
         this.contraseña = contraseña;
     }  
 
-    public void agregarBlog(BlogEntity blogEntity) {
-        blogs.add(blogEntity);
-    }
-
-    public void removerBlog(BlogEntity blog) {
-        blogs.remove(blog);
-    }
     
 }

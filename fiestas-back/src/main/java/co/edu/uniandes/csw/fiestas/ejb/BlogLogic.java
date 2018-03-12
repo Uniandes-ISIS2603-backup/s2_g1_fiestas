@@ -33,6 +33,16 @@ public class BlogLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los autores");
         return persistence.findAll();
     }
+    
+    /**
+     * Obtiene la lista de los registros de Blog.
+     *
+     * @return Colección de objetos de BlogEntity.
+     */
+    public List<BlogEntity> getBlogs(Long clienteId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los autores");
+        return persistence.findAllC(clienteId);
+    }
 
     /**
      * Obtiene los datos de una instancia de Blog a partir de su ID.
