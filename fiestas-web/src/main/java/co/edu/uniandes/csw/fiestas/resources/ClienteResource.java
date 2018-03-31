@@ -481,7 +481,7 @@ public class ClienteResource
      * @return JSON {@link BlogDTO} - El blog buscado
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
      * que se genera cuando no se encuentra la cliente o el blog.
-   
+     */
     @GET
     @Path("{clientesId: \\d+}/blogs/{blogId: \\d+}")
     public BlogDTO getBlogC(@PathParam("clientesId") Long clientesId, @PathParam("eventosId") Long blogId)
@@ -494,7 +494,7 @@ public class ClienteResource
         catch(BusinessLogicException e){
             throw new WebApplicationException(e.getMessage(),404);
         }
-    }*/
+    }
       
     /**
      * <h1>GET /blogs/{blogId} : Obtener
