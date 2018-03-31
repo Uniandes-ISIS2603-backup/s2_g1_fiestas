@@ -30,18 +30,14 @@ public class BlogPersistence {
     
     public BlogEntity find(Long id) {
         LOGGER.log(Level.INFO, "Consultando Blog con id={0}", id);
-       // TypedQuery<BlogEntity> q = em.createQuery("select p from BlogEntity p where (p.evento.id = :eventoId) and (p.id = id)", BlogEntity.class);
-        //q.setParameter("id", id);
-        //BlogEntity bE = q.getSingleResult();
-        //return bE;
          BlogEntity entity = em.find(BlogEntity.class, id);
         return entity;
     }
     
         public List<BlogEntity> findAllC(Long clienteId) {
         LOGGER.log(Level.INFO, "Consultando Blog cuyo dueño es el cliente con id={0}", clienteId);
-        TypedQuery<BlogEntity> q = em.createQuery("select p from BlogEntity p where (p.cliene.id = :clienteId)", BlogEntity.class);
-        q.setParameter("id", clienteId);
+        Query q = em.createQuery("SELECT c FROM BLOGENTITY WHERE c.USUARIO_ID = ?1", BlogEntity.class);
+        q.setParameter(1, clienteId);
         List<BlogEntity> bE = q.getResultList();
         return bE;
     }
