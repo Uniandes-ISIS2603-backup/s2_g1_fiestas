@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -12,7 +13,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author nm.hernandez10
  */
 @Entity
-public class ClienteEntity extends BaseEntity
+public class ClienteEntity extends BaseEntity implements Serializable
 {    
     private String nombre;
     private String documento;

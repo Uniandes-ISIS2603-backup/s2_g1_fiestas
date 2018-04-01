@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author nm.hernandez10
  */
 @Entity
-public class ProveedorEntity extends BaseEntity
+public class ProveedorEntity extends BaseEntity implements Serializable
 {
     private boolean penalizado;
     private String nombre;

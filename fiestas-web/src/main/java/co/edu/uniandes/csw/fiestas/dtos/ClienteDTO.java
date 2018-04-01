@@ -187,7 +187,8 @@ public class ClienteDTO
     public ClienteDTO(ClienteEntity e)
     {
         if (e != null)
-        {            
+        {
+            this.id = e.getId();            
             this.contraseña=e.getContraseña();
             this.correo=e.getCorreo();
             this.direccion=e.getDireccion();
@@ -204,7 +205,8 @@ public class ClienteDTO
      */
     public ClienteEntity toEntity()
     {
-        ClienteEntity e = new ClienteEntity(); 
+        ClienteEntity e = new ClienteEntity();
+        e.setId(this.getId());
         e.setContraseña(getContraseña());
         e.setCorreo(getCorreo());
         e.setDireccion(getDireccion());

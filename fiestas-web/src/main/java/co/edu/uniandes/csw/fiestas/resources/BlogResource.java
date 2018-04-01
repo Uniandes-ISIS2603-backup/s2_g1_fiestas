@@ -45,6 +45,24 @@ public class BlogResource {
     private BlogLogic logic;
 
 
+        /**
+     * <h1>GET /blogs : Obtener todos los blogs.</h1>
+     *
+     * <pre>Busca y devuelve todos los blogs que existen en la aplicacion.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve todas los blogs de la aplicacion.</code>
+     * </pre>
+     *
+     * @return JSONArray {@link BlogDetailDTO} - Los blogs encontrados en la
+     * aplicación. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    public List<BlogDetailDTO> getBlogs() 
+    {
+        return listEntity2DTO(logic.getBlogs());
+    }
     /**
      * <h1>GET /blog/ : Obtener blog por id.</h1>
      * 
@@ -82,7 +100,7 @@ public class BlogResource {
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Creó el nuevo Blog.
-     * </code>
+     * </code>S
      * <code style="color: #c7254e; background-color: #f9f2f4;">
      * 412 Precodition Failed: Ya existe el Blog.
      * </code>
