@@ -48,16 +48,6 @@ public class BlogDTO {
      * Número de likes
      */
     private int likes;
-    
-    /**
-     * id del cliente 
-     */
-    private long idCliente;
-    
-    /**
-     * id del evento
-     */
-    private long idEvento;
 
     /**
      * Constructor vacío BlogDTO
@@ -79,9 +69,7 @@ public class BlogDTO {
             this.titulo = entity.getTitulo();
             this.cuerpo = entity.getCuerpo();
             this.likes = entity.getLikes();
-            this.idCliente= entity.getCliente().getId();
-            this.idEvento= entity.getEvento().getId();
-            
+
         }
     }
 
