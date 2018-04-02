@@ -53,9 +53,7 @@ public class ProveedorResource {
 
     @Inject
     private ProveedorLogic proveedorLogic;
-
-    @Inject
-    private ValoracionLogic valoracionLogic;
+    
     
     /**
      * Convierte una lista de ProveedorEntity a una lista de ProveedorDetailDTO.
@@ -443,7 +441,7 @@ public class ProveedorResource {
     {
         try
         {
-            return valoracionesListEntity2DTO(valoracionLogic.getValoracionesProveedor(proveedorId));
+            return valoracionesListEntity2DTO(proveedorLogic.getValoraciones(proveedorId));
         }
         catch(BusinessLogicException e)
         {
@@ -476,7 +474,7 @@ public class ProveedorResource {
     {
         try
         {
-            return valoracionesListEntity2DTO(valoracionLogic.replaceValoracionesProveedor(proveedorId, valoracionesListDTO2Entity(valoraciones)));
+            return valoracionesListEntity2DTO(proveedorLogic.replaceValoraciones(proveedorId, valoracionesListDTO2Entity(valoraciones)));
         }
         catch(BusinessLogicException e)
         {
@@ -512,7 +510,7 @@ public class ProveedorResource {
     {
         try
         {
-            return new ValoracionDTO(valoracionLogic.addValoracionProveedor(valoracionId, proveedorId));
+            return new ValoracionDTO(proveedorLogic.addValoracion(valoracionId, proveedorId));
         }
         catch(BusinessLogicException e)
         {
@@ -546,7 +544,7 @@ public class ProveedorResource {
     {
         try
         {
-            valoracionLogic.removeValoracionProveedor(valoracionId, proveedorId);
+            proveedorLogic.removeValoracion(valoracionId, proveedorId);
         }
         catch(BusinessLogicException e)
         {
@@ -584,7 +582,7 @@ public class ProveedorResource {
     {
         try
         {
-            return new ValoracionDTO(valoracionLogic.getValoracionProveedor(proveedorId, valoracionId));
+            return new ValoracionDTO(proveedorLogic.getValoracion(proveedorId, valoracionId));
         }
         catch(BusinessLogicException e)
         {

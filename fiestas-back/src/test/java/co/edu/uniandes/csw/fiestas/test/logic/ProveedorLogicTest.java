@@ -95,6 +95,7 @@ public class ProveedorLogicTest
         em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
         em.createQuery("delete from ServicioEntity").executeUpdate();
+        em.createQuery("delete from ValoracionEntity").executeUpdate();
     }
 
     /**
@@ -118,12 +119,18 @@ public class ProveedorLogicTest
                     contratosData.add(entityC);
                 }
                 for (int j = 0; j < 3; j++) {
+                    ValoracionEntity entityV = factory.manufacturePojo(ValoracionEntity.class);
+                    em.persist(entityV);
+                    valoracionesData.add(entityV);
+                }
+                for (int j = 0; j < 3; j++) {
                     ServicioEntity entityS = factory.manufacturePojo(ServicioEntity.class);
                     em.persist(entityS);
                     serviciosData.add(entityS);
                 }
                 entity.setPenalizado(false);
                 entity.setContratos(contratosData);
+                entity.setValoraciones(valoracionesData);
                 entity.setServicios(serviciosData);
             } 
             else if (i == 1)
@@ -567,6 +574,219 @@ public class ProveedorLogicTest
         try {
             ContratoEntity obtenida = proveedorLogic.getContrato(data.get(1).getId(), contratosData.get(0).getId());
             fail("Se obtiene un contrato de un proveedor que no tiene dicho contrato");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba para agregar valoraciones a un Proveedor.
+     *
+     * Se agregan los tres valoraciones creados a los tres proveedores creados
+     */
+    @Test
+    public void addValoracionTest() {
+        try {
+            for (int i = 1; i < 3; i++) {
+                proveedorLogic.addValoracion(valoracionesData.get(i).getId(), data.get(i).getId());
+            }
+
+            Assert.assertEquals(valoracionesData.get(1), em.find(ProveedorEntity.class, data.get(1).getId()).getValoraciones().get(0));
+            Assert.assertEquals(valoracionesData.get(2), em.find(ProveedorEntity.class, data.get(2).getId()).getValoraciones().get(0));
+        } catch (BusinessLogicException x) {
+            fail(x.getMessage());
+        }
+    }
+
+    /**
+     * Prueba de falla para agregar valoraciones a un Proveedor 1.
+     *
+     * Falla si se agrega una valoración a un proveedor inexistente
+     */
+    @Test
+    public void addValoracionTestFail1() {
+        try {
+            proveedorLogic.addValoracion(valoracionesData.get(0).getId(), Long(999999));
+            fail("No debe agregarse el valoraciones a un proveedor inexistente");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba de falla para agregar valoraciones a un Proveedor 2.
+     *
+     * Falla si se agrega una valoración a un proveedor que ya tiene ese
+     * valoraciones
+     */
+    @Test
+    public void addValoracionTestFail2() {
+        try {
+            proveedorLogic.addValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
+            proveedorLogic.addValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
+            fail("No debe agregarse una valoración a un proveedor que ya tiene dicha valoración");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba para remover valoraciones a un Proveedor.
+     *
+     * Falla si se remueve el único valoraciones de un proveedor y éste sigue
+     * teniendo valoraciones
+     */
+    @Test
+    public void removeValoracionTest() {
+        try {
+            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
+            Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().size());
+        } catch (BusinessLogicException x) {
+            fail(x.getMessage());
+        }
+    }
+
+    /**
+     * Prueba de falla para remover valoraciones a un Proveedor 1.
+     *
+     * Falla si se remueve una valoración de un proveedor inexistente
+     */
+    @Test
+    public void removeValoracionTestFail1() {
+        try {
+            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), Long(99999999));
+            fail("Se removió una valoración de un proveedor inexistente");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba de falla para remover valoraciones a un Proveedor 2.
+     *
+     * Falla si se remueve una valoración de un proveedor que no lo tiene
+     */
+    @Test
+    public void removeValoracionTestFail2() {
+        try {
+            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(1).getId());
+            fail("Se removió una valoración de un proveedor que no tiene dicha valoración");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba para remover valoraciones a un Proveedor.
+     *
+     * Falla si se reemplaza todos los elementos de la lista y estos son
+     * diferentes a la lista despues de ser reemplazada
+     */
+    @Test
+    public void replaceValoracionesTest() {
+        try {
+            proveedorLogic.replaceValoraciones(data.get(0).getId(), valoracionesData);
+            for (ValoracionEntity ee : valoracionesData) {
+                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().contains(ee)) {
+                    fail("No está alguno de los valoraciones reemplazados en la nueva lista del proveedor");
+                }
+            }
+            passed();
+        } catch (BusinessLogicException x) {
+            fail(x.getMessage());
+        }
+    }
+
+    /**
+     * Prueba de falla para remover valoraciones a un Proveedor.
+     *
+     * Falla si se reemplazan valoraciones de un proveedor inexistente
+     */
+    @Test
+    public void replaceValoracionesTestFail() {
+        try {
+            proveedorLogic.replaceValoraciones(Long(99999999), valoracionesData);
+            fail("Se removió una valoración de un proveedor inexistente");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba obtener valoraciones de un Proveedor.
+     *
+     * Falla si se obtienen valoraciones diferentes a los que se tiene
+     */
+    @Test
+    public void getValoracionesTest() {
+        try {
+            List<ValoracionEntity> obtenida = proveedorLogic.getValoraciones(data.get(0).getId());
+            for (ValoracionEntity ve : obtenida) {
+                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().contains(ve)) {
+                    fail("Alguna valoración que sí debería estar no está persistida para el proveedor en la lista relación");
+                }
+            }
+            passed();
+        } catch (BusinessLogicException x) {
+            fail(x.getMessage());
+        }
+    }
+
+    /**
+     * Prueba de falla para obtener valoraciones de un Proveedor.
+     *
+     * Falla si se obtienen valoraciones de un proveedor inexistente
+     */
+    @Test
+    public void getValoracionesTestFail() {
+        try {
+            List<ValoracionEntity> obtenida = proveedorLogic.getValoraciones(Long(99999999));
+            fail("Se removió una valoración de un proveedor inexistente");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba obtener valoraciones de un Proveedor.
+     *
+     * Falla si se obtiene valoraciones diferente al que se tiene
+     */
+    @Test
+    public void getValoracionTest() {
+        try {
+            ValoracionEntity obtenida = proveedorLogic.getValoracion(data.get(0).getId(), valoracionesData.get(0).getId());
+            Assert.assertEquals(valoracionesData.get(0), obtenida);
+        } catch (BusinessLogicException x) {
+            fail(x.getMessage());
+        }
+    }
+
+    /**
+     * Prueba de falla para obtene valoraciones de un Proveedor 1.
+     *
+     * Falla si se obtiene una valoración de un proveedor inexistente
+     */
+    @Test
+    public void getValoracionTestFail1() {
+        try {
+            ValoracionEntity obtenida = proveedorLogic.getValoracion(Long(9999999), valoracionesData.get(0).getId());
+            fail("Se removió una valoración de un proveedor inexistente");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
+    /**
+     * Prueba de falla para obtener valoraciones de un Proveedor 2.
+     *
+     * Falla si se obtiene una valoración de un proveedor que no lo tiene
+     */
+    @Test
+    public void getValoracionTestFail2() {
+        try {
+            proveedorLogic.getValoracion(data.get(1).getId(), valoracionesData.get(0).getId());
+            fail("Se obtiene una valoración de un proveedor que no tiene dicha valoración");
         } catch (BusinessLogicException x) {
             passed();
         }
