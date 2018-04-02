@@ -24,8 +24,6 @@ public class BlogLogic {
     @Inject
     private EventoLogic logicEvento;
     
-    @Inject
-    private ClienteLogic clienteEvento;
     /**
      * Obtiene la lista de los registros de Blog.
      *

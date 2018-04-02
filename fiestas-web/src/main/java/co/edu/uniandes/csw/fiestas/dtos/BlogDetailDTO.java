@@ -39,8 +39,8 @@ public class BlogDetailDTO extends BlogDTO {
     public BlogDetailDTO (BlogEntity entity) 
     {
         super(entity);
-        if(cliente !=null) cliente = new ClienteDTO(entity.getCliente());
-        if(evento !=null) evento = new EventoDTO(entity.getEvento());
+        if(entity.getCliente()!=null)cliente = new ClienteDTO(entity.getCliente());
+        if(entity.getEvento()!=null)evento = new EventoDTO(entity.getEvento());
        
     }
 
