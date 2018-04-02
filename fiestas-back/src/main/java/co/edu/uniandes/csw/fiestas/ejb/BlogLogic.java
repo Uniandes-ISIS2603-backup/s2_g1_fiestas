@@ -40,7 +40,7 @@ public class BlogLogic {
      * @return Colección de objetos de BlogEntity.
      */
     public List<BlogEntity> getBlogs(Long clienteId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los autores");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los blogs");
         return persistence.findAllC(clienteId);
     }
 

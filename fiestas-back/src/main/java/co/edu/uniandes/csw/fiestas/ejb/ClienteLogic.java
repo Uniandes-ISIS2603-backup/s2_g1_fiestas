@@ -283,18 +283,22 @@ public class ClienteLogic
      * @param clientesId
      * @return 
      */
-    public List<BlogEntity> getBlogs(Long clientesId) {
+    public List<BlogEntity> getBlogs(Long clientesId) throws BusinessLogicException {
        ClienteEntity cliente = getCliente(clientesId);
-       return blogLogic.getBlogs(clientesId);
+       if(cliente == null)
+           throw new BusinessLogicException("No existe un cliente con dicho id para enlistar blogs");
+       return cliente.getBlogs();
     }
 
     public BlogEntity getBlogC(Long blogId, Long clienteId) throws BusinessLogicException {
        ClienteEntity cliente = getCliente(clienteId);
        BlogEntity blog = blogLogic.getBlog(blogId);
+       if(cliente == null)
+           throw new BusinessLogicException("No existe el cliente.");
+       if(blog == null)
+           throw new BusinessLogicException("No existe el cliente.");
        if(blog.getCliente().getId()!=cliente.getId())
            throw new BusinessLogicException("El blog a buscar existe, pero el cliente no corresponde");
-       if(blog==null)
-           throw new BusinessLogicException("El blog a buscar no existe.");
        return blog;
     }
     

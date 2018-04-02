@@ -7,7 +7,15 @@
     <class>co.edu.uniandes.csw.fiestas.entities.EventoEntity</class>
     <class>co.edu.uniandes.csw.fiestas.entities.PagoEntity</class>
     <class>co.edu.uniandes.csw.fiestas.entities.ProveedorServicio</class>
-    <class>co.edu.uniandes.csw.fiestas.test.logic.ValoracionProveedorTest</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.BlogEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ClienteEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ContratoEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.HorarioEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ProductoEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ProveedorEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ServicioEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.TematicaEntity</class>
+    <class>co.edu.uniandes.csw.fiestas.entities.ValoracionEntity</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
