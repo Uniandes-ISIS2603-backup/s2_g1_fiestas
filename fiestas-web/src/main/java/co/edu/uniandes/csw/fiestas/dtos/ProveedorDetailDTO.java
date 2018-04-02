@@ -160,21 +160,34 @@ public class ProveedorDetailDTO extends ProveedorDTO
         List<ContratoEntity> listContratos = new ArrayList<>();
         List<ValoracionEntity> listValoraciones = new ArrayList<>();
         List<ServicioEntity> listServicios = new ArrayList<>();
-        for(ContratoDTO dto : getContratos())
+        
+        if(contratos != null)
         {
+            for(ContratoDTO dto : getContratos())
+            {
             ContratoEntity ent = dto.toEntity();
             listContratos.add(ent);
+            }
         }
-        for(ValoracionDTO dto : getValoraciones())
+        
+        if(valoraciones != null)
         {
+            for(ValoracionDTO dto : getValoraciones())
+            {
             ValoracionEntity ent = dto.toEntity();
             listValoraciones.add(ent);
+            }
         }
-        for(ServicioDTO dto : getServicios())
+        
+        if(servicios != null)
         {
+            for(ServicioDTO dto : getServicios())
+            {
             ServicioEntity ent = dto.toEntity();
             listServicios.add(ent);
+            }
         }
+        
         entity.setContratos(listContratos);
         entity.setServicios(listServicios);
         entity.setValoraciones(listValoraciones);
