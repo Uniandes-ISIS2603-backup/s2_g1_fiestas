@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
@@ -28,7 +29,11 @@ public class ServicioLogic {
     
     @Inject
     private ServicioPersistence persistence;
-
+    
+    @Inject 
+    private ValoracionLogic valoracionLogic;
+    
+ 
      /**
      * Obtiene la lista de los registros de Servicio.
      *
@@ -66,9 +71,14 @@ public class ServicioLogic {
      *
      * @param entity Instancia de ServicioEntity con los nuevos datos.
      * @return Instancia de ServicioEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public ServicioEntity updateServicio(ServicioEntity entity) {
+    public ServicioEntity updateServicio(ServicioEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un servicio");
+        if(getServicio(entity.getId()) == null)
+        {
+            throw new BusinessLogicException("No existe un servicio con dicho id para actualizar");
+        }  
         return persistence.update(entity);
     }
 
@@ -76,9 +86,15 @@ public class ServicioLogic {
      * Elimina una instancia de Servicio de la base de datos.
      *
      * @param id Identificador de la instancia a eliminar.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public void deleteServicio(Long id) {
+    public void deleteServicio(Long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un servicio.");
+        if(persistence.find(id)==null)
+        {
+            throw new BusinessLogicException("El servicio que se quiere borrar no existe.");
+        }
+            
         persistence.delete(id);
     }
     
@@ -144,24 +160,27 @@ public class ServicioLogic {
      */
     public List<ProveedorEntity> replaceProveedores(Long servicioId, List<ProveedorEntity> list) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la lista de proveedores asociada a un servicio");
-         ServicioEntity servicio = getServicio(servicioId);
-        if(servicio == null)
-        {
-            throw new BusinessLogicException("El servicio al que se le quiere reemplazar proveedores es nulo");
-        }
-              
-        else if(list == null)
-        {
-            throw new BusinessLogicException("No hay lista nueva");
-        }
+        ServicioEntity servicio = getServicio(servicioId);
         
-        else if(list.isEmpty())
+        if (list == null) 
         {
-            throw new BusinessLogicException("La lista está vacía");
+            throw new BusinessLogicException("No hay lista nueva.");
         }
-        else
+        if (!list.isEmpty()) 
+        {
+        } 
+        else 
+        {
+            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
+        }
+        if (servicio != null)
         {
             servicio.setProveedores(list);
+            updateServicio(servicio);
+        } 
+        else 
+        {
+            throw new BusinessLogicException("El servicio al que se le quiere reemplazar proveedores es nulo");
         }
         return list;
     }
@@ -180,7 +199,44 @@ public class ServicioLogic {
         proveedoresEntity.setId(proveedoresId);
         entity.getProveedores().remove(proveedoresEntity);
     }
-
+     
+    /**
+    * Obtiene la lista de los registros de Valoracion que pertenecen a un Servicio.
+     *
+    * @param servicioid id del Servicio el cual es padre de las Valoraciones.
+    * @return Colección de objetos de ValoracionEntity.
+    * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no hay valoraciones
+    */
+    public List<ValoracionEntity> getValoraciones(Long servicioid) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las valoraciones asociadas al servicio");
+        ServicioEntity servicio = getServicio(servicioid);
+        if (servicio.getValoraciones() == null) {
+           throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
+       }
+       if (servicio.getValoraciones().isEmpty()) {
+           throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
+       }
+       return servicio.getValoraciones();
+    }
     
-
+     /**
+     * Retorna un valoracion asociado a un servicio
+     *
+     * @param servicioId El id del servicio a buscar.
+     * @param valoracionId El id del valoracion a buscar
+     * @return El valoracion encontrado dentro del servicio.
+     * @throws BusinessLogicException Si el valoracion no se encuentra en el servicio
+     */
+    public ValoracionEntity getValoracion(Long servicioId, Long valoracionId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la valoracion asociada al servicio");
+        List<ValoracionEntity> valoraciones = getServicio(servicioId).getValoraciones();
+        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
+        int index = valoraciones.indexOf(valoracion);
+        if (index >= 0) {
+            return valoraciones.get(index);
+        }
+        throw new BusinessLogicException("El valoracion no está asociado al proveedor");
+    }
+    
 }
+

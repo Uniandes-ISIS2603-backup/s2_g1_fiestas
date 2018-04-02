@@ -1,10 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
-import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -50,9 +54,6 @@ public class ServicioResource {
     
     @Inject
     private ServicioLogic logic;
-    
-    @Inject
-    private ValoracionLogic valoracionLogic;
      /**
      * <h1>POST /servicios : Crear un servicio.</h1>
      * 
@@ -341,12 +342,12 @@ public class ServicioResource {
      * @throws BusinessLogicException
      */    
      @GET
-    @Path("{id:\\d+}/valoraciones")
-    public List<ValoracionDetailDTO> getValoracionesServicio(@PathParam("id")Long id) throws BusinessLogicException{
+    @Path("{id:\\d+}/proveedores")
+    public List<ValoracionDetailDTO> getPValoracionesServicio(@PathParam("id")Long id) throws BusinessLogicException{
         ServicioEntity ent = logic.getServicio(id);
         if(ent == null)
             throw new BusinessLogicException("El servicio no existe.");
-        return valoracionListEntity2DTO(valoracionLogic.getValoracionesServicio(id));
+        return valoracionListEntity2DTO(logic.getValoraciones(id));
     }
     private List<ValoracionDetailDTO> valoracionListEntity2DTO(List<ValoracionEntity> entityList) {
         List<ValoracionDetailDTO> list = new ArrayList<>();

@@ -1,6 +1,5 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ValoracionPersistence;
 import java.util.ArrayList;
@@ -27,34 +26,42 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class ValoracionPersistenceTest {
     
-   @Deployment
+    @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ValoracionEntity.class.getPackage())
                 .addPackage(ValoracionPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    }
-
+    } 
     
+     /**
+     * Inyección de la dependencia a la clase ValoracionPersistence cuyos métodos
+     * se van a probar.
+     */
     @Inject
     private ValoracionPersistence valoracionPersistence;
-
-   
+    
+     /**
+     * Contexto de Persistencia que se va autilizar para acceder a la Base de
+     * datos por fuera de los métodos que se están probando.
+     */
     @PersistenceContext
     private EntityManager em;
-
-  
+    
+     /**
+     * Variable para marcar las transacciones del em anterior cuando se
+     * crean/borran datos para las pruebas.
+     */
     @Inject
     UserTransaction utx;
 
     /**
      * Configuración inicial de la prueba.
-     *
-     * 
      */
+    
     @Before
-    public void configTest() {
+    public void setUp() {
         try {
             utx.begin();
             em.joinTransaction();
@@ -74,79 +81,89 @@ public class ValoracionPersistenceTest {
     /**
      * Limpia las tablas que están implicadas en la prueba.
      *
-     * 
+     *
      */
     private void clearData() {
         em.createQuery("delete from ValoracionEntity").executeUpdate();
-        em.createQuery("delete from ServicioEntity").executeUpdate();
     }
 
+    /**
+     *
+     */
     private List<ValoracionEntity> data = new ArrayList<ValoracionEntity>();
-    private List<ServicioEntity> dataServicio = new ArrayList<ServicioEntity>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      *
-     * 
+     *
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
-            em.persist(entity);
-            dataServicio.add(entity);
-        }
-        for (int i = 0; i < 3; i++) {
             ValoracionEntity entity = factory.manufacturePojo(ValoracionEntity.class);
+
             em.persist(entity);
             data.add(entity);
-            if(i==0){
-                dataServicio.get(0).getValoraciones().add(entity);
-            }
         }
     }
 
     /**
      * Prueba para crear un Valoracion.
      *
-     * 
+     *
      */
     @Test
     public void createValoracionTest() {
-
         PodamFactory factory = new PodamFactoryImpl();
         ValoracionEntity newEntity = factory.manufacturePojo(ValoracionEntity.class);
-        ValoracionEntity result = valoracionPersistence.create(newEntity);
-
+        ValoracionEntity result= valoracionPersistence.create(newEntity);
+        
         Assert.assertNotNull(result);
 
         ValoracionEntity entity = em.find(ValoracionEntity.class, result.getId());
-
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
         Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
+        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
     }
-
-    /**
+    
+     /**
+     * Prueba para consultar la lista de valoracions.
+     *
+     *
+     */
+    @Test
+    public void getValoracionsTest() {
+        List<ValoracionEntity> list = valoracionPersistence.findAll();
+        Assert.assertEquals(data.size(), list.size());
+        for (ValoracionEntity ent : list) {
+            boolean found = false;
+            for (ValoracionEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+     /**
      * Prueba para consultar un Valoracion.
      *
-     * 
+     *
      */
     @Test
     public void getValoracionTest() {
         ValoracionEntity entity = data.get(0);
-        ValoracionEntity newEntity = valoracionPersistence.find(dataServicio.get(0).getId(), entity.getId());
+        ValoracionEntity newEntity = valoracionPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getId(), newEntity.getId());
-        Assert.assertEquals(entity.getCalificacion(), newEntity.getCalificacion());
-        Assert.assertEquals(entity.getComentario(), newEntity.getComentario());
+        Assert.assertEquals(newEntity.getComentario(), entity.getComentario());
+        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
     }
-
-    /**
-     * Prueba para eliminar un Valoracion.
+    
+     /**
+     * Prueba para eliminar un valoracion.
      *
-     * 
+     *
      */
     @Test
     public void deleteValoracionTest() {
@@ -155,11 +172,11 @@ public class ValoracionPersistenceTest {
         ValoracionEntity deleted = em.find(ValoracionEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-
+    
     /**
      * Prueba para actualizar un Valoracion.
      *
-     * 
+     *
      */
     @Test
     public void updateValoracionTest() {
@@ -173,8 +190,10 @@ public class ValoracionPersistenceTest {
 
         ValoracionEntity resp = em.find(ValoracionEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getId(), resp.getId());
-        Assert.assertEquals(newEntity.getCalificacion(), resp.getCalificacion());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getComentario(), resp.getComentario());
-    } 
+        Assert.assertEquals(newEntity.getCalificacion(), resp.getCalificacion());
+    }
+    
 }
+
