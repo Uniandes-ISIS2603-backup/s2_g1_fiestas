@@ -1,10 +1,7 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,50 +12,6 @@ public class ValoracionEntity extends BaseEntity implements Serializable{
  
     private String comentario;
     private Integer calificacion;
-    
-    @PodamExclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private ServicioEntity servicio;
-    
-    @PodamExclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private ProveedorEntity proveedor;
-    
-     /**
-     * Obtiene el proveedor correspondiente a la valoracion
-     *
-     * @return proveedor
-     */
-    public ProveedorEntity getProveedor() {
-        return proveedor;
-    }
-    
-    /**
-     * Establece el proveedor de la valoracion
-     *
-     * @param proveedor nuevo de la valoracion
-     */
-    public void setProveedor(ProveedorEntity proveedor) {
-        this.proveedor = proveedor;
-    }
-    
-    /**
-     * Obtiene el servicio correspondiente a la valoracion
-     *
-     * @return servicio
-     */
-    public ServicioEntity getServicio() {
-        return servicio;
-    }
-    
-    /**
-     * Establece el servicio de la valoracion
-     *
-     * @param servicio nuevo de la valoracion
-     */
-    public void setServicio(ServicioEntity servicio) {
-        this.servicio = servicio;
-    }
     
     /**
      * Obtiene el atributo comentario
@@ -96,3 +49,4 @@ public class ValoracionEntity extends BaseEntity implements Serializable{
         this.calificacion=calificacion;
     }    
 }
+
