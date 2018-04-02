@@ -29,6 +29,9 @@ public class ClienteLogic
     @Inject
     private EventoLogic eventoLogic;
     
+    @Inject
+    private ProveedorLogic proveedorLogic;
+    
     //Logic de apoyo para algunas reglas de negocio.
     @Inject
     private UsuarioLogic usuarioLogic;    
@@ -58,12 +61,22 @@ public class ClienteLogic
         LOGGER.log(Level.INFO, "Inicia proceso de consultar un cliente con id = {0}", id);
         return persistence.find(id);
     }
+    
+    /** Verifica si existe el login en la base de datos.
+    * 
+     * @param login
+     * @return true si el login que se pasa por parámetro está en la base de datos.
+    */
+    public boolean loginRepetido(String login){
+        return persistence.loginRepetido(login);
+    }
 
     /**
      * Se encarga de crear un Cliente en la base de datos.
      *
      * @param entity Objeto de ClienteEntity con los datos nuevos
      * @return Objeto de ClienteEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     public ClienteEntity createCliente(ClienteEntity entity) throws BusinessLogicException 
     {
@@ -71,10 +84,6 @@ public class ClienteLogic
         if(getCliente(entity.getId()) != null)
         {
             throw new BusinessLogicException("Ya existe un cliente con ese id");
-        }
-        if(usuarioLogic.repetidoLogin(entity.getLogin()))
-        {
-            throw new BusinessLogicException("Ya existe un usuario (cliente o cliente) con ese mismo login");
         }
         if(entity.getNombre() == null || entity.getNombre().equals(""))
         {
@@ -88,7 +97,11 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede crear un cliente sin login");
         }
-        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        if(persistence.loginRepetido(entity.getLogin()) && proveedorLogic.loginRepetido(entity.getLogin()))
+        {
+            throw new BusinessLogicException("Ya existe un usuario (cliente o proveedor) con ese mismo login");
+        }
+        if(entity.getContrasena() == null || entity.getContrasena().equals(""))
         {
             throw new BusinessLogicException("No puede crear un cliente sin contraseña");
         }
@@ -125,7 +138,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede actualizar a un cliente sin login");
         }
-        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        if(entity.getContrasena() == null || entity.getContrasena().equals(""))
         {
             throw new BusinessLogicException("No puede actualizar a un cliente sin contraseña");
         }

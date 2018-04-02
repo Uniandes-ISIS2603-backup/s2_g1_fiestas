@@ -61,6 +61,14 @@ public class ProveedorLogic
         return persistence.find(id);
     }
 
+    /** Verifica si existe el login en la base de datos.
+    * 
+     * @param login
+     * @return true si el login que se pasa por parámetro está en la base de datos.
+    */
+    public boolean loginRepetido(String login){
+        return persistence.loginRepetido(login);
+    }
     /**
      * Se encarga de crear un Proveedor en la base de datos.
      *

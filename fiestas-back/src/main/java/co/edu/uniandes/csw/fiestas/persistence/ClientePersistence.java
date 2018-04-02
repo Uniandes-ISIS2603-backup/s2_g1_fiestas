@@ -32,6 +32,12 @@ public class ClientePersistence
         return q.getResultList();
     }
     
+    public boolean loginRepetido(String login){
+        Query q = em.createQuery("select u from ClienteEntity u where u.login = ?1");
+        q.setParameter(1, login); 
+        return !q.getResultList().isEmpty();
+    }
+    
     public ClienteEntity create (ClienteEntity entity)
     {
         em.persist(entity);

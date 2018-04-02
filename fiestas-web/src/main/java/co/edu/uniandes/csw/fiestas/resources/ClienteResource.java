@@ -3,7 +3,6 @@ package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.BlogDTO;
 import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
-import co.edu.uniandes.csw.fiestas.dtos.ClienteDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.EventoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ClienteDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ClienteLogic;

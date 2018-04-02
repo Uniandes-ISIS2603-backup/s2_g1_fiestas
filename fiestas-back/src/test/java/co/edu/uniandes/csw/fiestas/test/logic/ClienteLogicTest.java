@@ -158,7 +158,7 @@ public class ClienteLogicTest
         Assert.assertNotNull(result);
         ClienteEntity entidad = em.find(ClienteEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
+        Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
@@ -226,7 +226,7 @@ public class ClienteLogicTest
         }
         ClienteEntity entidad = em.find(ClienteEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
+        Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
@@ -268,11 +268,36 @@ public class ClienteLogicTest
     {
         ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
         ClienteEntity result = new ClienteEntity();
-        newEntity.setContraseña("");
+        newEntity.setContrasena("");
         
         try
         {
             result = clienteLogic.createCliente(newEntity);
+            fail("No se debio haber creado el cliente");
+        }
+        catch (BusinessLogicException x)
+        {
+            passed();
+        }
+    }
+    
+    /**
+     * Prueba fallida para crear un Cliente 2.
+     *
+     * Falla por que un cliente se crea con un login ya existente
+     */
+    @Test
+    public void createClienteTestFail3()
+    {
+        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
+        ClienteEntity newEntity2 = factory.manufacturePojo(ClienteEntity.class);
+        newEntity2.setLogin(newEntity.getLogin());
+        ClienteEntity result = new ClienteEntity();
+        
+        try
+        {
+            result = clienteLogic.createCliente(newEntity);
+            result = clienteLogic.createCliente(newEntity2);
             fail("No se debio haber creado el cliente");
         }
         catch (BusinessLogicException x)
@@ -319,7 +344,7 @@ public class ClienteLogicTest
         try
         {
             result = clienteLogic.createCliente(newEntity);
-            newEntity.setContraseña("");
+            newEntity.setContrasena("");
             result = clienteLogic.updateCliente(newEntity);
             fail("No se debio haber creado el cliente");
         }
@@ -727,7 +752,7 @@ public class ClienteLogicTest
                 fail("Debería encontrar un blog con el id pasado por parámetro.");
         }
         catch(BusinessLogicException e){
-           fail();
+            fail();
         }
     }
     
