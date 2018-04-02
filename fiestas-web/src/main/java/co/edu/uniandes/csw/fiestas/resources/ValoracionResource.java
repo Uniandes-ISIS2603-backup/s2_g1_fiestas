@@ -1,6 +1,5 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
-import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -43,148 +42,163 @@ public class ValoracionResource {
 
     @Inject
     ValoracionLogic valoracionLogic;
-
-    /**
-     * <h1>GET /api/servicios/{idServicio}/valoraciones : Obtener todas las valoraciones de un servicio.</h1>
+    
+        /**
+     * Convierte una lista de ValoracionEntity a una lista de ValoracionDetailDTO.
      *
-     * <pre>Busca y devuelve todas las valoraciones que existen en un servicio.
-     * 
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todas las valoraciones del servicio.</code> 
-     * </pre>
-     * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found. No existe un servicio con el id dado.
-     * </code>
-     * @param idServicio El ID del servicio del cual se buscan las valoraciones
-     * @return JSONArray {@link ValoracionDTO} - Las valoraciones encontradas en el servicio. Si no hay ninguna retorna una lista vacía.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando no se encuentra el servicio.
-     */
-    @GET
-    public List<ValoracionDTO> getValoracionesServicio(@PathParam("idServicio") Long idServicio) throws BusinessLogicException {
-        return listEntity2DTO(valoracionLogic.getValoracionesServicio(idServicio));
-    }
-
-    /**
-     * <h1>GET /api/servicios/{idServicio}/valoraciones/{id} : Obtener una valoracion de un servicio.</h1>
+     * @param entityList Lista de ValoracionEntity a convertir.
+     * @return Lista de ValoracionDetailDTO convertida.
      *
-     * <pre>Busca y devuelve la valoracion con el ID recibido en la URL, relativa a un
-     * servicio.
-     * 
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve la valoracion del servicio.</code> 
-     * </pre>
-     * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found. No existe un servicio con el id dado.
-     * </code>
-     * @param idServicio El ID del servicio del cual se buscan las valoraciones
-     * @param id El ID de la valoracion que se busca
-     * @return {@link ValoracionDTO} - La valoracion encontradas en el servicio.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando no se encuentra el servicio.
      */
-    @GET
-    @Path("{id: \\d+}")
-    public ValoracionDTO getValoracionServicio(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id) throws BusinessLogicException {
-        ValoracionEntity entity = valoracionLogic.getValoracionServicio(idServicio, id);
-        if (entity == null) {
-            throw new WebApplicationException("El recurso /servicios/" + idServicio + "/valoraciones/" + id + " no existe.", 404);
+    private List<ValoracionDetailDTO> listEntity2DTO(List<ValoracionEntity> entityList) {
+        List<ValoracionDetailDTO> list = new ArrayList<>();
+        for (ValoracionEntity entity : entityList) {
+            list.add(new ValoracionDetailDTO(entity));
         }
-        return new ValoracionDTO(entity);
+        return list;
     }
-
     /**
-     * <h1>POST /api/servicios/{idServicio}/valoraciones : Crear una valoracion de un servicio.</h1>
+     * <h1>POST /valoraciones : Crear un valoracion.</h1>
      *
-     * <pre>Cuerpo de petición: JSON {@link ValoracionDTO}.
-     * 
-     * Crea una nueva valoracion con la informacion que se recibe en el cuerpo 
-     * de la petición y se regresa un objeto identico con un id auto-generado 
+     * <pre>Cuerpo de petición: JSON {@link ValoracionDetailDTO}.
+     *
+     * Crea una nueva valoracion con la informacion que se recibe en el cuerpo
+     * de la petición y se regresa un objeto identico con un id auto-generado
      * por la base de datos.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Creó la nueva valoracion .
+     * 200 OK Creó la nueva valoracion.
      * </code>
      * <code style="color: #c7254e; background-color: #f9f2f4;">
      * 412 Precodition Failed: Ya existe la valoracion.
      * </code>
      * </pre>
-     * @param idServicio El ID del servicio del cual se guarda la valoracion
-     * @param valoracion {@link ValoracionDTO} - La valoracion que se desea guardar.
-     * @return JSON {@link ValoracionDTO}  - La valoracion guardada con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la valoracion.
+     *
+     * @param valoracion {@link ValoracionDetailDTO} - La valoracion que se
+     * desea guardar.
+     * @return JSON {@link ValoracionDetailDTO} - la valoracion guardada con el
+     * atributo id autogenerado.
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica que se genera cuando ya existe la valoracion.
      */
     @POST
-    public ValoracionDTO createValoracionServicio(@PathParam("idServicio") Long idServicio, ValoracionDTO valoracion) throws BusinessLogicException {
-        return new ValoracionDTO(valoracionLogic.createValoracionServicio(idServicio, valoracion.toEntity()));
+    public ValoracionDetailDTO createValoracion(ValoracionDetailDTO valoracion) throws BusinessLogicException {
+        return new ValoracionDetailDTO(valoracionLogic.createValoracion(valoracion.toEntity()));
     }
 
     /**
-     * <h1>PUT /api/servicios/{idServicio}/valoraciones/{id} : Actualizar una valoracion de un servicio.</h1>
+     * <h1>GET /valoraciones : Obtener todas los valoraciones.</h1>
      *
-     * <pre>Cuerpo de petición: JSON {@link ValoracionDTO}.
-     * 
-     * Actualiza una valoracion con la informacion que se recibe en el cuerpo 
-     * de la petición y se regresa el objeto actualizado.
-     * 
+     * <pre>Busca y devuelve todas las valoraciones que existen en la aplicacion.
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Se actualizó la valoracion
+     * 200 OK Devuelve todas las valoraciones de la aplicacion.</code>
+     * </pre>
+     *
+     * @return JSONArray {@link ValoracionDetailDTO} - Los valoraciones
+     * encontradas en la aplicación. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    public List<ValoracionDetailDTO> getValoraciones() {
+        return listEntity2DTO(valoracionLogic.getValoraciones());
+    }
+
+    /**
+     * <h1>GET /valoraciones/{id} : Obtener valoracion por id.</h1>
+     *
+     * <pre>Busca la valoracion con el id asociado recibido en la URL y lo devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve la valoracion correspondiente al id.
      * </code>
      * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 412 Precodition Failed: No se pudo actualizar la valoracion
+     * 404 Not Found No existe una valoracion con el id dado.
      * </code>
      * </pre>
-     * @param idServicio El ID del servicio del cual se guarda la valoracion
-     * @param id El ID de la valoracion que se va a actualizar
-     * @param valoracion {@link ValoracionDTO} - La valoracion que se desea guardar.
-     * @return JSON {@link ValoracionDTO}  - La valoracion actualizada.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe la valoracion.
+     *
+     * @param id Identificador de la valoracion que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSON {@link ValoracionDetailDTO} - La valoracion buscado
+     * @throws BusinessLogicException{@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} No existe la valoracion
+     */
+    @GET
+    @Path("{id: \\d+}")
+    public ValoracionDetailDTO getValoracion(@PathParam("id") Long id) throws BusinessLogicException {
+        ValoracionEntity entity=valoracionLogic.getValoracion(id);
+        if (entity == null) {
+            throw new WebApplicationException("La valoracion no existe", 404);
+        }
+        return new ValoracionDetailDTO(entity);
+    }
+
+    /**
+     * <h1>PUT /valoraciones/{id} : Actualizar valoracion por id.</h1>
+     *
+     * <pre>Busca la valoracion con el id asociado recibido en la URL, actualiza los paramteros
+     * y la devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve la valoracion correspondiente al id, despues de actualizado.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe una valoracion con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador de la valoracion que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param valoracion a actualizar
+     * @return JSON {@link ValoracionDetailDTO} - La valoracion buscada y
+     * actuaizada
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica
      */
     @PUT
     @Path("{id: \\d+}")
-    public ValoracionDTO updateValoracion(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id, ValoracionDTO valoracion) throws BusinessLogicException {
-        valoracion.setId(id);
-        ValoracionEntity entity = valoracionLogic.getValoracionServicio(idServicio, id);
-        if (entity == null) {
-            throw new WebApplicationException("El recurso /servicios/" + idServicio + "/valoraciones/" + id + " no existe.", 404);
+    public ValoracionDetailDTO updateValoracion(@PathParam("id") Long id, ValoracionDetailDTO valoracion) throws BusinessLogicException {
+        ValoracionEntity entity = valoracion.toEntity();
+        entity.setId(id);
+        ValoracionEntity oldEntity=valoracionLogic.getValoracion(id);
+        if (oldEntity == null) {
+            throw new WebApplicationException("La valoracion a actualizar no existe", 404);
         }
-        return new ValoracionDTO(valoracionLogic.updateValoracionServicio(idServicio, valoracion.toEntity()));
-
+        return new ValoracionDetailDTO(valoracionLogic.updateValoracion(entity));
     }
 
     /**
-     * <h1>DELETE /api/servicios/{idServicio}/valoraciones/{id} : Borrar valoracion por id.</h1>
+     * <h1>DELETE /valoraciones/{id} : Elimina una valoracion por id.</h1>
      *
-     * <pre>Borra la valoracion con el id asociado recibido en la URL.
+     * <pre>Busca la valoracion con el id asociado recibido en la URL y lo elimina
      *
-     * Códigos de respuesta:<br>
+     * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Elimina la valoracion correspondiente al id dado dentro del servicio.</code>
+     * 200 OK La valoracion fue eliminada exitosamente
+     * </code>
      * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found. No existe una valoracion con el id dado en el servicio.
+     * 404 Not Found No existe una valoracion con el id dado.
      * </code>
      * </pre>
-     * @param idServicio El ID del servicio del cual se va a eliminar la valoracion.
-     * @param id El ID de la valoracion que se va a eliminar.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - Error de lógica que se genera cuando no se puede eliminar la valoracion.
+     *
+     * @param id Identificador de la valoracion que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @throws BusinessLogicException{@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} No existe la valoracion
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteValoracionServicio(@PathParam("idServicio") Long idServicio, @PathParam("id") Long id) throws BusinessLogicException {
-        ValoracionEntity entity = valoracionLogic.getValoracionServicio(idServicio, id);
+    public void deleteValoracion(@PathParam("id") Long id) throws BusinessLogicException {
+        ValoracionEntity entity=valoracionLogic.getValoracion(id);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /servicios/" + idServicio + "/valoraciones/" + id + " no existe.", 404);
+            throw new WebApplicationException("La valoracion no existe", 404);
         }
-        valoracionLogic.deleteValoracionServicio(idServicio, id);
+        valoracionLogic.deleteValoracion(id);
     }
 
-    private List<ValoracionDTO> listEntity2DTO(List<ValoracionEntity> entityList) {
-        List<ValoracionDTO> list = new ArrayList<>();
-        for (ValoracionEntity entity : entityList) {
-            list.add(new ValoracionDTO(entity));
-        }
-        return list;
-    }
 }
+
+

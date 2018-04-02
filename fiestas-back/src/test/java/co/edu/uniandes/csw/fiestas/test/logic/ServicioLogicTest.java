@@ -6,6 +6,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
+import static com.ctc.wstx.util.DataUtil.Long;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import static org.jboss.arquillian.test.spi.TestResult.passed;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
@@ -196,10 +198,19 @@ public class ServicioLogicTest {
      */
     @Test
     public void deleteServicioTest() {
-        ServicioEntity entity = data.get(0);
-        servicioLogic.deleteServicio(entity.getId());
+         ServicioEntity entity = data.get(0);
+        try 
+        {
+            servicioLogic.deleteServicio(entity.getId());
+        } 
+        catch (BusinessLogicException e) 
+        {
+            fail(e.getMessage());
+        }
+
         ServicioEntity deleted = em.find(ServicioEntity.class, entity.getId());
-        Assert.assertNull(deleted);
+        org.junit.Assert.assertNull(deleted);
+    
     }
 
     /**
@@ -210,19 +221,32 @@ public class ServicioLogicTest {
      */
     @Test
     public void updateServicioTest() throws BusinessLogicException {
+        
         ServicioEntity entity = data.get(0);
         ServicioEntity pojoEntity = factory.manufacturePojo(ServicioEntity.class);
-
+        pojoEntity.setProveedores(proveedorData);
+        pojoEntity.setValoraciones(valoracionData);
         pojoEntity.setId(entity.getId());
+        
+        pojoEntity.setDescripcion(entity.getDescripcion());
 
-        servicioLogic.updateServicio(pojoEntity);
-
+        pojoEntity.setNombre(entity.getNombre());
+        pojoEntity.setTipo(entity.getTipo());
+        pojoEntity.setProductos(entity.getProductos());
+        
+        try
+        {
+            servicioLogic.updateServicio(pojoEntity);
+        }
+        catch (BusinessLogicException e)
+        {
+            fail(e.getMessage());
+        }
         ServicioEntity resp = em.find(ServicioEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
-        Assert.assertEquals(pojoEntity.getValoraciones(), resp.getValoraciones());
     }
     
     /**
@@ -332,17 +356,35 @@ public class ServicioLogicTest {
      */
     @Test
     public void replaceProveedoresTest() throws BusinessLogicException{
-
-        ServicioEntity entity = data.get(0);
-        List<ProveedorEntity> list = proveedorData.subList(1, 3);
-        servicioLogic.replaceProveedores(entity.getId(), list);
-
-        entity = servicioLogic.getServicio(entity.getId());
-        Assert.assertFalse(entity.getProveedores().contains(proveedorData.get(0)));
-        Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(1)));
-        Assert.assertTrue(entity.getProveedores().contains(proveedorData.get(2)));
-       
+       try {
+            servicioLogic.replaceProveedores(data.get(0).getId(), proveedorData);
+            for (ProveedorEntity ee : proveedorData) {
+                if (!em.find(ServicioEntity.class, data.get(0).getId()).getProveedores().contains(ee)) {
+                    fail("No está alguno de los proveedores reemplazados en la nueva lista del servicio");
+                }
+            }
+            passed();
+        } catch (BusinessLogicException x) {
+            fail(x.getMessage());
+        }
     }    
+    
+    
+    /**
+     * Prueba de falla para remover proveedor a un servicio.
+     *
+     * Falla si se reemplazan proveedores de un servicio inexistente
+     */
+    @Test
+    public void replaceProveedoresTestFail() {
+        try {
+            servicioLogic.replaceProveedores(Long(99999999), proveedorData);
+            fail("Se removió un proveedor de un servicio inexistente");
+        } catch (BusinessLogicException x) {
+            passed();
+        }
+    }
+
     /**
      * Prueba para desasociar un Proveedor existente de un Servicio existente
      *
@@ -353,8 +395,5 @@ public class ServicioLogicTest {
         servicioLogic.removeProveedor(data.get(0).getId(), proveedorData.get(0).getId());
         ProveedorEntity response = servicioLogic.getProveedor(data.get(0).getId(), proveedorData.get(0).getId());
     }
-   
-    
-
-    
+  
 }
