@@ -24,6 +24,8 @@ public class BlogLogic {
     @Inject
     private EventoLogic logicEvento;
     
+    @Inject
+    private ClienteLogic clienteEvento;
     /**
      * Obtiene la lista de los registros de Blog.
      *
@@ -61,9 +63,11 @@ public class BlogLogic {
      * @param entity Objeto de BlogEntity con los datos nuevos
      * @return Objeto de BlogEntity con los datos nuevos y su ID.
      */
-    public BlogEntity createBlog(BlogEntity entity) {
+    public BlogEntity createBlog(BlogEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un blog ");
-
+        if(entity.getCuerpo()== null && entity.getCuerpo().equals(""))
+            throw new BusinessLogicException("El blog debe tener cuerpo");
+        
         return persistence.create(entity);
     }
 

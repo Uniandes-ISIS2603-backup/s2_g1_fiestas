@@ -27,9 +27,9 @@ insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, 
 insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña, penalizado) values(10012, 'Diana Fernández Galán', 1012345679, 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','df.galan','hola1234', false);
 insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña, penalizado) values(10013, 'Andrés Felip Segura Hernández', 1012345670, 3212121214, 'andresillo@hotmail.com', 'cll.2 #20-34','af.segura10','hola', true);
 
-insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10011, 'Nicolás Hernández', 1012345681, 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
-insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10012, 'Sofía Arias', 1012345682, 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
-insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contraseña) values(10013, 'Cristian Amaya', 1012345683, 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
+insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10011, 'Nicolás Hernández', 1012345681, 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
+insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias', 1012345682, 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
+insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya', 1012345683, 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
 
 insert into ServicioEntity(id,descripcion,tipo) values(10019,'Carrito de perros calientes','comida');
 insert into ServicioEntity(id,descripcion,tipo) values(10020,'Show de magia para niños','entretenimiento');

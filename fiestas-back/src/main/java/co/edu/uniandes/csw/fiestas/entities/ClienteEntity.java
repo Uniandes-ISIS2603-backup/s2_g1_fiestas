@@ -21,7 +21,7 @@ public class ClienteEntity extends BaseEntity implements Serializable
     private String correo;
     private String direccion;
     private String login;
-    private String contraseña;
+    private String contrasena;
     
     @PodamExclude
     @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -124,18 +124,18 @@ public class ClienteEntity extends BaseEntity implements Serializable
     }
 
     /**
-     * @return the contraseña
+     * @return the contrasena
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contrasena
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
     
     /**

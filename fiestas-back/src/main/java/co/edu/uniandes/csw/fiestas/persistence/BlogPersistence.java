@@ -36,7 +36,7 @@ public class BlogPersistence {
     
         public List<BlogEntity> findAllC(Long clienteId) {
         LOGGER.log(Level.INFO, "Consultando Blog cuyo dueño es el cliente con id={0}", clienteId);
-        Query q = em.createQuery("SELECT c FROM BLOGENTITY WHERE c.USUARIO_ID = ?1", BlogEntity.class);
+        Query q = em.createQuery("SELECT c FROM BLOGENTITY WHERE c.CLIENTE_ID = ?1");
         q.setParameter(1, clienteId);
         List<BlogEntity> bE = q.getResultList();
         return bE;

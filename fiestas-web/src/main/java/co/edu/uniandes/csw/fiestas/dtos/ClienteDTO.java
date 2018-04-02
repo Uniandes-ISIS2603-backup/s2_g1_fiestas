@@ -38,14 +38,14 @@ import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
  */
 public class ClienteDTO
 {   
-    private Long id;
+    private long id;
     private String nombre;
     private String documento;
     private Long telefono;
     private String correo;
     private String direccion;
     private String login;
-    private String contraseña;
+    private String contrasena;
     
     public ClienteDTO()
     {
@@ -55,33 +55,30 @@ public class ClienteDTO
     /**
      * @return El id del usuario.
      */
-    public Long getId() 
+    public long getId() 
     {
         return id;
     }
 
-    /**
-     * @param id El nuevo id.
+     /**
+     * @param id the id to set
      */
-    public void setId(Long id) 
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
     /**
-     * @return La contraseña del usuario
+     * @return the contrasena
      */
-    public String getContraseña()
-    {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
-    
+
     /**
-     * @param contraseña La nueva contraseña
+     * @param contrasena the contrasena to set
      */
-    public void setContraseña(String contraseña) 
-    {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     /**
@@ -189,7 +186,7 @@ public class ClienteDTO
         if (e != null)
         {
             this.id = e.getId();            
-            this.contraseña=e.getContraseña();
+            this.contrasena=e.getContrasena();
             this.correo=e.getCorreo();
             this.direccion=e.getDireccion();
             this.documento=e.getDocumento();
@@ -207,7 +204,7 @@ public class ClienteDTO
     {
         ClienteEntity e = new ClienteEntity();
         e.setId(this.getId());
-        e.setContraseña(getContraseña());
+        e.setContrasena(getContrasena());
         e.setCorreo(getCorreo());
         e.setDireccion(getDireccion());
         e.setDocumento(getDocumento());

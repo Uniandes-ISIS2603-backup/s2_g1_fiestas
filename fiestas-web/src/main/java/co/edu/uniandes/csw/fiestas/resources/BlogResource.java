@@ -77,6 +77,7 @@ public class BlogResource {
      * </code> 
      * </pre>
      * @param id Identificador del blog que se esta buscando. Este debe ser una cadena de dígitos.
+     * @param eventoId
      * @return JSON {@link BlogDetailDTO} - El blog buscado
      */
     @GET
