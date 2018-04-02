@@ -37,7 +37,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /*Numero de invitados del evento */
 
     @PodamExclude
-    @OneToMany(mappedBy = "evento")
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContratoEntity> contratos = new ArrayList<>();
 
     @PodamExclude

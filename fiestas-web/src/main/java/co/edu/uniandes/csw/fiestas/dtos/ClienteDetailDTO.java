@@ -71,7 +71,7 @@ public class ClienteDetailDTO extends ClienteDTO
      */
     public ClienteDetailDTO() 
     {
-        //Constructor vacio
+        super();
     }
     
     /**
@@ -115,6 +115,7 @@ public class ClienteDetailDTO extends ClienteDTO
     {
         ClienteEntity entity = super.toEntity();
         List<EventoEntity> listEventos = new ArrayList<>();
+        if(!listEventos.isEmpty())
         for(EventoDTO dto : getEventos())
         {
             EventoEntity ent = dto.toEntity();

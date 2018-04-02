@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -12,7 +13,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author nm.hernandez10
  */
 @Entity
-public class ClienteEntity extends BaseEntity
+public class ClienteEntity extends BaseEntity implements Serializable
 {    
     private String nombre;
     private String documento;
@@ -20,7 +21,7 @@ public class ClienteEntity extends BaseEntity
     private String correo;
     private String direccion;
     private String login;
-    private String contraseña;
+    private String contrasena;
     
     @PodamExclude
     @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -123,18 +124,18 @@ public class ClienteEntity extends BaseEntity
     }
 
     /**
-     * @return the contraseña
+     * @return the contrasena
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contrasena
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
     
     /**

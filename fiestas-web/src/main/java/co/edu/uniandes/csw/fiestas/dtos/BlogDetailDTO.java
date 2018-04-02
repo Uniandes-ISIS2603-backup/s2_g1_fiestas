@@ -39,8 +39,8 @@ public class BlogDetailDTO extends BlogDTO {
     public BlogDetailDTO (BlogEntity entity) 
     {
         super(entity);
-        cliente = new ClienteDTO(entity.getCliente());
-        evento = new EventoDTO(entity.getEvento());
+        if(entity.getCliente()!=null)cliente = new ClienteDTO(entity.getCliente());
+        if(entity.getEvento()!=null)evento = new EventoDTO(entity.getEvento());
        
     }
 
@@ -54,8 +54,8 @@ public class BlogDetailDTO extends BlogDTO {
     @Override
     public BlogEntity toEntity() {
         BlogEntity entity = super.toEntity();
-        entity.setCliente(this.cliente.toEntity());
-        entity.setEvento(this.evento.toEntity());
+        if(cliente !=null) entity.setCliente(this.cliente.toEntity());
+        if(evento !=null) entity.setEvento(this.evento.toEntity());
         
         return entity;
     }
