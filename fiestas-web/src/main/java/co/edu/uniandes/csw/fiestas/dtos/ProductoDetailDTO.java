@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
  *      {
  *          "id" : Long
  *      }
- *      "servicios":
+ *      "servicio":
  *      {
  *          "id": Long
              "descripcion": String
@@ -46,7 +47,7 @@ import java.util.List;
  *      {
  *          "id" :99979846
  *      }
- *      "servicios":
+ *      "servicio":
  *      {
  *          "id": 4567672
              "descripcion": "Pasteles y demás"
@@ -110,6 +111,14 @@ void setServicio(ServicioDTO pServ)
      */ 
     public ProductoDetailDTO(ProductoEntity entity) {
         super(entity);
+        if(entity.getServicio() != null)
+        {
+        servicio = (new ServicioDTO(entity.getServicio()));
+        }
+        else
+        {
+        servicio = null;
+        }
     }
 
     /**
@@ -123,8 +132,11 @@ void setServicio(ServicioDTO pServ)
     public ProductoEntity toEntity()
     {
         ProductoEntity producto = super.toEntity();
-        producto.setServicio(this.servicio.toEntity());
-        return null;
+        if(servicio != null)
+        producto.setServicio(servicio.toEntity());
+        else
+        producto.setServicio(new ServicioEntity());
+        return producto;
     }
     
     

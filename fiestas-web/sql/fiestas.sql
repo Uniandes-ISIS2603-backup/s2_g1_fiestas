@@ -33,12 +33,12 @@ insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, lo
 
 insert into ServicioEntity(id,descripcion,tipo) values(10019,'Carrito de perros calientes','comida');
 insert into ServicioEntity(id,descripcion,tipo) values(10020,'Show de magia para niños','entretenimiento');
-insert into ServicioEntity(id,descripcion,tipo) values(10021,'Stripers',200000, 'despedida de soltero');
+insert into ServicioEntity(id,descripcion,tipo) values(10021,'Stripers', 'despedida de soltero');
 
 
 insert into ValoracionEntity(id,calificacion,comentario) values(10022,5,'Excelente servicio');
 insert into ValoracionEntity(id,calificacion,comentario) values(10023,4,'Me encanto');
-insert into ValoracionEntity(id,calificacion,comentario) values(10024,2,200000, 'Pesimo servicio');
+insert into ValoracionEntity(id,calificacion,comentario) values(10024,2, 'Pesimo servicio');
 
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10016,'Servicio de comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros','4');
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10017,'Servicio de audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes', 'incluye varios estilos de musica','6');

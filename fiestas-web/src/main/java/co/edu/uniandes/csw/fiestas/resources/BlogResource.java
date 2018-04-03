@@ -209,7 +209,8 @@ public class BlogResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
      */
     @POST
-    public void addEvento(@PathParam("id")Long eventoId, @PathParam("id")Long id) {
+    @Path("{id: \\d+}/evento/{eventosId: \\d+}")
+    public void addEvento(@PathParam("eventosId")Long eventoId, @PathParam("id")Long id) {
         EventoEntity eE=logic.getEventoExistente(eventoId);
         try{
             logic.addEvento(eE, id);
@@ -237,8 +238,9 @@ public class BlogResource {
      * en el blog.
      */
     @GET
-     public EventoDTO getEvento(Long idBlog) {
-        EventoEntity eE=logic.getEvento(idBlog);
+    @Path("{id: \\d+}/evento")
+     public EventoDTO getEvento(@PathParam("id") Long id) {
+        EventoEntity eE=logic.getEvento(id);
         
         return new EventoDTO(eE);
     }

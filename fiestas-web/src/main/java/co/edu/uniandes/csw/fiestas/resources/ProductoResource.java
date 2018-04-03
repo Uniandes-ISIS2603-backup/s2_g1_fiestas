@@ -50,7 +50,7 @@ public class ProductoResource
     ProductoLogic productoLogic;
     
         /**
-     * <h1>GET /api/productos/{id} : Obtener producto por id.</h1>
+     * <h1>GET /productos/{id} : Obtener producto por id.</h1>
      * 
      * <pre>Busca el producto con el id asociado recibido en la URL y la devuelve.
      * 
@@ -66,6 +66,9 @@ public class ProductoResource
      * @return JSON {@link ProductoDetailDTO} - El product buscada
      */
     @GET
+    @Produces("application/json")
+    @Consumes("application/json")
+
     @Path("{id: \\d+}")
     public ProductoDetailDTO getProducto(@PathParam("id") Long id)
     {
@@ -84,16 +87,17 @@ public class ProductoResource
      * @return JSONArray {@link ProductoDetailDTO} - Los productos encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
+    @Produces("application/json")
+    @Consumes("application/json")
     public List<ProductoDetailDTO> getProductos()
     {
         List<ProductoEntity> lista = productoLogic.getProductos();
-        ArrayList<ProductoDetailDTO> nuevaList = new ArrayList<ProductoDetailDTO>();
+        List<ProductoDetailDTO> nuevaList = new ArrayList<>();
         
         for (ProductoEntity productoEntity : lista) 
         {
             nuevaList.add(new ProductoDetailDTO(productoEntity));
         }
-        
         return nuevaList;
     }
     
@@ -119,10 +123,11 @@ public class ProductoResource
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe El producto
      */
     @POST
+    @Produces("application/json")
+    @Consumes("application/json")
     public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
         
-        productoLogic.createProducto(producto.toEntity());
-        
+        productoLogic.createProducto(producto.toEntity());        
         return producto;
     }
     
@@ -145,6 +150,8 @@ public class ProductoResource
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera al no poder actualizar el productod porque ya existe uno con ese nombre.
      */
     @PUT
+    @Produces("application/json")
+    @Consumes("application/json")
     @Path("{id: \\d+}")
     public ProductoDetailDTO updateProducto(@PathParam("id") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
          
@@ -167,6 +174,8 @@ public class ProductoResource
      * @param id Identificador del producto que se desea borrar. Este debe ser una cadena de dígitos.
      */
     @DELETE
+    @Produces("application/json")
+    @Consumes("application/json")
     @Path("{id: \\d+}")
     public void deleteProducto(@PathParam("id") Long id)
     {
