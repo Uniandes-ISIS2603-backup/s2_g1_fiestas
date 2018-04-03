@@ -49,7 +49,7 @@ public class ServicioLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<ServicioEntity> data = new ArrayList<ServicioEntity>();
+    private List<ServicioEntity> data = new ArrayList<>();
 
     private List<ProveedorEntity> proveedorData = new ArrayList();
     
@@ -95,8 +95,8 @@ public class ServicioLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from ProveedorEntity").executeUpdate();
-        em.createQuery("delete from ServicioEntity").executeUpdate();
         em.createQuery("delete from ValoracionEntity").executeUpdate();
+        em.createQuery("delete from ServicioEntity").executeUpdate();
     }
 
     /**
@@ -106,14 +106,14 @@ public class ServicioLogicTest {
      *
      */
     private void insertData() {
-       List<ProveedorEntity> listaProveedor = new ArrayList<ProveedorEntity>();
+       List<ProveedorEntity> listaProveedor = new ArrayList<>();
        for (int i = 0; i < 3; i++) {
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
             em.persist(proveedor);
             proveedorData.add(proveedor);
             listaProveedor.add(proveedor);
         }
-       List<ValoracionEntity> listaValoracion = new ArrayList<ValoracionEntity>();
+       List<ValoracionEntity> listaValoracion = new ArrayList<>();
        for (int i = 0; i < 3; i++) {
             ValoracionEntity valoracion = factory.manufacturePojo(ValoracionEntity.class);
             em.persist(valoracion);
@@ -198,7 +198,7 @@ public class ServicioLogicTest {
      */
     @Test
     public void deleteServicioTest() {
-         ServicioEntity entity = data.get(0);
+        ServicioEntity entity = data.get(0);
         try 
         {
             servicioLogic.deleteServicio(entity.getId());
