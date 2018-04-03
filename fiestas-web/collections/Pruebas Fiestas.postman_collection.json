@@ -1,14 +1,14 @@
 {
 	"info": {
 		"name": "Pruebas Fiestas",
-		"_postman_id": "11b1ddba-824a-13e7-3240-cfcb30797e82",
+		"_postman_id": "419a04eb-9511-47c6-82c7-f8c2778c5632",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Eventos",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Eventos",
@@ -27,7 +27,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/eventos",
 							"protocol": "http",
@@ -62,9 +65,12 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -74,7 +80,7 @@
 								"fiestas-web",
 								"api",
 								"eventos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "GET fiestas"
@@ -98,7 +104,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/eventos/400",
 							"protocol": "http",
@@ -184,7 +193,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 100,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
+							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 10001,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/eventos",
@@ -220,9 +229,12 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/300",
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -232,7 +244,7 @@
 								"fiestas-web",
 								"api",
 								"eventos",
-								"300"
+								"10003"
 							]
 						},
 						"description": "DELETE evento exitoso"
@@ -256,9 +268,12 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/300",
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -268,7 +283,7 @@
 								"fiestas-web",
 								"api",
 								"eventos",
-								"300"
+								"10003"
 							]
 						},
 						"description": "DELETE evento no existente"
@@ -302,7 +317,7 @@
 							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -312,7 +327,7 @@
 								"fiestas-web",
 								"api",
 								"eventos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "UPDATE evento existoso"
@@ -369,10 +384,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"id": "d825bcaf-d7c2-45d6-a395-2b94a976d249",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"]=responseCode.code===200;"
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
 								]
 							}
 						}
@@ -387,10 +402,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
+							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": -10,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -400,7 +415,7 @@
 								"fiestas-web",
 								"api",
 								"eventos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "UPDATE evento fallido, por numero de invitados negativo"
@@ -430,7 +445,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/pagos",
 							"protocol": "http",
@@ -465,9 +483,12 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -477,7 +498,7 @@
 								"fiestas-web",
 								"api",
 								"pagos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "GET pagos exitoso"
@@ -501,7 +522,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/pagos/400",
 							"protocol": "http",
@@ -544,7 +568,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 400,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 10004,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/pagos",
@@ -587,7 +611,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 10001,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/pagos",
@@ -630,7 +654,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \n\t\"estado\": \"Todavia en Revision\",\n    \"id\": 400,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+							"raw": "{   \n\t\"estado\": \"Todavia en Revision\",\n    \"id\": 10005,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/pagos",
@@ -673,7 +697,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 500,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": false,\n    \"valor\": 5000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
+							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 10005,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": false,\n    \"valor\": 5000000,\n    \"evento\": {\n        \"id\": 100\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/pagos",
@@ -709,9 +733,12 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/pagos/300",
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -721,7 +748,7 @@
 								"fiestas-web",
 								"api",
 								"pagos",
-								"300"
+								"10003"
 							]
 						},
 						"description": "DELETE pago exitoso"
@@ -745,9 +772,12 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/pagos/300",
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -757,7 +787,7 @@
 								"fiestas-web",
 								"api",
 								"pagos",
-								"300"
+								"10003"
 							]
 						},
 						"description": "DELETE pago no existente"
@@ -791,7 +821,7 @@
 							"raw": "{\n    \"estado\":\"Confirmado\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -801,7 +831,7 @@
 								"fiestas-web",
 								"api",
 								"pagos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "UPDATE pago exitoso"
@@ -879,7 +909,7 @@
 							"raw": "{\n    \"estado\":\"En Proceso\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -889,7 +919,7 @@
 								"fiestas-web",
 								"api",
 								"pagos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "UPDATE pago fallido por estado que no cumple la condicion"
@@ -923,7 +953,7 @@
 							"raw": "{\n    \"estado\":\"Confirmado\",\n    \"id\": 100,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/pagos/100",
+							"raw": "http://localhost:8080/fiestas-web/api/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -933,7 +963,7 @@
 								"fiestas-web",
 								"api",
 								"pagos",
-								"100"
+								"10001"
 							]
 						},
 						"description": "UPDATE pago fallido por que el metodo de pago no cumple la condicion"
