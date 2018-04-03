@@ -11,8 +11,6 @@ import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
  */
 public class PagoDetailDTO extends PagoDTO{
     
-    private EventoDTO evento;
-    
      /**
      * Constructor por defecto
      */
@@ -30,41 +28,6 @@ public class PagoDetailDTO extends PagoDTO{
      */
     public PagoDetailDTO(PagoEntity entity){
         super(entity);
-        this.evento=new EventoDTO(entity.getEvento());
-    }
-     
-     /**
-     * Convierte un objeto PagoDetailDTO a PagoEntity incluyendo los
-     * atributos de PagoDTO.
-     *
-     * @return Nueva objeto PagoEntity.
-     *
-     */   
-    @Override
-    public PagoEntity toEntity(){
-        PagoEntity entity=super.toEntity();
-        EventoEntity eventoEntity= this.evento.toEntity();
-        entity.setEvento(eventoEntity);
-        return entity;
-    }
-    
-    /**
-     * Retorna el evento correspondiente al pago.
-     * @return Evento relacionado.
-     */
-
-    public EventoDTO getEvento(){
-        return evento;
-    }
-    
-
-    /**
-     * Se asigna un evento al pago.
-     * @param evento nuevo a asignar
-     */
-
-    public void setEvento(EventoDTO evento){
-        this.evento=evento;
     }
 
 }

@@ -20,9 +20,6 @@ public class PagoEntity extends BaseEntity implements Serializable {
     private String metodoDePago;/*Metodo de pago actual*/
     private int valor;/*Valor del pago*/
 
-    @PodamExclude
-    @OneToOne(mappedBy = "pago")
-    private EventoEntity evento;
 
     /**
      * Obtiene el boolean que representa si el pago fue realizado
@@ -96,23 +93,5 @@ public class PagoEntity extends BaseEntity implements Serializable {
      */
     public void setValor(int valor) {
         this.valor = valor;
-    }
-
-    /**
-     * Obtiene el evento relacionado del pago
-     *
-     * @return evento relacionado del pago
-     */
-    public EventoEntity getEvento() {
-        return evento;
-    }
-
-    /**
-     * Establece el evento al que corresponde el pago
-     *
-     * @param evento Entidad del evento a asignar al pago
-     */
-    public void setEvento(EventoEntity evento) {
-        this.evento = evento;
     }
 }
