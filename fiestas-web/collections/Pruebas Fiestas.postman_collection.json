@@ -1,7 +1,7 @@
 {
 	"info": {
+		"_postman_id": "526fab25-1ecc-488d-8eb2-0bb6cb3eef4d",
 		"name": "Pruebas Fiestas",
-		"_postman_id": "419a04eb-9511-47c6-82c7-f8c2778c5632",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -150,7 +150,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 400,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
+							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 10004,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/eventos",
