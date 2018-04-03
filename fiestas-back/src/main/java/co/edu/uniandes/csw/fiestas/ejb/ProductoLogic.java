@@ -8,6 +8,7 @@ import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
@@ -16,6 +17,7 @@ import javax.inject.Inject;
  *
  * @author af.losada
  */
+@Stateless
 public class ProductoLogic 
 {
     private static final Logger LOGGER = Logger.getLogger(ProductoLogic.class.getName());
