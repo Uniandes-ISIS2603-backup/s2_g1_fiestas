@@ -32,10 +32,6 @@ public class ClienteLogic
     @Inject
     private ProveedorLogic proveedorLogic;
     
-    //Logic de apoyo para algunas reglas de negocio.
-    @Inject
-    private UsuarioLogic usuarioLogic;    
-    
     @Inject
     private BlogLogic blogLogic;
     
@@ -97,7 +93,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede crear un cliente sin login");
         }
-        if(persistence.loginRepetido(entity.getLogin()) && proveedorLogic.loginRepetido(entity.getLogin()))
+        if(persistence.loginRepetido(entity.getLogin()) || proveedorLogic.loginRepetido(entity.getLogin()))
         {
             throw new BusinessLogicException("Ya existe un usuario (cliente o proveedor) con ese mismo login");
         }

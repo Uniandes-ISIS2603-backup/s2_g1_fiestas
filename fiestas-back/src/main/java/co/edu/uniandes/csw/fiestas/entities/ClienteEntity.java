@@ -1,3 +1,4 @@
+
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;

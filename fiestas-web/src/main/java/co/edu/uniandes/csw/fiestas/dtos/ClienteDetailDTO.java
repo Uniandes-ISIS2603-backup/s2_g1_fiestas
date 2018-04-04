@@ -64,7 +64,7 @@ import java.util.List;
 public class ClienteDetailDTO extends ClienteDTO 
 {
     
-    private List<EventoDTO> eventos;
+    private List<EventoDTO> eventos = new ArrayList<>();
 
     /**
      * Constructor por defecto
@@ -115,7 +115,7 @@ public class ClienteDetailDTO extends ClienteDTO
     {
         ClienteEntity entity = super.toEntity();
         List<EventoEntity> listEventos = new ArrayList<>();
-        if(!listEventos.isEmpty())
+        if(!eventos.isEmpty())
         for(EventoDTO dto : getEventos())
         {
             EventoEntity ent = dto.toEntity();
