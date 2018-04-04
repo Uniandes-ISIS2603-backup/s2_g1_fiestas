@@ -40,20 +40,20 @@ import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
  */
 public class ProveedorDTO
 {    
-    private Long id;
+    private long id;
     private String nombre;
     private String documento;
     private Long telefono;
     private String correo;
     private String direccion;
     private String login;
-    private String contraseña;
+    private String contrasena;
     private boolean penalizado;   
     
     /**
      * @return El id del usuario.
      */
-    public Long getId() 
+    public long getId() 
     {
         return id;
     }
@@ -61,25 +61,25 @@ public class ProveedorDTO
     /**
      * @param id El nuevo id.
      */
-    public void setId(Long id) 
+    public void setId(long id) 
     {
         this.id = id;
     }
 
     /**
-     * @return La contraseña del usuario
+     * @return La contrasena del usuario
      */
-    public String getContraseña()
+    public String getContrasena()
     {
-        return contraseña;
+        return contrasena;
     }
     
     /**
-     * @param contraseña La nueva contraseña
+     * @param contrasena La nueva contraseña
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     /**
@@ -210,7 +210,7 @@ public class ProveedorDTO
     {        
         if (e != null)
         {    
-            this.contraseña=e.getContraseña();
+            this.contrasena=e.getContrasena();
             this.correo=e.getCorreo();
             this.direccion=e.getDireccion();
             this.documento=e.getDocumento();
@@ -228,7 +228,8 @@ public class ProveedorDTO
     public ProveedorEntity toEntity()
     {
         ProveedorEntity e = new ProveedorEntity(); 
-        e.setContraseña(getContraseña());
+        e.setId(this.id);
+        e.setContrasena(getContrasena());
         e.setCorreo(getCorreo());
         e.setDireccion(getDireccion());
         e.setDocumento(getDocumento());

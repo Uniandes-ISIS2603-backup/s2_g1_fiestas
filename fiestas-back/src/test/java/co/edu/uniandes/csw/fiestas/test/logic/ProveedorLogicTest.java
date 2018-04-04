@@ -177,7 +177,7 @@ public class ProveedorLogicTest
         Assert.assertNotNull(result);
         ProveedorEntity entidad = em.find(ProveedorEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
+        Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
@@ -253,7 +253,7 @@ public class ProveedorLogicTest
 
         ProveedorEntity entidad = em.find(ProveedorEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
+        Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
         Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
         Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
         Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
@@ -292,7 +292,7 @@ public class ProveedorLogicTest
     public void createProveedorTestFail2() {
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
         ProveedorEntity result = new ProveedorEntity();
-        newEntity.setContraseña("");
+        newEntity.setContrasena("");
 
         try {
             result = proveedorLogic.createProveedor(newEntity);
@@ -346,7 +346,7 @@ public class ProveedorLogicTest
         ProveedorEntity result = new ProveedorEntity();
         try {
             result = proveedorLogic.createProveedor(newEntity);
-            newEntity.setContraseña("");
+            newEntity.setContrasena("");
             result = proveedorLogic.updateProveedor(newEntity);
             fail("No se debio haber creado el proveedor");
         } catch (BusinessLogicException x) {

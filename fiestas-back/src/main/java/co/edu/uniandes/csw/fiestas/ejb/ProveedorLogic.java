@@ -6,6 +6,7 @@ import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,13 +31,12 @@ public class ProveedorLogic
 
     @Inject
     private ServicioLogic servicioLogic;
+    
+    @Inject
+    private ClientePersistence clientePersistence;
 
     @Inject
     private ContratoLogic contratoLogic;
-
-    //Logic de apoyo para algunas reglas de negocio.
-    @Inject
-    private UsuarioLogic usuarioLogic;   
     
     @Inject
     private ValoracionLogic valoracionLogic;
@@ -87,10 +87,6 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("Ya existe un proveedor con ese id");
         }
-        if(usuarioLogic.repetidoLogin(entity.getLogin()))
-        {
-            throw new BusinessLogicException("Ya existe un usuario (proveedor o cliente) con ese mismo login");
-        }
         if(entity.getNombre() == null || entity.getNombre().equals(""))
         {
             throw new BusinessLogicException("No puede crear un proveedor sin nombre");
@@ -103,7 +99,11 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No puede crear un proveedor sin login");
         }
-        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        if(persistence.loginRepetido(entity.getLogin()) && clientePersistence.loginRepetido(entity.getLogin()))
+        {
+            throw new BusinessLogicException("Ya existe un usuario (proveedor o proveedor) con ese mismo login");
+        }
+        if(entity.getContrasena() == null || entity.getContrasena().equals(""))
         {
             throw new BusinessLogicException("No puede crear un proveedor sin contraseña");
         }
@@ -142,7 +142,7 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No puede actualizar a un proveedor sin login");
         }
-        if(entity.getContraseña() == null || entity.getContraseña().equals(""))
+        if(entity.getContrasena() == null || entity.getContrasena().equals(""))
         {
             throw new BusinessLogicException("No puede actualizar a un proveedor sin contraseña");
         }

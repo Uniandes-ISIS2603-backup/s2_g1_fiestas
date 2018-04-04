@@ -34,7 +34,7 @@ public class ProveedorPersistence
     }
     
     public boolean loginRepetido(String login){
-        Query q = em.createQuery("select u from ClienteEntity u where u.login = ?1");
+        Query q = em.createQuery("select u from ProveedorEntity u where u.login = ?1");
         q.setParameter(1, login); 
         return !q.getResultList().isEmpty();
     }

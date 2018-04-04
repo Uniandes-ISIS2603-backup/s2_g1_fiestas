@@ -32,10 +32,6 @@ public class ClienteLogic
     @Inject
     private ProveedorLogic proveedorLogic;
     
-    //Logic de apoyo para algunas reglas de negocio.
-    @Inject
-    private UsuarioLogic usuarioLogic;    
-    
     @Inject
     private BlogLogic blogLogic;
     

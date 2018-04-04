@@ -65,9 +65,9 @@ import java.util.List;
  */
 public class ProveedorDetailDTO extends ProveedorDTO
 {
-    private List<ServicioDTO> servicios;
-    private List<ValoracionDTO> valoraciones;
-    private List<ContratoDTO> contratos;    
+    private List<ServicioDTO> servicios = new ArrayList<>();
+    private List<ValoracionDTO> valoraciones= new ArrayList<>();
+    private List<ContratoDTO> contratos= new ArrayList<>();    
     
     /**
      * Constructor por defecto
@@ -160,16 +160,19 @@ public class ProveedorDetailDTO extends ProveedorDTO
         List<ContratoEntity> listContratos = new ArrayList<>();
         List<ValoracionEntity> listValoraciones = new ArrayList<>();
         List<ServicioEntity> listServicios = new ArrayList<>();
+        if(!contratos.isEmpty())
         for(ContratoDTO dto : getContratos())
         {
             ContratoEntity ent = dto.toEntity();
             listContratos.add(ent);
         }
+        if(!valoraciones.isEmpty())
         for(ValoracionDTO dto : getValoraciones())
         {
             ValoracionEntity ent = dto.toEntity();
             listValoraciones.add(ent);
         }
+        if(!servicios.isEmpty())
         for(ServicioDTO dto : getServicios())
         {
             ServicioEntity ent = dto.toEntity();

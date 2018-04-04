@@ -22,7 +22,7 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     private String correo;
     private String direccion;
     private String login;
-    private String contraseña;
+    private String contrasena;
     
     @PodamExclude
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -128,19 +128,19 @@ public class ProveedorEntity extends BaseEntity implements Serializable
         this.login = login;
     }
 
-    /**
-     * @return the contraseña
+    /** Comentario para asegurar que el classPath se actualice
+     * @return the contrasena
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    /**
-     * @param contraseña the contraseña to set
+    /** Comentario para asegurar que el classPath se actualice
+     * @param contrasena the contrasena to set
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     /**
