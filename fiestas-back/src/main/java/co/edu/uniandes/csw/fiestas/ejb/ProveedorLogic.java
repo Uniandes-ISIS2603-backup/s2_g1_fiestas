@@ -99,7 +99,7 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No puede crear un proveedor sin login");
         }
-        if(persistence.loginRepetido(entity.getLogin()) && clientePersistence.loginRepetido(entity.getLogin()))
+        if(persistence.loginRepetido(entity.getLogin()) || clientePersistence.loginRepetido(entity.getLogin()))
         {
             throw new BusinessLogicException("Ya existe un usuario (proveedor o proveedor) con ese mismo login");
         }
