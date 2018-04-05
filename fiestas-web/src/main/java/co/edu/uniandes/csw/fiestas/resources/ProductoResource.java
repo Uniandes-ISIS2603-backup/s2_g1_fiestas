@@ -180,5 +180,6 @@ public class ProductoResource
     public void deleteProducto(@PathParam("id") Long id)
     {
         productoLogic.deleteProducto(id);
-    }    
+    }
+    
 }

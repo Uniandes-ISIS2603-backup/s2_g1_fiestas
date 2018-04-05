@@ -22,6 +22,10 @@ import java.util.List;
  *      "descripcion": String,
  *      "incluye": String
  *      "personal": Integer
+ *      "contratos":
+ *      {
+ *          "id" : Long
+ *      }
  *      "servicio":
  *      {
  *          "id": Long
@@ -39,6 +43,10 @@ import java.util.List;
  *      "descripcion": "Paquete de comida para boda"
  *      "incluye": "Incluye pastel y demás"
  *      "personal": 4
+ *      "contratos":
+ *      {
+ *          "id" :99979846
+ *      }
  *      "servicio":
  *      {
  *          "id": 4567672
@@ -73,9 +81,9 @@ Getters
  * 
  * @return el Servicio en el cual está el producto 
  */
-public ServicioDTO getServicio()
+public ServicioDTO darServicio()
 {
-    return servicio;
+return servicio;
 }
 
 /*

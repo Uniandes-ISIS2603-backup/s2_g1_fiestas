@@ -70,7 +70,7 @@ public class TematicaDTO {
      *
      * @return La descripción de la temática
      */
-    public String getDescripcion() {
+    public String darDescripcion() {
         return descripcion;
     }
 
@@ -78,7 +78,7 @@ public class TematicaDTO {
      *
      * @return La ID de la temática
      */
-    public long getID() {
+    public long darID() {
         return id;
     }
 

@@ -89,7 +89,7 @@ public class TematicaDetailDTO extends TematicaDTO {
     public TematicaEntity toEntity()
     {
         TematicaEntity entity = super.toEntity();
-        List<ServicioDTO> list1 = getServicios();
+        List<ServicioDTO> list1 = darServiciosSugeridos();
         ArrayList<ServicioEntity> list2 = new ArrayList<ServicioEntity>();
         for (ServicioDTO servicioDTO : list1) 
         {
@@ -104,7 +104,7 @@ public class TematicaDetailDTO extends TematicaDTO {
      *
      * @return La lista de Servicios sugeridos para esta temática
      */
-    public List<ServicioDTO> getServicios() {
+    public List<ServicioDTO> darServiciosSugeridos() {
         return serviciosSugeridos;
     }
 
