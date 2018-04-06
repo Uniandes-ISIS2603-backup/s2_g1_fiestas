@@ -209,7 +209,8 @@ public class ProveedorDTO
     public ProveedorDTO(ProveedorEntity e)
     {        
         if (e != null)
-        {    
+        {   
+            this.id=e.getId();
             this.contrasena=e.getContrasena();
             this.correo=e.getCorreo();
             this.direccion=e.getDireccion();

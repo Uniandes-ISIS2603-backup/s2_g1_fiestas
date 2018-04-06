@@ -161,15 +161,15 @@
 					"response": []
 				},
 				{
-					"name": "post proveedor con 404",
+					"name": "post proveedor con 412",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "67de0e9d-0034-4dfd-93ea-30221b8f7257",
+								"id": "f52f6edf-76c7-499b-bef3-007ce70e1450",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"]=responseCode.code===200;"
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
 								]
 							}
 						}
@@ -204,7 +204,7 @@
 					"response": []
 				},
 				{
-					"name": "put proveedor con 200 (saca error)",
+					"name": "put proveedor con 200",
 					"event": [
 						{
 							"listen": "test",
@@ -230,7 +230,7 @@
 							"raw": "{\n    \"contrasena\": \"chao123\",\n    \"correo\": \"j.pradilla@hotmail.com\",\n    \"direccion\": \"cll.2 #20-32\",\n    \"documento\": \"1012345678\",\n    \"login\": \"j11.pradilla\",\n    \"nombre\": \"JesÃºs Pradilla\",\n    \"penalizado\": false,\n    \"telefono\": 3212121212\n    }"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/proveedores/0",
+							"raw": "http://localhost:8080/fiestas-web/api/proveedores/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -240,7 +240,51 @@
 								"fiestas-web",
 								"api",
 								"proveedores",
-								"0"
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "put proveedor con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca799d1b-cd95-4869-b9b7-98e2bf50f71d",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contrasena\": \"chao123\",\n    \"correo\": \"j.pradilla@hotmail.com\",\n    \"direccion\": \"cll.2 #20-32\",\n    \"documento\": \"1012345678\",\n    \"login\": \"j11.pradilla\",\n    \"nombre\": \"JesÃºs Pradilla\",\n    \"penalizado\": false,\n    \"telefono\": 3212121212\n\t\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/proveedores/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"proveedores",
+								"9999"
 							]
 						},
 						"description": ""
@@ -385,7 +429,7 @@
 					"response": []
 				},
 				{
-					"name": "post cliente con 200",
+					"name": "post cliente con 200 (saca error)",
 					"event": [
 						{
 							"listen": "test",
@@ -664,10 +708,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7786fd47-de34-42c0-a289-7ecbaea5245c",
+								"id": "057561e8-fe07-4599-9c73-80e77d32dce0",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 404\"]=responseCode.code===404;"
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
 								]
 							}
 						}
@@ -702,7 +746,7 @@
 					"response": []
 				},
 				{
-					"name": "put blog con 200 (falla)",
+					"name": "put blog con 200",
 					"event": [
 						{
 							"listen": "test",
@@ -725,7 +769,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cuerpo\": \"Muy buena fiesta de semana santa. Todo muy respetuoso y acorde con la ocasión\",\n    \"likes\": 23,\n    \"titulo\": \"La mejor semana santa de todas\"\n}"
+							"raw": "{\n    \"cuerpo\": \"Muy buena fiesta de semana santa. Todo muy respetuoso y acorde con la ocasión\",\n    \"likes\": 23,\n    \"titulo\": \"La mejor semana santa de todas\",\n    \"cliente\": {\n        \"id\": 10011\n    },\n    \"evento\": {\n        \"id\": 10001\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/blogs/10001",
@@ -795,10 +839,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "86c839c6-2c55-4d4e-b752-d1357929274d",
+								"id": "63458a59-24e9-4e19-a674-df4e9d51658e",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"]=responseCode.code===200;"
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
 								]
 							}
 						}

@@ -173,6 +173,7 @@ public class ClienteResource
     public ClienteDetailDTO updateCliente(@PathParam("id") Long id, ClienteDetailDTO cliente) throws BusinessLogicException
     {
         ClienteEntity entity = cliente.toEntity();
+        entity.setId(id);
         try
         {
             return new ClienteDetailDTO(clienteLogic.updateCliente(entity));
