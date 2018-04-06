@@ -58,7 +58,7 @@ public class ContratoLogic {
      * @return Objeto de ContratoEntity con los datos nuevos y su ID.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public ContratoEntity createContrato(ContratoEntity entity, HorarioEntity entityH) throws BusinessLogicException {
+    public ContratoEntity createContrato(ContratoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un contrato ");
         
         if(entity.getValor() < 0)
@@ -70,10 +70,8 @@ public class ContratoLogic {
         {
             throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
         }
-        
-        entity.setHorario(entityH);
        
-        horarioLogic.createHorario(entityH);
+        horarioLogic.createHorario(entity.getHorario());
         
         return persistence.create(entity);
     }
