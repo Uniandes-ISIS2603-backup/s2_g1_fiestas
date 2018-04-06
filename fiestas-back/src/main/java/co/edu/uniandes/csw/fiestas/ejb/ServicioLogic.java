@@ -136,7 +136,7 @@ public class ServicioLogic {
      * Asocia un Proveedor existente a un Servicio
      *
      * @param servicioId Identificador de la instancia de Servicio
-     * @param proveedoresId Identificador de la instancia de Proveedor
+     * @param proveedorId Identificador de la instancia de Proveedor
      * @return Instancia de ProveedorEntity que fue asociada a Servicio
      * 
      */
@@ -156,33 +156,35 @@ public class ServicioLogic {
      * @param list Colección de instancias de ProveedorEntity a asociar a instancia
      * de Servicio
      * @return Nueva colección de ProveedorEntity asociada a la instancia de Servicio
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      * 
      */
     public List<ProveedorEntity> replaceProveedores(Long servicioId, List<ProveedorEntity> list) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la lista de proveedores asociada a un servicio");
+        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los proveedores asociados al servicio con id = {0}", servicioId);
         ServicioEntity servicio = getServicio(servicioId);
         
         if (list == null) 
         {
             throw new BusinessLogicException("No hay lista nueva.");
         }
-        if (!list.isEmpty()) 
+        if (list.isEmpty()) 
         {
-        } 
-        else 
-        {
-            throw new BusinessLogicException("No hay lista nueva o la lista está vacía");
+            throw new BusinessLogicException("La lista está vacía");
         }
         if (servicio != null)
         {
+            for (ProveedorEntity proveedorEntity : list) 
+                proveedorEntity.getServicios().add(servicio);
+            
             servicio.setProveedores(list);
-            updateServicio(servicio);
+            servicio = updateServicio(servicio);   
+            return list;
         } 
         else 
         {
             throw new BusinessLogicException("El servicio al que se le quiere reemplazar proveedores es nulo");
         }
-        return list;
+        
     }
 
     /**

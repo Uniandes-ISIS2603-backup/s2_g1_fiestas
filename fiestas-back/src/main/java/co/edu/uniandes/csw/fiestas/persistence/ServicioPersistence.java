@@ -41,6 +41,7 @@ public class ServicioPersistence {
       
       public ServicioEntity update (ServicioEntity entity)
       {
+          System.out.println("E: " + entity.getId() + " - " + entity.getProveedores().size());
         return em.merge(entity);
       }
       
