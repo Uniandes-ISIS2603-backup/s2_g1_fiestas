@@ -47,3 +47,10 @@ insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values
 insert into TematicaEntity(id, descripcion) values(10014,'Bodas');
 insert into TematicaEntity(id, descripcion) values(10015,'Fiestas Infantiles');
 
+insert into HorarioEntity(id, fecha, horafin, horainicio) values(10001,'08/03/2018','22:00:00', '13:00:00');
+insert into HorarioEntity(id, fecha, horafin, horainicio) values(10002,'08/03/2019','22:00:00', '13:00:00');
+insert into HorarioEntity(id, fecha, horafin, horainicio) values(10003,'08/03/2028','22:00:00', '13:00:00');
+
+insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10001, 'Por pagar', 'Sin términos ni condiciones', 2000000000, 10001);
+insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10002, 'Pagada la primera cuota', 'Si el cliente cancela despues de 2 semanas de haber contratado el servicio deberá pagar el 100% del costo', 345000000, 10002);
+insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10003, 'Pagado', 'Sin términos ni condiciones', 20000000, 10003);

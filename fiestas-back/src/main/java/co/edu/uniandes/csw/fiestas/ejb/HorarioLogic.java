@@ -54,6 +54,10 @@ public class HorarioLogic
             throw new BusinessLogicException("La hora de inicio no puede ser una fecha que ya ocurrió");
         }
         
+        if(entity.getFecha().before(new Date()))
+        {
+            throw new BusinessLogicException("La fecha del evento no puede ser una fecha que ya ocurrió");
+        }
         
         LOGGER.info("Termina proceso de creación del horario");
         return persistence.create(entity);
