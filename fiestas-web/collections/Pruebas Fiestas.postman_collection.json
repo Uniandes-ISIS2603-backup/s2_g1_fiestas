@@ -566,6 +566,18 @@
 			"item": [
 				{
 					"name": "get blog con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4b6004a-0a02-41b5-9304-95c247cedeb2",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1876,6 +1888,205 @@
 							]
 						},
 						"description": "UPDATE pago fallido por que el metodo de pago no cumple la condicion"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Horario",
+			"description": "",
+			"item": [
+				{
+					"name": "get horarios con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14ec2ebc-3244-4401-8961-8a9bdd046b70",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get horario con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e88aa350-a7cc-4d3d-a08c-d1512962c57f",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios/10001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios",
+								"10001"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get horario con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbab0fad-8739-49b4-8db4-ea866dff7c77",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios",
+								"9999"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "post horario con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b61cafb5-2fd5-4333-b5bc-a5456c725d92",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fecha\": \"2018-08-03T00:00:00-05:00\",\n        \"horaFin\": \"2100-01-01T22:00:00-05:00\",\n        \"horaInicio\": \"2070-01-01T13:00:00-05:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "post horario con 412",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "39ee54c9-0d54-4339-a5eb-8f83b4fb7850",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fecha\": \"2017-08-03T00:00:00-05:00\",\n        \"horaFin\": \"2100-01-01T22:00:00-05:00\",\n        \"horaInicio\": \"2070-01-01T13:00:00-05:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios"
+							]
+						},
+						"description": ""
 					},
 					"response": []
 				}
