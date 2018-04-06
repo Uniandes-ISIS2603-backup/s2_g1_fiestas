@@ -148,14 +148,9 @@ public class ProveedorResource {
     @POST
     public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException
     {
-        try
-        {
-            return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 412);
-        }
+        
+        return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
+        
     }
     
     /**
@@ -181,19 +176,12 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public ProveedorDetailDTO updateProveedor(@PathParam("id") Long id, ProveedorDetailDTO proveedor)
+    public ProveedorDetailDTO updateProveedor(@PathParam("id") long id, ProveedorDetailDTO proveedor) throws BusinessLogicException
     {
         ProveedorEntity entity = proveedor.toEntity();
+        entity.setId(id);
         
-        try
-        {
-            return new ProveedorDetailDTO(proveedorLogic.updateProveedor(entity));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 412);
-        }
-        
+        return new ProveedorDetailDTO(proveedorLogic.updateProveedor(entity));       
     }
     
     /**
@@ -831,16 +819,16 @@ public class ProveedorResource {
     @Path(value = "{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
     public void removeContratos(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "proveedorId") final Long proveedorId, @PathParam(value = "contratoId") final Long contratoId) {
         executorService.submit
-                (
-                        new Runnable()
-                        {
-                            public void run()
-                            {
-                                doRemoveContratos(proveedorId, contratoId);
-                                asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
-                            }
-                        }
-                );
+                        (
+                                new Runnable()
+                                {
+                                    public void run()
+                                    {
+                                        doRemoveContratos(proveedorId, contratoId);
+                                        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+                                    }
+                                }
+                        );
     }
     
     private void doRemoveContratos(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId)

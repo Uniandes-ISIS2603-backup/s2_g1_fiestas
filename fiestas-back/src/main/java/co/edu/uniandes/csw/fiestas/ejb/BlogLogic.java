@@ -117,7 +117,7 @@ public class BlogLogic {
         if(logicEvento.getEvento(entity.getEvento().getId())==null)
             throw new BusinessLogicException("El evento del blog no existe");
 
-        if(clientePersistence.find(entity.getEvento().getId())==null)
+        if(clientePersistence.find(entity.getCliente().getId())==null)
             throw new BusinessLogicException("El cliente del blog no existe");        
         
         return persistence.update(entity);
