@@ -1,14 +1,13 @@
 {
 	"info": {
 		"name": "Pruebas Fiestas",
-		"_postman_id": "678be4d3-36b6-2dfd-94e7-e373cbd7cac2",
+		"_postman_id": "c1b5f96c-d969-7e07-7bd5-d087c7ec88ca",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Proveedor",
-			"description": "",
 			"item": [
 				{
 					"name": "get proveedores con 200",
@@ -27,7 +26,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/proveedores",
 							"protocol": "http",
@@ -40,8 +42,7 @@
 								"api",
 								"proveedores"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -62,7 +63,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/proveedores/10011",
 							"protocol": "http",
@@ -76,8 +80,7 @@
 								"proveedores",
 								"10011"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -98,7 +101,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/proveedores/9999",
 							"protocol": "http",
@@ -112,8 +118,7 @@
 								"proveedores",
 								"9999"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -155,8 +160,7 @@
 								"api",
 								"proveedores"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -198,8 +202,7 @@
 								"api",
 								"proveedores"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -242,8 +245,7 @@
 								"proveedores",
 								"1"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -286,6 +288,77 @@
 								"proveedores",
 								"9999"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete proveedor con 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f074192-6a16-4ad6-a3ae-b78a67d1c119",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/proveedores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"proveedores",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete proveedor con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75cef460-a880-415b-a4c5-3befd278abb4",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/proveedores/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"proveedores",
+								"9999"
+							]
 						},
 						"description": ""
 					},
@@ -295,7 +368,6 @@
 		},
 		{
 			"name": "Cliente",
-			"description": "",
 			"item": [
 				{
 					"name": "get clientes con 200",
@@ -335,8 +407,7 @@
 								"api",
 								"clientes"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -379,8 +450,7 @@
 								"clientes",
 								"10011"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -423,13 +493,12 @@
 								"clientes",
 								"9999"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "post cliente con 200 (saca error)",
+					"name": "post cliente con 200",
 					"event": [
 						{
 							"listen": "test",
@@ -466,8 +535,7 @@
 								"api",
 								"clientes"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -509,13 +577,12 @@
 								"api",
 								"clientes"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "put cliente con 200 (saca error)",
+					"name": "put cliente con 200",
 					"event": [
 						{
 							"listen": "test",
@@ -553,6 +620,120 @@
 								"clientes",
 								"1"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put cliente con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "da8c079c-c0a9-4f9b-a49b-36fcd1769a97",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\": \"David Niño\",\n\t\"documento\":1020430239,\n\t\"telefono\":31499939456,\n\t\"correo\": \"df.nino10@uniandes.edu.co\", \n\t\"direccion\": \"cll.32 #32-32\",\n\t\"login\": \"df.nino10\", \n\t\"contrasena\":\"chao123456789\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete cliente con 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f074192-6a16-4ad6-a3ae-b78a67d1c119",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete cliente con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80d6f734-6eef-45cc-8b8f-f7cf64cdf477",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/proveedores/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"proveedores",
+								"9999"
+							]
 						},
 						"description": ""
 					},
@@ -562,7 +743,6 @@
 		},
 		{
 			"name": "Blog",
-			"description": "",
 			"item": [
 				{
 					"name": "get blog con 200",
@@ -581,7 +761,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/blogs/10001",
 							"protocol": "http",
@@ -595,8 +778,7 @@
 								"blogs",
 								"10001"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -617,7 +799,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/blogs/45457",
 							"protocol": "http",
@@ -631,8 +816,7 @@
 								"blogs",
 								"45457"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -653,7 +837,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/blogs",
 							"protocol": "http",
@@ -709,8 +896,7 @@
 								"api",
 								"blogs"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -752,8 +938,7 @@
 								"api",
 								"blogs"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -796,8 +981,7 @@
 								"blogs",
 								"10001"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -840,8 +1024,7 @@
 								"blogs",
 								"9999"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -867,7 +1050,10 @@
 								"value": "application/json"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/blogs/10001",
 							"protocol": "http",
@@ -881,8 +1067,7 @@
 								"blogs",
 								"10001"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -908,7 +1093,10 @@
 								"value": "application/json"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/blogs/9999",
 							"protocol": "http",
@@ -922,8 +1110,7 @@
 								"blogs",
 								"9999"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -1895,7 +2082,6 @@
 		},
 		{
 			"name": "Horario",
-			"description": "",
 			"item": [
 				{
 					"name": "get horarios con 200",
@@ -1914,7 +2100,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/horarios",
 							"protocol": "http",
@@ -1927,8 +2116,7 @@
 								"api",
 								"horarios"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1949,7 +2137,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/horarios/10001",
 							"protocol": "http",
@@ -1963,8 +2154,7 @@
 								"horarios",
 								"10001"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1985,7 +2175,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/fiestas-web/api/horarios/9999",
 							"protocol": "http",
@@ -1999,8 +2192,7 @@
 								"horarios",
 								"9999"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2042,8 +2234,7 @@
 								"api",
 								"horarios"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2085,8 +2276,176 @@
 								"api",
 								"horarios"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put horario con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b61cafb5-2fd5-4333-b5bc-a5456c725d92",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fecha\": \"2018-08-03T00:00:00-05:00\",\n        \"horaFin\": \"2100-01-01T22:00:00-05:00\",\n        \"horaInicio\": \"2070-01-01T13:00:00-05:00\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post horario con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "346a1def-dc8d-4cce-b483-afa0f5449060",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fecha\": \"2017-08-03T00:00:00-05:00\",\n        \"horaFin\": \"2100-01-01T22:00:00-05:00\",\n        \"horaInicio\": \"2070-01-01T13:00:00-05:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete horario con 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63458a59-24e9-4e19-a674-df4e9d51658e",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/blogs/10001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"blogs",
+								"10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete horario con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99c1cafa-774b-48dc-a6fc-3da47c331e9f",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/horarios/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"horarios",
+								"9999"
+							]
+						}
 					},
 					"response": []
 				}

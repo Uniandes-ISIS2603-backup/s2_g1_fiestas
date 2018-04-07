@@ -174,6 +174,8 @@ public class ClienteResource
     {
         ClienteEntity entity = cliente.toEntity();
         entity.setId(id);
+        if(getCliente(id)==null)
+            throw new WebApplicationException("No existe el cliente a actualizar.", 404);
         
         return new ClienteDetailDTO(clienteLogic.updateCliente(entity));
         
