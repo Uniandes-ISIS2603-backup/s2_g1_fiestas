@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
+import co.edu.uniandes.csw.fiestas.dtos.BonoDTO;
+import co.edu.uniandes.csw.fiestas.dtos.BonoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
@@ -7,6 +9,7 @@ import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
+import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -841,5 +844,251 @@ public class ProveedorResource {
         {
             throw new WebApplicationException(e.getMessage(), 404);
         }
+    }
+    
+    /**
+    * Convierte una lista de BonoEntity a una lista de BonoDTO.
+    *
+    * @param entityList Lista de BonoEntity a convertir.
+    * @return Lista de BonoDTO convertida.
+    *
+    */
+    private List<BonoDTO> bonosListEntity2DTO(List<BonoEntity> bonoList) {
+        List<BonoDTO> list = new ArrayList<>();
+        for (BonoEntity entity : bonoList) {
+            list.add(new BonoDTO(entity));
+        }
+        return list;
+    }
+    
+    /**
+     * <h1>GET /{proveedoresId}/bonos/ : Obtener todos los bonos de un proveedor.</h1>
+     *
+     * <pre>Busca y devuelve todos los bonos que bonos en el proveedor.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve todos los bonos del proveedor.</code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSONArray {@link BonoDTO} - Los bonos encontrados
+     * en el proveedor. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    @Path("{proveedoresId: \\d+}/bonos")
+    public List<BonoDTO> listBonos(@PathParam("proveedoresId") Long proveedoresId) throws BusinessLogicException
+    {       
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if(proveedor == null)
+            throw new WebApplicationException("El proveedor especificado no existe.", 404);
+        
+        return bonosListEntity2DTO(proveedorLogic.getBonos(proveedoresId));
+    }
+    
+    /**
+     * <h1>GET /{proveedoresId}/bonos/{bonoId} : Obtener
+     * bono por id del proveedor por id.</h1>
+     *
+     * <pre>Busca el bono con el id asociado dentro del proveedor con id asociado.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el bono correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un bono con el id dado dentro del proveedor.
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonoId Identificador del bono que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BonoDTO} - El bono buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra la proveedor o el bono.
+     */
+    @GET
+    @Path("{proveedoresId: \\d+}/bonos/{bonoId: \\d+}")
+    public BonoDTO getBonoC(@PathParam("proveedoresId") Long proveedoresId, @PathParam("eventosId") Long bonoId)
+    {
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if(proveedor == null)
+            throw new WebApplicationException("El proveedor no existe", 404);
+        
+        try{return new BonoDTO(proveedorLogic.getBonoP(bonoId, proveedoresId));}
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+      
+    /**
+     * <h1>GET /bonos/{bonoId} : Obtener
+     * bono por id.</h1>
+     *
+     * <pre>Busca el bono con el id .
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el bono correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un bono con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param bonoId Identificador del bono que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BonoDTO} - El bono buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra el bono.
+     */
+    @GET
+    @Path("bonos/{bonoId: \\d+}")
+    public BonoDTO getBono(@PathParam("eventosId") Long bonoId)
+    {
+        try{return new BonoDTO(proveedorLogic.getBono(bonoId));}
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+    
+
+    /**
+     * <h1>POST /{proveedoresId}/bonos/{bonosId} : Guarda un
+     * bono dentro del proveedor.</h1>
+     *
+     * <pre> Guarda un bono dentro de un proveedor con la informacion que
+     * recibe el la URL. Se devuelve el bono que se guarda en la proveedor.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo bono .
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonoDTO El bono que se desea guardar. Este
+     * debe ser la representación de un bono en JSON.
+     * @return JSON {@link BonoDetailDTO} - El bono guardado en la
+     * proveedor.
+     */
+    @POST
+    @Path("{proveedoresId: \\d+}")
+    public BonoDTO addBono(@PathParam("proveedoresId") Long proveedoresId, BonoDTO bono)
+    {        
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if (proveedor == null)
+            throw new WebApplicationException("El proveedor no existe.", 404);
+        try{
+            BonoEntity bonoE = bono.toEntity();
+            if(bonoE == null)
+                throw new WebApplicationException("El bono no se creó correctamente.", 404);            
+            return new BonoDTO(proveedorLogic.addBono(bonoE, proveedoresId));
+        }
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+    
+    @PUT
+    @Path("{proveedoresId: \\d+}/contratos/{contratosId: \\d+}/bonos/{bonosId: \\d+}")
+    public BonoDTO setBono2Contrato(@PathParam("proveedoresId") Long proveedoresId, @PathParam("bonosId") Long bonosId,@PathParam("contratosId") Long contratosId) throws BusinessLogicException
+    {        
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        ContratoEntity contrato = proveedorLogic.getContrato(proveedoresId, contratosId);
+        BonoEntity bono = proveedorLogic.getBonoP(bonosId,proveedoresId);
+        if (proveedor == null)
+            throw new WebApplicationException("El proveedor no existe.", 404);
+        if (contrato == null)
+            throw new WebApplicationException("El contrat no existe.", 404);
+        if (bono == null)
+            throw new WebApplicationException("El bono no existe.", 404);
+        
+        
+        proveedorLogic.setBono2Contrato(bonosId, proveedoresId, contratosId);
+        return new BonoDetailDTO(bono);
+    }
+    
+        /**
+     * <h1>PUT /{proveedoresId}/bonos: Edita los bonos de un proveedor..</h1>
+     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Proveedor
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó los bonos del proveedor.
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonos JSONArray {@link BonoDetailDTO} El arreglo de
+     * bonos nuevo para la proveedor.
+     * @return JSON {@link EventoDetailDTO} - El arreglo de bonos guardado
+     * en la proveedor.
+     */
+    @PUT
+    @Path("{proveedoresId: \\d+}/bonos")
+    public List<BonoDTO> replaceBonos(@PathParam("proveedoresId") Long proveedoresId, List<BonoDetailDTO> bonos) 
+    {        
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if(proveedor == null){
+            throw new WebApplicationException("El proveedor no existe.", 404);
+        }
+        try
+        {
+            return bonosListEntity2DTO(proveedorLogic.replaceBonos(proveedoresId, bonosListDTO2Entity(bonos)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+
+    private List<BonoEntity> bonosListDTO2Entity(List<BonoDetailDTO> bonos) {
+        List<BonoEntity> lista = new ArrayList<>();
+        for (BonoDetailDTO bonoD : bonos) {
+            BonoEntity ent = bonoD.toEntity();
+            lista.add(ent);
+        }
+        return lista;
+    }
+    
+    /**
+     * <h1>DELETE /{proveedoresId}/bonos/{bonoId} : Elimina un
+     * bono dentro del proveedor.</h1>
+     *
+     * <pre> Elimina la referencia del bono asociado al ID dentro del proveedor
+     * con la informacion que recibe el la URL.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Se eliminó la referencia del bono.
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonosId Identificador del bono que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     */
+    @DELETE
+    @Path("{proveedoresId: \\d+}/bonos/{bonosId: \\d+}")
+    public void removeBono(@PathParam("proveedoresId") Long proveedoresId, @PathParam("bonosId") Long bonosId) 
+    {
+        if (proveedorLogic.getProveedor(proveedoresId)==null)
+            throw new WebApplicationException("El proveedor no existe", 404);
+        try
+        {
+            proveedorLogic.removeBono(bonosId, proveedoresId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+        
     }
 }

@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
+import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
@@ -27,6 +29,9 @@ public class ContratoLogic {
     
     @Inject
     private HorarioLogic horarioLogic;
+    
+    @Inject
+    private BonoLogic bonoLogic;
 
     /**
      * Obtiene la lista de los registros de Contrato.
@@ -191,5 +196,24 @@ public class ContratoLogic {
         return contrato.getHorario();
         
     }
-
+    
+    public BonoEntity getBono(Long id){
+        BonoEntity bE=getContrato(id).getBono();
+        return bE;
+    }
+    
+    
+    public void setBono(BonoEntity eE, Long idC) throws BusinessLogicException{
+        ContratoEntity cE = getContrato(idC);
+        if(cE==null)
+            throw new BusinessLogicException("El contrato es nulo.");
+        BonoEntity bE = getBono(idC);
+        if(eE==null)
+            throw new BusinessLogicException("El bono a aplicar es nulo.");
+        if(cE.getBono()!=null)
+            throw new BusinessLogicException("El contrato ya tine aplcado un bono.");
+        cE.setBono(bE);
+        persistence.update(cE);
+        
+    }
 }

@@ -27,18 +27,26 @@ public class BonoPersistence {
     @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
     
-    public BonoEntity find(Long id) {
+    public BonoEntity find(long id) {
         LOGGER.log(Level.INFO, "Consultando Bono con id={0}", id);
          BonoEntity entity = em.find(BonoEntity.class, id);
         return entity;
     }
     
-        public List<BonoEntity> findAllC(Long proveedorId) {
+    public List<BonoEntity> findAllC(long proveedorId) {
         LOGGER.log(Level.INFO, "Consultando Bono cuyo dueño es el proveedor con id={0}", proveedorId);
         Query q = em.createQuery("SELECT c FROM BONOENTITY WHERE c.PROVEEDOR_ID = ?1");
         q.setParameter(1, proveedorId);
         List<BonoEntity> bE = q.getResultList();
         return bE;
+    }
+    
+    public BonoEntity findAllPandC(long proveedorId, long contratoId) {
+        Query q = em.createQuery("SELECT c FROM BONOENTITY WHERE c.PROVEEDOR_ID = ?1 AND c.CONTRATO_ID=?2");
+        q.setParameter(1, proveedorId);
+        q.setParameter(2, contratoId);
+        List<BonoEntity> bE = q.getResultList();
+        return bE.get(0);
     }
         
     /**

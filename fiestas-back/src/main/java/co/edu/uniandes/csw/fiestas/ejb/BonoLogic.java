@@ -64,6 +64,17 @@ public class BonoLogic {
     }
 
     /**
+     * Obtiene los datos de una instancia de Bono a partir del id de su proveedor y el id del contrato al cual se aplica.
+     *
+     * @param idP Identificador del proveedor
+     * @param idC Identificador del contrato
+     * @return Instancia de BonoEntity con los datos del Bono consultado.
+     */
+    public BonoEntity getBono(long idP, long idC) {
+        return persistence.findAllPandC(idP,idC);
+    }
+    
+    /**
      * Se encarga de crear un Bono en la base de datos.
      *
      * @param entity Objeto de BonoEntity con los datos nuevos
