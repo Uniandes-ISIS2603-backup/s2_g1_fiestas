@@ -118,7 +118,13 @@ public class BlogLogic {
             throw new BusinessLogicException("El evento del blog no existe");
 
         if(clientePersistence.find(entity.getCliente().getId())==null)
-            throw new BusinessLogicException("El cliente del blog no existe");        
+            throw new BusinessLogicException("El cliente del blog no existe");    
+        
+        if(clientePersistence.find(entity.getCliente().getId())!=entity.getCliente())
+            throw new BusinessLogicException("No es posible cambiar el cliente del blog.");    
+        
+        if(logicEvento.getEvento(entity.getEvento().getId())!=entity.getEvento())
+            throw new BusinessLogicException("No es posible cambiar el evento del blog");
         
         return persistence.update(entity);
     }

@@ -26,6 +26,11 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private ProveedorEntity proveedor;
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval = true)
+    private BonoEntity bono;
+
 
     @PodamExclude
     @OneToMany
@@ -101,6 +106,20 @@ public class ContratoEntity extends BaseEntity implements Serializable {
         return estado;
     }
 
+    /**
+     * @return the bono
+     */
+    public BonoEntity getBono() {
+        return bono;
+    }
 
+    /**
+     * @param bono the bono to set
+     */
+    public void setBono(BonoEntity bono) {
+        this.bono = bono;
+    }
+
+    
 
 }

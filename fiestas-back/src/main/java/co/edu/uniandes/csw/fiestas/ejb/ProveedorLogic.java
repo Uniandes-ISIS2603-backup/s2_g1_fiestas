@@ -1,6 +1,7 @@
 
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
@@ -37,6 +38,9 @@ public class ProveedorLogic
 
     @Inject
     private ContratoLogic contratoLogic;
+    
+    @Inject
+    private BonoLogic bonoLogic;
     
     @Inject
     private ValoracionLogic valoracionLogic;
@@ -574,5 +578,102 @@ public class ProveedorLogic
         } else {
             throw new BusinessLogicException("No existe dicha valoración en ese proveedor");
         }
-    } 
+    }
+    
+    /**
+     * 
+     * @param proveedoresId
+     * @return 
+     */
+    public List<BonoEntity> getBonos(Long proveedoresId) throws BusinessLogicException {
+       ProveedorEntity proveedor = getProveedor(proveedoresId);
+       if(proveedor == null)
+           throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar bonos");
+       return bonoLogic.getBonos(proveedoresId);
+    }
+
+    public BonoEntity getBonoP(Long bonoId, Long proveedorId) throws BusinessLogicException {
+       ProveedorEntity proveedor = getProveedor(proveedorId);
+       BonoEntity bono = bonoLogic.getBono(bonoId);
+       if(proveedor == null)
+           throw new BusinessLogicException("No existe el proveedor.");
+       if(bono == null)
+           throw new BusinessLogicException("No existe el bono.");
+       if(bono.getProveedor().getId()!=proveedor.getId())
+           throw new BusinessLogicException("El bono a buscar existe, pero el proveedor no corresponde");
+       return bono;
+    }
+    
+    
+    public BonoEntity getBono(Long bonoId) throws BusinessLogicException {
+       BonoEntity bono = bonoLogic.getBono(bonoId);
+       if(bono==null)
+           throw new BusinessLogicException("El bono a buscar no existe.");
+       return bono;
+    }
+
+    public BonoEntity addBono(BonoEntity bono, Long proveedoresId) throws BusinessLogicException {
+        ProveedorEntity proveedor = getProveedor(proveedoresId);
+         if(bono== null)
+            throw new BusinessLogicException("El bono es vacío.");
+        bono.setProveedor(proveedor);
+        if(bono.getContrato()!=null && bonoLogic.getBono(proveedoresId, bono.getContrato().getId())!=null)
+        {
+            throw new BusinessLogicException("El proveedor ya aplicó un bono a ese contrato.");
+        }
+        bonoLogic.createBono(bono);
+        proveedor.addBono(bono);
+        updateProveedor(proveedor);
+        return bono;
+    }
+    
+    public BonoEntity setBono2Contrato(long bonoId, long proveedoresId, long contratoId) throws BusinessLogicException {
+        ProveedorEntity proveedor = getProveedor(proveedoresId);
+         if(proveedor== null)
+            throw new BusinessLogicException("El proveedor no existe.");
+         BonoEntity bono=getBono(bonoId);
+         if(bono==null)
+             throw new BusinessLogicException("El bono a aplicar no existe.");
+        ContratoEntity contrato = getContrato(proveedoresId, contratoId);
+        if(contrato == null)
+            throw new BusinessLogicException("El contrato no existe.");
+        if( bonoLogic.getBono(proveedoresId, contrato.getId())!=null)
+        {
+            throw new BusinessLogicException("El proveedor ya aplicó un bono a ese contrato.");
+        }
+        bono.setContrato(contrato);
+        bonoLogic.updateBono(bono);
+        updateProveedor(proveedor);
+        contrato.setValor(contrato.getValor()*(1-bono.getDescuento())/100);
+        contratoLogic.updateContrato(contrato);
+        return bono;
+    }
+
+    public List<BonoEntity> replaceBonos(Long proveedoresId, List<BonoEntity> bonos) throws BusinessLogicException {
+        ProveedorEntity proveedor = getProveedor(proveedoresId);
+        
+        for (BonoEntity bono : bonos) {
+            if(bonoLogic.getBono(bono.getId())!=null)
+                throw new BusinessLogicException("Se quiere añadir bono que ya existe");
+            bono.setProveedor(proveedor);
+            bonoLogic.createBono(bono);
+        }
+        proveedor.setBonos(bonos);
+        updateProveedor(proveedor);
+        return bonos;
+    }
+
+
+    public void removeBono(Long bonosId, Long proveedoresId) throws BusinessLogicException {
+        ProveedorEntity proveedor = getProveedor(proveedoresId);
+        BonoEntity bono = bonoLogic.getBono(bonosId);
+        if(bono==null)
+            throw new BusinessLogicException("No se encuentra el bono especificado.");
+        if(bono.getProveedor().getId()!=proveedor.getId())
+            throw new BusinessLogicException("No puede eliminarse un bono de otro proveedor.");
+        proveedor.getBonos().remove(bono);
+        updateProveedor(proveedor);
+        bonoLogic.deleteBono(bonosId);
+    }
+
 }

@@ -174,21 +174,11 @@ public class ClienteResource
     {
         ClienteEntity entity = cliente.toEntity();
         entity.setId(id);
-        try
-        {
-            return new ClienteDetailDTO(clienteLogic.updateCliente(entity));
-        }
-        catch(BusinessLogicException e)
-        {
-            if(e.getMessage().equals("No existe un cliente con dicho id para actualizar"))
-            {
-                throw new WebApplicationException(e.getMessage(), 404);
-            }            
-            else
-            {
-                throw new WebApplicationException(e.getMessage(), 412);
-            }
-        }   
+        if(getCliente(id)==null)
+            throw new WebApplicationException("No existe el cliente a actualizar.", 404);
+        
+        return new ClienteDetailDTO(clienteLogic.updateCliente(entity));
+        
         
     }
 
@@ -211,16 +201,11 @@ public class ClienteResource
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteCliente(@PathParam("id") Long id)
+    public void deleteCliente(@PathParam("id") Long id) throws BusinessLogicException
     {        
-        try
-        {
-            clienteLogic.deleteCliente(id);
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }        
+        
+        clienteLogic.deleteCliente(id);
+      
     }
 
     /**

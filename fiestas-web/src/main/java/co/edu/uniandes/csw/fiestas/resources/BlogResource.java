@@ -82,7 +82,7 @@ public class BlogResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public BlogDetailDTO getBlog(@PathParam("id") Long id, @PathParam("id") Long eventoId) {
+    public BlogDetailDTO getBlog(@PathParam("id") Long id) {
         BlogEntity bE=logic.getBlog(id);
         if(bE==null)
             throw new WebApplicationException("El blog no existe", 404);
@@ -142,7 +142,8 @@ public class BlogResource {
         if (oldEntity == null) {
             throw new WebApplicationException("El blog no existe", 404);
         }
-        entity.setEvento(oldEntity.getEvento());
+        if(entity.getEvento()==null)entity.setEvento(oldEntity.getEvento());
+        if(entity.getCliente()==null)entity.setCliente(oldEntity.getCliente());
         try{
         return new BlogDetailDTO(logic.updateBlog(entity));
         }
