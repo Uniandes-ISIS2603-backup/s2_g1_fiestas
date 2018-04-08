@@ -644,6 +644,8 @@ public class ProveedorLogic
         bono.setContrato(contrato);
         bonoLogic.updateBono(bono);
         updateProveedor(proveedor);
+        contrato.setValor(contrato.getValor()*(1-bono.getDescuento())/100);
+        contratoLogic.updateContrato(contrato);
         return bono;
     }
 
