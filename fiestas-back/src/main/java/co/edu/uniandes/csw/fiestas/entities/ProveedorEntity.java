@@ -29,7 +29,7 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     private List<ContratoEntity> contratos;
     
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BonoEntity> bonos;
     
     @PodamExclude

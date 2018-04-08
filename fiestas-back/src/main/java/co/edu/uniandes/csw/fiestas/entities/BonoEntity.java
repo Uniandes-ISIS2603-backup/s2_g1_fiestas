@@ -32,7 +32,7 @@ public class BonoEntity extends BaseEntity implements Serializable {
     /**
      * Porcentaje de descuento
      */
-    private double descuento;
+    private int descuento;
 
     /**
     * Fecha desde la cual aplica el bono
@@ -82,14 +82,14 @@ public class BonoEntity extends BaseEntity implements Serializable {
     /**
      * @return the descuento
      */
-    public double getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 
     /**
      * @param descuento the descuento to set
      */
-    public void setDescuento(double descuento) {
+    public void setDescuento(int descuento) {
         this.descuento = descuento;
     }
 
