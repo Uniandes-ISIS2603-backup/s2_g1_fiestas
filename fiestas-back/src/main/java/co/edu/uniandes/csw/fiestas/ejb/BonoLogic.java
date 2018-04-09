@@ -97,7 +97,7 @@ public class BonoLogic {
         if(entity.getExpira().before(new Date()))
             throw new BusinessLogicException("El bono no debería expirar antes de su creación.");
         
-        if(entity.getDescuento()<=0)
+        if(entity.getDescuento()<=0 ||entity.getDescuento()>100)
             throw new BusinessLogicException("El bono debería tener un procentaje de descuento razonable.");
         
         if(entity.getMotivo()== null || entity.getMotivo().equals(""))
