@@ -197,8 +197,12 @@ public class BlogLogicTest {
         newEntity.setCliente(entity.getCliente());
 
         
-        
-          BlogEntity actualizado=blogLogic.updateBlog(newEntity);
+        try{
+        BlogEntity actualizado=blogLogic.updateBlog(newEntity);
+        }
+        catch(BusinessLogicException e){
+            fail();
+        }
                
         BlogEntity resp = em.find(BlogEntity.class, newEntity.getId());
 
@@ -247,7 +251,12 @@ public class BlogLogicTest {
     public void addEventoTest(){
         BlogEntity blogE = data.get(0);
         blogE.setEvento(null);
+        try{
         blogLogic.updateBlog(blogE);
+        }
+        catch(BusinessLogicException e){
+            fail();
+        }
         EventoEntity evento= factory.manufacturePojo(EventoEntity.class);
         
         try{

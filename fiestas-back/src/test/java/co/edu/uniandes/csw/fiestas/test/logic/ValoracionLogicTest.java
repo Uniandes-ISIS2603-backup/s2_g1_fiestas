@@ -38,7 +38,7 @@ public class ValoracionLogicTest {
     @Inject
     private UserTransaction utx;
     
-    private List<ValoracionEntity> data = new ArrayList<ValoracionEntity>();
+    private List<ValoracionEntity> data = new ArrayList<>();
     
     @Deployment
     public static JavaArchive createDeployment() {

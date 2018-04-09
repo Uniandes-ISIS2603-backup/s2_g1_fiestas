@@ -1,8 +1,11 @@
 package co.edu.uniandes.csw.fiestas.resources;
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.ContratoLogic;
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,6 +33,9 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 
 public class ContratoResource {
+    
+    @Inject 
+    private ContratoLogic logic;
 
     /**
      * <h1>GET /contratos : Obtener todos los Contratos.</h1>
@@ -44,7 +50,22 @@ public class ContratoResource {
      */
     @GET
     public List<ContratoDetailDTO> getContratos() {
-        return new ArrayList<>();
+        return listEntity2DTO(logic.getContratos());
+    }
+    /**
+     * Convierte una lista de ContratoEntity a una lista de ContratoDetailDTO.
+     *
+     * @param entityList Lista de ContratoEntity a convertir.
+     * @return Lista de ContratoDetailDTO convertida.
+     *
+     */
+    private List<ContratoDetailDTO> listEntity2DTO(List<ContratoEntity> entityList)
+    {
+        List<ContratoDetailDTO> list = new ArrayList<>();
+        for (ContratoEntity entity : entityList) {
+            list.add(new ContratoDetailDTO(entity));
+        }
+        return list;
     }
 
     /**
@@ -65,8 +86,11 @@ public class ContratoResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public ContratoDetailDTO getContrato(@PathParam("id") Long id) {
-        return null;
+    public ContratoDetailDTO getContrato(@PathParam("id") Long id) throws BusinessLogicException {
+        ContratoEntity ent = logic.getContrato(id);
+        if(ent == null)
+            throw new BusinessLogicException("No existe el contrato pasado por parámetro.");
+        return new ContratoDetailDTO(ent);
     }
     
         /**
@@ -92,19 +116,30 @@ public class ContratoResource {
      */
     @POST
     public ContratoDetailDTO createContrato(ContratoDetailDTO contrato) throws BusinessLogicException {
-        return contrato;
+        return new ContratoDetailDTO(logic.createContrato(contrato.toEntity()));
     }
     
+    /**
+     * 
+     * @param id
+     * @param contrato
+     * @return 
+     */
     @PUT
     @Path("{id: \\d+}")
-    public ContratoDetailDTO updateContrato(@PathParam("id")Long id) {
-        return null;
+    public ContratoDetailDTO updateContrato(@PathParam("id")Long id,ContratoDetailDTO contrato) {
+        ContratoEntity ent = contrato.toEntity();
+        ent.setId(id);
+        return new ContratoDetailDTO(logic.updateContrato(ent));
     }
     
     @DELETE
     @Path("{id:\\d+}")
-    public void deleteContrato(@PathParam("id")Long id){
-        
+    public void deleteContrato(@PathParam("id")Long id) throws BusinessLogicException{
+        ContratoEntity ent = logic.getContrato(id);
+        if(ent== null)
+            throw new BusinessLogicException("No existe el contrato a eliminar.");
+        logic.deleteContrato(id);
     }
 }
     

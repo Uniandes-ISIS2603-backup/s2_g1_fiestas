@@ -22,11 +22,15 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     private String correo;
     private String direccion;
     private String login;
-    private String contraseña;
+    private String contrasena;
     
     @PodamExclude
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContratoEntity> contratos;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BonoEntity> bonos;
     
     @PodamExclude
     @ManyToMany
@@ -128,19 +132,19 @@ public class ProveedorEntity extends BaseEntity implements Serializable
         this.login = login;
     }
 
-    /**
-     * @return the contraseña
+    /** Comentario para asegurar que el classPath se actualice
+     * @return the contrasena
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    /**
-     * @param contraseña the contraseña to set
+    /** Comentario para asegurar que el classPath se actualice
+     * @param contrasena the contrasena to set
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     /**
@@ -228,5 +232,31 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     public void removerValoracion(ValoracionEntity pValoracion)
     {
         valoraciones.remove(pValoracion);
+    }
+
+    /**
+     * @return the bonos
+     */
+    public List<BonoEntity> getBonos() {
+        return bonos;
+    }
+
+    /**
+     * @param bonos the bonos to set
+     */
+    public void setBonos(List<BonoEntity> bonos) {
+        this.bonos = bonos;
+    }
+    
+    /**
+     * Agrega un bono al proveedor
+     * @param bono 
+     */
+    public void addBono(BonoEntity bono){
+        this.bonos.add(bono);
+    }
+    
+    public void removeBono(BonoEntity bono){
+        this.bonos.remove(bono);
     }
 }

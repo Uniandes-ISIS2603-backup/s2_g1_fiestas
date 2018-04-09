@@ -4,6 +4,7 @@ import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.BlogPersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
 import java.util.*;
 import java.util.logging.*;
 import javax.inject.Inject;
@@ -23,6 +24,9 @@ public class BlogLogic {
     
     @Inject
     private EventoLogic logicEvento;
+    
+    @Inject 
+    private ClientePersistence clientePersistence;
     
     /**
      * Obtiene la lista de los registros de Blog.
@@ -63,8 +67,26 @@ public class BlogLogic {
      */
     public BlogEntity createBlog(BlogEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un blog ");
+        if(entity.getId()== null)
+            throw new BusinessLogicException("El blog debe tener id");
+        
+        if(entity.getTitulo()== null && entity.getTitulo().equals(""))
+            throw new BusinessLogicException("El blog debe tener título");
+        
         if(entity.getCuerpo()== null && entity.getCuerpo().equals(""))
             throw new BusinessLogicException("El blog debe tener cuerpo");
+        
+        if(entity.getCliente()== null )
+            throw new BusinessLogicException("El blog debe tener cliente");        
+        
+        if(entity.getEvento()== null )
+            throw new BusinessLogicException("El blog debe tener evento");       
+        
+        if(logicEvento.getEvento(entity.getEvento().getId())==null)
+            throw new BusinessLogicException("El evento del blog no existe");
+
+        if(clientePersistence.find((long)entity.getCliente().getId())==null)
+            throw new BusinessLogicException("El cliente del blog no existe");              
         
         return persistence.create(entity);
     }
@@ -75,8 +97,35 @@ public class BlogLogic {
      * @param entity Instancia de BlogEntity con los nuevos datos.
      * @return Instancia de BlogEntity con los datos actualizados.
      */
-    public BlogEntity updateBlog(BlogEntity entity) {
+    public BlogEntity updateBlog(BlogEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un blog ");
+        
+        
+        
+        if(entity.getTitulo()== null && entity.getTitulo().equals(""))
+            throw new BusinessLogicException("El blog debe tener título");
+        
+        if(entity.getCuerpo()== null && entity.getCuerpo().equals(""))
+            throw new BusinessLogicException("El blog debe tener cuerpo");
+        
+        if(entity.getCliente()== null )
+            throw new BusinessLogicException("El blog debe tener cliente");        
+        
+        if(entity.getEvento()== null )
+            throw new BusinessLogicException("El blog debe tener evento");       
+        
+        if(logicEvento.getEvento(entity.getEvento().getId())==null)
+            throw new BusinessLogicException("El evento del blog no existe");
+
+        if(clientePersistence.find(entity.getCliente().getId())==null)
+            throw new BusinessLogicException("El cliente del blog no existe");    
+        
+        if(clientePersistence.find(entity.getCliente().getId())!=entity.getCliente())
+            throw new BusinessLogicException("No es posible cambiar el cliente del blog.");    
+        
+        if(logicEvento.getEvento(entity.getEvento().getId())!=entity.getEvento())
+            throw new BusinessLogicException("No es posible cambiar el evento del blog");
+        
         return persistence.update(entity);
     }
 

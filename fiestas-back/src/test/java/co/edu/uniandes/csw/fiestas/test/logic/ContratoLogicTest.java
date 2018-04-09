@@ -132,7 +132,7 @@ public class ContratoLogicTest {
         //Caso 1: Normal
         try {
 
-            ContratoEntity result = contratoLogic.createContrato(newEntity, horario);
+            ContratoEntity result = contratoLogic.createContrato(newEntity);
 
             ContratoEntity entidad = em.find(ContratoEntity.class, result.getId());
             Assert.assertEquals(newEntity.getId(), entidad.getId());
@@ -153,7 +153,7 @@ public class ContratoLogicTest {
             horario2.setHoraInicio(new Date(2018, 5, 20, 20, 15, 0));
             horario2.setHoraFin(new Date(2018, 5, 20, 20, 22, 0));
             newEntity2.setTyc("");
-            ContratoEntity result = contratoLogic.createContrato(newEntity2, horario2);
+            ContratoEntity result = contratoLogic.createContrato(newEntity2);
 
             Assert.fail("No debería llegar aquí");
 
@@ -165,7 +165,7 @@ public class ContratoLogicTest {
         //Caso 3: El valor es negativo
         try {
             newEntity2.setValor(-1);
-            ContratoEntity result = contratoLogic.createContrato(newEntity2, horario2);
+            ContratoEntity result = contratoLogic.createContrato(newEntity2);
 
             Assert.fail("No debería llegar aquí");
 
@@ -176,7 +176,7 @@ public class ContratoLogicTest {
 
         //Caso 4: El contrato con id ya existe.
         try {
-            ContratoEntity result = contratoLogic.createContrato(newEntity, horario);
+            ContratoEntity result = contratoLogic.createContrato(newEntity);
 
             Assert.fail("No debería llegar aquí");
 

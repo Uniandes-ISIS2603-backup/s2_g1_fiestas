@@ -1,5 +1,7 @@
 package co.edu.uniandes.csw.fiestas.resources;
 
+import co.edu.uniandes.csw.fiestas.dtos.BonoDTO;
+import co.edu.uniandes.csw.fiestas.dtos.BonoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
@@ -7,6 +9,7 @@ import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
+import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -50,7 +53,7 @@ import javax.ws.rs.container.Suspended;
 @Consumes("application/json")
 @RequestScoped
 public class ProveedorResource {
-
+    
     @Inject
     private ProveedorLogic proveedorLogic;
     
@@ -61,7 +64,7 @@ public class ProveedorResource {
      * @return Lista de ProveedorDetailDTO convertida.
      *
      */
-    private List<ProveedorDetailDTO> listEntity2DTO(List<ProveedorEntity> entityList) 
+    private List<ProveedorDetailDTO> listEntity2DTO(List<ProveedorEntity> entityList)
     {
         List<ProveedorDetailDTO> list = new ArrayList<>();
         for (ProveedorEntity entity : entityList) {
@@ -69,7 +72,7 @@ public class ProveedorResource {
         }
         return list;
     }
-
+    
     /**
      * <h1>GET /proveedores : Obtener todos los proveedores.</h1>
      *
@@ -84,11 +87,11 @@ public class ProveedorResource {
      * encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<ProveedorDetailDTO> getProveedores() 
+    public List<ProveedorDetailDTO> getProveedores()
     {
         return listEntity2DTO(proveedorLogic.getProveedores());
     }
-
+    
     /**
      * <h1>GET /proveedores/{id} : Obtener proveedor por id.</h1>
      *
@@ -109,16 +112,16 @@ public class ProveedorResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public ProveedorDetailDTO getProveedor(@PathParam("id") Long id) 
+    public ProveedorDetailDTO getProveedor(@PathParam("id") Long id)
     {
         ProveedorEntity entity = proveedorLogic.getProveedor(id);
-        if (entity == null) 
+        if (entity == null)
         {
             throw new WebApplicationException("El proveedor no existe", 404);
         }
         return new ProveedorDetailDTO(entity);
     }
-
+    
     /**
      * <h1>POST /proveedores : Crear un proveedor.</h1>
      *
@@ -146,18 +149,13 @@ public class ProveedorResource {
      * - Error de lógica que se genera cuando ya existe el proveedor.
      */
     @POST
-    public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException 
+    public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException
     {
-        try
-        {
-            return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 412);
-        }       
+        
+        return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
+        
     }
-
+    
     /**
      * <h1>PUT /proveedores/{id} : Actualizar proveedor por id.</h1>
      *
@@ -181,25 +179,14 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public ProveedorDetailDTO updateProveedor(@PathParam("id") Long id, ProveedorDetailDTO proveedor)
+    public ProveedorDetailDTO updateProveedor(@PathParam("id") long id, ProveedorDetailDTO proveedor) throws BusinessLogicException
     {
         ProveedorEntity entity = proveedor.toEntity();
         entity.setId(id);
-        ProveedorEntity oldEntity = proveedorLogic.getProveedor(id);
-        if (oldEntity == null) {
-            throw new WebApplicationException("El proveedor no existe", 404);
-        }
-        try
-        {
-            return new ProveedorDetailDTO(proveedorLogic.updateProveedor(entity));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 412);
-        }
         
+        return new ProveedorDetailDTO(proveedorLogic.updateProveedor(entity));       
     }
-
+    
     /**
      * <h1>DELETE /proveedores/{id} : Elimina un proveedor por id.</h1>
      *
@@ -220,7 +207,7 @@ public class ProveedorResource {
     @DELETE
     @Path("{id: \\d+}")
     public void deleteProveedor(@PathParam("id") Long id)
-    {        
+    {
         try
         {
             proveedorLogic.deleteProveedor(id);
@@ -228,10 +215,10 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }        
+        }
     }
-
-
+    
+    
     
     /**
      * <h1>GET /{proveedorId}/contratos/ : Obtener todos los contratos de un
@@ -260,9 +247,9 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * <h1>PUT /{proveedorId}/contratos: Edita loscontratos de un
      * proveedor..</h1>
@@ -284,7 +271,7 @@ public class ProveedorResource {
      */
     @PUT
     @Path("{proveedorId: \\d+}/contratos")
-    public List<ContratoDetailDTO> replaceContratos(@PathParam("proveedorId") Long proveedorId, List<ContratoDetailDTO> contratos) 
+    public List<ContratoDetailDTO> replaceContratos(@PathParam("proveedorId") Long proveedorId, List<ContratoDetailDTO> contratos)
     {
         try
         {
@@ -299,10 +286,10 @@ public class ProveedorResource {
             else
             {
                 throw new WebApplicationException(e.getMessage(), 404);
-            } 
-        }          
+            }
+        }
     }
-
+    
     /**
      * <h1>POST /{proveedorId}/contratos/{contratoId} : Guarda un contrato
      * dentro del proveedor.</h1>
@@ -327,8 +314,8 @@ public class ProveedorResource {
      */
     @POST
     @Path("{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
-    public ContratoDetailDTO addContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId) 
-    {        
+    public ContratoDetailDTO addContrato(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId)
+    {
         try
         {
             return new ContratoDetailDTO(proveedorLogic.addContrato(contratoId, proveedorId));
@@ -342,10 +329,10 @@ public class ProveedorResource {
             else
             {
                 throw new WebApplicationException(e.getMessage(), 404);
-            }            
-        }   
+            }
+        }
     }
-
+    
     /**
      * <h1>GET /{proveedorId}/contratos/{contratoId} : Obtener contrato por id
      * del proveedor por id.</h1>
@@ -382,10 +369,10 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }   
+        }
         
     }
-
+    
     /**
      * Convierte una lista de ContratoEntity a una lista de ContratoDetailDTO.
      *
@@ -393,7 +380,7 @@ public class ProveedorResource {
      * @return Lista de ContratoDetailDTO convertida.
      *
      */
-    private List<ContratoDetailDTO> contratosListEntity2DTO(List<ContratoEntity> entityList) 
+    private List<ContratoDetailDTO> contratosListEntity2DTO(List<ContratoEntity> entityList)
     {
         List<ContratoDetailDTO> list = new ArrayList<>();
         for (ContratoEntity entity : entityList) {
@@ -401,7 +388,7 @@ public class ProveedorResource {
         }
         return list;
     }
-
+    
     /**
      * Convierte una lista de ContratoDetailDTO a una lista de ContratoEntity.
      *
@@ -409,7 +396,7 @@ public class ProveedorResource {
      * @return Lista de ContratoEntity convertida.
      *
      */
-    private List<ContratoEntity> contratosListDTO2Entity(List<ContratoDetailDTO> dtos) 
+    private List<ContratoEntity> contratosListDTO2Entity(List<ContratoDetailDTO> dtos)
     {
         List<ContratoEntity> list = new ArrayList<>();
         for (ContratoDetailDTO dto : dtos) {
@@ -417,7 +404,7 @@ public class ProveedorResource {
         }
         return list;
     }
-
+    
     /**
      * <h1>GET /{proveedorId}/valoraciones/ : Obtener todos los valoraciones de
      * un proveedor.</h1>
@@ -436,7 +423,7 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/valoraciones")
-    public List<ValoracionDTO> listValoraciones(@PathParam("proveedorId") Long proveedorId) 
+    public List<ValoracionDTO> listValoraciones(@PathParam("proveedorId") Long proveedorId)
     {
         try
         {
@@ -445,9 +432,9 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * <h1>PUT /{proveedorId}/valoraciones: Edita losvaloraciones de un proveedor..</h1>
      * <pre> Remplaza las instancias de Valoracion asociadas a una instancia de Proveedor
@@ -478,9 +465,9 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }        
+        }
     }
-
+    
     /**
      * <h1>POST /{proveedorId}/valoraciones/{valoracionId} : Guarda un
      * valoracion dentro del proveedor.</h1>
@@ -505,7 +492,7 @@ public class ProveedorResource {
      */
     @POST
     @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public ValoracionDTO addValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId) 
+    public ValoracionDTO addValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId)
     {
         try
         {
@@ -514,9 +501,9 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * <h1>DELETE /{proveedorId}/valoraciones/{valoracionId} : Elimina un
      * valoracion dentro del proveedor.</h1>
@@ -548,9 +535,9 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * <h1>GET /{proveedorId}/valoraciones/{valoracionId} : Obtener valoracion
      * por id del proveedor por id.</h1>
@@ -571,7 +558,7 @@ public class ProveedorResource {
      * @param valoracionId Identificador del valoracion que se esta buscando.
      * Este debe ser una cadena de dígitos.
      * @return JSON {@link ValoracionDetailDTO} - El valoracion buscado
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -Error de lógica 
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -Error de lógica
      * que se genera cuando no se encuentra la proveedor o el
      * valoracion.
      */
@@ -586,9 +573,9 @@ public class ProveedorResource {
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }        
+        }
     }
-
+    
     /**
      * Convierte una lista de ValoracionEntity a una lista de
      * ValoracionDetailDTO.
@@ -597,7 +584,7 @@ public class ProveedorResource {
      * @return Lista de ValoracionDetailDTO convertida.
      *
      */
-    private List<ValoracionDTO> valoracionesListEntity2DTO(List<ValoracionEntity> entityList) 
+    private List<ValoracionDTO> valoracionesListEntity2DTO(List<ValoracionEntity> entityList)
     {
         List<ValoracionDTO> list = new ArrayList<>();
         for (ValoracionEntity entity : entityList) {
@@ -605,7 +592,7 @@ public class ProveedorResource {
         }
         return list;
     }
-
+    
     /**
      * Convierte una lista de ValoracionDetailDTO a una lista de
      * ValoracionEntity.
@@ -614,7 +601,7 @@ public class ProveedorResource {
      * @return Lista de ValoracionEntity convertida.
      *
      */
-    private List<ValoracionEntity> valoracionesListDTO2Entity(List<ValoracionDTO> dtos) 
+    private List<ValoracionEntity> valoracionesListDTO2Entity(List<ValoracionDTO> dtos)
     {
         List<ValoracionEntity> list = new ArrayList<>();
         for (ValoracionDTO dto : dtos) {
@@ -622,7 +609,7 @@ public class ProveedorResource {
         }
         return list;
     }
-
+    
     /**
      * <h1>GET /{proveedorId}/servicios/ : Obtener todos los servicios de un
      * proveedor.</h1>
@@ -644,7 +631,7 @@ public class ProveedorResource {
     public List<ServicioDetailDTO> getServicios(@PathParam("proveedorId") Long proveedorId)
     {
         try
-        {                  
+        {
             return serviciosListEntity2DTO(proveedorLogic.getServicios(proveedorId));
         }
         catch(BusinessLogicException e)
@@ -652,7 +639,7 @@ public class ProveedorResource {
             throw new WebApplicationException(e.getMessage(), 404);
         }
     }
-
+    
     /**
      * <h1>PUT /{proveedorId}/servicios: Edita losservicios de un proveedor..</h1>
      * <pre> Remplaza las instancias de Servicio asociadas a una instancia de Proveedor
@@ -676,15 +663,15 @@ public class ProveedorResource {
     public List<ServicioDetailDTO> replaceServicios(@PathParam("proveedorId") Long proveedorId, List<ServicioDetailDTO> servicios)
     {
         try
-        {                  
+        {
             return serviciosListEntity2DTO(proveedorLogic.replaceServicios(proveedorId, serviciosListDTO2Entity(servicios)));
         }
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }        
+        }
     }
-
+    
     /**
      * <h1>POST /{proveedorId}/servicios/{serviciosId} : Guarda un servicio
      * dentro del proveedor.</h1>
@@ -712,15 +699,15 @@ public class ProveedorResource {
     public ServicioDetailDTO addServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long servicioId)
     {
         try
-        {                  
+        {
             return new ServicioDetailDTO(proveedorLogic.addServicio(servicioId, proveedorId));
         }
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * <h1>DELETE /{proveedorId}/servicios/{serviciosId} : Elimina un servicio
      * dentro del proveedor.</h1>
@@ -746,15 +733,15 @@ public class ProveedorResource {
     public void removeServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("servicioId") Long serviciosId)
     {
         try
-        {                  
+        {
             proveedorLogic.removeServicio(serviciosId, proveedorId);
         }
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * <h1>GET /{proveedorId}/servicios/{serviciosId} : Obtener servicio por id
      * del proveedor por id.</h1>
@@ -781,18 +768,18 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public ServicioDetailDTO getServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long serviciosId) 
+    public ServicioDetailDTO getServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long serviciosId)
     {
         try
-        {                  
+        {
             return new ServicioDetailDTO(proveedorLogic.getServicio(proveedorId, serviciosId));
         }
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }         
+        }
     }
-
+    
     /**
      * Convierte una lista de ServicioEntity a una lista de ServicioDetailDTO.
      *
@@ -807,7 +794,7 @@ public class ProveedorResource {
         }
         return list;
     }
-
+    
     /**
      * Convierte una lista de ServicioDetailDTO a una lista de ServicioEntity.
      *
@@ -823,10 +810,10 @@ public class ProveedorResource {
         return list;
     }
     private ExecutorService executorService = java.util.concurrent.Executors.newCachedThreadPool();
-
+    
     /**
      * Remover un contrato de un proveedor.
-     * 
+     *
      * @param asyncResponse Elemento de la clase AsyncResponse
      * @param proveedorId id del proveedor que tiene el contrato
      * @param contratoId id del contrato a remover
@@ -835,27 +822,273 @@ public class ProveedorResource {
     @Path(value = "{proveedorId: \\d+}/contratos/{contratoId: \\d+}")
     public void removeContratos(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "proveedorId") final Long proveedorId, @PathParam(value = "contratoId") final Long contratoId) {
         executorService.submit
-        (
-            new Runnable() 
-            {
-                public void run() 
-                {                
-                    doRemoveContratos(proveedorId, contratoId);                    
-                    asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
-                }
-            }
-        );
+                        (
+                                new Runnable()
+                                {
+                                    public void run()
+                                    {
+                                        doRemoveContratos(proveedorId, contratoId);
+                                        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+                                    }
+                                }
+                        );
     }
-
+    
     private void doRemoveContratos(@PathParam("proveedorId") Long proveedorId, @PathParam("contratoId") Long contratoId)
     {
         try
-        {                  
-             proveedorLogic.removeContrato(contratoId, proveedorId);
+        {
+            proveedorLogic.removeContrato(contratoId, proveedorId);
         }
         catch(BusinessLogicException e)
         {
             throw new WebApplicationException(e.getMessage(), 404);
-        }        
+        }
+    }
+    
+    /**
+    * Convierte una lista de BonoEntity a una lista de BonoDTO.
+    *
+    * @param entityList Lista de BonoEntity a convertir.
+    * @return Lista de BonoDTO convertida.
+    *
+    */
+    private List<BonoDTO> bonosListEntity2DTO(List<BonoEntity> bonoList) {
+        List<BonoDTO> list = new ArrayList<>();
+        for (BonoEntity entity : bonoList) {
+            list.add(new BonoDTO(entity));
+        }
+        return list;
+    }
+    
+    /**
+     * <h1>GET /{proveedoresId}/bonos/ : Obtener todos los bonos de un proveedor.</h1>
+     *
+     * <pre>Busca y devuelve todos los bonos que bonos en el proveedor.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve todos los bonos del proveedor.</code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSONArray {@link BonoDTO} - Los bonos encontrados
+     * en el proveedor. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    @Path("{proveedoresId: \\d+}/bonos")
+    public List<BonoDTO> listBonos(@PathParam("proveedoresId") Long proveedoresId) throws BusinessLogicException
+    {       
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if(proveedor == null)
+            throw new WebApplicationException("El proveedor especificado no existe.", 404);
+        
+        return bonosListEntity2DTO(proveedorLogic.getBonos(proveedoresId));
+    }
+    
+    /**
+     * <h1>GET /{proveedoresId}/bonos/{bonoId} : Obtener
+     * bono por id del proveedor por id.</h1>
+     *
+     * <pre>Busca el bono con el id asociado dentro del proveedor con id asociado.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el bono correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un bono con el id dado dentro del proveedor.
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonoId Identificador del bono que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BonoDTO} - El bono buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra la proveedor o el bono.
+     */
+    @GET
+    @Path("{proveedoresId: \\d+}/bonos/{bonoId: \\d+}")
+    public BonoDTO getBonoC(@PathParam("proveedoresId") Long proveedoresId, @PathParam("eventosId") Long bonoId)
+    {
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if(proveedor == null)
+            throw new WebApplicationException("El proveedor no existe", 404);
+        
+        try{return new BonoDTO(proveedorLogic.getBonoP(bonoId, proveedoresId));}
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+      
+    /**
+     * <h1>GET /bonos/{bonoId} : Obtener
+     * bono por id.</h1>
+     *
+     * <pre>Busca el bono con el id .
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el bono correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un bono con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param bonoId Identificador del bono que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link BonoDTO} - El bono buscado
+     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * que se genera cuando no se encuentra el bono.
+     */
+    @GET
+    @Path("bonos/{bonoId: \\d+}")
+    public BonoDTO getBono(@PathParam("eventosId") Long bonoId)
+    {
+        try{return new BonoDTO(proveedorLogic.getBono(bonoId));}
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+    
+
+    /**
+     * <h1>POST /{proveedoresId}/bonos/{bonosId} : Guarda un
+     * bono dentro del proveedor.</h1>
+     *
+     * <pre> Guarda un bono dentro de un proveedor con la informacion que
+     * recibe el la URL. Se devuelve el bono que se guarda en la proveedor.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo bono .
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonoDTO El bono que se desea guardar. Este
+     * debe ser la representación de un bono en JSON.
+     * @return JSON {@link BonoDetailDTO} - El bono guardado en la
+     * proveedor.
+     */
+    @POST
+    @Path("{proveedoresId: \\d+}")
+    public BonoDTO addBono(@PathParam("proveedoresId") Long proveedoresId, BonoDTO bono)
+    {        
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if (proveedor == null)
+            throw new WebApplicationException("El proveedor no existe.", 404);
+        try{
+            BonoEntity bonoE = bono.toEntity();
+            if(bonoE == null)
+                throw new WebApplicationException("El bono no se creó correctamente.", 404);            
+            return new BonoDTO(proveedorLogic.addBono(bonoE, proveedoresId));
+        }
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+    
+    @PUT
+    @Path("{proveedoresId: \\d+}/contratos/{contratosId: \\d+}/bonos/{bonosId: \\d+}")
+    public BonoDTO setBono2Contrato(@PathParam("proveedoresId") Long proveedoresId, @PathParam("bonosId") Long bonosId,@PathParam("contratosId") Long contratosId) throws BusinessLogicException
+    {        
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        ContratoEntity contrato = proveedorLogic.getContrato(proveedoresId, contratosId);
+        BonoEntity bono = proveedorLogic.getBonoP(bonosId,proveedoresId);
+        if (proveedor == null)
+            throw new WebApplicationException("El proveedor no existe.", 404);
+        if (contrato == null)
+            throw new WebApplicationException("El contrat no existe.", 404);
+        if (bono == null)
+            throw new WebApplicationException("El bono no existe.", 404);
+        
+        
+        proveedorLogic.setBono2Contrato(bonosId, proveedoresId, contratosId);
+        return new BonoDetailDTO(bono);
+    }
+    
+        /**
+     * <h1>PUT /{proveedoresId}/bonos: Edita los bonos de un proveedor..</h1>
+     * <pre> Remplaza las instancias de Evento asociadas a una instancia de Proveedor
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó los bonos del proveedor.
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonos JSONArray {@link BonoDetailDTO} El arreglo de
+     * bonos nuevo para la proveedor.
+     * @return JSON {@link EventoDetailDTO} - El arreglo de bonos guardado
+     * en la proveedor.
+     */
+    @PUT
+    @Path("{proveedoresId: \\d+}/bonos")
+    public List<BonoDTO> replaceBonos(@PathParam("proveedoresId") Long proveedoresId, List<BonoDetailDTO> bonos) 
+    {        
+        ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
+        if(proveedor == null){
+            throw new WebApplicationException("El proveedor no existe.", 404);
+        }
+        try
+        {
+            return bonosListEntity2DTO(proveedorLogic.replaceBonos(proveedoresId, bonosListDTO2Entity(bonos)));
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+    }
+
+    private List<BonoEntity> bonosListDTO2Entity(List<BonoDetailDTO> bonos) {
+        List<BonoEntity> lista = new ArrayList<>();
+        for (BonoDetailDTO bonoD : bonos) {
+            BonoEntity ent = bonoD.toEntity();
+            lista.add(ent);
+        }
+        return lista;
+    }
+    
+    /**
+     * <h1>DELETE /{proveedoresId}/bonos/{bonoId} : Elimina un
+     * bono dentro del proveedor.</h1>
+     *
+     * <pre> Elimina la referencia del bono asociado al ID dentro del proveedor
+     * con la informacion que recibe el la URL.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Se eliminó la referencia del bono.
+     * </code>
+     * </pre>
+     *
+     * @param proveedoresId Identificador del proveedor que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param bonosId Identificador del bono que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     */
+    @DELETE
+    @Path("{proveedoresId: \\d+}/bonos/{bonosId: \\d+}")
+    public void removeBono(@PathParam("proveedoresId") Long proveedoresId, @PathParam("bonosId") Long bonosId) 
+    {
+        if (proveedorLogic.getProveedor(proveedoresId)==null)
+            throw new WebApplicationException("El proveedor no existe", 404);
+        try
+        {
+            proveedorLogic.removeBono(bonosId, proveedoresId);
+        }
+        catch(BusinessLogicException e)
+        {
+            throw new WebApplicationException(e.getMessage(),404);
+        }
+        
     }
 }

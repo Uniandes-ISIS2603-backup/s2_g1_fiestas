@@ -82,7 +82,7 @@ public class BlogResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public BlogDetailDTO getBlog(@PathParam("id") Long id, @PathParam("id") Long eventoId) {
+    public BlogDetailDTO getBlog(@PathParam("id") Long id) {
         BlogEntity bE=logic.getBlog(id);
         if(bE==null)
             throw new WebApplicationException("El blog no existe", 404);
@@ -142,8 +142,14 @@ public class BlogResource {
         if (oldEntity == null) {
             throw new WebApplicationException("El blog no existe", 404);
         }
-        entity.setEvento(oldEntity.getEvento());
+        if(entity.getEvento()==null)entity.setEvento(oldEntity.getEvento());
+        if(entity.getCliente()==null)entity.setCliente(oldEntity.getCliente());
+        try{
         return new BlogDetailDTO(logic.updateBlog(entity));
+        }
+        catch(BusinessLogicException e){
+            throw new WebApplicationException(e.getMessage(), 412);
+        }
     }
     /**
      * <h1>DELETE /blogs/{id} : Elimina un blog por id.</h1>
@@ -209,7 +215,7 @@ public class BlogResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
      */
     @POST
-    @Path("{id: \\d+}/evento/{eventosId: \\d+}")
+    @Path("/{id: \\d+}/evento/{eventosId: \\d+}")
     public void addEvento(@PathParam("eventosId")Long eventoId, @PathParam("id")Long id) {
         EventoEntity eE=logic.getEventoExistente(eventoId);
         try{

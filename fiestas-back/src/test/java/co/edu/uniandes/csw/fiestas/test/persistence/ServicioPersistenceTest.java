@@ -89,7 +89,7 @@ public class ServicioPersistenceTest
     /**
      *
      */
-    private List<ServicioEntity> data = new ArrayList<ServicioEntity>();
+    private List<ServicioEntity> data = new ArrayList<>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las

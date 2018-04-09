@@ -6,10 +6,10 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -22,7 +22,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ServicioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="servicio")
     private List<ValoracionEntity> valoraciones;
 
     @PodamExclude
