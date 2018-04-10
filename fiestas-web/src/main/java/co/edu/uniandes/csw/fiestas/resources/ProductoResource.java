@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import co.edu.uniandes.csw.fiestas.dtos.*;
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class ProductoResource
     
     @Inject
     ProductoLogic productoLogic;
+    
+    @Inject
+    ServicioLogic servicioLogic;
     
         /**
      * <h1>GET /productos/{id} : Obtener producto por id.</h1>
@@ -180,6 +184,16 @@ public class ProductoResource
     public void deleteProducto(@PathParam("id") Long id)
     {
         productoLogic.deleteProducto(id);
+    }
+    
+    
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Path("{productoId: \\d+}/servicio/{servicioId: \\d+}")
+    public void addServicio(@PathParam("servicioID") Long servicioId,@PathParam("productoId") Long productoId )
+    {
+        productoLogic.addServicio(productoId, servicioId);
     }
     
 }

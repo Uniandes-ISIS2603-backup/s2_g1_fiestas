@@ -101,7 +101,7 @@ public class ProductoLogic
      * @param idSer servicio
      * @return 
      */
-    public ServicioEntity setServicio(Long id, Long idSer) 
+    public ServicioEntity addServicio(Long id, Long idSer) 
     {
         ServicioEntity find = perSer.find(idSer);
         ProductoEntity faind = persistence.find(id);
