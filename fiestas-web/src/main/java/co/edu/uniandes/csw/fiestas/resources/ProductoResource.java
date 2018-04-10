@@ -191,9 +191,10 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{productoId: \\d+}/servicio/{servicioId: \\d+}")
-    public void addServicio(@PathParam("servicioID") Long servicioId,@PathParam("productoId") Long productoId )
+    public ProductoEntity addServicio(@PathParam("servicioId") Long servicioId,@PathParam("productoId") Long productoId )
     {
         productoLogic.addServicio(productoId, servicioId);
+        return productoLogic.getProducto(productoId);
     }
     
 }
