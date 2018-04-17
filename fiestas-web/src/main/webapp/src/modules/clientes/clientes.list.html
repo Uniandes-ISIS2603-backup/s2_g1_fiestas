@@ -1,16 +1,31 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2 col-md-2" ng-repeat="cliente in clientesRecords">
-            <div class="thumbnail">                
-                <td id="{{$index}}-name"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.name}}</a></td>
-                <td id="{{$index}}-contraseña"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.contraseña}}</a></td>
-                <td id="{{$index}}-correo"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.correo}}</a></td>
-                <td id="{{$index}}-direccion"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.direccion}}</a></td>
-                <td id="{{$index}}-documento"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.documento}}</a></td>
-                <td id="{{$index}}-login"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.login}}</a></td>
-                <td id="{{$index}}-telefono"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.telefono}}</a></td>
-            </div>
-        </div>
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Contraseña</th>
+                    <th>Correo</th>
+                    <th>Dirección</th>
+                    <th>Documento</th>
+                    <th>Login</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cliente in clientesRecords">
+                    <td id="{{$index}}-id">{{cliente.id}}</td>
+                    <td id="{{$index}}-name"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.nombre}}</a></td>
+                    <td id="{{$index}}-contraseña"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.contraseña}}</a></td>
+                    <td id="{{$index}}-correo"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.correo}}</a></td>
+                    <td id="{{$index}}-direccion"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.direccion}}</a></td>
+                    <td id="{{$index}}-documento"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.documento}}</a></td>
+                    <td id="{{$index}}-login"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.login}}</a></td>
+                    <td id="{{$index}}-telefono"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.telefono}}</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
