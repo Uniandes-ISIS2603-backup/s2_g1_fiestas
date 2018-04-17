@@ -1,0 +1,14 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2 col-md-2" ng-repeat="blog in blogsRecords">
+            <div class="thumbnail">
+                <a ui-sref="blogsDetail({blogsId: blogs.id})">          
+                    <div class="caption text-center">{{blogs.name}}</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
