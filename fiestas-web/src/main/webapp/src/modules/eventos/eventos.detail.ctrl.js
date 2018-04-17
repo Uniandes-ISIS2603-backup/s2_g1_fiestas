@@ -5,7 +5,7 @@
         function ($scope, $http, eventoContext, $state, $filter) {
 
             if (($state.params.eventoId !== undefined) && ($state.params.eventoId !== null)) {
-                $http.get(eventoContext + '/' + $state.params.eventoId).then(function (response) {
+                $http.get(eventoContext).then(function (response) {
                     $scope.eventosRecords = response.data;
                     $scope.currentEvento = $filter('filter')($scope.eventosRecords, {id: $state.params.eventoId}, true)[0];
                 });
