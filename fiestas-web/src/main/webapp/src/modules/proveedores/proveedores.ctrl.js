@@ -3,7 +3,7 @@
     mod.constant("proveedorContext", "api/proveedores");
     mod.controller('proveedorCtrl', ['$scope', '$http', 'proveedorContext',
         function ($scope, $http, proveedorContext) {
-            $http.get('proveedorContext').then(function (response) {
+            $http.get(proveedorContext).then(function (response) {
                 $scope.proveedoresRecords = response.data;
             });
         }
