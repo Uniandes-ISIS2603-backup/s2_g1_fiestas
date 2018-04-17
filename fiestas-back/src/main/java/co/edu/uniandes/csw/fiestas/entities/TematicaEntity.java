@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.fiestas.entities;
 
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeSupport;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,6 +22,8 @@ public class TematicaEntity  extends BaseEntity implements Serializable
 {
 
     private String descripcion;
+    
+    private String nombre;
     
     @PodamExclude
     @OneToMany
@@ -54,5 +58,20 @@ public class TematicaEntity  extends BaseEntity implements Serializable
      */
     public void setServicios(List<ServicioEntity> servicios) {
         this.servicios = servicios;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) throws PropertyVetoException {
+        java.lang.String oldNombre = this.nombre;
+        this.nombre = nombre;
     }
 }
