@@ -5,7 +5,7 @@
         function ($scope, $http, clienteContext, $state, $filter) {
 
             if (($state.params.clienteId !== undefined) && ($state.params.clienteId !== null)) {
-                $http.get('data/clientes.json').then(function (response) {
+                $http.get(clienteContext).then(function (response) {
                     $scope.clientesRecords = response.data;
                     $scope.currentSport = $filter('filter')($scope.clientesRecords, {id: $state.params.clienteId}, true)[0];
                 });
