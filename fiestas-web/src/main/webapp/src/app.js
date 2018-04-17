@@ -5,6 +5,10 @@
        
         // Internal modules dependencies       
         'citiesModule',
+        'clienteModule',
+        'proveedorModule',
+        'pagoModule',
+        'eventoModule'
         
 
     ]);

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="evento in eventosRecords">
+                    <td id="{{$index}}-id">{{evento.id}}</td>
+                    <td id="{{$index}}-name">
+                        <a ui-sref="eventoDetail({eventoId: evento.id})">{{evento.nombre}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
