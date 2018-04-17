@@ -29,6 +29,7 @@ public class TematicaDTO {
 
     private long id;
     private String descripcion;
+    private String nombre;
 
     /**
      * Constructor por defecto
@@ -79,6 +80,20 @@ public class TematicaDTO {
      */
     public long darID() {
         return id;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**

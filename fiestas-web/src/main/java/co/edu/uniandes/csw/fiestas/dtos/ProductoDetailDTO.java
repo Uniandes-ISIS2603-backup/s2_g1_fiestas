@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +22,7 @@ import java.util.List;
  *      "descripcion": String,
  *      "incluye": String
  *      "personal": Integer
- *      "contratos":
- *      {
- *          "id" : Long
- *      }
- *      "servicios":
+ *      "servicio":
  *      {
  *          "id": Long
              "descripcion": String
@@ -46,7 +43,7 @@ import java.util.List;
  *      {
  *          "id" :99979846
  *      }
- *      "servicios":
+ *      "servicio":
  *      {
  *          "id": 4567672
              "descripcion": "Pasteles y demás"
@@ -80,7 +77,7 @@ Getters
  * 
  * @return el Servicio en el cual está el producto 
  */
-public ServicioDTO darServicio()
+public ServicioDTO getServicio()
 {
 return servicio;
 }
@@ -110,6 +107,14 @@ void setServicio(ServicioDTO pServ)
      */ 
     public ProductoDetailDTO(ProductoEntity entity) {
         super(entity);
+        if(entity.getServicio() != null)
+        {
+        servicio = (new ServicioDTO(entity.getServicio()));
+        }
+        else
+        {
+        servicio = null;
+        }
     }
 
     /**
@@ -118,13 +123,14 @@ void setServicio(ServicioDTO pServ)
      *
      * @return Nueva objeto ProductoEntity.
      *
-     */
-    @Override 
+     */ 
+    @Override
     public ProductoEntity toEntity()
     {
         ProductoEntity producto = super.toEntity();
-        producto.setServicio(this.servicio.toEntity());
-        return null;
+        if(this.getServicio() != null)
+        producto.setServicio(this.getServicio().toEntity());
+        return producto;
     }
     
     
