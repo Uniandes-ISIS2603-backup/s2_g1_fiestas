@@ -5,26 +5,12 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Contraseña</th>
-                    <th>Correo</th>
-                    <th>Dirección</th>
-                    <th>Documento</th>
-                    <th>Login</th>
-                    <th>Teléfono</th>
-                    <th>Penalizado</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="proveedor in proveedoresRecords">
                     <td id="{{$index}}-id">{{proveedor.id}}</td>
                     <td id="{{$index}}-name"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.nombre}}</a></td>
-                    <td id="{{$index}}-contraseña"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.contraseña}}</a></td>
-                    <td id="{{$index}}-correo"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.correo}}</a></td>
-                    <td id="{{$index}}-direccion"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.direccion}}</a></td>
-                    <td id="{{$index}}-documento"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.documento}}</a></td>
-                    <td id="{{$index}}-login"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.login}}</a></td>
-                    <td id="{{$index}}-telefono"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.telefono}}</a></td>
-                    <td id="{{$index}}-penalizado"><a ui-sref="proveedorDetail({proveedorId: proveedor.id})">{{proveedor.penalizado}}</a></td>
                 </tr>
             </tbody>
         </table>
