@@ -7,7 +7,7 @@
             if (($state.params.clienteId !== undefined) && ($state.params.clienteId !== null)) {
                 $http.get(clienteContext).then(function (response) {
                     $scope.clientesRecords = response.data;
-                    $scope.currentSport = $filter('filter')($scope.clientesRecords, {id: $state.params.clienteId}, true)[0];
+                    $scope.currentCliente = $filter('filter')($scope.clientesRecords, {id: $state.params.clienteId}, true)[0];
                 });
             }
         }

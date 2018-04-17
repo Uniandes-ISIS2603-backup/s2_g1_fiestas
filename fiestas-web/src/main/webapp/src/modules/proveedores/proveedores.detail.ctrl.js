@@ -7,7 +7,7 @@
             if (($state.params.proveedorId !== undefined) && ($state.params.proveedorId !== null)) {
                 $http.get(proveedorContext).then(function (response) {
                     $scope.proveedoresRecords = response.data;
-                    $scope.currentSport = $filter('filter')($scope.proveedoresRecords, {id: $state.params.proveedorId}, true)[0];
+                    $scope.currentProveedor = $filter('filter')($scope.proveedoresRecords, {id: $state.params.proveedorId}, true)[0];
                 });
             }
         }
