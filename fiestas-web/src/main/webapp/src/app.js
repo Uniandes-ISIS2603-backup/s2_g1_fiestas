@@ -5,12 +5,12 @@
        
         // Internal modules dependencies       
         'citiesModule',
-        'clienteModule',
         'proveedorModule',
+        'clienteModule',
+        'blogsModule',
+        'bonosModule',
         'pagoModule',
         'eventoModule'
-        
-
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {
