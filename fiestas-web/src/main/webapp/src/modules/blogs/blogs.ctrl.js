@@ -3,7 +3,7 @@
     mod.constant("blogsContext", "api/blogs");
     mod.controller('blogsCtrl', ['$scope', '$http', 'blogsContext',
         function ($scope, $http, blogsContext) {
-            $http.get('blogsContext'+'/'+$state.params.blogsId).then(function (response) {
+            $http.get(blogsContext).then(function (response) {
                 $scope.blogsRecords = response.data;
             });
         }
