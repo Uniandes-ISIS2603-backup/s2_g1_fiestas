@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="pago in pagosRecords">
+                    <td id="{{$index}}-id">
+                        <a ui-sref="pagoDetail({pagoId: pago.id})">{{pago.id}}</a>
+                    </td>
+                    <td id="{{$index}}-estado">{{pago.estado}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
