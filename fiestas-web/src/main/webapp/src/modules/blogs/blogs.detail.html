@@ -13,6 +13,12 @@
                     <hr>
                     <dt class="bold">Likes</dt>
                     <dd>{{currentBlogs.likes}}</dd>
+                    <hr>
+                    <dt class="bold">Evento</dt>
+                    <dd id="{{$index}}-name"><a ui-sref="eventoDetail({eventoId: currentBlogs.evento.id})">{{currentBlogs.evento.nombre}}</a></dd>
+                    <hr>
+                    <dt class="bold">Organizado por</dt>
+                    <dd id="{{$index}}-name"><a ui-sref="clienteDetail({clienteId: currentBlogs.cliente.id})">{{currentBlogs.cliente.nombre}}</a></dd>
                 </dl>
             </div>
         </div>
