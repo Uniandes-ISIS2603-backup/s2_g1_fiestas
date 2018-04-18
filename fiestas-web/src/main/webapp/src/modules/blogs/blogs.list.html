@@ -3,7 +3,7 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">id</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Título</th>
                     <th scope="col">Likes</th>
                     <th scope="col">Evento</th>
@@ -12,8 +12,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="blogs in blogsRecords">
-                    <td id="{{$idex}}-id}">
-                        <a ui-sref="blogsDetail({blogsId: blog.id})">{{blogs.id}}</a>
+                    <td Id="{{$index}}-id">
+                        <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
                     </td>          
                     <td id="{{$index}}-Título">{{blogs.titulo}}</td>
                     <td id="{{$index}}-Likes">{{blogs.likes}}</td>
