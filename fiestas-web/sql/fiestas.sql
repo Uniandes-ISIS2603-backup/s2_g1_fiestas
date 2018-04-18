@@ -22,6 +22,10 @@ insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(1
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
 
+insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10001, '18/04/2018','jihrfu9i3', 15, '18/05/2018', 'Día de san valentin', 10011);
+insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10002, '19/04/2018','u934hq', 30, '18/05/2018', 'Día de la madre', 10012);
+insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10003, '20/04/2018','54jkbsdv', 50, '18/05/2018', 'Navidad', 10013);
+
 insert into ServicioEntity(id,descripcion,tipo) values(10019,'Carrito de perros calientes','comida');
 insert into ServicioEntity(id,descripcion,tipo) values(10020,'Show de magia para niños','entretenimiento');
 insert into ServicioEntity(id,descripcion,tipo) values(10021,'Stripers', 'despedida de soltero');

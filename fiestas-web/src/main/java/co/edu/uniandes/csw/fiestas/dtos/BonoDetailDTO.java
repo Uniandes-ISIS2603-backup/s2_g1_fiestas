@@ -42,7 +42,7 @@ public class BonoDetailDTO extends BonoDTO{
     {
         super(entity);
         if(entity.getProveedor()!=null)proveedor = new ProveedorDTO(entity.getProveedor());
-        if(entity.getContrato()!=null)contrato = new ContratoDTO(entity.getContrato());
+        //if(entity.getContrato()!=null)contrato = new ContratoDTO(entity.getContrato());
        
     }
 
@@ -57,7 +57,7 @@ public class BonoDetailDTO extends BonoDTO{
     public BonoEntity toEntity() {
         BonoEntity entity = super.toEntity();
         if(this.getProveedor() !=null) entity.setProveedor(this.getProveedor().toEntity());
-        if(this.getContrato() !=null) entity.setContrato(this.getContrato().toEntity());
+        //if(this.getContrato() !=null) entity.setContrato(this.getContrato().toEntity());
         
         return entity;
     }
@@ -89,6 +89,5 @@ public class BonoDetailDTO extends BonoDTO{
     public void setContrato(ContratoDTO contrato) {
         this.contrato = contrato;
     }
-    
     
 }

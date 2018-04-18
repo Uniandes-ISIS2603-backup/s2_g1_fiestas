@@ -34,6 +34,11 @@ public class BonoDTO {
     private String motivo;
     
     /**
+     * Razón del bono
+     */
+    private String codigo;
+    
+    /**
      * Descuento en %
      */
     private int descuento;
@@ -58,7 +63,7 @@ public class BonoDTO {
             this.aplicaDesde = entity.getAplicaDesde();
             this.expira = entity.getExpira();
             this.motivo = entity.getMotivo();
-
+            this.codigo=entity.getCodigo();
         }
     }
 
@@ -135,6 +140,20 @@ public class BonoDTO {
     public void setDescuento(int descuento) {
         this.descuento = descuento;
     }
+    
+    /**
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     /**
      * Convierte un objeto BonoDTO a BonoEntity.
@@ -148,6 +167,7 @@ public class BonoDTO {
         entity.setAplicaDesde(this.getAplicaDesde());
         entity.setExpira(this.getExpira());
         entity.setMotivo(this.getMotivo());
+        entity.setCodigo(this.getCodigo());
         return entity;
     }
 }

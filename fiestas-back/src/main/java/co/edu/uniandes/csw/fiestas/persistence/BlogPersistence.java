@@ -48,9 +48,9 @@ public class BlogPersistence {
      * @return 
      */
 
-    public BlogEntity findByName(String name) {
+    public BlogEntity findByTitulo(String name) {
         LOGGER.log(Level.INFO, "Consultando blog con name= ", name);
-        TypedQuery<BlogEntity> q = em.createQuery("select u from BlogEntity u where u.name = :name", BlogEntity.class);
+        TypedQuery<BlogEntity> q = em.createQuery("select u from BlogEntity u where u.titulo = :name", BlogEntity.class);
         q = q.setParameter("name", name);
         return q.getSingleResult();
     }
