@@ -7,14 +7,18 @@
                 <dl>     
                     <dt>{{currentBlogs.id}}</dt>
                     <hr>
-                    <dt class="bold">Descripcion</dt>
-                    <dd>{{currentBlogs.descripcion}}</dd>
+                    <dd><dt class="bold">{{currentBlogs.titulo}}</dt></dd>
                     <hr>
-                    <dt class="bold">Titulo</dt>
-                    <dd>{{currentBlogs.titulo}}</dd>
+                    <dd>{{currentBlogs.cuerpo}}</dd>
                     <hr>
                     <dt class="bold">Likes</dt>
                     <dd>{{currentBlogs.likes}}</dd>
+                    <hr>
+                    <dt class="bold">Evento</dt>
+                    <dd id="{{$index}}-name"><a ui-sref="eventoDetail({eventoId: currentBlogs.evento.id})">{{currentBlogs.evento.nombre}}</a></dd>
+                    <hr>
+                    <dt class="bold">Organizado por</dt>
+                    <dd id="{{$index}}-name"><a ui-sref="clienteDetail({clienteId: currentBlogs.cliente.id})">{{currentBlogs.cliente.nombre}}</a></dd>
                 </dl>
             </div>
         </div>
