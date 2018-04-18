@@ -10,15 +10,6 @@ delete from ValoracionEntity;
 delete from ProveedorEntity;
 delete from ClienteEntity;
 
-
-insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10001,0,'En Revision','PSE',100000);
-insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10002,1,'Confirmado','Tarjeta de Credito',250000);
-insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10003,0,'Rechazado','Consignacion',350000);
-
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25);
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15);
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45);
-
 insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Jesús Pradilla', '1012345678', 3212121212, 'j.pradilla@hotmail.com', 'cll.2 #20-32','j.pradilla','hola123', 0);
 insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Diana Fernández Galán', '1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','df.galan','hola1234', 0);
 insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10013, 'Andrés Felip Segura Hernández', '1012345670', 3212121214, 'andresillo@hotmail.com', 'cll.2 #20-34','af.segura10','hola', 1);
@@ -46,6 +37,8 @@ insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values
 
 insert into TematicaEntity(id, descripcion) values(10014,'Bodas');
 insert into TematicaEntity(id, descripcion) values(10015,'Fiestas Infantiles');
+insert into TematicaEntity(id, descripcion) values(10016,'Bautizo');
+insert into TematicaEntity(id, descripcion) values(10017,'Grado');
 
 insert into HorarioEntity(id, fecha, horafin, horainicio) values(10001,'08/03/2018','22:00:00', '13:00:00');
 insert into HorarioEntity(id, fecha, horafin, horainicio) values(10002,'08/03/2019','22:00:00', '13:00:00');
@@ -54,3 +47,11 @@ insert into HorarioEntity(id, fecha, horafin, horainicio) values(10003,'08/03/20
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10001, 'Por pagar', 'Sin términos ni condiciones', 2000000000, 10001);
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10002, 'Pagada la primera cuota', 'Si el cliente cancela despues de 2 semanas de haber contratado el servicio deberá pagar el 100% del costo', 345000000, 10002);
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10003, 'Pagado', 'Sin términos ni condiciones', 20000000, 10003);
+
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10001,0,'En Revision','PSE',100000);
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10002,1,'Confirmado','Tarjeta de Credito',250000);
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10003,0,'Rechazado','Consignacion',350000);
+
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10001,10011,10015);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10002,10012,10016);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10003,10013,10017);
