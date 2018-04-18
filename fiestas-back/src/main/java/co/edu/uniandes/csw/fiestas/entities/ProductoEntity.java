@@ -3,6 +3,7 @@ package co.edu.uniandes.csw.fiestas.entities;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -12,6 +13,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class ProductoEntity extends BaseEntity implements Serializable {
+    
 
     private String nombre;
     private Integer precio;
@@ -107,4 +109,10 @@ public class ProductoEntity extends BaseEntity implements Serializable {
         this.servicio = servicio;
     }
 
+    
+    
+    
+    
+    
+    
 }
