@@ -131,7 +131,7 @@ public class BonoResource {
             throw new WebApplicationException("El bono no existe", 404);
         }
         if(entity.getProveedor()==null)entity.setProveedor(oldEntity.getProveedor());
-        if(entity.getContrato()==null)entity.setContrato(oldEntity.getContrato());
+        if(entity.getCodigo()==null)entity.setCodigo(oldEntity.getCodigo());
         try{
         return new BonoDetailDTO(logic.updateBono(entity));
         }

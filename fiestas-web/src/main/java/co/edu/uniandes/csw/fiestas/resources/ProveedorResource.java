@@ -994,7 +994,7 @@ public class ProveedorResource {
         }
     }
     
-    @PUT
+    /*@PUT
     @Path("{proveedoresId: \\d+}/contratos/{contratosId: \\d+}/bonos/{bonosId: \\d+}")
     public BonoDTO setBono2Contrato(@PathParam("proveedoresId") Long proveedoresId, @PathParam("bonosId") Long bonosId,@PathParam("contratosId") Long contratosId) throws BusinessLogicException
     {        
@@ -1011,7 +1011,7 @@ public class ProveedorResource {
         
         proveedorLogic.setBono2Contrato(bonosId, proveedoresId, contratosId);
         return new BonoDetailDTO(bono);
-    }
+    }**/
     
         /**
      * <h1>PUT /{proveedoresId}/bonos: Edita los bonos de un proveedor..</h1>

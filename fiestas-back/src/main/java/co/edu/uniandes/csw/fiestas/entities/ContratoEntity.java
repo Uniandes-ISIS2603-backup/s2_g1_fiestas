@@ -28,7 +28,6 @@ public class ContratoEntity extends BaseEntity implements Serializable {
     private ProveedorEntity proveedor;
     
     @PodamExclude
-    @OneToOne(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval = true)
     private BonoEntity bono;
 
 
