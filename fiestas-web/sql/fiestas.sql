@@ -58,4 +58,4 @@ insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10003,0,'
 
 insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10001,10011,10015);
 insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10002,10012,10016);
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10003,10013,10017);
+insert into eventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10003,10013,10017);
