@@ -18,10 +18,6 @@ insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, lo
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias', '1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
 insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya', '1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
 
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
-
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10001, '04/22/2018','jihrfu9i3', 15, '05/22/2018', 'Día de san valentin', 10011);
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10002, '04/23/2018','u934hq', 30, '05/22/2018', 'Día de la madre', 10012);
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10003, '04/24/2018','54jkbsdv', 50, '05/22/2018', 'Navidad', 10013);
@@ -59,3 +55,7 @@ insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10003,0,'
 insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10001,10011,10015);
 insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10002,10012,10016);
 insert into eventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10003,10013,10017);
+
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001);
+insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
+insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
