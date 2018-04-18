@@ -14,7 +14,6 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class ProductoEntity extends BaseEntity implements Serializable {
     
-    
 
     private String nombre;
     private Integer precio;
@@ -107,13 +106,13 @@ public class ProductoEntity extends BaseEntity implements Serializable {
      * @param servicio the servicio to set
      */
     public void setServicio(ServicioEntity servicio) {
-        this.servicio = servicio;}
-    
-    
-    
-    
-    
-    
+        this.servicio = servicio;
     }
 
+    
+    
+    
+    
+    
+    
 }
