@@ -146,7 +146,7 @@ public class TematicaResource
     @PUT 
     @Path("{id: \\d+}")
     public TematicaDetailDTO updateTematica(@PathParam("id") Long id, TematicaDetailDTO tematica){
-       tematica.darID();
+       tematica.getID();
        TematicaEntity entity = tematicaLogic.getTematica(id);
         return new TematicaDetailDTO(tematicaLogic.updateTematica(id, tematica.toEntity()));
     }

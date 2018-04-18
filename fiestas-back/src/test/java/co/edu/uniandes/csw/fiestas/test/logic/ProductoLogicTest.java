@@ -171,8 +171,8 @@ public class ProductoLogicTest
         ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
         servicioLogic.createServicio(newServicio);
         
-        productoLogic.setServicio(entity.getId(), newServicio.getId());
-        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        productoLogic.addServicio(entity.getId(), newServicio.getId());
+        productoLogic.addServicio(newEntity.getId(), newServicio.getId());
         
         Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
     }
@@ -190,8 +190,8 @@ public class ProductoLogicTest
         ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
         servicioLogic.createServicio(newServicio);
         
-        productoLogic.setServicio(entity.getId(), newServicio.getId());
-        productoLogic.setServicio(newEntity.getId(), newServicio.getId());
+        productoLogic.addServicio(entity.getId(), newServicio.getId());
+        productoLogic.addServicio(newEntity.getId(), newServicio.getId());
         
         
         Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
