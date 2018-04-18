@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "38c5d64e-e903-046e-d15b-857e309b5aaf",
+		"name": "Pruebas Tematica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/fiestas-web/api/tematicas/3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\" : \"Nueva tematica\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiestas-web/api/tematicas/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiestas-web",
+						"api",
+						"tematicas",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/fiestas-web/api/tematicas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiestas-web/api/tematicas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiestas-web",
+						"api",
+						"tematicas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/fiestas-web/api/tematicas/1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiestas-web/api/tematicas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiestas-web",
+						"api",
+						"tematicas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/fiestas-web/api/tematicas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiestas-web/api/tematicas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiestas-web",
+						"api",
+						"tematicas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/fiestas-web/api/tematicas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiestas-web/api/tematicas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiestas-web",
+						"api",
+						"tematicas"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "32727780-7550-4aab-a08a-47f03d939e9e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "29cab15a-b560-4217-9a62-5b5da51e6a24",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
