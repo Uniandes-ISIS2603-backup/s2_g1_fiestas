@@ -174,6 +174,22 @@ public class BlogPersistenceTest {
         Assert.assertEquals(newEntity.getLikes(), entity.getLikes());
 
     }
+    
+    /**
+     * Prueba para consultar un Blog.
+     *
+     *
+     */
+    @Test
+    public void getBlogByTituloTest() {
+        BlogEntity entity = data.get(0);
+        BlogEntity newEntity = blogPersistence.findByTitulo(entity.getTitulo());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getTitulo(), newEntity.getTitulo());
+        Assert.assertEquals(newEntity.getCuerpo(), entity.getCuerpo());
+        Assert.assertEquals(newEntity.getLikes(), entity.getLikes());
+
+    }
 
     /**
      * Prueba para eliminar un Blog.

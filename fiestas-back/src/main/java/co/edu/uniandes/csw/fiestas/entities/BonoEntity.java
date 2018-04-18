@@ -20,15 +20,6 @@ public class BonoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private ProveedorEntity proveedor;
 
-
-    /**
-     * Contato al cual se aplica el descuento del bono.
-     * Es OneToOne porque un bono no es acumulable con otros bonos.
-     */
-    @PodamExclude
-    @OneToOne
-    private ContratoEntity contrato;
-
     /**
      * Porcentaje de descuento
      */
@@ -50,6 +41,11 @@ public class BonoEntity extends BaseEntity implements Serializable {
      * Razón del bono (puede ser null)
      */
     private String motivo;
+    
+    /**
+     * Código del bono (puede ser null)
+     */
+    private String codigo;
 
     /**
      * @return the proveedor
@@ -65,19 +61,6 @@ public class BonoEntity extends BaseEntity implements Serializable {
         this.proveedor = proveedor;
     }
 
-    /**
-     * @return the contrato
-     */
-    public ContratoEntity getContrato() {
-        return contrato;
-    }
-
-    /**
-     * @param contrato the contrato to set
-     */
-    public void setContrato(ContratoEntity contrato) {
-        this.contrato = contrato;
-    }
 
     /**
      * @return the descuento
@@ -133,6 +116,20 @@ public class BonoEntity extends BaseEntity implements Serializable {
      */
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
 }

@@ -617,17 +617,13 @@ public class ProveedorLogic
          if(bono== null)
             throw new BusinessLogicException("El bono es vacío.");
         bono.setProveedor(proveedor);
-        if(bono.getContrato()!=null && bonoLogic.getBono(proveedoresId, bono.getContrato().getId())!=null)
-        {
-            throw new BusinessLogicException("El proveedor ya aplicó un bono a ese contrato.");
-        }
         bonoLogic.createBono(bono);
         proveedor.addBono(bono);
         updateProveedor(proveedor);
         return bono;
     }
     
-    public BonoEntity setBono2Contrato(long bonoId, long proveedoresId, long contratoId) throws BusinessLogicException {
+    /*public BonoEntity setBono2Contrato(long bonoId, long proveedoresId, long contratoId) throws BusinessLogicException {
         ProveedorEntity proveedor = getProveedor(proveedoresId);
          if(proveedor== null)
             throw new BusinessLogicException("El proveedor no existe.");
@@ -647,7 +643,7 @@ public class ProveedorLogic
         contrato.setValor(contrato.getValor()*(1-bono.getDescuento())/100);
         contratoLogic.updateContrato(contrato);
         return bono;
-    }
+    }**/
 
     public List<BonoEntity> replaceBonos(Long proveedoresId, List<BonoEntity> bonos) throws BusinessLogicException {
         ProveedorEntity proveedor = getProveedor(proveedoresId);

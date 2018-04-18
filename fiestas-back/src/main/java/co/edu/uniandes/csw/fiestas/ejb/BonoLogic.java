@@ -69,10 +69,10 @@ public class BonoLogic {
      * @param idP Identificador del proveedor
      * @param idC Identificador del contrato
      * @return Instancia de BonoEntity con los datos del Bono consultado.
-     */
+    
     public BonoEntity getBono(long idP, long idC) {
         return persistence.findAllPandC(idP,idC);
-    }
+    } */
     
     /**
      * Se encarga de crear un Bono en la base de datos.
@@ -106,10 +106,9 @@ public class BonoLogic {
         if(entity.getProveedor()== null )
             throw new BusinessLogicException("El bono debe tener proveedor");    
         
-        if(entity.getContrato()!=null && contratoPersistence.find(entity.getContrato().getId())==null)
-            throw new BusinessLogicException("El contrato del bono no existe");
-
-
+        if(entity.getCodigo()!=null && persistence.findByCodigo(entity.getCodigo())==null)
+            throw new BusinessLogicException("El código del bono ya está asignado a otro bono.");
+        
         if(proveedorPersistence.find((long)entity.getProveedor().getId())==null)
             throw new BusinessLogicException("El proveedor del bono no existe");              
         
@@ -148,11 +147,8 @@ public class BonoLogic {
         if(entity.getProveedor()== null )
             throw new BusinessLogicException("El bono debe tener proveedor");    
         
-        if(entity.getContrato()!=null && contratoPersistence.find(entity.getContrato().getId())==null)
-            throw new BusinessLogicException("El contrato del bono no existe");
-        
-        if(entity.getContrato()!=contratoPersistence.find(entity.getContrato().getId()))
-            throw new BusinessLogicException("El contrato del bono no existe");
+        if(entity.getCodigo()!=null && persistence.findByCodigo(entity.getCodigo())==null)
+            throw new BusinessLogicException("El código del bono ya está asignado a otro bono.");
 
         if(proveedorPersistence.find((long)entity.getProveedor().getId())==null)
             throw new BusinessLogicException("El proveedor del bono no existe"); 

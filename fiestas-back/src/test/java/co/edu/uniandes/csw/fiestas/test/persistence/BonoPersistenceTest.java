@@ -162,6 +162,23 @@ public class BonoPersistenceTest {
     }
 
     /**
+     * Prueba para consultar la lista de Bonos.
+     *
+     *
+     */
+    @Test
+    public void getBonosByCodigoTest() {
+        BonoEntity entity = data.get(0);
+        BonoEntity newEntity = bonoPersistence.findByCodigo(entity.getCodigo());
+        Assert.assertNotNull(newEntity);
+        
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getMotivo(), entity.getMotivo());
+        Assert.assertEquals(newEntity.getDescuento(), entity.getDescuento());
+
+    }
+    
+    /**
      * Prueba para consultar un Bono.
      *
      *

@@ -54,8 +54,6 @@ public class BonoLogicTest {
     private List<BonoEntity> data = new ArrayList<>();   
     
     private List<ProveedorEntity> pData = new ArrayList<>();   
-    
-    private List<ContratoEntity> cData = new ArrayList<>();   
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -93,7 +91,6 @@ public class BonoLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from BonoEntity").executeUpdate();
-        em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
 
@@ -104,7 +101,6 @@ public class BonoLogicTest {
     private void insertData() {
 
         for (int i = 0; i < 3; i++) {
-            ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
             BonoEntity entity = factory.manufacturePojo(BonoEntity.class);
             int noOfDays = 8;
@@ -121,19 +117,12 @@ public class BonoLogicTest {
             date = calendar.getTime();
             entity.setAplicaDesde(date);
             entity.setProveedor(proveedor);
-            entity.setContrato(contrato);
             em.persist(entity);
             ArrayList lista=new ArrayList<>();
-            ArrayList lista2=new ArrayList<ContratoEntity>();
             lista.add(entity);
-            lista2.add(contrato);
             proveedor.setBonos(lista);
-            proveedor.setContratos(lista2);
             em.persist(proveedor);
             pData.add(proveedor);
-            contrato.setBono(entity);
-            contrato.setProveedor(proveedor);
-            em.persist(contrato);
             data.add(entity); 
         }
     }
@@ -154,7 +143,7 @@ public class BonoLogicTest {
         assertEquals(result.getId(), entidad.getId());
         assertEquals(result.getDescuento(), entidad.getDescuento());
         assertEquals(result.getMotivo(), entidad.getMotivo());
-        assertEquals(result.getContrato(), entidad.getContrato());
+        assertEquals(result.getCodigo(), entidad.getCodigo());
         assertEquals(result.getProveedor(), entidad.getProveedor());
     }
 
@@ -196,7 +185,7 @@ public class BonoLogicTest {
         assertEquals(result.getId(), entidad.getId());
         assertEquals(result.getDescuento(), entidad.getDescuento());
         assertEquals(result.getMotivo(), entidad.getMotivo());
-        assertEquals(result.getContrato(), entidad.getContrato());
+        assertEquals(result.getCodigo(), entidad.getCodigo());
         assertEquals(result.getProveedor(), entidad.getProveedor());
         
     }
@@ -207,13 +196,12 @@ public class BonoLogicTest {
     public void getBonoPandCTest(){
         BonoEntity entidad = data.get(0);
         ProveedorEntity proveedor =pData.get(0);
-        ContratoEntity contrato =cData.get(0);
-        BonoEntity result = bonoLogic.getBono(proveedor.getId(), contrato.getId());
+        BonoEntity result = bonoLogic.getBono(proveedor.getId());
         assertNotNull(result);
         assertEquals(result.getId(), entidad.getId());
         assertEquals(result.getDescuento(), entidad.getDescuento());
         assertEquals(result.getMotivo(), entidad.getMotivo());
-        assertEquals(result.getContrato(), entidad.getContrato());
+        assertEquals(result.getCodigo(), entidad.getCodigo());
         assertEquals(result.getProveedor(), entidad.getProveedor());
         
     }
@@ -251,9 +239,8 @@ public class BonoLogicTest {
         assertEquals(result.getId(), entidad.getId());
         assertEquals(result.getDescuento(), entidad.getDescuento());
         assertEquals(result.getMotivo(), entidad.getMotivo());
-        assertEquals(result.getContrato(), entidad.getContrato());
+        assertEquals(result.getCodigo(), entidad.getCodigo());
         assertEquals(result.getProveedor(), entidad.getProveedor());
-        
     }
 
 }

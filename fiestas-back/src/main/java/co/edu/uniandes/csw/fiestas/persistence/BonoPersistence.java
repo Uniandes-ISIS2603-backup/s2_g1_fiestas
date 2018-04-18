@@ -41,6 +41,14 @@ public class BonoPersistence {
         return bE;
     }
     
+    public BonoEntity findByCodigo(String codigo) {
+        LOGGER.log(Level.INFO, "Consultando Bono cuyo dueño es el proveedor con id={0}", codigo);
+        TypedQuery<BonoEntity> q = em.createQuery("select u from BonoEntity u where u.codigo = :cod", BonoEntity.class);
+        q = q.setParameter("cod", codigo);
+        List<BonoEntity> bE = q.getResultList();
+        return bE.get(0);
+    }
+    
     public BonoEntity findAllPandC(long proveedorId, long contratoId) {
         Query q = em.createQuery("SELECT c FROM BONOENTITY WHERE c.PROVEEDOR_ID = ?1 AND c.CONTRATO_ID=?2");
         q.setParameter(1, proveedorId);
@@ -98,5 +106,7 @@ public class BonoPersistence {
         BonoEntity entity = em.find(BonoEntity.class, id);
         em.remove(entity);
     }
+    
+    
 }
 
