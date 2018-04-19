@@ -40,7 +40,15 @@
                         controllerAs: 'ctrl'
                     }
                 }
-
+            }).state('eventosCreate', {
+                url: '/create',
+                parent: 'eventos',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/eventos.new.html',
+                        controller: 'eventoNewCtrl'
+                    }
+                }
             });
         }
     ]);

@@ -16,15 +16,31 @@
                     <hr>
                     <dt class="bold">Lugar</dt>
                     <dd>{{currentEvento.lugar}}</dd>
-                     <hr>
+                    <hr>
                     <dt class="bold">Cliente</dt>
                     <dd>{{currentEvento.cliente.nombre}}</dd>  
-                     <hr>
-                    <dt class="bold">Valor Pago</dt>
-                    <dd>{{currentEvento.pago.valor}}</dd>  
-                     <hr>
+
+                    <hr>
                     <dt class="bold">Tematica</dt>
                     <dd>{{currentEvento.tematica.descripcion}}</dd>                      
+                </dl>
+            </div>
+            <div class="col-md-3">
+                <dl>  
+                    <dt>Pago</dt>  
+                    <hr>                    
+                    <dt class="bold">Estado</dt>
+                    <dd>{{currentEvento.pago.estado}}</dd>
+                    <hr>
+                    <dt class="bold">Metodo De Pago</dt>
+                    <dd>{{currentEvento.pago.metodoPago}}</dd>
+                    <hr>
+                    <dt class="bold">Valor</dt>
+                    <dd>{{ currentEvento.pago.valor | currency : "COP" : 0 }}</dd>
+                    <hr>
+                    <dt class="bold">Realizado</dt>
+                    <dd ng-if="currentEvento.pago.realizado==true">Pagado</dd>
+                    <dd ng-if="currentEvento.pago.realizado==false">Falta Pago</dd>
                 </dl>
             </div>
         </div>
