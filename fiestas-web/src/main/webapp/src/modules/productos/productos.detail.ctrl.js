@@ -13,7 +13,7 @@
             if (($state.params.productoId !== undefined) && ($state.params.productoId !== null)) {
                 $http.get(productoContext).then(function (response) {
                     $scope.productosRecords = response.data;
-                    $scope.currentPago = $filter('filter')($scope.productosRecords, {id: $state.params.productoId}, true)[0];
+                    $scope.currentProducto = $filter('filter')($scope.productosRecords, {id: $state.params.productoId}, true)[0];
                 });
             }
         }
