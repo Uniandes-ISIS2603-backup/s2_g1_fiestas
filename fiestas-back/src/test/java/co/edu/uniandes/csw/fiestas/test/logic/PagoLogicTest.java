@@ -120,6 +120,7 @@ public class PagoLogicTest {
         PagoEntity entidad = em.find(PagoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
+        Assert.assertEquals(newEntity.getValor(), entidad.getValor());
         Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
         Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
     }

@@ -23,8 +23,7 @@ public class PagoPersistence {
     protected EntityManager em;
 
     public PagoEntity find(Long id) {
-        PagoEntity entidad = em.find(PagoEntity.class, id);
-        return entidad;
+        return em.find(PagoEntity.class, id);
     }
 
     public List<PagoEntity> findAll() {

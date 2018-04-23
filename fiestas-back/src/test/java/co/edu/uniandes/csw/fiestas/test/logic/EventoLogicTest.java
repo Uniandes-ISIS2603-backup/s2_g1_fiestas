@@ -3,6 +3,9 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
+import co.edu.uniandes.csw.fiestas.enums.Estado;
+import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.ArrayList;
@@ -30,8 +33,8 @@ import org.junit.Test;
  * @author cm.amaya10
  */
 @RunWith(Arquillian.class)
-public class EventoLogicTest 
-{
+public class EventoLogicTest {
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -44,6 +47,8 @@ public class EventoLogicTest
     private UserTransaction utx;
 
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
+
+    private List<PagoEntity> pagosData = new ArrayList<PagoEntity>();
 
     private List<ContratoEntity> contratosData = new ArrayList<ContratoEntity>();
 
@@ -84,6 +89,7 @@ public class EventoLogicTest
     private void clearData() {
         em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from PagoEntity").executeUpdate();
     }
 
     /**
@@ -95,6 +101,13 @@ public class EventoLogicTest
             ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
             em.persist(contrato);
             contratosData.add(contrato);
+
+            PagoEntity pagoEntity = factory.manufacturePojo(PagoEntity.class);
+            pagoEntity.setEstado(Estado.EN_REVISION.toString());
+            pagoEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
+            pagoEntity.setRealizado(false);
+            em.persist(pagoEntity);
+            pagosData.add(pagoEntity);
         }
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
@@ -107,7 +120,9 @@ public class EventoLogicTest
             Date date = calendar.getTime();
             entity.setFecha(date);
             entity.setInvitados(10);
-
+            if (i == 0) {
+                entity.setPago(pagosData.get(i));
+            }
             em.persist(entity);
             data.add(entity);
 
@@ -148,6 +163,37 @@ public class EventoLogicTest
     }
 
     /**
+     * Prueba fallida para crear un Evento duplicado.
+     */
+    @Test
+    public void createDuplicateEventoTest() {
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+
+        int noOfDays = 8;
+        Date dateOfOrder = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateOfOrder);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date date = calendar.getTime();
+        newEntity.setFecha(date);
+        newEntity.setInvitados(10);
+
+        EventoEntity result = new EventoEntity();
+        try {
+            result = eventoLogic.createEvento(newEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+
+        try {
+            result = eventoLogic.createEvento(newEntity);
+            fail("No se puede crear duplicado");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
+
+    /**
      * Prueba fallida para crear un Evento 1.
      *
      * Falla por que el evento o cumple el plazo
@@ -174,6 +220,7 @@ public class EventoLogicTest
     @Test
     public void createEventoTestFail2() {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+
         int noOfDays = 8;
         Date dateOfOrder = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -181,7 +228,8 @@ public class EventoLogicTest
         calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
         Date date = calendar.getTime();
         newEntity.setFecha(date);
-        newEntity.setFecha(new Date());
+        newEntity.setInvitados(-1);
+
         EventoEntity result;
         try {
             result = eventoLogic.createEvento(newEntity);
@@ -250,7 +298,7 @@ public class EventoLogicTest
         Assert.assertEquals(respuesta.getId(), contratoEntity.getId());
         Assert.assertEquals(respuesta.getTyc(), contratoEntity.getTyc());
     }
-    
+
     /**
      * Prueba de obtener la lista de contratos de un evento.
      */
@@ -258,12 +306,11 @@ public class EventoLogicTest
     public void getContratosTest() {
         EventoEntity entity = data.get(0);
         ContratoEntity contratoEntity = contratosData.get(0);
-         List<ContratoEntity> respuesta = eventoLogic.getContratos(entity.getId());
+        List<ContratoEntity> respuesta = eventoLogic.getContratos(entity.getId());
         Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
         Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
     }
 
-        
     /**
      * Prueba para reemplzar la lista de contratos de un evento.
      */
@@ -279,7 +326,7 @@ public class EventoLogicTest
         Assert.assertEquals(respuesta.get(1).getId(), otherContratoEntity.getId());
         Assert.assertEquals(respuesta.get(1).getTyc(), otherContratoEntity.getTyc());
     }
-    
+
     /**
      * Prueba para eliminar un contrato
      */
@@ -292,7 +339,7 @@ public class EventoLogicTest
             ContratoEntity respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
             fail("No deberia encontrar el contrato en el evento");
         } catch (BusinessLogicException ex) {
-            
+
         }
     }
 
@@ -348,4 +395,58 @@ public class EventoLogicTest
         } catch (BusinessLogicException ex) {
         }
     }
+
+    /**
+     * Prueba de obtener el pago de un evento.
+     */
+    @Test
+    public void getPagoTest() {
+        EventoEntity entity = data.get(0);
+        PagoEntity pagoEntity = pagosData.get(0);
+        PagoEntity respuesta = new PagoEntity();
+        try {
+            respuesta = eventoLogic.getPago(entity.getId());
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+        Assert.assertEquals(respuesta.getId(), pagoEntity.getId());
+        Assert.assertEquals(respuesta.getValor(), pagoEntity.getValor());
+    }
+    
+        /**
+     * Prueba de obtener el pago de un evento.
+     */
+    @Test
+    public void updatePagoTest() {
+        EventoEntity entity = data.get(0);
+        PagoEntity pagoEntity = pagosData.get(0);
+        PagoEntity nuevoPago = pagosData.get(1);
+        PagoEntity respuesta = new PagoEntity();
+        try {
+            respuesta = eventoLogic.updatePago(entity.getId(), nuevoPago);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+        Assert.assertEquals(respuesta.getId(), nuevoPago.getId());
+        Assert.assertEquals(respuesta.getValor(), nuevoPago.getValor());
+    }
+    
+            /**
+     * Prueba de obtener el pago de un evento.
+     */
+    @Test
+    public void createPagoTest() {
+        EventoEntity entity = data.get(1);
+        PagoEntity pagoEntity = pagosData.get(2);
+        PagoEntity respuesta = new PagoEntity();
+        try {
+            respuesta = eventoLogic.createPago(entity.getId(), pagoEntity);
+        } catch (BusinessLogicException ex) {
+            fail(ex.getMessage());
+        }
+        Assert.assertEquals(respuesta.getId(), pagoEntity.getId());
+        Assert.assertEquals(respuesta.getValor(), pagoEntity.getValor());
+    }
+
+
 }
