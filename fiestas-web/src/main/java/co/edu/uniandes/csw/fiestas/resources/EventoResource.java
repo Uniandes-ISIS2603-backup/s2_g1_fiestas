@@ -373,39 +373,12 @@ public class EventoResource {
      */
     @GET
     @Path("{eventosId: \\d+}/pago")
-    public PagoDetailDTO getPago(@PathParam("eventosId") Long eventosId) {
+    public PagoDetailDTO getPago(@PathParam("eventosId") Long eventosId) throws BusinessLogicException {
         PagoEntity entity = eventoLogic.getPago(eventosId);
         if (entity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
         return new PagoDetailDTO(entity);
-    }
-
-    /**
-     * <h1>DELETE /{eventosId}/pago/ : Borra el pago del evento.</h1>
-     *
-     * <pre>Busca y elimina el pago del evento evento.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK El pago fue eliminado exitosamente
-     * </code>
-     * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found No existe un pago con el id dado.
-     * </code>
-     * </pre>
-     *
-     * @param eventosId Identificador del evento que se esta buscando. Este debe
-     * ser una cadena de dígitos.
-     */
-    @DELETE
-    @Path("{eventosId: \\d+}/pago")
-    public void deletePago(@PathParam("eventosId") Long eventosId) {
-        PagoEntity entity = eventoLogic.getPago(eventosId);
-        if (entity == null) {
-            throw new WebApplicationException("El pago no existe", 404);
-        }
-        eventoLogic.deletePago(eventosId);
     }
 
     /**
