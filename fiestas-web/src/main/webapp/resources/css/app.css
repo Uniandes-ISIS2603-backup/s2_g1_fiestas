@@ -1,0 +1,17 @@
+.margin-top{
+    padding-top: 20px;
+}
+
+.mainHeader {
+    padding: 20px;
+}
+
+.logo{
+    display: block;
+    object-fit: cover;
+}
+
+.mainTitle {
+    font-variant: small-caps;
+    font-style: italic;
+}
