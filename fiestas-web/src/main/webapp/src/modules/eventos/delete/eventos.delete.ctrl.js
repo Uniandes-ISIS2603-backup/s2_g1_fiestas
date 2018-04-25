@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoDeleteCtrl', ['$scope', '$http', 'sportsContext', '$state',
+    mod.controller('eventoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoDeleteCtrl
