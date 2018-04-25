@@ -436,7 +436,7 @@ public class EventoResource {
      * @param @param eventosId Identificador del evento que se esta buscando.
      * Este debe ser una cadena de dígitos.
      * @param pago pago a actualizar
-     * @return JSON {@link PagoDetailDTO} - El pago buscado y actuaizado
+     * @return JSON {@link PagoDetailDTO} - El pago buscado y actualizado
      * @throws BusinessLogicException
      * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
      * - Error de lógica.
