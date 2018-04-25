@@ -1,31 +1,38 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <a class="btn btn-info" ui-sref="eventoCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Evento</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-lg-6">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="evento in eventosRecords">
-                        <td id="{{$index}}-id">{{evento.id}}</td>
-                        <td id="{{$index}}-name">
-                            <a ui-sref="eventoDetail({eventoId: evento.id})">{{evento.nombre}}</a>
-                        </td>
-                        <td id="{{$index}}-actions">
-                            <a class="btn btn-default btn-sm" ui-sref="eventoUpdate({eventoId: evento.id})"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn btn-danger btn-sm" ui-sref="eventoDelete({eventoId: evento.id})"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="container-fluid" style="padding-top: 20px">
+    <div class="panel-group">
+        <div class="panel panel-primary" >
+            <div class="panel-heading"><label>Lista de Eventos</label></div>
+            <div class="panel-body">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <a class="btn btn-info" ui-sref="eventoCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Evento</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-6">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="evento in eventosRecords">
+                                    <td id="{{$index}}-id">{{evento.id}}</td>
+                                    <td id="{{$index}}-name">
+                                        <a ui-sref="eventoDetail({eventoId: evento.id})">{{evento.nombre}}</a>
+                                    </td>
+                                    <td id="{{$index}}-actions">
+                                        <a class="btn btn-default btn-sm" ui-sref="eventoUpdate({eventoId: evento.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-danger btn-sm" ui-sref="eventoDelete({eventoId: evento.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
