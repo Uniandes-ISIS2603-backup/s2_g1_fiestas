@@ -9,7 +9,6 @@
         'clienteModule',
         'blogsModule',
         'bonosModule',
-        'pagoModule',
         'eventoModule'
     ]);
     // Resuelve problemas de las promesas
