@@ -40,7 +40,7 @@
     mod.constant("eventosContext", "api/eventos");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/eventos/';
-            var basePathContratos = 'src/modules/contratos/';
+            //var basePathContratos = 'src/modules/contratos/';
             $urlRouterProvider.otherwise("/eventosList");
 
             $stateProvider.state('eventos', {
@@ -84,7 +84,30 @@
                         controller: 'eventoNewCtrl'
                     }
                 }
+            }).state('eventoUpdate', {
+                url: '/update/{eventoId:int}',
+                parent: 'eventos',
+                param: {
+                    eventoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/eventos.new.html',
+                        controller: 'eventoUpdateCtrl'
+                    }
+                }
+            }).state('eventoDelete', {
+                url: '/delete/{eventoId:int}',
+                parent: 'eventos',
+                param: {
+                    eventeId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/delete/eventos.delete.html',
+                        controller: 'eventoDeleteCtrl'
+                    }
+                }
             });
-        }
-    ]);
+        }]);
 })(window.angular);

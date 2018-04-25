@@ -19,9 +19,11 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, eventoContext, $state, $filter) {
+        function ($scope, $http, eventoContext, $state, $rootScope) {
             $rootScope.edit = false;
+            
             $scope.data = {};
+            
              /**
              * @ngdoc function
              * @name createEvento
