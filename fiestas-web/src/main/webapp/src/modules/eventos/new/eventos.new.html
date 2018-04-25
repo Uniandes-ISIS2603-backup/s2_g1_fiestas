@@ -1,26 +1,49 @@
-<!DOCTYPE html>
-<form name="evento">
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createAuthor">Crear un nuevo Evento</label>
+                <label ng-if="edit" id="editAuthor">Editar Evento</label></div>
+            <div class="panel-body">
+                <form name="evento">
                     <div class="form-group row">
                         <div class="form-group col-md-6">
-                            <label for="eventosName" class="col-sm-2">Nombre:</label>
-                            <input id="eventoName" required ng-model="data.name" class="col-sm-6"/>
-                        </div>
-                    </div>
-                        <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="eventosDate" class="col-sm-2">Fecha Evento:</label>
-                            <input type="date" id="eventoDate" placeholder="DD/MM/YYYY" required ng-model="data.birthDate" class="col-sm-6"/>
+                            <label for="eventoName" class="col-sm-2">Nombre:</label>
+                            <input id="eventoName" required ng-model="data.nombre" class="col-sm-6"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
-                            <label for="eventosDescripcion" class="col-sm-2">Nombre:</label>
-                            <input id="eventoName" required ng-model="data.name" class="col-sm-6"/>
+                            <label for="eventoDate" class="col-sm-2">Fecha:</label>
+                            <input type="date" id="eventoDate" placeholder="DD/MM/YYYY" required ng-model="data.fecha" class="col-sm-6"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="eventoCelebrado" class="col-sm-2">Celebrado:</label>
+                            <input id="eventoCelebrado" required ng-model="data.celebrado" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="eventoLugar" class="col-sm-2">Lugar:</label>
+                            <input id="eventoLugar" required ng-model="data.lugar" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="eventoInvitados" class="col-sm-2">Num. Invitados:</label>
+                            <input id="eventoInvitados"  min="1" type="number" required ng-model="data.invitados" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="eventoDescripcion" class="col-sm-2">Descripcion:</label>
+                            <textarea id="eventoDescripcion" required ng-model="data.descripcion" class="col-sm-6"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-sm-4" ng-if="!evento.$valid">
-
                             <div class="alert alert-warning" >
                                 <strong>Warning!</strong><p>All inputs are required*</p>
                             </div> 
@@ -28,8 +51,12 @@
                     </div> 
                     <div class="form-group row">
                         <div class="form-group col-sm-12">
-                            <input ng-show="editorial.$valid" ng-click="createEvento()" value="Save" class="btn btn-success"/>
+                            <input ng-show="evento.$valid" ng-click="createEvento()" value="Save" class="btn btn-success"/>
                             <a class="btn btn-info" ui-sref="eventosList">Cancel</a>
                         </div>
                     </div>
-</form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
