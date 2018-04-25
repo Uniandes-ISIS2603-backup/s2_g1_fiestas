@@ -1,11 +1,7 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
-import co.edu.uniandes.csw.fiestas.enums.Estado;
-import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Entidad Pago.
