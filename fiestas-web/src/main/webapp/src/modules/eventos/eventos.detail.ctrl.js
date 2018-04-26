@@ -31,9 +31,11 @@
                  * @param {String} URL Dirección donde se encuentra el recurso
                  * del evento o API donde se puede consultar.
                  */
-                $http.get(eventoContext).then(function (response) {
-                    $scope.eventosRecords = response.data;
-                    $scope.currentEvento = $filter('filter')($scope.eventosRecords, {id: $state.params.eventoId}, true)[0];
+                $http.get(eventoContext+'/' + $state.params.eventoId).then(function (response) {
+                    $scope.currentEvento = response.data;
+                    $scope.pagosRecords=response.data.pagos;
+                    $scope.contratosRecords=response.data.contratos;
+                    
                 });
             }
         }

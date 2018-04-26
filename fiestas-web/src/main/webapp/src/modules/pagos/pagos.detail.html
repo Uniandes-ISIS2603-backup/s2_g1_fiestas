@@ -11,10 +11,11 @@
             <dd>{{currentPago.metodoPago}}</dd>
             <hr>
             <dt class="bold">Valor</dt>
-            <dd>{{currentPago.valor}}</dd>
+            <dd>{{currentPago.valor| currency:"COP": 0}}</dd>
             <hr>
             <dt class="bold">Realizado</dt>
-            <dd>{{currentPago.realizado}}</dd>
+            <dd ng-if="currentPago.realizado==true">Pagado</dd>
+            <dd ng-if="currentPago.realizado==false">No Pagado</dd>
         </dl>
     </div>
 </div>

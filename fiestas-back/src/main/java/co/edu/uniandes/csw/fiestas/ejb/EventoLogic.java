@@ -29,7 +29,7 @@ public class EventoLogic {
 
     @Inject
     private ContratoLogic contratoLogic;
-
+    
     @Inject
     private PagoLogic pagoLogic;
 
@@ -214,58 +214,81 @@ public class EventoLogic {
     public List<ContratoEntity> getContratos(Long eventoId) {
         return getEvento(eventoId).getContratos();
     }
+    
+    
+       /**
+     * Añadir pago a un evento por id
+     *
+     * @param pagoId id del pago a añadir
+     * @param eventoId id del evento en el cual se asignara el pago
+     * @return entidad del pago agregado
+     */
+    public PagoEntity addPago(Long pagoId, Long eventoId) {
+        EventoEntity evento = persistence.find(eventoId);
+        PagoEntity pago = pagoLogic.getPago(pagoId);
+        pago.setEvento(evento);
+        return pago;
+    }
 
     /**
-     * Retorna el pago del evento
+     * Borrar pago de un evento
+     *
+     * @param pagoId id del pago a borrar
+     * @param eventoId id del evento en el cual se borrara el pago
+     */
+    public void removePago(Long pagoId, Long eventoId) {
+        EventoEntity evento = persistence.find(eventoId);
+        PagoEntity pago = pagoLogic.getPago(pagoId);
+        pago.setEvento(null);
+        evento.getPagos().remove(pago);
+    }
+
+    /**
+     * Reemplazar los pagos de un evento
+     *
+     * @param eventoId id del evento al que se le cambiaran los pagos
+     * @param pagos Lista de pagos que se quiere actualizar
+     * @return Lista de pagos actualizados
+     */
+    public List<PagoEntity> replacePagos(Long eventoId, List<PagoEntity> pagos) {
+        EventoEntity evento = persistence.find(eventoId);
+        List<PagoEntity> listaPagos = evento.getPagos();
+        for (PagoEntity pago : listaPagos) {
+            if (pagos.contains(pago)) {
+                pago.setEvento(evento);
+            } else if (pago.getEvento() != null && pago.getEvento().equals(evento)) {
+                pago.setEvento(null);
+            }
+        }
+        return pagos;
+    }
+
+    /**
+     * Retorna un pago asociado a un evento
      *
      * @param eventoId El id del evento a buscar
-     * @return el pago correspondiente al pago
+     * @param pagoId El id del pago a buscar
+     * @return El pago encontrado en el evento
      * @throws BusinessLogicException Si el pago no se encuentra en el
      * evento
      */
-    public PagoEntity getPago(Long eventoId) throws BusinessLogicException {
-        EventoEntity evento = persistence.find(eventoId);
-        PagoEntity pago = pagoLogic.getPago(evento.getPago().getId());
-        if(pago!=null)return pago;
-        throw new BusinessLogicException("No hay pago asociado al evento");
+    public PagoEntity getPago(Long eventoId, Long pagoId) throws BusinessLogicException {
+        List<PagoEntity> pagos = getEvento(eventoId).getPagos();
+        PagoEntity pago = pagoLogic.getPago(pagoId);
+        int index = pagos.indexOf(pago);
+        if (index >= 0) {
+            return pagos.get(index);
+        }
+        throw new BusinessLogicException("El pago no está asociado al evento");
     }
 
     /**
-     * Se encarga de crear un pago correspondiente a un evento.
+     * Retorna todos los pagos del evento
      *
-     * @param entity Objeto de PagoEntity con los datos nuevos
-     * @param eventoId Id del evento en el cual se creara el nuevo pago
-     * @return Objeto de PagoEntity con los datos nuevos y su ID.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
-     * no se cumple reglas de negocio
+     * @param eventoId El id del evento a buscar
+     * @return la lista de pagos del evento
      */
-    public PagoEntity createPago(Long eventoId, PagoEntity entity) throws BusinessLogicException {
-        EventoEntity evento = persistence.find(eventoId);
-        if (evento != null) {
-            pagoLogic.createPago(entity);
-            evento.setPago(entity);
-            persistence.update(evento);
-        }
-        return entity;
+    public List<PagoEntity> getPagos(Long eventoId) {
+        return getEvento(eventoId).getPagos();
     }
-
-    /**
-     * Se encarga de actualizar un pago correspondiente a un evento.
-     *
-     * @param entity Objeto de PagoEntity con los datos nuevos
-     * @param eventoId Id del evento en el cual se actualizara el nuevo pago
-     * @return Objeto de PagoEntity con los datos nuevos y su ID.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
-     * no se cumple reglas de negocio
-     */
-    public PagoEntity updatePago(Long eventoId, PagoEntity entity) throws BusinessLogicException {
-        PagoEntity pagoActualizado = new PagoEntity();
-         EventoEntity evento = persistence.find(eventoId);
-        if (evento != null) {
-            entity.setId(evento.getPago().getId());
-            pagoActualizado = pagoLogic.updatePago(entity);
-        }
-        return pagoActualizado;
-    }
-
 }

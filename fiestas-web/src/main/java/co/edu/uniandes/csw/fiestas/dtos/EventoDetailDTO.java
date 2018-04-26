@@ -2,6 +2,7 @@ package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class EventoDetailDTO extends EventoDTO {
 
     private ClienteDTO cliente;
-    private PagoDTO pago;
+    private List<PagoDTO> pagos;
     private List<ContratoDTO> contratos;
     private TematicaDTO tematica;
 
@@ -36,15 +37,19 @@ public class EventoDetailDTO extends EventoDTO {
      */
     public EventoDetailDTO(EventoEntity entity) {
         super(entity);
-        if(entity!=null){
-            contratos=new ArrayList<>();
-            for(ContratoEntity contratoEntity : entity.getContratos()){
+        if (entity != null) {
+            contratos = new ArrayList<>();
+            for (ContratoEntity contratoEntity : entity.getContratos()) {
                 contratos.add(new ContratoDTO(contratoEntity));
             }
-            
-            pago=new PagoDTO(entity.getPago());
+
+            pagos = new ArrayList<>();
+            for (PagoEntity pagoEntity : entity.getPagos()) {
+                pagos.add(new PagoDTO(pagoEntity));
+            }
+
             cliente = new ClienteDTO(entity.getCliente());
-            tematica= new TematicaDTO(entity.getTematica());
+            tematica = new TematicaDTO(entity.getTematica());
         }
     }
 
@@ -58,15 +63,19 @@ public class EventoDetailDTO extends EventoDTO {
     @Override
     public EventoEntity toEntity() {
         EventoEntity entity = super.toEntity();
-        if(contratos!=null){
-            List<ContratoEntity> contratosEntity= new ArrayList<>();
-            for(ContratoDTO contrato: contratos)
-            {
+        if (contratos != null) {
+            List<ContratoEntity> contratosEntity = new ArrayList<>();
+            for (ContratoDTO contrato : contratos) {
                 contratosEntity.add(contrato.toEntity());
             }
             entity.setContratos(contratosEntity);
-            
-            entity.setPago(pago.toEntity());
+
+              List<PagoEntity> pagosEntity = new ArrayList<>();
+            for (PagoDTO pago : pagos) {
+                pagosEntity.add(pago.toEntity());
+            }
+            entity.setPagos(pagosEntity);
+            entity.setContratos(contratosEntity);          
             entity.setCliente(cliente.toEntity());
             entity.setTematica(tematica.toEntity());
         }
@@ -92,21 +101,21 @@ public class EventoDetailDTO extends EventoDTO {
     }
 
     /**
-     * Se retorna el pago asociado al evento
+     * Se retorna los pagos asociado al evento
      *
-     * @return Pago del evento.
+     * @return Pagos del evento.
      */
-    public PagoDTO getPago() {
-        return pago;
+    public List<PagoDTO> getPagos() {
+        return pagos;
     }
 
     /**
-     * Asigna el pago al evento
+     * Asigna los pagos al evento
      *
-     * @param pago del evento
+     * @param pagos del evento
      */
-    public void setPago(PagoDTO pago) {
-        this.pago = pago;
+    public void setPagos(List<PagoDTO> pagos) {
+        this.pagos = pagos;
     }
 
     /**

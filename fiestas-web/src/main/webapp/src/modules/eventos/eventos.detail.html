@@ -24,24 +24,17 @@
                     <dt class="bold">Tematica</dt>
                     <dd>{{currentEvento.tematica.descripcion}}</dd>                      
                 </dl>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"> <a ui-sref="pagosList({eventoId: currentEvento.id})">Pagos</a></li>
+                </ul>
             </div>
-            <div class="col-md-3">
-                <dl>  
-                    <dt>Pago</dt>  
-                    <hr>                    
-                    <dt class="bold">Estado</dt>
-                    <dd>{{currentEvento.pago.estado}}</dd>
-                    <hr>
-                    <dt class="bold">Metodo De Pago</dt>
-                    <dd>{{currentEvento.pago.metodoPago}}</dd>
-                    <hr>
-                    <dt class="bold">Valor</dt>
-                    <dd>{{ currentEvento.pago.valor | currency : "COP" : 0 }}</dd>
-                    <hr>
-                    <dt class="bold">Realizado</dt>
-                    <dd ng-if="currentEvento.pago.realizado==true">Pagado</dd>
-                    <dd ng-if="currentEvento.pago.realizado==false">Falta Pago</dd>
-                </dl>
+
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-9">
+                    <div ui-view="childrenView"></div>
+                </div>
             </div>
         </div>
     </div>

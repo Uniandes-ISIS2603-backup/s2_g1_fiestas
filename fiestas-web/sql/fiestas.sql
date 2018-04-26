@@ -26,7 +26,6 @@ insert into ServicioEntity(id,descripcion,tipo) values(10019,'Carrito de perros 
 insert into ServicioEntity(id,descripcion,tipo) values(10020,'Show de magia para niños','entretenimiento');
 insert into ServicioEntity(id,descripcion,tipo) values(10021,'Stripers', 'despedida de soltero');
 
-
 insert into ValoracionEntity(id,calificacion,comentario) values(10022,5,'Excelente servicio');
 insert into ValoracionEntity(id,calificacion,comentario) values(10023,4,'Me encanto');
 insert into ValoracionEntity(id,calificacion,comentario) values(10024,2, 'Pesimo servicio');
@@ -48,13 +47,14 @@ insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10001, 'Po
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10002, 'Pagada la primera cuota', 'Si el cliente cancela despues de 2 semanas de haber contratado el servicio deberá pagar el 100% del costo', 345000000, 10002);
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10003, 'Pagado', 'Sin términos ni condiciones', 20000000, 10003);
 
-insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10001,0,'En Revision','PSE',100000);
-insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10002,1,'Confirmado','Tarjeta de Credito',250000);
-insert into PagoEntity(id,realizado,estado,metodoDePago,valor) values (10003,0,'Rechazado','Consignacion',350000);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10011,10015);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10012,10016);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10013,10017);
 
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10001,10011,10015);
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10002,10012,10016);
-insert into eventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,pago_id,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10003,10013,10017);
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10001,0,'Rechazado','PSE',100000,10001);
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10002,1,'Confirmado','Tarjeta de Credito',250000,10001);
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10003,0,'Rechazado','Consignacion',350000,10002);
+insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10004,1,'Confirmado','Consignacion',350000,10002);
 
 insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);

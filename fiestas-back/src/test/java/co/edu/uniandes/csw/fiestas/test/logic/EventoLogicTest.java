@@ -88,8 +88,9 @@ public class EventoLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from ContratoEntity").executeUpdate();
-        em.createQuery("delete from EventoEntity").executeUpdate();
         em.createQuery("delete from PagoEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
+
     }
 
     /**
@@ -120,14 +121,12 @@ public class EventoLogicTest {
             Date date = calendar.getTime();
             entity.setFecha(date);
             entity.setInvitados(10);
-            if (i == 0) {
-                entity.setPago(pagosData.get(i));
-            }
             em.persist(entity);
             data.add(entity);
 
             if (i == 0) {
                 contratosData.get(i).setEvento(entity);
+                pagosData.get(i).setEvento(entity);
             }
         }
     }
@@ -397,7 +396,19 @@ public class EventoLogicTest {
     }
 
     /**
-     * Prueba de obtener el pago de un evento.
+     * Prueba de agregar un pago de un evento.
+     */
+    @Test
+    public void addPagoTest() {
+        EventoEntity entity = data.get(0);
+        PagoEntity pagoEntity = pagosData.get(0);
+        PagoEntity creado = eventoLogic.addPago(pagoEntity.getId(), entity.getId());
+        Assert.assertEquals(creado.getId(), pagoEntity.getId());
+        Assert.assertEquals(creado.getValor(), pagoEntity.getValor());
+    }
+
+    /**
+     * Prueba de obtener un pago de un evento.
      */
     @Test
     public void getPagoTest() {
@@ -405,42 +416,7 @@ public class EventoLogicTest {
         PagoEntity pagoEntity = pagosData.get(0);
         PagoEntity respuesta = new PagoEntity();
         try {
-            respuesta = eventoLogic.getPago(entity.getId());
-        } catch (BusinessLogicException ex) {
-            fail(ex.getMessage());
-        }
-        Assert.assertEquals(respuesta.getId(), pagoEntity.getId());
-        Assert.assertEquals(respuesta.getValor(), pagoEntity.getValor());
-    }
-    
-        /**
-     * Prueba de obtener el pago de un evento.
-     */
-    @Test
-    public void updatePagoTest() {
-        EventoEntity entity = data.get(0);
-        PagoEntity pagoEntity = pagosData.get(0);
-        PagoEntity nuevoPago = pagosData.get(1);
-        PagoEntity respuesta = new PagoEntity();
-        try {
-            respuesta = eventoLogic.updatePago(entity.getId(), nuevoPago);
-        } catch (BusinessLogicException ex) {
-            fail(ex.getMessage());
-        }
-        Assert.assertEquals(respuesta.getId(), nuevoPago.getId());
-        Assert.assertEquals(respuesta.getValor(), nuevoPago.getValor());
-    }
-    
-            /**
-     * Prueba de obtener el pago de un evento.
-     */
-    @Test
-    public void createPagoTest() {
-        EventoEntity entity = data.get(1);
-        PagoEntity pagoEntity = pagosData.get(2);
-        PagoEntity respuesta = new PagoEntity();
-        try {
-            respuesta = eventoLogic.createPago(entity.getId(), pagoEntity);
+            respuesta = eventoLogic.getPago(entity.getId(), pagoEntity.getId());
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -448,5 +424,48 @@ public class EventoLogicTest {
         Assert.assertEquals(respuesta.getValor(), pagoEntity.getValor());
     }
 
+    /**
+     * Prueba de obtener la lista de pagos de un evento.
+     */
+    @Test
+    public void getPagosTest() {
+        EventoEntity entity = data.get(0);
+        PagoEntity pagoEntity = pagosData.get(0);
+        List<PagoEntity> respuesta = eventoLogic.getPagos(entity.getId());
+        Assert.assertEquals(respuesta.get(0).getId(), pagoEntity.getId());
+        Assert.assertEquals(respuesta.get(0).getValor(), pagoEntity.getValor());
+    }
+
+    /**
+     * Prueba para reemplzar la lista de pagos de un evento.
+     */
+    @Test
+    public void replacePagosTest() {
+        EventoEntity entity = data.get(0);
+        PagoEntity pagoEntity = pagosData.get(0);
+        PagoEntity otherPagoEntity = pagosData.get(1);
+
+        List<PagoEntity> respuesta = eventoLogic.replacePagos(entity.getId(), pagosData);
+        Assert.assertEquals(respuesta.get(0).getId(), pagoEntity.getId());
+        Assert.assertEquals(respuesta.get(0).getValor(), pagoEntity.getValor());
+        Assert.assertEquals(respuesta.get(1).getId(), otherPagoEntity.getId());
+        Assert.assertEquals(respuesta.get(1).getValor(), otherPagoEntity.getValor());
+    }
+
+    /**
+     * Prueba para eliminar un pago
+     */
+    @Test
+    public void removePagoTest() {
+        EventoEntity entity = data.get(0);
+        PagoEntity pagoEntity = pagosData.get(0);
+        eventoLogic.removePago(pagoEntity.getId(), entity.getId());
+        try {
+            PagoEntity respuesta = eventoLogic.getPago(entity.getId(), pagoEntity.getId());
+            fail("No deberia encontrar el pago en el evento");
+        } catch (BusinessLogicException ex) {
+
+        }
+    }
 
 }
