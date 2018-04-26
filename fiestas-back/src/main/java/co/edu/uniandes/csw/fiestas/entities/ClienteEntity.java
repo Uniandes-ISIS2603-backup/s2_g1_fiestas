@@ -17,6 +17,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ClienteEntity extends BaseEntity implements Serializable
 {    
     private String nombre;
+    private String imagen;
     private String documento;
     private Long telefono;
     private String correo;
@@ -178,5 +179,19 @@ public class ClienteEntity extends BaseEntity implements Serializable
      */
     public void setBlogs(List<BlogEntity> blogs) {
         this.blogs = blogs;
+    }
+    
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

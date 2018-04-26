@@ -1,11 +1,9 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
-import co.edu.uniandes.csw.fiestas.enums.Estado;
-import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
 
 /**
- * EventoDTO Objeto de transferencia de datos de Eventos.
+ * PagoDTO Objeto de transferencia de datos de Pagos.
  *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
@@ -15,7 +13,7 @@ import co.edu.uniandes.csw.fiestas.enums.MetodoDePago;
  *      "estado": string,
  *      "metodoDePago": string
  *   }
- * </pre> Ejemplo de Evento:<br>
+ * </pre> Ejemplo de Pago:<br>
  *
  * <pre>
  *

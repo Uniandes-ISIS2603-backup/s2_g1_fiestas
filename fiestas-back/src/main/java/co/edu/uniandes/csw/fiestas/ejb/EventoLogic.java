@@ -2,6 +2,7 @@ package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.Calendar;
@@ -28,6 +29,9 @@ public class EventoLogic {
 
     @Inject
     private ContratoLogic contratoLogic;
+
+    @Inject
+    private PagoLogic pagoLogic;
 
     /**
      * Devuelve todos los eventos que hay en la base de datos.
@@ -67,9 +71,9 @@ public class EventoLogic {
      */
     public EventoEntity createEvento(EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
-        
-        EventoEntity buscado=getEvento(entity.getId());
-        if(buscado!=null){
+
+        EventoEntity buscado = getEvento(entity.getId());
+        if (buscado != null) {
             throw new BusinessLogicException("Ya existe el evento con este Id");
         }
 
@@ -209,6 +213,59 @@ public class EventoLogic {
      */
     public List<ContratoEntity> getContratos(Long eventoId) {
         return getEvento(eventoId).getContratos();
+    }
+
+    /**
+     * Retorna el pago del evento
+     *
+     * @param eventoId El id del evento a buscar
+     * @return el pago correspondiente al pago
+     * @throws BusinessLogicException Si el pago no se encuentra en el
+     * evento
+     */
+    public PagoEntity getPago(Long eventoId) throws BusinessLogicException {
+        EventoEntity evento = persistence.find(eventoId);
+        PagoEntity pago = pagoLogic.getPago(evento.getPago().getId());
+        if(pago!=null)return pago;
+        throw new BusinessLogicException("No hay pago asociado al evento");
+    }
+
+    /**
+     * Se encarga de crear un pago correspondiente a un evento.
+     *
+     * @param entity Objeto de PagoEntity con los datos nuevos
+     * @param eventoId Id del evento en el cual se creara el nuevo pago
+     * @return Objeto de PagoEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
+     */
+    public PagoEntity createPago(Long eventoId, PagoEntity entity) throws BusinessLogicException {
+        EventoEntity evento = persistence.find(eventoId);
+        if (evento != null) {
+            pagoLogic.createPago(entity);
+            evento.setPago(entity);
+            persistence.update(evento);
+        }
+        return entity;
+    }
+
+    /**
+     * Se encarga de actualizar un pago correspondiente a un evento.
+     *
+     * @param entity Objeto de PagoEntity con los datos nuevos
+     * @param eventoId Id del evento en el cual se actualizara el nuevo pago
+     * @return Objeto de PagoEntity con los datos nuevos y su ID.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
+     */
+    public PagoEntity updatePago(Long eventoId, PagoEntity entity) throws BusinessLogicException {
+        PagoEntity pagoActualizado = new PagoEntity();
+         EventoEntity evento = persistence.find(eventoId);
+        if (evento != null) {
+            entity.setId(evento.getPago().getId());
+            pagoActualizado = pagoLogic.updatePago(entity);
+        }
+        return pagoActualizado;
     }
 
 }

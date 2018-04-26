@@ -40,6 +40,7 @@ public class ClienteDTO
 {   
     private long id;
     private String nombre;
+    private String imagen;
     private String documento;
     private Long telefono;
     private String correo;
@@ -175,7 +176,21 @@ public class ClienteDTO
     public void setLogin(String login) 
     {
         this.login = login;
-    }    
+    }  
+    
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
     
     /**
      * Convierte un ClienteEntity en un ClienteDTO
@@ -193,6 +208,7 @@ public class ClienteDTO
             this.login=e.getLogin();
             this.nombre=e.getNombre();
             this.telefono=e.getTelefono();
+            this.imagen = e.getImagen();
         }
     }    
     
@@ -211,6 +227,7 @@ public class ClienteDTO
         e.setLogin(getLogin());
         e.setNombre(getNombre());
         e.setTelefono(getTelefono());
+        e.setImagen(getImagen());
         return e;
     }
 }

@@ -9,6 +9,7 @@
         'clienteModule',
         'blogsModule',
         'bonosModule',
+        'eventoModule',      
         'pagoModule',
         'eventoModule',
         'productoModule',
