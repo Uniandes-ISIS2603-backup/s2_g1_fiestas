@@ -11,7 +11,8 @@
         'bonosModule',
         'pagoModule',
         'eventoModule',
-        'productoModule'
+        'productoModule',
+        'tematicaModule'
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {
