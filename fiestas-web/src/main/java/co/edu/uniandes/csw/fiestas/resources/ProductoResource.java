@@ -64,7 +64,7 @@ public class ProductoResource
      * </code> 
      * <code style="color: #c7254e; background-color: #f9f2f4;">
      * 404 Not Found No existe un producto con el id dado.
-     * </code> 
+     * </code>
      * </pre>
      * @param id Identificador del producto que se esta buscando. Este debe ser una cadena de dígitos.
      * @return JSON {@link ProductoDetailDTO} - El product buscada
