@@ -42,6 +42,7 @@ public class ProveedorDTO
 {    
     private long id;
     private String nombre;
+    private String imagen;
     private String documento;
     private Long telefono;
     private String correo;
@@ -203,6 +204,20 @@ public class ProveedorDTO
     }
     
     /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    /**
      * Convierte un ProveedorEntity en un ProveedorDTO
      * @param e ClienteEntity instancia
      */
@@ -218,7 +233,8 @@ public class ProveedorDTO
             this.login=e.getLogin();
             this.nombre=e.getNombre();
             this.telefono=e.getTelefono();
-            this.penalizado = e.isPenalizado();             
+            this.penalizado = e.isPenalizado();
+            this.imagen = e.getImagen();
         }
     }
     
@@ -238,6 +254,7 @@ public class ProveedorDTO
         e.setNombre(getNombre());
         e.setTelefono(getTelefono());
         e.setPenalizado(isPenalizado());
+        e.setImagen(getImagen());
         return e;
     }
 }

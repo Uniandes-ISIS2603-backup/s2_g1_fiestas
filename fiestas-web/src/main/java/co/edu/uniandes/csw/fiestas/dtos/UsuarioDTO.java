@@ -40,6 +40,7 @@ import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 public class UsuarioDTO 
 {
     private Long id;
+    private String imagen;
     private String nombre;
     private String documento;
     private Long telefono;
@@ -194,6 +195,8 @@ public class UsuarioDTO
         this.login = login;
     }
     
+    
+    
     /**
      * Método que transforma la clase UsuarioDTO a UsuarioEntity.
      * @return UsuarioEntity instancia.
@@ -209,5 +212,19 @@ public class UsuarioDTO
         e.setNombre(this.nombre);
         e.setTelefono(this.telefono);
         return e;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

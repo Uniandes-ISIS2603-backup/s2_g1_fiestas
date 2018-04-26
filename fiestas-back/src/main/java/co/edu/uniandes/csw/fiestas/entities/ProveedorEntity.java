@@ -16,6 +16,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ProveedorEntity extends BaseEntity implements Serializable
 {
     private boolean penalizado;
+    private String imagen;
     private String nombre;
     private String documento;
     private Long telefono;
@@ -258,5 +259,19 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     
     public void removeBono(BonoEntity bono){
         this.bonos.remove(bono);
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
