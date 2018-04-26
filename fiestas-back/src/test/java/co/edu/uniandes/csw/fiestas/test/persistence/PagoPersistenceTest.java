@@ -122,6 +122,7 @@ public class PagoPersistenceTest {
         Assert.assertEquals(creado.getEstado(), entidad.getEstado());
         Assert.assertEquals(creado.getMetodoDePago(), entidad.getMetodoDePago());
         Assert.assertEquals(creado.isRealizado(), entidad.isRealizado());
+        Assert.assertEquals(creado.getValor(), entidad.getValor());
     }
 
     /**

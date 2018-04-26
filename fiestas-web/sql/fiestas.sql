@@ -10,13 +10,13 @@ delete from ValoracionEntity;
 delete from ProveedorEntity;
 delete from ClienteEntity;
 
-insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Jesús Pradilla', '1012345678', 3212121212, 'j.pradilla@hotmail.com', 'cll.2 #20-32','j.pradilla','hola123', 0);
-insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Diana Fernández Galán', '1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','df.galan','hola1234', 0);
-insert into ProveedorEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10013, 'Andrés Felip Segura Hernández', '1012345670', 3212121214, 'andresillo@hotmail.com', 'cll.2 #20-34','af.segura10','hola', 1);
+insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','hola123', 0);
+insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Iluminación de Diana','http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270' ,'1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','dianailu','hola1234', 0);
+insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10013, 'Decoración Pepitos','http://www.glits.mx/ckfinder/userfiles/images/Atmosphere%20Gala%204.jpg' ,'1012345670', 3212121214, 'pepitosdec@hotmail.com', 'cll.2 #20-34','decpep10','hola', 1);
 
-insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10011, 'Nicolás Hernández', '1012345681', 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
-insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias', '1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
-insert into ClienteEntity(id, nombre, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya', '1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
+insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10011, 'Nicolás Hernández','https://www.psicoactiva.com/blog/wp-content/uploads/2017/07/hombre-soltero-feliz.jpg', '1012345681', 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
+insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias','https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg' ,'1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
+insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
 
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10001, '04/22/2018','jihrfu9i3', 15, '05/22/2018', 'Día de san valentin', 10011);
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10002, '04/23/2018','u934hq', 30, '05/22/2018', 'Día de la madre', 10012);

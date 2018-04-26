@@ -1,6 +1,4 @@
 package co.edu.uniandes.csw.fiestas.dtos;
-
-import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 
 /**
@@ -15,7 +13,7 @@ public class PagoDetailDTO extends PagoDTO{
      * Constructor por defecto
      */
     public PagoDetailDTO(){
-        
+        //Constructor vacio
     }
     
         /**
