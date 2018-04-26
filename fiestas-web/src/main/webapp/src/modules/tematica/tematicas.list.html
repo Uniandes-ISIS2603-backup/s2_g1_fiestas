@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr ng-repeat="tematica in tematicasRecords">
+                    <td id="{{$index}}-id">{{tematica.id}}</td>
+                    <td id="{{$index}}-name">
+                        <a ui-sref="tematicaDetail({tematicaId: tematica.id})">{{tematica.nombre}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
