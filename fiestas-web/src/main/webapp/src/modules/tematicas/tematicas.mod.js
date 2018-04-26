@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 (function (ng) {
-    var mod = ng.module("tematicaModule", ['ui.router']);
+    var mod = ng.module("tematicasModule", ['ui.router']);
     
    mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -18,7 +18,7 @@
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'tematicas.html',
-                        controller: 'tematicaCtrl',
+                        controller: 'tematicasCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
@@ -40,7 +40,7 @@
                     },
                     'detailView': {
                         templateUrl: basePath + 'tematicas.detail.html',
-                        controller: 'tematicaDetailCtrl',
+                        controller: 'tematicasDetailCtrl',
                         controllerAs: 'ctrl'
                     }
                 }

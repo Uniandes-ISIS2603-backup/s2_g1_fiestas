@@ -11,7 +11,7 @@
                 <tr ng-repeat="producto in productosRecords">
                     <td id="{{$index}}-id">{{producto.id}}</td>
                     <td id="{{$index}}-name">
-                        <a ui-sref="productoDetail({productoId: producto.id})">{{producto.nombre}}</a>
+                        <a ui-sref="productosDetail({productoId: producto.id})">{{producto.nombre}}</a>
                     </td>
                 </tr>
             </tbody>

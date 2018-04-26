@@ -9,11 +9,10 @@
         'clienteModule',
         'blogsModule',
         'bonosModule',
-        'eventoModule',      
-        'pagoModule',
         'eventoModule',
-        'productoModule'
-
+        'eventoModule',
+        'productoModule',
+        'tematicasModule'
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {

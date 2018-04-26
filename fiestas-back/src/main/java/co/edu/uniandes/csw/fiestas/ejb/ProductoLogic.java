@@ -24,8 +24,7 @@ public class ProductoLogic
     
     @Inject
     private ProductoPersistence persistence;
-    
-    @Inject
+        @Inject
     private ServicioPersistence perSer;
     
     /**

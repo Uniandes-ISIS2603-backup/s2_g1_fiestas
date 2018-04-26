@@ -33,7 +33,7 @@
                         templateUrl: basePath + 'productos.list.html'
                     }
                 }
-            }).state('productosDetail', {
+            }).state('productoDetail', {
                 url: '/{productoId:int}/detail',
                 parent: 'producto',
                 param: {productoId: null},
