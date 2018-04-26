@@ -1,9 +1,9 @@
 (function (ng) {
-    var mod = ng.module("tematicaModule");
-    mod.constant("tematicaContext", "api/tematicas");
-    mod.controller('tematicaCtrl', ['$scope', '$http', 'tematicaContext',
-        function ($scope, $http, tematicaContext) {
-            $http.get(tematicaContext).then(function (response) {
+    var mod = ng.module("tematicasModule");
+    mod.constant("tematicasContext", "api/tematicas");
+    mod.controller('tematicasCtrl', ['$scope', '$http', 'tematicasContext',
+        function ($scope, $http, tematicasContext) {
+            $http.get(tematicasContext).then(function (response) {
                 $scope.tematicasRecords = response.data;
             });
         }
