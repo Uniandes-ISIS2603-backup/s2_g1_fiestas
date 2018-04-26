@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 (function (ng) {
+    
+    
+
+    var mod = ng.module("productoModule", ['ui.router']);
+    
    mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
             var basePath = 'src/modules/productos/';
@@ -16,7 +21,7 @@
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'productos.html',
-                        controller: 'productosCtrl',
+                        controller: 'productoCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
@@ -28,7 +33,7 @@
                         templateUrl: basePath + 'productos.list.html'
                     }
                 }
-            }).state('productosDetail', {
+            }).state('productoDetail', {
                 url: '/{productoId:int}/detail',
                 parent: 'producto',
                 param: {productoId: null},

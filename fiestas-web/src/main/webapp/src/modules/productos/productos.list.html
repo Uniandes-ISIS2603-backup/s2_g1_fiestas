@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr ng-repeat="producto in productosRecords">
+                    <td id="{{$index}}-id">{{producto.id}}</td>
+                    <td id="{{$index}}-name">
+                        <a ui-sref="productosDetail({productoId: producto.id})">{{producto.nombre}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
