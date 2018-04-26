@@ -8,10 +8,10 @@
                 </tr>
             </thead>
             <tbody> 
-                <tr ng-repeat="producto in productosRecords">
-                    <td id="{{$index}}-id">{{producto.id}}</td>
+                <tr ng-repeat="tematica in tematicasRecords">
+                    <td id="{{$index}}-id">{{tematica.id}}</td>
                     <td id="{{$index}}-name">
-                        <a ui-sref="productoDetail({productoId: producto.id})">{{producto.nombre}}</a>
+                        <a ui-sref="tematicaDetail({tematicaId: tematica.id})">{{tematica.nombre}}</a>
                     </td>
                 </tr>
             </tbody>

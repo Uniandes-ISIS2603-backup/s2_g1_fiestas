@@ -21,7 +21,7 @@
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'productos.html',
-                        controller: 'productosCtrl',
+                        controller: 'productoCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
