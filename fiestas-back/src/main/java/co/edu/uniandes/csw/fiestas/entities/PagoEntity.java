@@ -2,6 +2,8 @@ package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Entidad Pago.
@@ -16,6 +18,9 @@ public class PagoEntity extends BaseEntity implements Serializable {
     private String metodoDePago;/*Metodo de pago actual*/
     private int valor;/*Valor del pago*/
 
+    @PodamExclude
+    @ManyToOne
+    private EventoEntity evento;
 
     /**
      * Obtiene el boolean que representa si el pago fue realizado
@@ -54,7 +59,6 @@ public class PagoEntity extends BaseEntity implements Serializable {
         this.estado = estado;
     }
 
-
     /**
      * Obtiene el metodo de pago del pago
      *
@@ -83,11 +87,28 @@ public class PagoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * Establece eel valor a pagar del pago
+     * Establece el valor a pagar del pago
      *
      * @param valor a pagar
      */
     public void setValor(int valor) {
         this.valor = valor;
+    }
+
+    /**
+     * Retorna el evento correspondiente al pago
+     * @return pago correspondiente al pago
+     */
+    public EventoEntity getEvento() {
+        return evento;
+    }
+
+    /**
+     * Establece el evento del pago
+     *
+     * @param evento evento a cual corresponde el pago
+     */
+    public void setEvento(EventoEntity evento) {
+        this.evento = evento;
     }
 }

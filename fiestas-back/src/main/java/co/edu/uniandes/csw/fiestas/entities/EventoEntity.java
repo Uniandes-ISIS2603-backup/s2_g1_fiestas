@@ -41,8 +41,8 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<ContratoEntity> contratos = new ArrayList<>();
 
     @PodamExclude
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private PagoEntity pago;
+    @OneToMany(mappedBy = "evento",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PagoEntity> pagos = new ArrayList<>();
 
     @PodamExclude
     @ManyToOne
@@ -179,21 +179,21 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * Obtiene el pago del evento
+     * Obtiene los pagos del evento
      *
-     * @return pago correspondiente del evento
+     * @return pagos correspondientes del evento
      */
-    public PagoEntity getPago() {
-        return pago;
+    public List<PagoEntity> getPagos() {
+        return pagos;
     }
 
     /**
-     * Establece el pago correspondiente al evento
+     * Establece los pagos correspondiente al evento
      *
-     * @param pago, pago correspondiente al evento.
+     * @param pagos, pagos correspondientes al evento.
      */
-    public void setPago(PagoEntity pago) {
-        this.pago = pago;
+    public void setPagos(List<PagoEntity> pagos) {
+        this.pagos = pagos;
     }
 
     /**

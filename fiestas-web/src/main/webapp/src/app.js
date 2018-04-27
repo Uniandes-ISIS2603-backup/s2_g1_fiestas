@@ -11,6 +11,7 @@
         'bonosModule',
         'servicioModule',
         'valoracionModule'
+        'pagoModule',
         'eventoModule',
         'productoModule',
         'tematicasModule'
