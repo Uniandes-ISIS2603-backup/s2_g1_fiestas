@@ -7,7 +7,7 @@
     
     
 
-    var mod = ng.module("productoModule", ['ui.router']);
+    var mod = ng.module("productosModule", ['ui.router']);
     
    mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -21,7 +21,7 @@
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'productos.html',
-                        controller: 'productoCtrl',
+                        controller: 'productosCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
@@ -33,9 +33,9 @@
                         templateUrl: basePath + 'productos.list.html'
                     }
                 }
-            }).state('productoDetail', {
+            }).state('productosDetail', {
                 url: '/{productoId:int}/detail',
-                parent: 'producto',
+                parent: 'productos',
                 param: {productoId: null},
                 views: {
                     'listView': {
@@ -43,7 +43,7 @@
                     },
                     'detailView': {
                         templateUrl: basePath + 'productos.detail.html',
-                        controller: 'productoDetailCtrl',
+                        controller: 'productosDetailCtrl',
                         controllerAs: 'ctrl'
                     }
                 }

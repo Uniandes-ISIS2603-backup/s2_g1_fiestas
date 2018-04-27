@@ -9,9 +9,9 @@
             </thead>
             <tbody> 
                 <tr ng-repeat="producto in productosRecords">
-                    <td id="{{$index}}-id">{{producto.id}}</td>
+                    <td id="{{$index}}-id">{{producto.ID}}</td>
                     <td id="{{$index}}-name">
-                        <a ui-sref="productosDetail({productoId: producto.id})">{{producto.nombre}}</a>
+                        <a ui-sref="productosDetail({productoId: producto.ID})">{{producto.nombre}}</a>
                     </td>
                 </tr>
             </tbody>

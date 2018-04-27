@@ -36,7 +36,7 @@ import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 public class ProductoDTO {
 
     private long id;
-    private String nombre;
+    private String nombree;
     private int precio;
     private String descripcion;
     private String incluye;
@@ -58,7 +58,7 @@ public class ProductoDTO {
     public ProductoDTO(ProductoEntity productoE) {
         if (productoE != null) {
             this.id = productoE.getId();
-            this.nombre=productoE.getNombre();
+            this.nombree=productoE.getNombre();
             this.descripcion = productoE.getDescripcion();
             this.incluye = productoE.getIncluye();
             this.personal = productoE.getPersonal();
@@ -80,7 +80,7 @@ public class ProductoDTO {
      * @return El nombre del producto
      */
     public String getNombre() {
-        return nombre;
+        return nombree;
     }
 
     /**
@@ -166,7 +166,7 @@ public class ProductoDTO {
 
         ProductoEntity productoE = new ProductoEntity();
         productoE.setId(this.id);
-        productoE.setNombre(this.nombre);
+        productoE.setNombre(this.nombree);
         productoE.setDescripcion(this.descripcion);
         productoE.setIncluye(this.incluye);
         productoE.setPersonal(this.personal);

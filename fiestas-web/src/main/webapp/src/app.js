@@ -11,7 +11,7 @@
         'bonosModule',
         'eventoModule',
         'eventoModule',
-        'productoModule',
+        'productosModule',
         'tematicasModule'
     ]);
     // Resuelve problemas de las promesas
