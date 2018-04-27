@@ -3,7 +3,6 @@ package co.edu.uniandes.csw.fiestas.resources;
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.dtos.PagoDetailDTO;
-import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +77,7 @@ public class PagoResource {
     }
 
     /**
-     * <h1>GET /pagos/{id} : Obtener pago por id.</h1>
+     * <h1>GET api/eventos/{idEvento}/pagos/{id} : Obtener pago por id.</h1>
      *
      * <pre>Busca el pago con el id asociado recibido en la URL y lo devuelve.
      *
@@ -107,7 +106,7 @@ public class PagoResource {
     }
 
     /**
-     * <h1>POST /pagos : Crear un pago.</h1>
+     * <h1>POST api/eventos/{idEvento}/pagos : Crear un pago.</h1>
      *
      * <pre>Cuerpo de petición: JSON {@link PagoDetailDTO}.
      *
@@ -139,7 +138,7 @@ public class PagoResource {
     }
 
     /**
-     * <h1>PUT /pagos/{id} : Actualizar pago por id.</h1>
+     * <h1>PUT api/eventos/{idEvento}/pagos/{id} : Actualizar pago por id.</h1>
      *
      * <pre>Busca el pago con el id asociado recibido en la URL, actualiza os paramteros
      * y lo devuelve.
@@ -172,9 +171,9 @@ public class PagoResource {
     }
 
     /**
-     * <h1>DELETE /pagos/{id} : Elimina un pago por id.</h1>
+     * <h1>DELETE api/eventos/{idEvento}/pagos/{id} : Elimina un pago de un evento por id.</h1>
      *
-     * <pre>Busca el pago con el id asociado recibido en la URL y lo elimina
+     * <pre>Busca el pago con el id y evento asociado recibido en la URL y lo elimina
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
