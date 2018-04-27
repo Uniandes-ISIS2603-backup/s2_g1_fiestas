@@ -1,0 +1,43 @@
+<div class="panel panel-default"> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3">
+                <dl> 
+                    <dt class ="bold">Estado</dt>
+                    <dt>{{currentContrato.estado}}</dt>
+                    <hr>
+                    <dt class="bold">Valor</dt>
+                    <dd>{{currentContrato.valor}}</dd>
+                    <hr>
+                    <dt class="bold">Estado</dt>
+                    <dd>{{currentContrato.estado}}</dd>
+                    <hr>
+                    <dt class="bold">Proveedor</dt>
+                    <dd>{{currentContrato.proveedor.nombre}}</dd>
+                    <hr>
+                    <dt class="bold">Evento</dt>
+                    <dd>{{currentContrato.evento}}</dd>
+                    <hr>
+                    
+                    <!--Pendiente productos-->
+                </dl>
+            </div>
+            <div class="col-md-3">
+                <dl>  
+                    <dt>Horario</dt>  
+                    <hr>                    
+                    <dt class="bold">Fecha</dt>
+                    <dd>{{currentContrato.horario.fecha}}</dd>
+                    <hr>
+                    <dt class="bold">Hora Inicio</dt>
+                    <dd>{{currentContrato.horario.horaInicio}}</dd>
+                    <hr>
+                    <dt class="bold">Hora Fin</dt>
+                    <dd>{{ currentContrato.horario.horaFin}}</dd>
+                    <hr>
+                    
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

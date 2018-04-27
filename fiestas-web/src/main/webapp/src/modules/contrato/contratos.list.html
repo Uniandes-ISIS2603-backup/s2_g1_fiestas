@@ -1,0 +1,39 @@
+<div class="container-fluid" style="padding-top: 20px">
+    <div class="panel-group">
+        <div class="panel panel-primary" >
+            <div class="panel-heading"><label>Lista de Contratos</label></div>
+            <div class="panel-body">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <a class="btn btn-info" ui-sref="contratosCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Contrato</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-6">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="contrato in contratosRecords">
+                                    <td id="{{$index}}-id">{{contrato.id}}</td>
+                                    <td id="{{$index}}-name">
+                                        <a ui-sref="contratoDetail({contratoId: contrato.id})">{{contrato.nombre}}</a>
+                                    </td>
+                                    <td id="{{$index}}-actions">
+                                        <a class="btn btn-default btn-sm" ui-sref="contratoUpdate({contratoId: contrato.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-danger btn-sm" ui-sref="contratoDelete({contratoId: contrato.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
