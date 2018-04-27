@@ -4,7 +4,7 @@
 
 .mainHeader {
     padding: 20px;
-    background-color:  brown;
+    background-color:  white;
 }
 
 .logo{
@@ -22,6 +22,13 @@
     font-family: 'Century Gothic', sans-serif;
     color: whitesmoke;
 }
+
+.separator{
+    font-size: 30px;
+    font-family: : Roboto;
+    color: white;
+}
+
 
 
 
