@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.persistence.PagoPersistence;
 import java.util.ArrayList;
@@ -88,12 +89,14 @@ public class PagoPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from PagoEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
     /**
-     * Lista donde se guardaran las entidades creadas para las pruebas
+     * Listas donde se guardaran las entidades creadas para las pruebas
      */
     private List<PagoEntity> data = new ArrayList<PagoEntity>();
+    private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -102,7 +105,15 @@ public class PagoPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
+            EventoEntity entidad = factory.manufacturePojo(EventoEntity.class);
+            em.persist(entidad);
+            dataEvento.add(entidad);
+        }
+        for (int i = 0; i < 3; i++) {
             PagoEntity entidad = factory.manufacturePojo(PagoEntity.class);
+            if (i == 0) {
+                entidad.setEvento(dataEvento.get(0));
+            }
             em.persist(entidad);
             data.add(entidad);
         }
@@ -150,7 +161,7 @@ public class PagoPersistenceTest {
     @Test
     public void getPagoTest() {
         PagoEntity entidad = data.get(0);
-        PagoEntity encontrado = pagoPersistence.find(entidad.getId());
+        PagoEntity encontrado = pagoPersistence.find(dataEvento.get(0).getId(),entidad.getId());
         Assert.assertNotNull(encontrado);
         Assert.assertEquals(entidad.getEstado(), encontrado.getEstado());
         Assert.assertEquals(entidad.getMetodoDePago(), encontrado.getMetodoDePago());

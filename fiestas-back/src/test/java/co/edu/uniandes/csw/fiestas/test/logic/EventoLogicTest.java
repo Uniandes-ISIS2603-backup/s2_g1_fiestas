@@ -48,8 +48,6 @@ public class EventoLogicTest {
 
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
 
-    private List<PagoEntity> pagosData = new ArrayList<PagoEntity>();
-
     private List<ContratoEntity> contratosData = new ArrayList<ContratoEntity>();
 
     @Deployment
@@ -88,7 +86,6 @@ public class EventoLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from ContratoEntity").executeUpdate();
-        em.createQuery("delete from PagoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
 
     }
@@ -102,13 +99,6 @@ public class EventoLogicTest {
             ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
             em.persist(contrato);
             contratosData.add(contrato);
-
-            PagoEntity pagoEntity = factory.manufacturePojo(PagoEntity.class);
-            pagoEntity.setEstado(Estado.EN_REVISION.toString());
-            pagoEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
-            pagoEntity.setRealizado(false);
-            em.persist(pagoEntity);
-            pagosData.add(pagoEntity);
         }
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
@@ -126,7 +116,6 @@ public class EventoLogicTest {
 
             if (i == 0) {
                 contratosData.get(i).setEvento(entity);
-                pagosData.get(i).setEvento(entity);
             }
         }
     }
@@ -394,78 +383,5 @@ public class EventoLogicTest {
         } catch (BusinessLogicException ex) {
         }
     }
-
-    /**
-     * Prueba de agregar un pago de un evento.
-     */
-    @Test
-    public void addPagoTest() {
-        EventoEntity entity = data.get(0);
-        PagoEntity pagoEntity = pagosData.get(0);
-        PagoEntity creado = eventoLogic.addPago(pagoEntity.getId(), entity.getId());
-        Assert.assertEquals(creado.getId(), pagoEntity.getId());
-        Assert.assertEquals(creado.getValor(), pagoEntity.getValor());
-    }
-
-    /**
-     * Prueba de obtener un pago de un evento.
-     */
-    @Test
-    public void getPagoTest() {
-        EventoEntity entity = data.get(0);
-        PagoEntity pagoEntity = pagosData.get(0);
-        PagoEntity respuesta = new PagoEntity();
-        try {
-            respuesta = eventoLogic.getPago(entity.getId(), pagoEntity.getId());
-        } catch (BusinessLogicException ex) {
-            fail(ex.getMessage());
-        }
-        Assert.assertEquals(respuesta.getId(), pagoEntity.getId());
-        Assert.assertEquals(respuesta.getValor(), pagoEntity.getValor());
-    }
-
-    /**
-     * Prueba de obtener la lista de pagos de un evento.
-     */
-    @Test
-    public void getPagosTest() {
-        EventoEntity entity = data.get(0);
-        PagoEntity pagoEntity = pagosData.get(0);
-        List<PagoEntity> respuesta = eventoLogic.getPagos(entity.getId());
-        Assert.assertEquals(respuesta.get(0).getId(), pagoEntity.getId());
-        Assert.assertEquals(respuesta.get(0).getValor(), pagoEntity.getValor());
-    }
-
-    /**
-     * Prueba para reemplzar la lista de pagos de un evento.
-     */
-    @Test
-    public void replacePagosTest() {
-        EventoEntity entity = data.get(0);
-        PagoEntity pagoEntity = pagosData.get(0);
-        PagoEntity otherPagoEntity = pagosData.get(1);
-
-        List<PagoEntity> respuesta = eventoLogic.replacePagos(entity.getId(), pagosData);
-        Assert.assertEquals(respuesta.get(0).getId(), pagoEntity.getId());
-        Assert.assertEquals(respuesta.get(0).getValor(), pagoEntity.getValor());
-        Assert.assertEquals(respuesta.get(1).getId(), otherPagoEntity.getId());
-        Assert.assertEquals(respuesta.get(1).getValor(), otherPagoEntity.getValor());
-    }
-
-    /**
-     * Prueba para eliminar un pago
-     */
-    @Test
-    public void removePagoTest() {
-        EventoEntity entity = data.get(0);
-        PagoEntity pagoEntity = pagosData.get(0);
-        eventoLogic.removePago(pagoEntity.getId(), entity.getId());
-        try {
-            PagoEntity respuesta = eventoLogic.getPago(entity.getId(), pagoEntity.getId());
-            fail("No deberia encontrar el pago en el evento");
-        } catch (BusinessLogicException ex) {
-
-        }
-    }
-
+ 
 }
