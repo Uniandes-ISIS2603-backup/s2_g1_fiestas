@@ -44,7 +44,7 @@ public class ValoracionDTO {
      */
        public ValoracionDTO()
     {
-        
+        //constructor vacio
     }
        
      /**

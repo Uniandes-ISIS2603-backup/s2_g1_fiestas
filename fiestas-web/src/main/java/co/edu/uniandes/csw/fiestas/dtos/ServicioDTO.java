@@ -40,7 +40,7 @@ public class ServicioDTO {
      */
     public ServicioDTO()
     {
-        
+        //constructor vacio
     }
     
      /**

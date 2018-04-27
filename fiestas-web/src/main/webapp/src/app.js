@@ -10,7 +10,7 @@
         'blogsModule',
         'bonosModule',
         'servicioModule',
-        'valoracionModule'
+        'valoracionModule',
         'pagoModule',
         'eventoModule',
         'productoModule',
