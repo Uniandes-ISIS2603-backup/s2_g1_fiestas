@@ -1,10 +1,11 @@
 <div class="container-fluid">
-    <div class="col-md-4">
-        <table class="table table-hover">
+     <div class="col-sm-12 col-md-5">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Estado</th>
+                    <th>Metodo de Pago</th>
                 </tr>
             </thead>
             <tbody>
@@ -13,6 +14,7 @@
                         <a ui-sref="pagoDetail({pagoId: pago.id})">{{pago.id}}</a>
                     </td>
                     <td id="{{$index}}-estado">{{pago.estado}}</td>
+                    <td id="{{$index}}-metodo">{{pago.metodoPago}}</td>
 
                 </tr>
             </tbody>

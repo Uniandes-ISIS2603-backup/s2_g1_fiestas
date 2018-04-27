@@ -3,6 +3,7 @@ package co.edu.uniandes.csw.fiestas.resources;
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.dtos.PagoDetailDTO;
+import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,7 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "pagos".
- * URL: /api/proveedores
- * URL: /api/pagos
+ * URL: /api/eventos/{eventosId: \\d+}/pagos
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta
  * "/api" y este recurso tiene la ruta "pagos.</i>
@@ -43,6 +43,13 @@ public class PagoResource {
 
     @Inject
     private PagoLogic pagoLogic;
+    
+     @Inject
+    private EventoLogic eventoLogic;
+     
+     @PathParam("eventosId")
+     private Long eventoId;
+     
 
     /**
      * Convierte una lista de PagoEntity a una lista de PagoDetailDTO.
