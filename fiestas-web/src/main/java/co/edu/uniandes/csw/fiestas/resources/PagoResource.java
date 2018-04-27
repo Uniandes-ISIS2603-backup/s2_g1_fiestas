@@ -43,13 +43,6 @@ public class PagoResource {
 
     @Inject
     private PagoLogic pagoLogic;
-    
-     @Inject
-    private EventoLogic eventoLogic;
-     
-     @PathParam("eventosId")
-     private Long eventoId;
-     
 
     /**
      * Convierte una lista de PagoEntity a una lista de PagoDetailDTO.
