@@ -4,7 +4,7 @@
 
 .mainHeader {
     padding: 20px;
-    background-color: lightblue;
+    background-color:  brown;
 }
 
 .logo{
@@ -15,11 +15,11 @@
 .mainTitle {
     font-variant: small-caps;
     color: whitesmoke;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic',sans-serif;
 }
 
 .subTitle{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', sans-serif;
     color: whitesmoke;
 }
 
