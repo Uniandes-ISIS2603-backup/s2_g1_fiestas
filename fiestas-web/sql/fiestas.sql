@@ -1,11 +1,12 @@
+delete from BonoEntity;
 delete from BlogEntity;
-delete from ContratoEntity;
-delete from EventoEntity;
-delete from HorarioEntity;
 delete from PagoEntity;
+delete from EventoEntity;
+delete from ContratoEntity;
+delete from HorarioEntity;
+delete from TematicaEntity;
 delete from ProductoEntity;
 delete from ServicioEntity;
-delete from TematicaEntity;
 delete from ValoracionEntity;
 delete from ProveedorEntity;
 delete from ClienteEntity;
@@ -59,3 +60,4 @@ insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values 
 insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
+
