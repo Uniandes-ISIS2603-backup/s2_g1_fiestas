@@ -1,11 +1,12 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2 col-md-2" ng-repeat="valoracion in valoracionesRecords">
-                <td id="{{$index}}-calificacion"><a ui-sref="valoracionDetail({valoracionId: valoracion.id})">{{valoracion.calificacion}}</a></td>
-                <td id="{{$index}}-comentario"><a ui-sref="valoracionDetail({valoracionId: valoracion.id})">{{valoracion.comentario}}</a></td>
-        </div>
+<div class="container-fluid">   
+    <div class="col-sm-12">
+        <tbody>
+                <tr ng-repeat="review in reviewsRecords">
+                    <td id="{{$index}}-id"><b>{{currentServicio.descripcion}}</b><span>: </span>{{valoracion.calificacion}}</td>              
+                    <td id="{{$index}}-id"><b>{{currentServicio.descripcion}}</b><span>: </span>{{valoracion.comentario}}</td>
+                </tr>
+            </tbody>
+
     </div>
+
 </div>
-
-
-
