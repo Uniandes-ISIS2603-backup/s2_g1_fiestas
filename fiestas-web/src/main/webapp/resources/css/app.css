@@ -4,7 +4,7 @@
 
 .mainHeader {
     padding: 20px;
-    background-color:  brown;
+    background-color:  white;
 }
 
 .logo{
@@ -23,5 +23,9 @@
     color: whitesmoke;
 }
 
+.separator{
+    font-size: 30px;
+    color: white;
+}
 
 
