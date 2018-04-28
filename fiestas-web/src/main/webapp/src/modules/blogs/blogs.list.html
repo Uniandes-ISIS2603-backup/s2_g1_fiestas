@@ -12,13 +12,13 @@
             </thead>
             <tbody>
                 <tr ng-repeat="blogs in blogsRecords">
-                    <td Id="{{$index}}-id">
+                    <td >
                         <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
                     </td>          
-                    <td id="{{$index}}-Título">{{blogs.titulo}}</td>
-                    <td id="{{$index}}-Likes">{{blogs.likes}}</td>
-                    <td id="{{$index}}-Evento">{{blogs.evento.nombre}}</td>
-                    <td id="{{$index}}-Cliente">{{blogs.cliente.nombre}}</td>                    
+                    <td >{{blogs.titulo}}</td>
+                    <td >{{blogs.likes}}</td>
+                    <td >{{blogs.evento.nombre}}</td>
+                    <td >{{blogs.cliente.nombre}}</td>                    
                 </tr>
             </tbody>
         </table>
