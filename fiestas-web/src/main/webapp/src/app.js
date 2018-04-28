@@ -16,6 +16,7 @@
         'productosModule',
         'tematicasModule',
         'contratoModule'
+   
 
 
     ]);
