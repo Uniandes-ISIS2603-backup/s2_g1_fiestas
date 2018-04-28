@@ -2,7 +2,7 @@
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext',
+    mod.controller('pagoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -20,7 +20,7 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, eventosContext, $state, pagoContext) {
+        function ($scope, $http, eventosContext, $state, pagoContext,$rootScope) {
             $rootScope.edit = true;
 
             $scope.data = {};
@@ -32,7 +32,7 @@
             var idEvento = $state.params.eventoId;
             var idPago = $state.params.pagoId;
 
-            //Consulto el evento a editar.
+            //Consulto el pago a editar.
             $http.get(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago).then(function (response) {
                 var pago = response.data;
                 $scope.data.realizado = pago.realizado;
@@ -50,10 +50,10 @@
              * Crea un nuevo evento con los libros nuevos y la información del
              * $scope.
              */
-            $scope.createPago = function () {
+            $scope.updatePago = function () {
                 $http.put(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago).then(function (response) {
-                    //Evento created successfully
-                    $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
+                    //Pago updated successfully
+                    $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };
         }
