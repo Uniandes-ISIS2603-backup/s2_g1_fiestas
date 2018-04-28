@@ -30,7 +30,7 @@
                 url: '/create',
                 parent: 'valoraciones',
                 views: {
-                    'detailView': {
+                    'listView': {
                         templateUrl: basePath + '/new/valoraciones.new.html',
                         controller: 'valoracionNewCtrl'
                     }
