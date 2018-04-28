@@ -9,9 +9,9 @@
             </thead>
             <tbody> 
                 <tr ng-repeat="tematica in tematicasRecords">
-                    <td id="{{$index}}-id">{{tematica.id}}</td>
+                    <td id="{{$index}}-id">{{tematica.ID}}</td>
                     <td id="{{$index}}-name">
-                        <a ui-sref="tematicasDetail({tematicaId: tematica.id})">{{tematica.nombre}}</a>
+                        <a ui-sref="tematicasDetail({tematicaId: tematica.ID})">{{tematica.descripcion}}</a>
                     </td>
                 </tr>
             </tbody>
