@@ -74,7 +74,7 @@ public class PagoResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<PagoDTO> getPagos(@PathParam("idEvento") Long idEvento) throws BusinessLogicException {
+    public List<PagoDTO> getPagos(@PathParam("idEvento") Long idEvento){
         return listEntity2DTO(pagoLogic.getPagos(idEvento));
     }
 

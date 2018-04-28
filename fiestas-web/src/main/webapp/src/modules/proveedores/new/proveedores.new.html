@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="panel-group">
         <div class="panel panel-primary">
-            <div class="panel-heading"><label ng-if="!edit" id="createProveedor">Create new Proveedor</label>
-                <label ng-if="edit" id="editProveedor">Edit Proveedor</label></div>
+            <div class="panel-heading"><label ng-if="!edit" id="createProveedor">Creando nuevo proveedor</label>
+                <label ng-if="edit" id="editProveedor">Editando proveedor</label></div>
             <div class="panel-body">
                 <form name="proveedor">
                     <div class="form-group row">
@@ -58,26 +58,24 @@
                     <div class="form-group row">
                         <div class="form-group col-md-9">
                             <label for="proveedorPenalizado" class="col-sm-3">Penalizado:</label>
-                            <input id="proveedorPenalizado" type="checkbox" required ng-model="data.penalizado" class="col-sm-6"/>
+                            <input id="proveedorPenalizado" type="checkbox" ng-model="data.penalizado" class="col-sm-6"/>
                         </div>
-                    </div>
-                    
-                    <move-lists ng-if="edit" selected="selectedItems" available="availableItems"></move-lists>
+                    </div>                
 
                     <div class="form-group row">
                         <div class="form-group col-sm-4" ng-if="!proveedor.$valid">
 
                             <div class="alert alert-warning" >
-                                <strong>Warning!</strong><p>All inputs are required*</p>
+                                <strong>¡Advertencia!</strong><p>Todos los campos son requeridos*</p>
                             </div> 
                         </div> 
                     </div>
                     
                     <div class="form-group row">
                         <div class="form-group col-sm-12">
-                            <input ng-if="!edit" ng-show="proveedor.$valid" ng-click="createProveedor()" value="Save" class="btn btn-success"/>
-                            <input ng-if="edit" ng-show="proveedor.$valid" ng-click="updateProveedor()" value="Save" class="btn btn-success"/>
-                            <a class="btn btn-info" ui-sref="proveedoresList">Cancel</a>
+                            <input ng-if="!edit" ng-show="proveedor.$valid" ng-click="createProveedor()" value="Crear" class="btn btn-success"/>
+                            <input ng-if="edit" ng-show="proveedor.$valid" ng-click="updateProveedor()" value="Guardar" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="proveedoresList">Cancelar</a>
                         </div>
                     </div>
                 </form>
