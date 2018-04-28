@@ -9,11 +9,7 @@
 
             $scope.data = {};
 
-            $scope.selectedItems = [];
-
-            $scope.availableItems = [];
-
-            var idServicio = $state.params.proveedorId;
+            var idServicio = $state.params.servicioId;
 
             //Consulto el autor a editar.
             $http.get(serviciosContext + '/' + idServicio).then(function (response) {
@@ -34,11 +30,6 @@
              */
             $scope.updateServicio = function () {
                 $http.put(serviciosContext + "/" + idServicio, $scope.data).then(function (response) {
-                    if ($scope.selectedItems.length >= 0) {
-                        $http.put(serviciosContext + "/" + response.data.id, $scope.selectedItems).then(function (response) {
-                        });
-                    }
-                    
                     $state.go('serviciosList', {servicioId: response.data.id}, {reload: true});
                 });
             };
