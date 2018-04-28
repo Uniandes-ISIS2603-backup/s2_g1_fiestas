@@ -25,8 +25,9 @@
          * toda la aplicación.
          */
         function ($scope, $http, bonosContext, $state, $rootScope) {
-            $scope.data = {};
             $rootScope.edit=false;
+            $scope.data = {};
+            
             
              /**
              * @ngdoc function
