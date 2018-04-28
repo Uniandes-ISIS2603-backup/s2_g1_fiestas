@@ -24,7 +24,7 @@ public class EventoDetailDTO extends EventoDTO {
      * Constructor por defecto
      */
     public EventoDetailDTO() {
-        //Constructor vacio
+        super();
     }
 
     /**
@@ -37,19 +37,27 @@ public class EventoDetailDTO extends EventoDTO {
      */
     public EventoDetailDTO(EventoEntity entity) {
         super(entity);
-        if (entity != null) {
-            contratos = new ArrayList<>();
-            for (ContratoEntity contratoEntity : entity.getContratos()) {
-                contratos.add(new ContratoDTO(contratoEntity));
-            }
-
+        if (entity.getCliente() != null) {
+            this.cliente = new ClienteDTO(entity.getCliente());
+        } else {
+            entity.setCliente(null);
+        }
+        if (entity.getTematica() != null) {
+            this.tematica = new TematicaDTO(entity.getTematica());
+        } else {
+            entity.setTematica(null);
+        }
+        if (entity.getPagos() != null) {
             pagos = new ArrayList<>();
-            for (PagoEntity pagoEntity : entity.getPagos()) {
-                pagos.add(new PagoDTO(pagoEntity));
+            for (PagoEntity entityPago : entity.getPagos()) {
+                pagos.add(new PagoDTO(entityPago));
             }
-
-            cliente = new ClienteDTO(entity.getCliente());
-            tematica = new TematicaDTO(entity.getTematica());
+        }
+        if (entity.getContratos() != null) {
+            contratos = new ArrayList<>();
+            for (ContratoEntity entityContrato : entity.getContratos()) {
+                contratos.add(new ContratoDTO(entityContrato));
+            }
         }
     }
 
@@ -69,14 +77,18 @@ public class EventoDetailDTO extends EventoDTO {
                 contratosEntity.add(contrato.toEntity());
             }
             entity.setContratos(contratosEntity);
-
-              List<PagoEntity> pagosEntity = new ArrayList<>();
+        }
+        if (pagos != null) {
+            List<PagoEntity> pagosEntity = new ArrayList<>();
             for (PagoDTO pago : pagos) {
                 pagosEntity.add(pago.toEntity());
             }
             entity.setPagos(pagosEntity);
-            entity.setContratos(contratosEntity);          
+        }
+        if (this.getCliente() != null) {
             entity.setCliente(cliente.toEntity());
+        }
+        if (this.getTematica() != null) {
             entity.setTematica(tematica.toEntity());
         }
         return entity;

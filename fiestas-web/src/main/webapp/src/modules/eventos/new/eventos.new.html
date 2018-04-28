@@ -59,7 +59,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-if="edit" ng-repeat="pago in allPagosEvento">
+                                    <tr ng-if="edit" ng-repeat="pago in data.pagos">
                                         <td id="{{$index}}-estado">{{pago.estado}}</td>
                                         <td id="{{$index}}-metodo">{{pago.metodoPago}}</td>
                                     </tr>

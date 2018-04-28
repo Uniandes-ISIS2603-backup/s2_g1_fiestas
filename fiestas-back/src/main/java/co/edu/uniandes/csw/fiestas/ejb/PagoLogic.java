@@ -39,12 +39,12 @@ public class PagoLogic {
     public List<PagoEntity> getPagos(Long eventoId) throws BusinessLogicException {
         LOGGER.info("Inicia proceso de consultar todos los pagos");
         EventoEntity evento = eventoLogic.getEvento(eventoId);
-        if (evento.getPagos() == null) {
-            throw new BusinessLogicException("El evento que se consulta aún no tiene pagos");
-        }
-        if (evento.getPagos().isEmpty()) {
-            throw new BusinessLogicException("El evento que se consulta aún no tiene pagos");
-        }
+//        if (evento.getPagos() == null) {
+//            throw new BusinessLogicException("El evento que se consulta aún no tiene pagos");
+//        }
+//        if (evento.getPagos().isEmpty()) {
+//            throw new BusinessLogicException("El evento que se consulta aún no tiene pagos");
+//        }
         LOGGER.info("Termina proceso de consultar todos los pagos");
         return evento.getPagos();
     }
