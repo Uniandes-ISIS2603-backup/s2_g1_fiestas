@@ -36,10 +36,14 @@
             //Consulto el autor a editar.
             $http.get(clientesContext + '/' + idCliente).then(function (response) {
                 var cliente = response.data;
-                $scope.data.name = cliente.name;
-                $scope.data.birthDate = new Date(cliente.birthDate);
-                $scope.data.description = cliente.description;
-                $scope.data.image = cliente.image;
+                $scope.data.imagen = cliente.imagen;
+                $scope.data.nombre = cliente.nombre;
+                $scope.data.contrasena = cliente.contrasena;
+                $scope.data.correo = cliente.correo;
+                $scope.data.direccion = cliente.direccion;
+                $scope.data.documento = cliente.documento;
+                $scope.data.login = cliente.login;
+                $scope.data.telefono = cliente.telefono;
             });
             
             /**
@@ -50,7 +54,7 @@
              * Crea un nuevo autor con los libros nuevos y la información del
              * $scope.
              */
-            $scope.createCliente = function () {
+            $scope.updateCliente = function () {
                 $http.put(clientesContext + "/" + idCliente, $scope.data).then(function (response) {
                     if ($scope.selectedItems.length >= 0) {
                         $http.put(clientesContext + "/" + response.data.id, $scope.selectedItems).then(function (response) {
