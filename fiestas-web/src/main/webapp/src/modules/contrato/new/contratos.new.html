@@ -1,0 +1,64 @@
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createAuthor">Crear un nuevo Contrato</label>
+                <label ng-if="edit" id="editAuthor">Editar Contrato</label></div>
+            <div class="panel-body">
+                <form name="contrato">
+                    
+                    
+                    
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="contratoValor" class="col-sm-2">Valor:</label>
+                            <input id="contratoValor" required ng-model="data.valor" class="col-sm-6"/>
+                        </div>
+                    </div>
+                     <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="contratoTyC" class="col-sm-2">Términos y condiciones:</label>
+                            <input id="contratoTyC" required ng-model="data.tyc" class="col-sm-6"/>
+                        </div>
+                    </div
+                    
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="contratoEstado" class="col-sm-2">Estado</label>
+                            <input id="contratoEstado" required ng-model="data.estado" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    
+
+
+                    <div class="row" ng-if="edit">
+                        <div class="col-sm-12 col-md-5">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Hora Inicio</th>
+                                        <th>Hora Fin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="edit" ng-repeat="horario in horarios">
+                                        <td id="{{$index}}-fecha">{{horario.fecha}}</td>
+                                        <td id="{{$index}}-horaInicio">{{horario.horaInicio}}</td>
+                                        <td id="{{$index}}-horaFin">{{horario.horaFin}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-if="!edit"  ng-show="contrato.$valid" ng-click="createContrato()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="contrato.$valid" ng-click="updateContrato()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="contratosList">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
