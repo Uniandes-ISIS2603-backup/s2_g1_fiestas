@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function(ng){
+(function(ng){
     var mod =  ng.module ("BonosModule");
     mod.constant("bonosContext", "api/bonos");
     mod.controller('bonoDeleteCtrl', ['$scope', '$http', 'clientesContext', '$state',
@@ -39,3 +39,6 @@ function(ng){
                 });
             };
         }
+    ]);
+}
+)(window.angular);
