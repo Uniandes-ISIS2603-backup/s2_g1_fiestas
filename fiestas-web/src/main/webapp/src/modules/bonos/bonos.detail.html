@@ -19,6 +19,9 @@
                     <dt class="bold">Descuento (%)</dt>
                     <dd>{{currentBonos.descuento}}</dd>
                     <hr>
+                    <dt class="bold">Motivo</dt>
+                    <dd>{{currentBonos.motivo}}</dd>
+                    <hr>
                     <dt class="bold">Proveedor</dt>
                     <dd id="{{$index}}-name"><a ui-sref="proveedorDetail({proveedorId: currentBonos.proveedor.id})">{{currentBonos.proveedor.nombre}}</a></dd>
                 </dl>
