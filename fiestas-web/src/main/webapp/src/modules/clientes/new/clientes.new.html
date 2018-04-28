@@ -1,0 +1,91 @@
+<div class="container-fluid">
+    <div class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createCliente">Create new Cliente</label>
+                <label ng-if="edit" id="editCliente">Edit Cliente</label></div>
+            <div class="panel-body">
+                <form name="cliente">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteImagen" class="col-sm-2">Imagen de perfil:</label>
+                            <input id="clienteImagen" required ng-model="data.imagen" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteNombre" class="col-sm-2">Nombre:</label>
+                            <input id="clienteNombre" required ng-model="data.nombre" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteContrasena" class="col-sm-2">Contraseña:</label>
+                            <input id="clienteContrasena" required ng-model="data.contrasena" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteCorreo" class="col-sm-2">Correo:</label>
+                            <input id="clienteCorreo" required ng-model="data.correo" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteDireccion" class="col-sm-2">Dirección:</label>
+                            <input id="clienteDireccion" required ng-model="data.direccion" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteDocumento" class="col-sm-2">Documento:</label>
+                            <input id="clienteDocumento" required ng-model="data.documento" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label ng-if="!edit" for="clienteLogin" class="col-sm-2">Login:</label>
+                            <input ng-if="!edit" id="clienteLogin" required ng-model="data.login" class="col-sm-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="clienteTelefono" class="col-sm-2">Teléfono:</label>
+                            <input id="clienteTelefono" required ng-model="data.telefono" class="col-sm-6"/>
+                        </div>
+                    </div>
+
+                    <move-lists ng-if="edit" selected="selectedItems" available="availableItems"></move-lists>
+
+                    <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!cliente.$valid">
+
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-show="cliente.$valid" ng-click="createCliente()" value="Save" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="clientesList">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="center-block well text-center" ng-if="isAuthenticated() && !hasPermissions()">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <h1 class="float-left display-3 mr-4">403 Forbidden</h1>
+                    <h4 >You do not have permission for this action.</h4>
+                    <p >Contact the administrator to obtain permission.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
