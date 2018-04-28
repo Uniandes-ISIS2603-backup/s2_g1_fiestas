@@ -98,36 +98,30 @@
                 <div class="col-md-1"> 
                     <img src="resources/images/logonegro.png" alt="Pásala Bomba" class="img-responsive logo"/>                    
                 </div>
-
             </div> 
-            <div class="container-fluid" > 
-                <div class="row" style = "background-color:black;">
+                <div>
                     <div class="col-lg-12">
-                        <ul class="nav nav-tabs"  >
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="clientesList">Clientes</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="proveedoresList">Proveedores</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="serviciosList">Servicios</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="valoracionesList">Valoraciones</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="blogsList">Blog</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px; font-color: brown"><a ui-sref="bonosList">Bonos</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="eventosList">Eventos</a></li>
-                            <li class = "separator">|</li> 
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="productosList">Productos</a></li>
-                            <li class = "separator">|</li>
-                            <li style = "font-family:Century Ghotic; font-size: 20px;"><a ui-sref="tematicasList">Temáticas</a></li>
-                        </ul>                   
-                    </div>
-                </div>               
-                <div ui-view="mainView">
-                </div> 
-            </div>
-            
+                        <nav class="navbar navbar-inverse">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <a class="navbar-brand" >KULTEM</a>
+                                </div>
+                                <ul class="nav navbar-nav">
+                                    <li><a ui-sref="clientesList">Clientes</a></li>                          
+                                    <li><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
+                                    <li><a ui-sref="serviciosList">Servicios</a>  </li>                     
+                                    <li><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
+                                    <li><a ui-sref="blogsList">Blog</a> </li>                         
+                                    <li><a ui-sref="bonosList">Bonos</a>   </li>                   
+                                    <li><a ui-sref="eventosList">Eventos</a><   </li>                   
+                                    <li><a ui-sref="productosList">Productos</a> </li>                   
+                                    <li><a ui-sref="tematicasList">Temáticas</a></li> 
+                                </ul>
+                           </div>
+                        </nav>                  
+                    </div>                     
+                <div ui-view="mainView">                
+            </div>     
 
 
         </div>
