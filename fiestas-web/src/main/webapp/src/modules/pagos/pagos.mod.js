@@ -74,7 +74,7 @@
                 parent: 'pagos',
                 views: {
                     'detailView': {
-                        templateUrl: basePath + '/new/pagos.new.html',
+                        templateUrl: basePath + 'new/pagos.new.html',
                         controller: 'pagoNewCtrl'
                     }
                 }
@@ -86,7 +86,7 @@
                 },
                 views: {
                     'detailView': {
-                        templateUrl: basePath + '/new/pagos.new.html',
+                        templateUrl: basePath + 'new/pagos.new.html',
                         controller: 'pagoUpdateCtrl'
                     }
                 }
@@ -98,7 +98,7 @@
                 },
                 views: {
                     'detailView': {
-                        templateUrl: basePath + '/delete/pagos.delete.html',
+                        templateUrl: basePath + 'delete/pagos.delete.html',
                         controller: 'pagoDeleteCtrl'
                     }
                 }
