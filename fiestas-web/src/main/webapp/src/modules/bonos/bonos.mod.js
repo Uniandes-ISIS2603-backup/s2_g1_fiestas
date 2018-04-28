@@ -41,6 +41,17 @@
                     }
                 }
 
+            }).state("bonosUpdate",{
+              url: '/{bonosId:int}/update',
+                parent: 'bonos',
+                param: {bonosId: null},
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/create/bonos.new.html',
+                        controller: 'bonosUpdateCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }  
             });
         }
     ]);

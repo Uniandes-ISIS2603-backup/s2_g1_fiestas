@@ -1,0 +1,58 @@
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createBono">Crear un nuevo Bono</label>
+                <label ng-if="edit" id="editBono">Editar Bono</label></div>
+            <div class="panel-body">
+                <form name="bonos">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="bonoAplicaDesde" class="col-sm-2">Aplida desde:</label>
+                            <input type="date" id="bonoAplicaDesde" placeholder="DD/MM/YYYY" required ng-model="data.aplicaDesde" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="expira" class="col-sm-2">Expira:</label>
+                            <input type="date" id="expira" placeholder="DD/MM/YYYY" required ng-model="data.expira" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="bonoCodigo" class="col-sm-2">Código</label>
+                            <input id="bonoCodigo" required ng-model="data.codigo" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="descuento" class="col-sm-2">Despuento</label>
+                            <input id="descuento"  min="1" type="number" required ng-model="data.descuento" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="motivo" class="col-sm-2"> Motivo:</label>
+                            <input id="motivo"  required ng-model="data.motivo" class="col-sm-6"/>
+                        </div>
+                    </div> 
+                     <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!bonos.$valid">
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-if="!edit" ng-show="bono.$valid" ng-click="createBonos()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="bonos.$valid" ng-click="updateBonos()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="bonosList">Cancel</a>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

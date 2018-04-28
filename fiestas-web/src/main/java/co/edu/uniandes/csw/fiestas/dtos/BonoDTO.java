@@ -64,6 +64,7 @@ public class BonoDTO {
             this.expira = entity.getExpira();
             this.motivo = entity.getMotivo();
             this.codigo=entity.getCodigo();
+            this.descuento=entity.getDescuento();
         }
     }
 
