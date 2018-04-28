@@ -2,7 +2,7 @@ package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
-import co.edu.uniandes.csw.fiestas.dtos.PagoDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.PagoDTO;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,19 +47,20 @@ public class PagoResource {
      * Convierte una lista de PagoEntity a una lista de PagoDetailDTO.
      *
      * @param entityList Lista de PagoEntity a convertir.
-     * @return Lista de PagoDetailDTO convertida.
+     * @return Lista de PagoDTO convertida.
      *
      */
-    private List<PagoDetailDTO> listEntity2DTO(List<PagoEntity> entityList) {
-        List<PagoDetailDTO> list = new ArrayList<>();
+    private List<PagoDTO> listEntity2DTO(List<PagoEntity> entityList) {
+        List<PagoDTO> list = new ArrayList<>();
         for (PagoEntity entity : entityList) {
-            list.add(new PagoDetailDTO(entity));
+            list.add(new PagoDTO(entity));
         }
         return list;
     }
 
     /**
-     * <h1>GET api/eventos/{idEvento}/pagos : Obtener todos los pagos de un evento.</h1>
+     * <h1>GET api/eventos/{idEvento}/pagos : Obtener todos los pagos de un
+     * evento.</h1>
      *
      * <pre>Busca y devuelve todos los pagos que existen en la aplicacion.
      *
@@ -67,12 +68,13 @@ public class PagoResource {
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Devuelve todas los pagos de la aplicacion.</code>
      * </pre>
+     *
      * @param idEvento El ID del evento del cual se buscan los pago
-     * @return JSONArray {@link PagoDetailDTO} - Los clientes encontrados en la
+     * @return JSONArray {@link PagoDTO} - Los clientes encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<PagoDetailDTO> getPagos(@PathParam("idEvento") Long idEvento)throws BusinessLogicException {
+    public List<PagoDTO> getPagos(@PathParam("idEvento") Long idEvento) throws BusinessLogicException {
         return listEntity2DTO(pagoLogic.getPagos(idEvento));
     }
 
@@ -93,16 +95,16 @@ public class PagoResource {
      * @param id Identificador del pago que se esta buscando. Este debe ser una
      * cadena de dígitos.
      * @param idEvento El ID del evento del cual se buscan los pago
-     * @return JSON {@link PagoDetailDTO} - El pago buscado
+     * @return JSON {@link PagoDTO} - El pago buscado
      */
     @GET
     @Path("{id: \\d+}")
-    public PagoDetailDTO getPago(@PathParam("idEvento") Long idEvento,@PathParam("id") Long id) {
+    public PagoDTO getPago(@PathParam("idEvento") Long idEvento, @PathParam("id") Long id) {
         PagoEntity entity = pagoLogic.getPago(idEvento, id);
         if (entity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        return new PagoDetailDTO(entity);
+        return new PagoDTO(entity);
     }
 
     /**
@@ -122,19 +124,22 @@ public class PagoResource {
      * 412 Precodition Failed: Ya existe el pago.
      * </code>
      * </pre>
-     *@param idEvento El ID del evento del cual se buscan los pago
-     * @param pago {@link PagoDetailDTO} - El pago que se desea guardar.
-     * @return JSON {@link PagoDetailDTO} - El pago guardado con el atributo id
+     *
+     * @param idEvento El ID del evento del cual se buscan los pago
+     * @param pago {@link PagoDTO} - El pago que se desea guardar.
+     * @return JSON {@link PagoDTO} - El pago guardado con el atributo id
      * autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica 
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica
      */
     @POST
-    public PagoDetailDTO createPago(@PathParam("idEvento") Long idEvento, PagoDetailDTO pago) throws BusinessLogicException {
-        PagoEntity entity = pagoLogic.getPago(idEvento,pago.getId());
+    public PagoDTO createPago(@PathParam("idEvento") Long idEvento, PagoDTO pago) throws BusinessLogicException {
+        PagoEntity entity = pagoLogic.getPago(idEvento, pago.getId());
         if (entity != null) {
             throw new WebApplicationException("El pago existe", 412);
         }
-        return new PagoDetailDTO(pagoLogic.createPago(idEvento,pago.toEntity()));
+        return new PagoDTO(pagoLogic.createPago(idEvento, pago.toEntity()));
     }
 
     /**
@@ -151,27 +156,31 @@ public class PagoResource {
      * 404 Not Found No existe un pago con el id dado.
      * </code>
      * </pre>
-     *@param idEvento El ID del evento del cual se buscan los pago
+     *
+     * @param idEvento El ID del evento del cual se buscan los pago
      * @param id Identificador del pago que se esta buscando. Este debe ser una
      * cadena de dígitos.
      * @param pago pago a actualizar
-     * @return JSON {@link PagoDetailDTO} - El pago buscado y actuaizado
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica.
+     * @return JSON {@link PagoDTO} - El pago buscado y actuaizado
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica.
      */
     @PUT
     @Path("{id: \\d+}")
-    public PagoDetailDTO updatePago(@PathParam("idEvento") Long idEvento, @PathParam("id") Long id, PagoDetailDTO pago) throws BusinessLogicException {
+    public PagoDTO updatePago(@PathParam("idEvento") Long idEvento, @PathParam("id") Long id, PagoDTO pago) throws BusinessLogicException {
         PagoEntity entity = pago.toEntity();
         entity.setId(id);
         PagoEntity oldEntity = pagoLogic.getPago(idEvento, id);
         if (oldEntity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        return new PagoDetailDTO(pagoLogic.updatePago(idEvento,entity));
+        return new PagoDTO(pagoLogic.updatePago(idEvento, entity));
     }
 
     /**
-     * <h1>DELETE api/eventos/{idEvento}/pagos/{id} : Elimina un pago de un evento por id.</h1>
+     * <h1>DELETE api/eventos/{idEvento}/pagos/{id} : Elimina un pago de un
+     * evento por id.</h1>
      *
      * <pre>Busca el pago con el id y evento asociado recibido en la URL y lo elimina
      *
@@ -183,17 +192,21 @@ public class PagoResource {
      * 404 Not Found No existe un pago con el id dado.
      * </code>
      * </pre>
-     *@param idEvento El ID del evento del cual se buscan los pago
+     *
+     * @param idEvento El ID del evento del cual se buscan los pago
      * @param id Identificador del pago que se esta buscando. Este debe ser una
      * cadena de dígitos.
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica.
      */
     @DELETE
-    @Path("{id:\\d+}")
-    public void deletePago(@PathParam("idEvento") Long idEvento, @PathParam("id") Long id) {
-        PagoEntity entity = pagoLogic.getPago(idEvento,id);
+    @Path("{id: \\d+}")
+    public void deletePago(@PathParam("idEvento") Long idEvento, @PathParam("id") Long id) throws BusinessLogicException {
+        PagoEntity entity = pagoLogic.getPago(idEvento, id);
         if (entity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        pagoLogic.deletePago(idEvento,id);
+        pagoLogic.deletePago(idEvento, id);
     }
 }

@@ -2,11 +2,9 @@ package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.EventoDetailDTO;
-import co.edu.uniandes.csw.fiestas.dtos.PagoDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
-import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import java.util.ArrayList;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.List;
