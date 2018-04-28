@@ -44,7 +44,7 @@ public class PagoLogicTest {
     private UserTransaction utx;
 
     private List<PagoEntity> data = new ArrayList<>();
-    
+
     private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
 
     @Deployment
@@ -96,7 +96,7 @@ public class PagoLogicTest {
             em.persist(entity);
             dataEvento.add(entity);
         }
-        
+
         for (int i = 0; i < 3; i++) {
             PagoEntity entity = factory.manufacturePojo(PagoEntity.class);
             entity.setEstado(Estado.EN_REVISION.toString());
@@ -121,7 +121,7 @@ public class PagoLogicTest {
 
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(),newEntity);
+            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -150,14 +150,14 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(),newEntity);
+            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
             fail("No se debio crear el pago");
         } catch (BusinessLogicException ex) {
 
         }
     }
-    
-        /**
+
+    /**
      * Prueba de fallo para crear un Pago.
      *
      * No se cumple que el estado exista en sistema
@@ -171,15 +171,14 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(),newEntity);
+            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
             fail("No se debio crear el pago");
         } catch (BusinessLogicException ex) {
 
         }
     }
-    
-        
-        /**
+
+    /**
      * Prueba de fallo para crear un Pago.
      *
      * No se cumple que el metodo exista en sistema
@@ -193,7 +192,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago("Efecty");
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(),newEntity);
+            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
             fail("No se debio crear el pago");
         } catch (BusinessLogicException ex) {
 
@@ -206,11 +205,9 @@ public class PagoLogicTest {
     @Test
     public void getPagosTest() {
         List<PagoEntity> lista = new ArrayList<>();
-        try{
-         lista = pagoLogic.getPagos(dataEvento.get(1).getId());    
-        }catch(BusinessLogicException ex){
-            fail("Debe consegui los pagos del evento");
-        }
+
+        lista = pagoLogic.getPagos(dataEvento.get(1).getId());
+
         Assert.assertEquals(data.size(), lista.size());
         for (PagoEntity entity : lista) {
             boolean encontrado = false;
@@ -230,12 +227,12 @@ public class PagoLogicTest {
      */
     @Test
     public void getPagoTest() {
-            PagoEntity newEntity = data.get(0);
-            PagoEntity entidad = pagoLogic.getPago(dataEvento.get(1).getId(),newEntity.getId());
-            Assert.assertEquals(newEntity.getId(), entidad.getId());
-            Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
-            Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
-            Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
+        PagoEntity newEntity = data.get(0);
+        PagoEntity entidad = pagoLogic.getPago(dataEvento.get(1).getId(), newEntity.getId());
+        Assert.assertEquals(newEntity.getId(), entidad.getId());
+        Assert.assertEquals(newEntity.getMetodoDePago(), entidad.getMetodoDePago());
+        Assert.assertEquals(newEntity.getEstado(), entidad.getEstado());
+        Assert.assertEquals(newEntity.isRealizado(), entidad.isRealizado());
     }
 
     /**
@@ -244,7 +241,7 @@ public class PagoLogicTest {
     @Test
     public void deletePago() {
         PagoEntity entity = data.get(0);
-        pagoLogic.deletePago(dataEvento.get(1).getId(),entity.getId());
+        pagoLogic.deletePago(dataEvento.get(1).getId(), entity.getId());
         PagoEntity deleted = em.find(PagoEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
@@ -264,7 +261,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
 
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(),newEntity);
+            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -293,7 +290,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
 
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(),newEntity);
+            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
             fail("No se debio poder actualizar el pago");
         } catch (BusinessLogicException ex) {
 
@@ -316,7 +313,7 @@ public class PagoLogicTest {
         newEntity.setRealizado(true);
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(),newEntity);
+            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
             fail("No se debio poder actualizar el pago");
         } catch (BusinessLogicException ex) {
 
@@ -339,7 +336,7 @@ public class PagoLogicTest {
         newEntity.setRealizado(true);
         newEntity.setMetodoDePago("Tarjeta de Debito");
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(),newEntity);
+            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
             fail("No se debio poder actualizar el pago");
         } catch (BusinessLogicException ex) {
 
