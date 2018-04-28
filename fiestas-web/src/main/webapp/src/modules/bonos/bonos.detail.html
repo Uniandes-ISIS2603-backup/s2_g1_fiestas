@@ -4,21 +4,25 @@
             <div class="col-md-3">
             </div>
             <div class="col-md-3">
-                <dl>     
+                <dl>
                     <dt>{{currentBonos.id}}</dt>
                     <hr>
-                    <dd><dt class="bold">{{currentBonos.aplicadesde}}</dt></dd>
+                    <dt class="bold">Aplica desde:</dt>
+                    <dd>{{currentBonos.aplicaDesde|date : "shortDate" }}</dd>
                     <hr>
+                    <dt class="bold">Aplica hasta:</dt>
+                    <dd>{{currentBonos.expira|date : "shortDate" }}</dd>
+                    <hr>
+                    <dt class="bold">Código</dt>
                     <dd>{{currentBonos.codigo}}</dd>
                     <hr>
-                    <dt class="bold">Likes</dt>
-                    <dd>{{currentBlogs.descuento}}</dd>
+                    <dt class="bold">Descuento (%)</dt>
+                    <dd>{{currentBonos.descuento}}</dd>
                     <hr>
-                    <dt class="bold">Evento</dt>
-                    <dd id="{{$index}}-name"><a ui-sref="proveedorDetail({proveedorId: currentBono.proveedor.id})">{{currentBono.proveedor.nombre}}</a></dd>     
+                    <dt class="bold">Proveedor</dt>
+                    <dd id="{{$index}}-name"><a ui-sref="proveedorDetail({proveedorId: currentBonos.proveedor.id})">{{currentBonos.proveedor.nombre}}</a></dd>
                 </dl>
             </div>
         </div>
-
     </div>
 </div>
