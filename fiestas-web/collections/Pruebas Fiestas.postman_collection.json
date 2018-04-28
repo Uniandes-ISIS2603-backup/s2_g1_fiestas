@@ -1435,10 +1435,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
+							"raw": "{\n        \"celebrado\": \"Juan Jose Jose\",\n        \"descripcion\": \"Juan Jose\",\n        \"fecha\": \"2018-08-04T00:00:00-05:00\",\n        \"id\": 10002,\n        \"invitados\": 15,\n        \"lugar\": \"Carrera 89 90-86\",\n        \"nombre\": \"Bautizo Juan\",\n        \"cliente\": {\n            \"contrasena\": \"chao1234\",\n            \"correo\": \"s.arias@uniandes.edu.co\",\n            \"direccion\": \"cll.94 # 7-12\",\n            \"documento\": \"1012345682\",\n            \"id\": 10012,\n            \"imagen\": \"https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg\",\n            \"login\": \"df.galan\",\n            \"nombre\": \"Sofía Arias\",\n            \"telefono\": 3112121213\n        },\n        \"pagos\": [\n            {\n                \"estado\": \"Rechazado\",\n                \"id\": 10003,\n                \"metodoPago\": \"Consignacion\",\n                \"realizado\": false,\n                \"valor\": 350000\n            },\n            {\n                \"estado\": \"Confirmado\",\n                \"id\": 10004,\n                \"metodoPago\": \"Consignacion\",\n                \"realizado\": true,\n                \"valor\": 350000\n            }\n        ],\n        \"tematica\": {\n            \"ID\": 10016,\n            \"descripcion\": \"Bautizos\",\n            \"nombre\": \"Bautizo\"\n        }\n    }"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/eventos/10002",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1448,7 +1448,7 @@
 								"fiestas-web",
 								"api",
 								"eventos",
-								"10001"
+								"10002"
 							]
 						},
 						"description": "UPDATE evento existoso"
