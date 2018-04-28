@@ -1,0 +1,51 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createHorario">Crear un nuevo Horario</label>
+                <label ng-if="edit" id="editHorario">Editar Horario</label></div>
+            
+            <div class="panel-body">
+                <form name="horario">
+                    
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="horarioDate" class="col-sm-2">Fecha:</label>
+                            <input type="date" id="horarioDate" placeholder="DD/MM/YYYY" required ng-model="data.fecha" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="horarioHoraInicio" class="col-sm-2">Hora Inicio:</label>
+                            <input type="date" id="horarioDate" placeholder="HH:mm" required ng-model="data.horaInicio" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="horarioHoraFin" class="col-sm-2">Hora Fin:</label>
+                            <input type="date" id="horarioHoraFin" placeholder="HH:mm" required ng-model="data.horaFin" class="col-sm-6"/>
+                        </div>
+                    </div>
+                                                           
+                    <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!horario.$valid">
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-if="!edit"  ng-show="horario.$valid" ng-click="createHorario()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="horario.$valid" ng-click="updateHorario()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="horariosList">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
