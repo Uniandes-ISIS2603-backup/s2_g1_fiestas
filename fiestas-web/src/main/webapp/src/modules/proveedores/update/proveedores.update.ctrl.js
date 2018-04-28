@@ -31,32 +31,37 @@
 
             $scope.availableItems = [];
 
-            var idCliente = $state.params.proveedorId;
+            var idProveedor = $state.params.proveedorId;
 
             //Consulto el autor a editar.
-            $http.get(proveedoresContext + '/' + idCliente).then(function (response) {
+            $http.get(proveedoresContext + '/' + idProveedor).then(function (response) {
                 var proveedor = response.data;
-                $scope.data.name = proveedor.name;
-                $scope.data.birthDate = new Date(proveedor.birthDate);
-                $scope.data.description = proveedor.description;
-                $scope.data.image = proveedor.image;
+                $scope.data.imagen = proveedor.imagen;
+                $scope.data.nombre = proveedor.nombre;
+                $scope.data.contrasena = proveedor.contrasena;
+                $scope.data.correo = proveedor.correo;
+                $scope.data.direccion = proveedor.direccion;
+                $scope.data.documento = proveedor.documento;
+                $scope.data.login = proveedor.login;
+                $scope.data.telefono = proveedor.telefono;
+                $scope.data.penalizado = proveedor.penalizado;
             });
             
             /**
              * @ngdoc function
-             * @name createCliente
+             * @name createProveedor
              * @methodOf proveedores.controller:proveedorUpdateCtrl
              * @description
              * Crea un nuevo autor con los libros nuevos y la información del
              * $scope.
              */
-            $scope.createCliente = function () {
-                $http.put(proveedoresContext + "/" + idCliente, $scope.data).then(function (response) {
+            $scope.updateProveedor = function () {
+                $http.put(proveedoresContext + "/" + idProveedor, $scope.data).then(function (response) {
                     if ($scope.selectedItems.length >= 0) {
                         $http.put(proveedoresContext + "/" + response.data.id, $scope.selectedItems).then(function (response) {
                         });
                     }
-                    //Cliente created successfully
+                    //Proveedor created successfully
                     $state.go('proveedoresList', {proveedorId: response.data.id}, {reload: true});
                 });
             };

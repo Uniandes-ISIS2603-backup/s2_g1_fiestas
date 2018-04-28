@@ -5,6 +5,9 @@
                 <dl>     
                     <dt>{{currentEvento.nombre}}</dt>
                     <hr>
+                    <dt class="bold">Fecha</dt>
+                    <dd>{{currentEvento.fecha|date : "shortDate" }}</dd>
+                    <hr>
                     <dt class="bold">Descripcion</dt>
                     <dd>{{currentEvento.descripcion}}</dd>
                     <hr>

@@ -36,7 +36,6 @@
              */
             $scope.createPago = function () {
                 $http.post(eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
-                    console.log($scope.data);
                     $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };
