@@ -70,8 +70,11 @@ public class ValoracionLogic {
      * @param entity Instancia de ValoracionEntity a actualizar
      * @return Instancia de ValoracionEntity actualizada
      */
-    public ValoracionEntity updateValoracion(ValoracionEntity entity) {
+    public ValoracionEntity updateValoracion(ValoracionEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una valoracion.");
+        if (entity.getCalificacion() > 5.0 || entity.getCalificacion() < 1.0) {
+            throw new BusinessLogicException("La calificación debe estar entre 1.0 y 5.0");
+        }
         return persistence.update(entity);
     }
 

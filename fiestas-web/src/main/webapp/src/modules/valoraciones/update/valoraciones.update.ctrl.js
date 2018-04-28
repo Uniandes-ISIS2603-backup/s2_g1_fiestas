@@ -50,11 +50,8 @@
              */
             $scope.updateValoracion = function () {
                 $http.put(valoracionesContext + "/" + idValoracion, $scope.data).then(function (response) {
-                    if ($scope.selectedItems.length >= 0) {
-                        $http.put(valoracionesContext + "/" + response.data.id, $scope.selectedItems).then(function (response) {
-                        });
-                    }
                     //Valoracion created successfully
+                    console.log($scope.data)
                     $state.go('valoracionesList', {valoracionId: response.data.id}, {reload: true});
                 });
             };
