@@ -25,9 +25,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
-  * <pre>Clase que implementa el recurso "servicios".
+ * <pre>Clase que implementa el recurso "servicios".
  * URL: /api/servicios
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta
@@ -39,30 +40,31 @@ import javax.ws.rs.Produces;
  * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
  * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio).
  * </pre>
+ *
  * @author ls.arias
  */
-
 @Path("servicio")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class ServicioResource {
-    
-    public ServicioResource(){
+
+    public ServicioResource() {
         //constructor vacio
     }
-    
+
     @Inject
     private ServicioLogic logic;
-     /**
+
+    /**
      * <h1>POST /servicios : Crear un servicio.</h1>
-     * 
+     *
      * <pre>Cuerpo de petición: JSON {@link ServicioDetailDTO}.
-     * 
-     * Crea un nuevo servicio con la informacion que se recibe en el cuerpo 
-     * de la petición y se regresa un objeto identico con un id auto-generado 
+     *
+     * Crea un nuevo servicio con la informacion que se recibe en el cuerpo
+     * de la petición y se regresa un objeto identico con un id auto-generado
      * por la base de datos.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Creó el nuevo servicio.
@@ -71,35 +73,43 @@ public class ServicioResource {
      * 412 Precodition Failed: Ya existe el servicio.
      * </code>
      * </pre>
-     * @param servicio {@link ServicioDetailDTO} - El servicio que se desea guardar.
-     * @return JSON {@link ServicioDetailDTO}  - El servicio guardado con el atributo id autogenerado.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el servicio.
+     *
+     * @param servicio {@link ServicioDetailDTO} - El servicio que se desea
+     * guardar.
+     * @return JSON {@link ServicioDetailDTO} - El servicio guardado con el
+     * atributo id autogenerado.
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica que se genera cuando ya existe el servicio.
      */
-     @POST
+    @POST
     public ServicioDetailDTO createServicio(ServicioDetailDTO servicio) throws BusinessLogicException {
-        if(logic.getServicio(servicio.getId())!=null)
+        if (logic.getServicio(servicio.getId()) != null) {
             throw new BusinessLogicException("El servicio ya existe.");
+        }
         logic.createServicio(servicio.toEntity());
         return servicio;
     }
-    
+
     /**
      * <h1>GET /servicios : Obtener todos los servicios.</h1>
-     * 
+     *
      * <pre>Busca y devuelve todos los servicios que existen en la aplicacion.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todas los servicios de la aplicacion.</code> 
+     * 200 OK Devuelve todas los servicios de la aplicacion.</code>
      * </pre>
-     * @return JSONArray {@link ServicioDetailDTO} - Los servicios encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
+     *
+     * @return JSONArray {@link ServicioDetailDTO} - Los servicios encontrados
+     * en la aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
     public List<ServicioDetailDTO> getServicios() {
         return listEntity2DTO(logic.getServicios());
     }
-    
-     /**
+
+    /**
      * Convierte una lista de ServicioiEntity a una lista de ServicioDetailDTO.
      *
      * @param entityList Lista de ServicioEntity a convertir.
@@ -113,21 +123,23 @@ public class ServicioResource {
         }
         return list;
     }
-    
+
     /**
      * <h1>GET /servicios/{id} : Obtener servicio por id.</h1>
-     * 
+     *
      * <pre>Busca el servicio con el id asociado recibido en la URL y lo devuelve.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Devuelve el servicio correspondiente al id.
-     * </code> 
+     * </code>
      * <code style="color: #c7254e; background-color: #f9f2f4;">
      * 404 Not Found No existe un servicio con el id dado.
-     * </code> 
+     * </code>
      * </pre>
-     * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
+     *
+     * @param id Identificador del servicio que se esta buscando. Este debe ser
+     * una cadena de dígitos.
      * @return JSON {@link ServicioDetailDTO} - El servicio buscado
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
@@ -135,85 +147,92 @@ public class ServicioResource {
     @Path("{id: \\d+}")
     public ServicioDetailDTO getServicio(@PathParam("id") Long id) throws BusinessLogicException {
         ServicioEntity e = logic.getServicio(id);
-        if(e == null)
-        {
+        if (e == null) {
             throw new BusinessLogicException("El servicio con el id buscado no existe.");
         }
         return new ServicioDetailDTO(e);
     }
-    
+
     /**
-    * <h1>PUT /servicio/{id} : Actualizar servicio por id.</h1>
-    * 
-    * <pre>Busca el servicio con el id asociado recibido en la URL, actualiza los paramteros
-    * y la devuelve.
-    * 
-    * Codigos de respuesta:
-    * <code style="color: mediumseagreen; background-color: #eaffe0;">
-    * 200 OK Devuelve el servicio correspondiente al id, despues de actualizado.
-    * </code> 
-    * <code style="color: #c7254e; background-color: #f9f2f4;">
-    * 404 Not Found No existe un servicio con el id dado.
-    * </code> 
-    * </pre>
-    * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
-    * @return JSON {@link ServicioDetailDTO} - El servicio buscado y actuaizado
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
-    */
-     @PUT
+     * <h1>PUT /servicio/{id} : Actualizar servicio por id.</h1>
+     *
+     * <pre>Busca el servicio con el id asociado recibido en la URL, actualiza los paramteros
+     * y la devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el servicio correspondiente al id, despues de actualizado.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un servicio con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador del servicio que se esta buscando. Este debe ser
+     * una cadena de dígitos.
+     * @param servicio {@link ServicioDetailDTO} El servicio que se desea guardar.
+     * @return JSON {@link ServicioDetailDTO} - El servicio buscado y actuaizado
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el servicio a
+     * actualizar.
+     */
+    @PUT
     @Path("{id: \\d+}")
-    public ServicioDetailDTO updateServicio(@PathParam("id") Long id) throws BusinessLogicException {
-       ServicioEntity ent =logic.getServicio(id);
-        if(ent == null)
-            throw new BusinessLogicException("El servicio no existe.");
-        logic.updateServicio(ent);
-        return new ServicioDetailDTO(ent);
+    public ServicioDetailDTO updateServicio(@PathParam("id") Long id, ServicioDetailDTO servicio) throws BusinessLogicException {
+        ServicioEntity entidad = servicio.toEntity();
+        entidad.setId(id);
+        ServicioEntity ent = logic.getServicio(id);
+        if (ent == null) {
+            throw new WebApplicationException("El servicio no existe.", 404);
+        }
+        return new ServicioDetailDTO(logic.updateServicio(entidad));
     }
-    
+
     /**
-    * <h1>DELETE /servicio/{id} : Elimina un servicio por id.</h1>
-    * 
-    * <pre>Busca rl servicio con el id asociado recibido en la URL y lo elimina
-    * 
-    * Codigos de respuesta:
-    * <code style="color: mediumseagreen; background-color: #eaffe0;">
-    * 200 OK La servicio fue eliminada exitosamente
-    * </code> 
-    * <code style="color: #c7254e; background-color: #f9f2f4;">
-    * 404 Not Found No existe una servicio con el id dado.
-    * </code> 
-    * </pre>
-    * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
+     * <h1>DELETE /servicio/{id} : Elimina un servicio por id.</h1>
+     *
+     * <pre>Busca rl servicio con el id asociado recibido en la URL y lo elimina
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK La servicio fue eliminada exitosamente
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe una servicio con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param id Identificador del servicio que se esta buscando. Este debe ser
+     * una cadena de dígitos.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-    */
+     */
     @DELETE
     @Path("{id: \\d+}")
-     public void deleteServicio(@PathParam("id") Long id) throws BusinessLogicException {
-         ServicioEntity ent =logic.getServicio(id);
-        if(ent == null)
-             throw new BusinessLogicException("El servicio no existe.");
+    public void deleteServicio(@PathParam("id") Long id) throws BusinessLogicException {
+        ServicioEntity ent = logic.getServicio(id);
+        if (ent == null) {
+            throw new BusinessLogicException("El servicio no existe.");
+        }
         logic.deleteServicio(id);
     }
-     
-     
-     
-     //Proveedores
 
+    //Proveedores
     /**
      *
      * @param id
      * @return
      * @throws BusinessLogicException
-     */    
-     @GET
+     */
+    @GET
     @Path("{id:\\d+}/proveedores")
-    public List<ProveedorDetailDTO> getProveedoresServicio(@PathParam("id")Long id) throws BusinessLogicException{
+    public List<ProveedorDetailDTO> getProveedoresServicio(@PathParam("id") Long id) throws BusinessLogicException {
         ServicioEntity ent = logic.getServicio(id);
-        if(ent == null)
+        if (ent == null) {
             throw new BusinessLogicException("El servicio no existe.");
+        }
         return proveedorListEntity2DTO(logic.listProveedores(id));
     }
-    
+
     /**
      *
      * @param id
@@ -223,12 +242,12 @@ public class ServicioResource {
      */
     @GET
     @Path("{id:\\d+}/proveedores/{proveedorId:\\d+}")
-    public ProveedorDetailDTO getServicioProveedor(@PathParam("id")Long id, @PathParam("proveedorId")Long proveedorId) throws BusinessLogicException
-    {
+    public ProveedorDetailDTO getServicioProveedor(@PathParam("id") Long id, @PathParam("proveedorId") Long proveedorId) throws BusinessLogicException {
         ServicioEntity e = logic.getServicio(id);
-        if(e==null)
+        if (e == null) {
             throw new BusinessLogicException("El servicio no existe.");
-        ProveedorEntity be= logic.getProveedor(e.getId(), proveedorId);
+        }
+        ProveedorEntity be = logic.getProveedor(e.getId(), proveedorId);
         return new ProveedorDetailDTO(be);
     }
 
@@ -246,8 +265,8 @@ public class ServicioResource {
         }
         return list;
     }
-    
-     /**
+
+    /**
      * Convierte una lista de ProveedorDetailDTO a una lista de ProveedorEntity.
      *
      * @param dtos Lista de ProveedorDetailDTO a convertir.
@@ -261,11 +280,10 @@ public class ServicioResource {
         }
         return list;
     }
-    
-    
+
     /**
-     * <h1>POST /{serviciosId}/proveedores/{proveedoresId} : Guarda un
-     * proveedor dentro del servicio.</h1>
+     * <h1>POST /{serviciosId}/proveedores/{proveedoresId} : Guarda un proveedor
+     * dentro del servicio.</h1>
      *
      * <pre> Guarda un proveedor dentro de un servicio con la informacion que
      * recibe el la URL. Se devuelve el proveedor que se guarda en el servicio.
@@ -276,23 +294,25 @@ public class ServicioResource {
      * </code>
      * </pre>
      *
-     * @param serviciosId Identificador del servicio que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param serviciosId Identificador del servicio que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @param proveedorId Identificador del proveedor que se desea guardar. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link ProveedorDetailDTO} - El proveedor guardado en la
      * servicio.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica
      */
     @POST
     @Path("{serviciosId: \\d+}/proveedores/{proveedoresId: \\d+}")
     public ProveedorDetailDTO addProveedor(@PathParam("serviciosId") Long serviciosId, @PathParam("proveedoresId") Long proveedorId) throws BusinessLogicException {
         return new ProveedorDetailDTO(logic.addProveedor(proveedorId, serviciosId));
     }
-    
+
     /**
-     * <h1>DELETE /{servicioId}/proveedores/{proveedorId} : Elimina un
-     * proveedor dentro del servicio.</h1>
+     * <h1>DELETE /{servicioId}/proveedores/{proveedorId} : Elimina un proveedor
+     * dentro del servicio.</h1>
      *
      * <pre> Elimina la referencia del proveedor asociado al ID dentro del servicio
      * con la informacion que recibe el la URL.
@@ -303,36 +323,37 @@ public class ServicioResource {
      * </code>
      * </pre>
      *
-     * @param servicioId Identificador del servicio que se esta buscando. Este debe
-     * ser una cadena de dígitos.
-     * @param proveedoresId Identificador del proveedor que se desea guardar. Este
+     * @param servicioId Identificador del servicio que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
+     * @param proveedoresId Identificador del proveedor que se desea guardar.
+     * Este debe ser una cadena de dígitos.
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica
      */
     @DELETE
     @Path("{servicioId: \\d+}/proveedores/{proveedoresId: \\d+}")
     public void removeProveedores(@PathParam("servicioId") Long servicioId, @PathParam("proveedoresId") Long proveedoresId) throws BusinessLogicException {
         logic.removeProveedor(proveedoresId, servicioId);
     }
-    
-    
-    
+
     //Valoraciones
-    
     /**
      *
      * @param id
      * @return
      * @throws BusinessLogicException
-     */    
-     @GET
+     */
+    @GET
     @Path("{id:\\d+}/valoraciones")
-    public List<ValoracionDetailDTO> getPValoracionesServicio(@PathParam("id")Long id) throws BusinessLogicException{
+    public List<ValoracionDetailDTO> getPValoracionesServicio(@PathParam("id") Long id) throws BusinessLogicException {
         ServicioEntity ent = logic.getServicio(id);
-        if(ent == null)
+        if (ent == null) {
             throw new BusinessLogicException("El servicio no existe.");
+        }
         return valoracionListEntity2DTO(logic.getValoraciones(id));
     }
+
     private List<ValoracionDetailDTO> valoracionListEntity2DTO(List<ValoracionEntity> entityList) {
         List<ValoracionDetailDTO> list = new ArrayList<>();
         for (ValoracionEntity entity : entityList) {
@@ -340,5 +361,5 @@ public class ServicioResource {
         }
         return list;
     }
-    
+
 }
