@@ -40,6 +40,15 @@
                         controllerAs: 'ctrl'
                     }
                 }
+            }).state('servicioCreate', {
+                url: '/create',
+                parent: 'servicios',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/servicios.new.html',
+                        controller: 'servicioNewCtrl'
+                    }
+                }
             });
         }
     ]);

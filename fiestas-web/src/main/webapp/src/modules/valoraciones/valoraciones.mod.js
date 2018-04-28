@@ -26,6 +26,15 @@
                         templateUrl: basePath + 'valoraciones.list.html'
                     }
                 }
+            }).state('valoracionCreate', {
+                url: '/create',
+                parent: 'valoraciones',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/valoraciones.new.html',
+                        controller: 'valoracionNewCtrl'
+                    }
+                }
             });
         }
     ]);
