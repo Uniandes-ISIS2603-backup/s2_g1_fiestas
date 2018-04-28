@@ -5,9 +5,9 @@
  */
 
 (function(ng){
-    var mod =  ng.module ("BonosModule");
+    var mod =  ng.module ("bonosModule");
     mod.constant("bonosContext", "api/bonos");
-    mod.controller('bonoDeleteCtrl', ['$scope', '$http', 'bonosContext', '$state',
+    mod.controller('bonosDeleteCtrl', ['$scope', '$http', 'bonosContext', '$state',
         /**
          * @ngdoc controller
          * @name clientes.controller:clienteDeleteCtrl
@@ -20,11 +20,12 @@
          * @param {Object} $http Objeto injectado para la manejar consultas HTTP
          * @param {Object} clientesContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Autores en el Backend.
-         * @param {Object} $state Dependencia injectada en la que se recibe el 
+         * @param {Object}          * @param {Object} clientesContext Constante injectada que contiene la ruta
+$state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
         function ($scope, $http, bonosContext, $state) {
-            var idBonos = $state.params.bonoId;
+            var idBonos = $state.params.id;
             /**
              * @ngdoc function
              * @name deleteCliente
@@ -33,9 +34,9 @@
              * Esta función utiliza el protocolo HTTP para eliminar el autor.
              * @param {String} id El ID del autor a eliminar.
              */        
-            $scope.deleteBono = function () {
+            $scope.deleteBonos = function () {
                 $http.delete(bonosContext + '/' + idBonos, {}).then(function (response) {
-                    $state.go('BonosList', {bonoIsd: response.data.id}, {reload: true});
+                    $state.go('bonosList', {bonoIsd: response.data.id}, {reload: true});
                 });
             };
         }

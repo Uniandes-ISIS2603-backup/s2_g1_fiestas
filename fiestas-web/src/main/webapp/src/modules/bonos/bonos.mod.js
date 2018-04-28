@@ -52,6 +52,17 @@
                         controllerAs: 'ctrl'
                     }
                 }  
+            }).state("bonosDelete",{
+              url: '/{bonosId:int}/delete',
+                parent: 'bonos',
+                param: {bonosId: null},
+                views: {
+                    'listView': {
+                        templateUrl: basePath + '/delete/bonos.delete.html',
+                        controller: 'bonosDeleteCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }  
             });
         }
     ]);
