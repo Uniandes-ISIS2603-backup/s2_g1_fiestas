@@ -1,9 +1,8 @@
 (function (ng) {
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
-     mod.constant("pagosContext", "api/pagos");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','pagosContext'
+    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -21,7 +20,7 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, eventosContext, $state, pagoContext,pagosContext) {
+        function ($scope, $http, eventosContext, $state, pagoContext) {
             $rootScope.edit = true;
 
             $scope.data = {};
@@ -52,9 +51,6 @@
              * $scope.
              */
             $scope.createPago = function () {
-                $http.put(pagosContext, $scope.data).then(function (response) {
-                   
-                });
                 $http.put(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago).then(function (response) {
                     //Evento created successfully
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});

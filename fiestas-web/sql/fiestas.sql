@@ -1,13 +1,14 @@
 delete from BlogEntity;
 delete from ContratoEntity;
-delete from EventoEntity;
 delete from HorarioEntity;
 delete from PagoEntity;
+delete from BonoEntity;
 delete from ProductoEntity;
 delete from ServicioEntity;
-delete from TematicaEntity;
 delete from ValoracionEntity;
 delete from ProveedorEntity;
+delete from EventoEntity;
+delete from TematicaEntity;
 delete from ClienteEntity;
 
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','hola123', 0);
@@ -34,10 +35,10 @@ insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10017,'Servicio de audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10018,'Servicio de recreaciones para boda',200000, 'Recreadores para mantener activa a la gente','Incluye lo que necesiten los recreadores',2);
 
-insert into TematicaEntity(id, descripcion) values(10014,'Bodas');
-insert into TematicaEntity(id, descripcion) values(10015,'Fiestas Infantiles');
-insert into TematicaEntity(id, descripcion) values(10016,'Bautizo');
-insert into TematicaEntity(id, descripcion) values(10017,'Grado');
+insert into TematicaEntity(id,nombre, descripcion) values(10014,'Bodas','Matrimonis');
+insert into TematicaEntity(id,nombre, descripcion) values(10015,'Fiestas Infantiles','Fiestas para niños y niñas');
+insert into TematicaEntity(id,nombre, descripcion) values(10016,'Bautizo','Bautizos');
+insert into TematicaEntity(id, nombre, descripcion) values(10017,'Grado','Grado de Colegio o Universidad');
 
 insert into HorarioEntity(id, fecha, horafin, horainicio) values(10001,'08/03/2018','22:00:00', '13:00:00');
 insert into HorarioEntity(id, fecha, horafin, horainicio) values(10002,'08/03/2019','22:00:00', '13:00:00');
