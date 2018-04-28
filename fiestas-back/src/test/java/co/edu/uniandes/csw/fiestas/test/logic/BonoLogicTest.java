@@ -134,9 +134,8 @@ public class BonoLogicTest {
      */
     @Test
     public void createBonoTest() throws BusinessLogicException {
-        BonoEntity newEntity = factory.manufacturePojo(BonoEntity.class);
+        BonoEntity newEntity = data.get(1);
         newEntity.setDescuento(50);
-        newEntity.setProveedor(pData.get(0));
         BonoEntity result = bonoLogic.createBono(newEntity);
         Assert.assertNotNull(result);
         BonoEntity entidad = em.find(BonoEntity.class, result.getId());

@@ -1,12 +1,23 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2 col-md-2" ng-repeat="bono in bonosRecords">
-            <div class="thumbnail">
-                <a ui-sref="bonosDetail({bonosId: bonos.id})">          
-                    <div class="caption text-center">{{bonos.name}}</div>
-                </a>
-            </div>
-        </div>
+        <table class="table">
+        <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Descuento</th>
+                </tr>
+            </thead>
+             <tbody>
+                <tr ng-repeat="bonos in bonosRecords">
+                    <td Id="{{$index}}-Id">
+                        <a ui-sref="bonosDetail({bonosId: bonos.id})">{{bonos.id}}</a>
+                    </td>          
+                    <td id="{{$index}}-Código">{{bonos.codigo}}</td>
+                    <td id="{{$index}}-Descuento">{{bonos.descuento}}</td>                  
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

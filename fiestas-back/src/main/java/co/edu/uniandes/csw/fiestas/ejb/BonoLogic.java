@@ -165,5 +165,4 @@ public class BonoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un bono ");
         persistence.delete(id);
     }
-
 }
