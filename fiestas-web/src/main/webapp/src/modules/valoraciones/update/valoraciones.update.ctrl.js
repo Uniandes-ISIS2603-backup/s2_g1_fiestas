@@ -3,21 +3,22 @@
     mod.constant("valoracionesContext", "api/valoraciones");
 
     mod.controller('valoracionUpdateCtrl', ['$scope', '$http', 'valoracionesContext', '$state', '$rootScope',
+        
         /**
          * @ngdoc controller
          * @name valoraciones.controller:valoracionUpdateCtrl
          * @description
-         * Definición del controlador auxiliar para actualizar Autores. 
+         * Definición del controlador auxiliar para actualizar Valoraciones. 
          * @param {Object} $scope Referencia injectada al Scope definida para este
          * controlador, el scope es el objeto que contiene las variables o 
          * funciones que se definen en este controlador y que son utilizadas 
          * desde el HTML.
          * @param {Object} $http Objeto injectado para la manejar consultas HTTP
          * @param {Object} valoracionesContext Constante injectada que contiene la ruta
-         * donde se encuentra el API de Autores en el Backend.
+         * donde se encuentra el API de Valoracion en el Backend.
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
-         * @param {Object} booksContext Constante injectada que contiene la ruta
+         * @param {Object} valoracionesContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Libros en el Backend.
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
