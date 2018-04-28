@@ -7,7 +7,7 @@
 (function(ng){
     var mod =  ng.module ("BonosModule");
     mod.constant("bonosContext", "api/bonos");
-    mod.controller('bonoDeleteCtrl', ['$scope', '$http', 'clientesContext', '$state',
+    mod.controller('bonoDeleteCtrl', ['$scope', '$http', 'bonosContext', '$state',
         /**
          * @ngdoc controller
          * @name clientes.controller:clienteDeleteCtrl
@@ -23,7 +23,7 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, clientesContext, $state) {
+        function ($scope, $http, bonosContext, $state) {
             var idBonos = $state.params.bonoId;
             /**
              * @ngdoc function
@@ -34,7 +34,7 @@
              * @param {String} id El ID del autor a eliminar.
              */        
             $scope.deleteBono = function () {
-                $http.delete(boonosContext + '/' + idBonos, {}).then(function (response) {
+                $http.delete(bonosContext + '/' + idBonos, {}).then(function (response) {
                     $state.go('BonosList', {bonoIsd: response.data.id}, {reload: true});
                 });
             };
