@@ -12,7 +12,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
  *      "id": number,
  *      "nombre": string,
  *      "descripcion": string,
- *      "tipo": string,
+ *      "tipo": string
  *   }
  * </pre>
  * Por ejemplo, un servicio se representa asi:<br>
@@ -22,7 +22,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
  *      "id": 542,
  *      "nombre":"Musica"
  *      "decripcion": "Ofrecemos diferentes interpretes musicales y paquetes",
- *      "tipo": "Entretenamiento",
+ *      "tipo": "Entretenamiento"
  *   }
  *
  * </pre>
@@ -40,7 +40,7 @@ public class ServicioDTO {
      */
     public ServicioDTO()
     {
-        
+        //constructor vacio
     }
     
      /**

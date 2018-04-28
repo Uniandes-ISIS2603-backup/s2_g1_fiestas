@@ -14,7 +14,7 @@
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'valoraciones.html',
-                        controller: 'valoracionCtrl',
+                        controller: 'valoracionesCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
@@ -26,21 +26,6 @@
                         templateUrl: basePath + 'valoraciones.list.html'
                     }
                 }
-            }).state('valoracionDetail', {
-                url: '/{valoracionId:int}/detail',
-                parent: 'valoraciones',
-                param: {valoracionId: null},
-                views: {
-                    'listView': {
-                        templateUrl: basePath + 'valoraciones.list.html'
-                    },
-                    'detailView': {
-                        templateUrl: basePath + 'valoraciones.detail.html',
-                        controller: 'valoracionDetailCtrl',
-                        controllerAs: 'ctrl'
-                    }
-                }
-
             });
         }
     ]);

@@ -1,12 +1,19 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2 col-md-2" ng-repeat="servicio in serviciosRecords">
-                <td id="{{$index}}-name"><a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.name}}</a></td>
-                <td id="{{$index}}-descripcion"><a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.descripcion}}</a></td>
-                <td id="{{$index}}-tipo"><a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.tipo}}</a></td>
-        </div>
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nombre</th>
+                    
+            </thead>
+            <tbody>
+                <tr ng-repeat="servicio in serviciosRecords">
+                    <td id="{{$index}}-id">{{servicio.id}}</td>
+                    <td id="{{$index}}-name"><a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.nombre}}</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-
-
 

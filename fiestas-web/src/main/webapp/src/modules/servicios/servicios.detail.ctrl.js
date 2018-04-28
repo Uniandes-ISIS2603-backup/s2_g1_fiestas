@@ -5,7 +5,7 @@
         function ($scope, $http, servicioContext, $state, $filter) {
 
             if (($state.params.servicioId !== undefined) && ($state.params.servicioId !== null)) {
-                $http.get('data/servicios.json').then(function (response) {
+                $http.get(servicioContext).then(function (response) {
                     $scope.serviciosRecords = response.data;
                     $scope.currentServicio = $filter('filter')($scope.serviciosRecords, {id: $state.params.servicioId}, true)[0];
                 });
