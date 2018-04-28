@@ -69,7 +69,7 @@ public class ServicioDetailDTO extends ServicioDTO {
      */
     public ServicioDetailDTO() 
     {
-        
+        //constructor vacio
     }
     /**
      * Constructor por defecto

@@ -38,6 +38,7 @@ public class ValoracionDetailDTO extends ValoracionDTO {
      * Constructor por defecto
      */
     public ValoracionDetailDTO() {
+        //constructor vacio
     }
     
         

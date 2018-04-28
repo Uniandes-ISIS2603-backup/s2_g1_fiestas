@@ -1,0 +1,97 @@
+<div class="container-fluid">
+    <div class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createProveedor">Create new Proveedor</label>
+                <label ng-if="edit" id="editProveedor">Edit Proveedor</label></div>
+            <div class="panel-body">
+                <form name="proveedor">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorImagen" class="col-sm-2">Imagen de perfil:</label>
+                            <input id="proveedorImagen" required ng-model="data.imagen" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorNombre" class="col-sm-2">Nombre:</label>
+                            <input id="proveedorNombre" required ng-model="data.nombre" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorContrasena" class="col-sm-2">Contraseña:</label>
+                            <input id="proveedorContrasena" required ng-model="data.contrasena" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorCorreo" class="col-sm-2">Correo:</label>
+                            <input id="proveedorCorreo" required ng-model="data.correo" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorDireccion" class="col-sm-2">Dirección:</label>
+                            <input id="proveedorDireccion" required ng-model="data.direccion" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorDocumento" class="col-sm-2">Documento:</label>
+                            <input id="proveedorDocumento" required ng-model="data.documento" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label ng-if="!edit" for="proveedorLogin" class="col-sm-2">Login:</label>
+                            <input ng-if="!edit" id="proveedorLogin" required ng-model="data.login" class="col-sm-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorTelefono" class="col-sm-2">Teléfono:</label>
+                            <input id="proveedorTelefono" required ng-model="data.telefono" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="proveedorPenalizado" class="col-sm-2">Penalizado:</label>
+                            <input id="proveedorPenalizado" required ng-model="data.penalizado" class="col-sm-6"/>
+                        </div>
+                    </div>
+
+                    <move-lists ng-if="edit" selected="selectedItems" available="availableItems"></move-lists>
+
+                    <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!proveedor.$valid">
+
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-show="proveedor.$valid" ng-click="createProveedor()" value="Save" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="proveedoresList">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="center-block well text-center" ng-if="isAuthenticated() && !hasPermissions()">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <h1 class="float-left display-3 mr-4">403 Forbidden</h1>
+                    <h4 >You do not have permission for this action.</h4>
+                    <p >Contact the administrator to obtain permission.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

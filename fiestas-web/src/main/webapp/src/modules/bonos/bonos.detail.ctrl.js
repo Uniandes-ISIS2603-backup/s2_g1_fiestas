@@ -6,7 +6,7 @@
             if (($state.params.bonosId !== undefined) && ($state.params.bonosId !== null)) {
                 $http.get(bonosContext).then(function (response) {
                     $scope.bonosRecords = response.data;
-                    $scope.currentBlogs = $filter('filter')($scope.bonosRecords, {id: $state.params.bonosId}, true)[0];
+                    $scope.currentBonos = $filter('filter')($scope.bonosRecords, {id: $state.params.bonosId}, true)[0];
                 });
             }
         }

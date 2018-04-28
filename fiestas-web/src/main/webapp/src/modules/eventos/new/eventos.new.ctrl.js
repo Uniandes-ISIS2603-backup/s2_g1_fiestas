@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
     mod.constant("eventoContext", "api/eventos");
-    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$filter',
+    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoNewCtrl

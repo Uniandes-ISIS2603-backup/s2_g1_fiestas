@@ -41,6 +41,51 @@
                     }
                 }
 
+            }).state('clientesCreate', {
+                url: '/create',
+                parent: 'clientes',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/clientes.new.html',
+                        controller: 'clienteNewCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
+                }
+            }).state('clienteUpdate', {
+                url: '/update/{clienteId:int}',
+                parent: 'clientes',
+                param: {
+                    clienteId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/clientes.new.html',
+                        controller: 'clienteUpdateCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'assistant']
+                }
+            }).state('clienteDelete', {
+                url: '/delete/{clienteId:int}',
+                parent: 'clientes',
+                param: {
+                    clienteId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/delete/clientes.delete.html',
+                        controller: 'clienteDeleteCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
+                }
             });
         }
     ]);

@@ -17,15 +17,11 @@
                     <dt class="bold">Lugar</dt>
                     <dd>{{currentEvento.lugar}}</dd>
                     <hr>
-                    <dt class="bold">Cliente</dt>
-                    <dd>{{currentEvento.cliente.nombre}}</dd>  
-
-                    <hr>
                     <dt class="bold">Tematica</dt>
-                    <dd>{{currentEvento.tematica.descripcion}}</dd>                      
+                    <dd>{{currentEvento.tematica.nombre}}</dd>                      
                 </dl>
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"> <a ui-sref="pagosList({eventoId: currentEvento.id})">Pagos</a></li>
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="active"> <a  ui-sref="pagosList({eventoId: currentEvento.id})">Pagos</a></li>
                 </ul>
             </div>
 

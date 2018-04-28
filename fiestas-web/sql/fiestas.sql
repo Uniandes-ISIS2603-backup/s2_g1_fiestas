@@ -1,13 +1,16 @@
+delete from BonoEntity;
 delete from BlogEntity;
-delete from ContratoEntity;
-delete from EventoEntity;
-delete from HorarioEntity;
 delete from PagoEntity;
+delete from EventoEntity;
+delete from ContratoEntity;
+delete from HorarioEntity;
+delete from TematicaEntity;
 delete from ProductoEntity;
 delete from ServicioEntity;
-delete from TematicaEntity;
 delete from ValoracionEntity;
 delete from ProveedorEntity;
+delete from EventoEntity;
+delete from TematicaEntity;
 delete from ClienteEntity;
 
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','hola123', 0);
@@ -22,22 +25,22 @@ insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, prove
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10002, '04/23/2018','u934hq', 30, '05/22/2018', 'Día de la madre', 10012);
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10003, '04/24/2018','54jkbsdv', 50, '05/22/2018', 'Navidad', 10013);
 
-insert into ServicioEntity(id,descripcion,tipo) values(10019,'Carrito de perros calientes','comida');
-insert into ServicioEntity(id,descripcion,tipo) values(10020,'Show de magia para niños','entretenimiento');
-insert into ServicioEntity(id,descripcion,tipo) values(10021,'Stripers', 'despedida de soltero');
+insert into ServicioEntity(id, nombre, descripcion, tipo) values(10019,'Carrito de perros calientes', 'Servicio de perritos calientes con personal incluido por 5 horas','Comida');
+insert into ServicioEntity(id, nombre, descripcion, tipo) values(10020,'Show de magia para niños','Mago profesional con 10 años de experiencia y experto en hacer reir','Entretenimiento');
+insert into ServicioEntity(id, nombre, descripcion, tipo) values(10021,'Orquesta la 104', 'Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos', 'Entretenimiento');
 
-insert into ValoracionEntity(id,calificacion,comentario) values(10022,5,'Excelente servicio');
-insert into ValoracionEntity(id,calificacion,comentario) values(10023,4,'Me encanto');
-insert into ValoracionEntity(id,calificacion,comentario) values(10024,2, 'Pesimo servicio');
+insert into ValoracionEntity(id, calificacion, comentario) values(10022,5,'Excelente servicio');
+insert into ValoracionEntity(id, calificacion, comentario) values(10023,4,'Me encanto');
+insert into ValoracionEntity(id, calificacion, comentario) values(10024,2, 'Pesimo servicio');
 
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10016,'Comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros',4);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10017,'Audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10018,'Recreaciones para boda',200000, 'Recreadores para mantener activa a la gente','Incluye lo que necesiten los recreadores',2);
 
-insert into TematicaEntity(id, descripcion) values(10014,'Bodas');
-insert into TematicaEntity(id, descripcion) values(10015,'Fiestas Infantiles');
-insert into TematicaEntity(id, descripcion) values(10016,'Bautizo');
-insert into TematicaEntity(id, descripcion) values(10017,'Grado');
+insert into TematicaEntity(id,nombre, descripcion) values(10014,'Bodas','Matrimonis');
+insert into TematicaEntity(id,nombre, descripcion) values(10015,'Fiestas Infantiles','Fiestas para niños y niñas');
+insert into TematicaEntity(id,nombre, descripcion) values(10016,'Bautizo','Bautizos');
+insert into TematicaEntity(id, nombre, descripcion) values(10017,'Grado','Grado de Colegio o Universidad');
 
 insert into HorarioEntity(id, fecha, horafin, horainicio) values(10001,'08/03/2018','22:00:00', '13:00:00');
 insert into HorarioEntity(id, fecha, horafin, horainicio) values(10002,'08/03/2019','22:00:00', '13:00:00');
@@ -59,3 +62,4 @@ insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values 
 insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
+
