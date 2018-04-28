@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'booksContext', '$rootScope',
+    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -39,65 +39,22 @@
                 $scope.data.invitados = evento.invitados;
                 $scope.data.lugar = evento.lugar;
                 $scope.data.nombre = evento.nombre;
-                $scope.data.pago = evento.pago;
-                //$scope.getBooks(evento.books);
+                $scope.data.pagos = evento.pagos;
+                $scope.data.cliente = evento.cliente;
+                $scope.data.tematica = evento.tematica;
             });
 
-            /**
-             * @ngdoc function
-             * @name getBooks
-             * @methodOf eventos.controller:eventoUpdateCtrl
-             * @description
-             * Esta función recarga la información de los libros del evento.
-             * @param {[Object]} books Los libros a actualizar del evento
-             */
-//            $scope.getBooks = function (books) {
-//
-//                $http.get(booksContext).then(function (response) {
-//
-//                    $scope.allBooks = response.data;
-//                    $scope.booksEvento = books;
-//
-//                    var filteredBooks = $scope.allBooks.filter(function (book) {
-//                        return $scope.booksEvento.filter(function (bookEvento) {
-//                            return bookEvento.id === book.id;
-//                        }).length === 0;
-//                    });
-//
-//                    var unFilteredBooks = $scope.allBooks.filter(function (book) {
-//                        return $scope.booksEvento.filter(function (bookEvento) {
-//                            return bookEvento.id === book.id;
-//                        }).length !== 0;
-//                    });
-//
-//                    if ($scope.booksEvento.length === 0) {
-//
-//                        $scope.availableItems = $scope.allBooks;
-//
-//                    } else {
-//
-//                        $scope.selectedItems = unFilteredBooks;
-//                        $scope.availableItems = filteredBooks;
-//                    }
-//
-//
-//                });
-//            };
 
             /**
              * @ngdoc function
-             * @name createEvento
+             * @name updateEvento
              * @methodOf eventos.controller:eventoUpdateCtrl
              * @description
-             * Crea un nuevo evento con los libros nuevos y la información del
+             * Actualiza un evento con la información del
              * $scope.
              */
-            $scope.createEvento = function () {
+            $scope.updateEvento = function () {
                 $http.put(eventosContext + "/" + idEvento, $scope.data).then(function (response) {
-//                    if ($scope.selectedItems.length >= 0) {
-//                        $http.put(eventosContext + "/" + response.data.id + "/books", $scope.selectedItems).then(function (response) {
-//                        });
-//                    }
                     //Evento created successfully
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
                 });
