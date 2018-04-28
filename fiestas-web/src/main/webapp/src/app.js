@@ -13,7 +13,7 @@
         'valoracionModule',
         'pagoModule',
         'eventoModule',
-        'productoModule',
+        'productosModule',
         'tematicasModule'
 
 

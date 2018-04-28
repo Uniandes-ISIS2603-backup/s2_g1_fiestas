@@ -6,15 +6,20 @@ and open the template in the editor.
 -->
 <div class="container-fluid">
 <div class="row">
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <a class="btn btn-info" ui-sref="productosCreate"><span class="glyphicon glyphicon-plus-sign"></span> Add new producto</a>
+         </div>
+    </div>
     <div class="col-md-3">
         <dl>
-            <dt>{{currentProducto.id}}</dt>
+            <dt>{{currentProducto.ID}}</dt>
             <hr>
             <dt class="bold">Descripcion</dt>
             <dd>{{currentProducto.descripcion}}</dd>
             <hr>
             <dt class="bold">Incluye</dt>
-            <dd>{{currentProducto.incluye}}</dd>
+            <dd>{{currentProducto.incluidos}}</dd>
             <hr>
             <dt class="bold">Personal</dt>
             <dd>{{currentProducto.personal}}</dd>
