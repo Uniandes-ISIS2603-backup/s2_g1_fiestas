@@ -56,12 +56,10 @@
              * $scope.
              */
             $scope.updateProveedor = function () {
-                $http.put(proveedoresContext + "/" + idProveedor, $scope.data).then(function (response) {
-                    if ($scope.selectedItems.length >= 0) {
-                        $http.put(proveedoresContext + "/" + response.data.id, $scope.selectedItems).then(function (response) {
-                        });
-                    }
-                    //Proveedor created successfully
+                $http.put(proveedoresContext + "/" + idProveedor, $scope.data).then(function (response) {   
+                        
+                    
+                    //Proveedor edited successfully
                     $state.go('proveedoresList', {proveedorId: response.data.id}, {reload: true});
                 });
             };
