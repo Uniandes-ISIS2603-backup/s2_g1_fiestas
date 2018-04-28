@@ -34,7 +34,7 @@
              * @description
              * Esta función utiliza el protocolo HTTP para crear el pago.
              */
-            $scope.createEvento = function () {
+            $scope.createPago = function () {
                 $http.post(eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
                     $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });

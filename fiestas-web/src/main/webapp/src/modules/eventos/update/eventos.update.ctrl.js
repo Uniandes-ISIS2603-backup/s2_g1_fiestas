@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', '$rootScope',
+    mod.constant("pagosContext", "pagos");
+    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagosContext', '$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -19,7 +20,7 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, eventosContext, $state, $rootScope) {
+        function ($scope, $http, eventosContext, $state, pagosContext, $rootScope) {
             $rootScope.edit = true;
 
             $scope.data = {};
@@ -39,11 +40,10 @@
                 $scope.data.invitados = evento.invitados;
                 $scope.data.lugar = evento.lugar;
                 $scope.data.nombre = evento.nombre;
-                $scope.data.pagos = evento.pagos;
+                $scope.allPagosEvento = evento.pagos;
                 $scope.data.cliente = evento.cliente;
                 $scope.data.tematica = evento.tematica;
             });
-
 
             /**
              * @ngdoc function
@@ -55,6 +55,12 @@
              */
             $scope.updateEvento = function () {
                 $http.put(eventosContext + "/" + idEvento, $scope.data).then(function (response) {
+                    if ($scope.allPagosEvento.length >= 0) {
+                        for (var pago in $scope.allPagosEvento) {
+                            $http.put(eventosContext + '/' + idEvento + '/' + pagosContext, pago).then(function (response) {
+                            });
+                        }
+                    }
                     //Evento created successfully
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
                 });
