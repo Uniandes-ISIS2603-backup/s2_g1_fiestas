@@ -34,8 +34,8 @@ function(ng){
              * @param {String} id El ID del autor a eliminar.
              */        
             $scope.deleteBono = function () {
-                $http.delete(clientesContext + '/' + idCliente, {}).then(function (response) {
-                    $state.go('clientesList', {clienteId: response.data.id}, {reload: true});
+                $http.delete(boonosContext + '/' + idBonos, {}).then(function (response) {
+                    $state.go('BonosList', {bonoIsd: response.data.id}, {reload: true});
                 });
             };
         }
