@@ -40,7 +40,7 @@
                 $scope.data.invitados = evento.invitados;
                 $scope.data.lugar = evento.lugar;
                 $scope.data.nombre = evento.nombre;
-                $scope.allPagosEvento = evento.pagos;
+                $scope.data.pagos  = evento.pagos;
                 $scope.data.cliente = evento.cliente;
                 $scope.data.tematica = evento.tematica;
             });
@@ -55,12 +55,6 @@
              */
             $scope.updateEvento = function () {
                 $http.put(eventosContext + "/" + idEvento, $scope.data).then(function (response) {
-                    if ($scope.allPagosEvento.length >= 0) {
-                        for (var pago in $scope.allPagosEvento) {
-                            $http.put(eventosContext + '/' + idEvento + '/' + pagosContext, pago).then(function (response) {
-                            });
-                        }
-                    }
                     //Evento created successfully
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
                 });
