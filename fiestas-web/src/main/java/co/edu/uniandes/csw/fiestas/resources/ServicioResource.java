@@ -49,7 +49,7 @@ import javax.ws.rs.Produces;
 public class ServicioResource {
     
     public ServicioResource(){
-        
+        //constructor vacio
     }
     
     @Inject
@@ -157,13 +157,12 @@ public class ServicioResource {
     * </code> 
     * </pre>
     * @param id Identificador del servicio que se esta buscando. Este debe ser una cadena de dígitos.
-     * @param servicio servicio a actualizar
     * @return JSON {@link ServicioDetailDTO} - El servicio buscado y actuaizado
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
     */
      @PUT
     @Path("{id: \\d+}")
-    public ServicioDetailDTO updateServicio(@PathParam("id") Long id, ServicioDetailDTO servicio) throws BusinessLogicException {
+    public ServicioDetailDTO updateServicio(@PathParam("id") Long id) throws BusinessLogicException {
        ServicioEntity ent =logic.getServicio(id);
         if(ent == null)
             throw new BusinessLogicException("El servicio no existe.");
@@ -232,22 +231,7 @@ public class ServicioResource {
         ProveedorEntity be= logic.getProveedor(e.getId(), proveedorId);
         return new ProveedorDetailDTO(be);
     }
-    
-    /**
-     * Actualizar proveedores en un servicio dado por id.
-     * 
-     * @param id del servicio donde se reemplazan los proveedores
-     * @param proveedores lista de proveedores a actualizar
-     * @return lista de proveedores actualizado
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
-     */
-    @PUT
-    @Path("{id: \\d+}/proveedores")
-    public  List<ProveedorDetailDTO> replaceProveedores(@PathParam("id")Long id,List<ProveedorDetailDTO> proveedores) throws BusinessLogicException
-    {
-        return proveedorListEntity2DTO(logic.replaceProveedores(id,proveedorListDTO2Entity(proveedores)));
-    }
-    
+
     /**
      * Convierte una lista de ProveedorEntity a una lista de ProveedorDetailDTO.
      *
@@ -356,23 +340,5 @@ public class ServicioResource {
         }
         return list;
     }
-    
-     /**
-     * Convierte una lista de ValoracionDetailDTO a una lista de ValoracionEntity.
-     *
-     * @param dtos Lista de ValoracionDetailDTO a convertir.
-     * @return Lista de ValoracionEntity convertida.
-     *
-     */
-    private List<ValoracionEntity> valoracionListDTO2Entity(List<ValoracionDetailDTO> dtos) {
-        List<ValoracionEntity> list = new ArrayList<>();
-        for (ValoracionDetailDTO dto : dtos) {
-            list.add(dto.toEntity());
-        }
-        return list;
-    }
-    
-    
-    
     
 }

@@ -149,44 +149,7 @@ public class ServicioLogic {
         return getProveedor(servicioId, proveedorId);
     }
 
-    /**
-     * Remplaza las instancias de Proveedor asociadas a una instancia de Servicio
-     *
-     * @param servicioId Identificador de la instancia de Servicio
-     * @param list Colección de instancias de ProveedorEntity a asociar a instancia
-     * de Servicio
-     * @return Nueva colección de ProveedorEntity asociada a la instancia de Servicio
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
-     * 
-     */
-    public List<ProveedorEntity> replaceProveedores(Long servicioId, List<ProveedorEntity> list) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los proveedores asociados al servicio con id = {0}", servicioId);
-        ServicioEntity servicio = getServicio(servicioId);
-        
-        if (list == null) 
-        {
-            throw new BusinessLogicException("No hay lista nueva.");
-        }
-        if (list.isEmpty()) 
-        {
-            throw new BusinessLogicException("La lista está vacía");
-        }
-        if (servicio != null)
-        {
-            for (ProveedorEntity proveedorEntity : list) 
-                proveedorEntity.getServicios().add(servicio);
-            
-            servicio.setProveedores(list);
-            servicio = updateServicio(servicio);   
-            return list;
-        } 
-        else 
-        {
-            throw new BusinessLogicException("El servicio al que se le quiere reemplazar proveedores es nulo");
-        }
-        
-    }
-
+   
     /**
      * Desasocia un Proveedor existente de un Servicio existente
      *
