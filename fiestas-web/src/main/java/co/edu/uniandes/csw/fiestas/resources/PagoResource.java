@@ -135,10 +135,6 @@ public class PagoResource {
      */
     @POST
     public PagoDTO createPago(@PathParam("idEvento") Long idEvento, PagoDTO pago) throws BusinessLogicException {
-        PagoEntity entity = pagoLogic.getPago(idEvento, pago.getId());
-        if (entity != null) {
-            throw new WebApplicationException("El pago existe", 412);
-        }
         return new PagoDTO(pagoLogic.createPago(idEvento, pago.toEntity()));
     }
 

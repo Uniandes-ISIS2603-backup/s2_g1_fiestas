@@ -17,7 +17,6 @@
                             <input type="date" id="eventoDate" placeholder="DD/MM/YYYY" required ng-model="data.fecha" class="col-sm-6"/>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <div class="form-group col-md-6">
                             <label for="eventoCelebrado" class="col-sm-2">Celebrado:</label>
@@ -49,7 +48,7 @@
                             </div> 
                         </div> 
                     </div> 
-                    <div class="row">
+                    <div class="row" ng-if="edit">
                         <div class="col-sm-12 col-md-5">
                             <table class="table table-striped">
                                 <thead>
@@ -59,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-if="edit" ng-repeat="pago in data.pagos">
+                                    <tr ng-if="edit" ng-repeat="pago in pagos">
                                         <td id="{{$index}}-estado">{{pago.estado}}</td>
                                         <td id="{{$index}}-metodo">{{pago.metodoPago}}</td>
                                     </tr>

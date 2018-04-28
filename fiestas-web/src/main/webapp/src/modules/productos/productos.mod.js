@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("productosModule", ['ui.router']);
-
-   mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    mod.constant("productosContext", "api/productos");
+    mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
             var basePath = 'src/modules/productos/';
 
@@ -63,7 +63,7 @@
                 }
             });
         }
-    
-]);
+
+    ]);
 })(window.angular);
 
