@@ -5,10 +5,17 @@
             </div>
             <div class="col-md-3">
                 <dl>     
+                    <dt>{{currentBonos.id}}</dt>
                     <hr>
-                    <dt class="bold">Description</dt>
-                    <dt class="bold">Description</dt>
-                    <dd>{{currentBonos.descuento}}</dd>
+                    <dd><dt class="bold">{{currentBonos.aplicadesde}}</dt></dd>
+                    <hr>
+                    <dd>{{currentBonos.codigo}}</dd>
+                    <hr>
+                    <dt class="bold">Likes</dt>
+                    <dd>{{currentBlogs.descuento}}</dd>
+                    <hr>
+                    <dt class="bold">Evento</dt>
+                    <dd id="{{$index}}-name"><a ui-sref="proveedorDetail({proveedorId: currentBono.proveedor.id})">{{currentBono.proveedor.nombre}}</a></dd>     
                 </dl>
             </div>
         </div>
