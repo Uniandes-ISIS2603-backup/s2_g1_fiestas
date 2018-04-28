@@ -41,6 +41,51 @@
                     }
                 }
 
+            }).state('proveedoresCreate', {
+                url: '/create',
+                parent: 'proveedores',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/proveedores.new.html',
+                        controller: 'proveedorNewCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
+                }
+            }).state('proveedorUpdate', {
+                url: '/update/{proveedorId:int}',
+                parent: 'proveedores',
+                param: {
+                    proveedorId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/proveedores.new.html',
+                        controller: 'proveedorUpdateCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'assistant']
+                }
+            }).state('proveedorDelete', {
+                url: '/delete/{proveedorId:int}',
+                parent: 'proveedores',
+                param: {
+                    proveedorId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/delete/proveedores.delete.html',
+                        controller: 'proveedorDeleteCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
+                }
             });
         }
     ]);
