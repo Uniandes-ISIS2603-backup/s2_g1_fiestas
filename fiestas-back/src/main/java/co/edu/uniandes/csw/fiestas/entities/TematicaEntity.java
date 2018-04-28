@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeSupport;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -70,8 +64,7 @@ public class TematicaEntity  extends BaseEntity implements Serializable
     /**
      * @param nombre the nombre to set
      */
-    public void setNombre(String nombre) throws PropertyVetoException {
-        java.lang.String oldNombre = this.nombre;
+    public void setNombre(String nombre){
         this.nombre = nombre;
     }
 }

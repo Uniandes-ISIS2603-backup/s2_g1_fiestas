@@ -69,7 +69,39 @@
                     }
                 }
 
+            }).state('pagosCreate', {
+                url: '/create',
+                parent: 'pagos',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + 'new/pagos.new.html',
+                        controller: 'pagoNewCtrl'
+                    }
+                }
+            }).state('pagoUpdate', {
+                url: '/update/{pagoId:int}',
+                parent: 'pagos',
+                param: {
+                    eventoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + 'new/pagos.new.html',
+                        controller: 'pagoUpdateCtrl'
+                    }
+                }
+            }).state('pagoDelete', {
+                url: '/delete/{pagoId:int}',
+                parent: 'pagos',
+                param: {
+                    pagoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + 'delete/pagos.delete.html',
+                        controller: 'pagoDeleteCtrl'
+                    }
+                }
             });
-        }
-    ]);
+        }]);
 })(window.angular);
