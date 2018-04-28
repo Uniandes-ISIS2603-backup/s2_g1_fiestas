@@ -57,7 +57,7 @@
                 }
             }).state('valoracionDelete', {
                 url: '/delete/{valoracionId:int}',
-                parent: 'valoracion',
+                parent: 'valoraciones',
                 param: {
                     valoracionId: null
                 },
