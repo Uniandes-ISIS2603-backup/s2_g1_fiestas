@@ -1,7 +1,8 @@
 (function (ng) {
-    var mod = ng.module("eventoModule");
-    mod.constant("eventoContext", "api/eventos");
-    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$rootScope',
+    var mod = ng.module("pagoModule");
+    mod.constant("pagoContext", "pagos");
+    mod.constant("eventosContext", "api/eventos");
+    mod.controller('pagoNewCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', '$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoNewCtrl
@@ -12,29 +13,30 @@
          * funciones que se definen en este controlador y que son utilizadas 
          * desde el HTML.
          * @param {Object} $http Objeto injectado para la manejar consultas HTTP
-         * @param {Object} authorsContext Constante injectada que contiene la ruta
+         * @param {Object} eventosContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Eventos en el Backend.
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
+         *@param {Object} pagoContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Pago en el Backend.
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, eventoContext, $state, $rootScope) {
+        function ($scope, $http, eventosContext, $state, pagoContext, $rootScope) {
             $rootScope.edit = false;
-            
+
             $scope.data = {};
-            
-             /**
+
+            /**
              * @ngdoc function
-             * @name createEvento
-             * @methodOf eventos.controller:eventoNewCtrl
+             * @name createPago
+             * @methodOf pagos.controller:pagoNewCtrl
              * @description
-             * Esta función utiliza el protocolo HTTP para crear el evento.
-             * @param {Object} autor Objeto con el nuevo autor.
+             * Esta función utiliza el protocolo HTTP para crear el pago.
              */
-            $scope.createEvento = function () {
-                $http.post(eventoContext, $scope.data).then(function (response) {
-                    $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
+            $scope.createPago = function () {
+                $http.post(eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
+                    $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };
         }

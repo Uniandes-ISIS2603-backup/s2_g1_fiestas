@@ -1,0 +1,53 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createPago">Crear un nuevo Pago</label>
+                <label ng-if="edit" id="editPago">Editar Pago</label></div>
+            <div class="panel-body">
+                <form name="pago">
+                    <div class="form-group row">
+                        <label for="sel1">Metodo De Pago:</label>
+                        <select class="form-control" id="pagoMetodo" ng-model="data.metodoPago">
+                            <option>PSE</option>
+                            <option>Tarjeta de Credito</option>
+                            <option>Consignacion</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="pagoEstado">Estado:</label>
+                        <select class="form-control" id="pagoEstado" ng-model="data.estado">
+                            <option>Confirmado</option>
+                            <option>En Revision</option>
+                            <option>Rechazado</option>
+                        </select>
+                    </div>
+                    <div class="checkbox">
+                        <label><input id="pagoRealizado" ng-model="data.realizado" type="checkbox" data-toggle="switch"> Realizado</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="pagoValor" class="col-sm-2">Valor:</label>
+                            <input id="pagoValor"  min="1" type="number" required ng-model="data.valor" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!pago.$valid">
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-if="!edit"  ng-show="pago.$valid" ng-click="createPago()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="pago.$valid" ng-click="updatePago()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="pagosList">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

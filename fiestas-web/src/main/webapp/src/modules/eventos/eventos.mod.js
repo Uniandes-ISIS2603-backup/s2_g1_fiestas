@@ -100,7 +100,7 @@
                 url: '/delete/{eventoId:int}',
                 parent: 'eventos',
                 param: {
-                    eventeId: null
+                    eventoId: null
                 },
                 views: {
                     'detailView': {

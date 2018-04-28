@@ -6,51 +6,53 @@
             <div class="panel-body">
                 <form name="cliente">
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteImagen" class="col-sm-2">Imagen de perfil:</label>
-                            <input id="clienteImagen" required ng-model="data.imagen" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteImagen" class="col-sm-3">Imagen de perfil:</label>
+                            <input id="clienteImagen" required ng-model="data.imagen" class="col-sm-6" placeholder="URL imagen"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteNombre" class="col-sm-2">Nombre:</label>
-                            <input id="clienteNombre" required ng-model="data.nombre" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteNombre" class="col-sm-3">Nombre:</label>
+                            <input id="clienteNombre" required ng-model="data.nombre" class="col-sm-6" placeholder="Nombre del cliente"//>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteContrasena" class="col-sm-2">Contraseña:</label>
-                            <input id="clienteContrasena" required ng-model="data.contrasena" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteContrasena" class="col-sm-3">Contraseña:</label>
+                            <input id="clienteContrasena" type ="password" required ng-model="data.contrasena" class="col-sm-6" placeholder="Contraseña del cliente"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteCorreo" class="col-sm-2">Correo:</label>
-                            <input id="clienteCorreo" required ng-model="data.correo" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteCorreo" class="col-sm-3">Correo:</label>
+                            <input id="clienteCorreo" required ng-model="data.correo" class="col-sm-6" placeholder="E-mail existente del cliente"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteDireccion" class="col-sm-2">Dirección:</label>
-                            <input id="clienteDireccion" required ng-model="data.direccion" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteDireccion" class="col-sm-3">Dirección:</label>
+                            <input id="clienteDireccion" required ng-model="data.direccion" class="col-sm-6" placeholder="Dirección del cliente"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteDocumento" class="col-sm-2">Documento:</label>
-                            <input id="clienteDocumento" required ng-model="data.documento" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteDocumento" class="col-sm-3">Documento:</label>
+                            <input id="clienteDocumento" required ng-model="data.documento" class="col-sm-6" placeholder="Documento del cliente"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label ng-if="!edit" for="clienteLogin" class="col-sm-2">Login:</label>
-                            <input ng-if="!edit" id="clienteLogin" required ng-model="data.login" class="col-sm-6">
+                        <div class="form-group col-md-9">
+                            <label ng-if="!edit" for="clienteLogin" class="col-sm-3">Login:</label>
+                            <input ng-if="!edit" id="clienteLogin" required ng-model="data.login" class="col-sm-6" placeholder="Login del cliente (no puede cambiarse después)">
+                            <label ng-if="edit" for="clienteLogin" class="col-sm-3">Login:</label>
+                            <input ng-if="edit" id="clienteLogin" required ng-model="data.login" class="col-sm-6" disabled>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group col-md-6">
-                            <label for="clienteTelefono" class="col-sm-2">Teléfono:</label>
-                            <input id="clienteTelefono" required ng-model="data.telefono" class="col-sm-6"/>
+                        <div class="form-group col-md-9">
+                            <label for="clienteTelefono" class="col-sm-3">Teléfono:</label>
+                            <input id="clienteTelefono" required ng-model="data.telefono" class="col-sm-6" placeholder="Teléfono del cliente"/>
                         </div>
                     </div>
 
@@ -66,7 +68,8 @@
                     </div> 
                     <div class="form-group row">
                         <div class="form-group col-sm-12">
-                            <input ng-show="cliente.$valid" ng-click="createCliente()" value="Save" class="btn btn-success"/>
+                            <input ng-if="!edit" ng-show="cliente.$valid" ng-click="createCliente()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit" ng-show="cliente.$valid" ng-click="updateCliente()" value="Save" class="btn btn-success"/>
                             <a class="btn btn-info" ui-sref="clientesList">Cancel</a>
                         </div>
                     </div>

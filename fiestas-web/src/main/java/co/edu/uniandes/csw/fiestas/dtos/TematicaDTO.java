@@ -49,6 +49,7 @@ public class TematicaDTO {
         if (entity != null) {
             this.id = entity.getId();
             this.descripcion = entity.getDescripcion();
+            this.nombre = entity.getNombre();
         }
     }
 
@@ -63,6 +64,7 @@ public class TematicaDTO {
         TematicaEntity entity = new TematicaEntity();
         entity.setId(id);
         entity.setDescripcion(descripcion);
+        entity.setNombre(nombre);
         return entity;
     }
 

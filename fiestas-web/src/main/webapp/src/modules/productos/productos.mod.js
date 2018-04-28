@@ -1,6 +1,7 @@
 (function (ng) {
-   var mod = ng.module("productoModule", ['ui.router']); 
-   mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    var mod = ng.module("productosModule", ['ui.router']);
+    mod.constant("productosContext", "api/productos");
+    mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
             var basePath = 'src/modules/productos/';
 
@@ -12,7 +13,7 @@
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'productos.html',
-                        controller: 'productoCtrl',
+                        controller: 'productosCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
@@ -24,9 +25,9 @@
                         templateUrl: basePath + 'productos.list.html'
                     }
                 }
-            }).state('productoDetail', {
+            }).state('productosDetail', {
                 url: '/{productoId:int}/detail',
-                parent: 'producto',
+                parent: 'productos',
                 param: {productoId: null},
                 views: {
                     'listView': {
@@ -34,14 +35,35 @@
                     },
                     'detailView': {
                         templateUrl: basePath + 'productos.detail.html',
-                        controller: 'productoDetailCtrl',
+                        controller: 'productosDetailCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
 
+            }).state('productosCreate', {
+                url: '/create',
+                parent: 'productos',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/productos.new.html',
+                        controller: 'productosNewCtrl'
+                    }
+                }
+            }).state('productoUpdate', {
+                url: '/update/{productoId:int}',
+                parent: 'productos',
+                param: {
+                    productoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/productos.new.html',
+                        controller: 'productoUpdateCtrl'
+                    }
+                }
             });
         }
-    
-]);
+
+    ]);
 })(window.angular);
 

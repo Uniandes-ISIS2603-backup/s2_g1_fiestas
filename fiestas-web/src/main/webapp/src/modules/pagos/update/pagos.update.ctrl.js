@@ -2,7 +2,7 @@
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext',
+    mod.controller('pagoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -17,10 +17,10 @@
          * donde se encuentra el API de Eventos en el Backend.
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
-         * @param {Object} $filter Dependencia injectada para hacer filtros sobre
-         * arreglos.
+         * @param {Object} $rootScope Referencia injectada al Scope definida para
+         * toda la aplicación.
          */
-        function ($scope, $http, eventosContext, $state, pagoContext) {
+        function ($scope, $http, eventosContext, $state, pagoContext,$rootScope) {
             $rootScope.edit = true;
 
             $scope.data = {};
@@ -32,9 +32,10 @@
             var idEvento = $state.params.eventoId;
             var idPago = $state.params.pagoId;
 
-            //Consulto el evento a editar.
+            //Consulto el pago a editar.
             $http.get(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago).then(function (response) {
                 var pago = response.data;
+                $scope.data.id = pago.id;
                 $scope.data.realizado = pago.realizado;
                 $scope.data.metodoPago = pago.metodoPago;
                 $scope.data.estado = pago.estado;
@@ -44,16 +45,15 @@
 
             /**
              * @ngdoc function
-             * @name createEvento
-             * @methodOf eventos.controller:eventoUpdateCtrl
+             * @name updatePago
+             * @methodOf pagos.controller:pagoUpdateCtrl
              * @description
-             * Crea un nuevo evento con los libros nuevos y la información del
-             * $scope.
+             * Actualiza un pago
              */
-            $scope.createPago = function () {
-                $http.put(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago).then(function (response) {
-                    //Evento created successfully
-                    $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
+            $scope.updatePago = function () {
+                $http.put(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago, $scope.data).then(function (response) {
+                    //Pago updated successfully
+                    $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };
         }
