@@ -1,24 +1,42 @@
-<div class="container-fluid">
-     <div class="col-sm-12 col-md-5">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Estado</th>
-                    <th>Metodo de Pago</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="pago in pagosRecords">
-                    <td id="{{$index}}-id">
-                        <a ui-sref="pagoDetail({pagoId: pago.id})">{{pago.id}}</a>
-                    </td>
-                    <td id="{{$index}}-estado">{{pago.estado}}</td>
-                    <td id="{{$index}}-metodo">{{pago.metodoPago}}</td>
+<div class="col-sm-12 col-md-5" style="padding-top: 20px">
+    <div class="panel-group">
+        <div class="panel panel-primary" >
+            <div class="panel-heading"><label>Lista de Pagos</label></div>
+            <div class="panel-body">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <a class="btn btn-info" ui-sref="pagosCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Pago</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Estado</th>
+                                    <th>Metodo de Pago</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="pago in pagosRecords">
+                                    <td id="{{$index}}-id">
+                                        <a ui-sref="pagoDetail({pagoId: pago.id})">{{pago.id}}</a>
+                                    </td>
+                                    <td id="{{$index}}-estado">{{pago.estado}}</td>
+                                    <td id="{{$index}}-metodo">{{pago.metodoPago}}</td>
+                                    <td id="{{$index}}-actions">
+                                        <a class="btn btn-default btn-sm" ui-sref="pagoUpdate({pagoId: pago.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-danger btn-sm" ui-sref="pagoDelete({pagoId: pago.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
 
-                </tr>
-            </tbody>
-        </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
