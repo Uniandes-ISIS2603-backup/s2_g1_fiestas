@@ -1,5 +1,10 @@
 <div class="container-fluid">
     <div class="col-md-4">
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <a class="btn btn-info" ui-sref="productosCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Producto</a>
+            </div>
+        </div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -11,7 +16,11 @@
                 <tr ng-repeat="producto in productosRecords">
                     <td id="{{$index}}-id">{{producto.ID}}</td>
                     <td id="{{$index}}-name">
-                        <a ui-sref="productosDetail({productoId: producto.ID})">{{producto.nombre}}</a>
+                        <a ui-sref="productosDetail({productoId: producto.ID})">{{producto.descripcion}}</a>
+                    </td>
+                    <td id="{{$index}}-actions">
+                        <a class="btn btn-default btn-sm" ui-sref="productoUpdate({productoId: producto.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-danger btn-sm" ui-sref="productoDelete({productoId: producto.id})"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
             </tbody>

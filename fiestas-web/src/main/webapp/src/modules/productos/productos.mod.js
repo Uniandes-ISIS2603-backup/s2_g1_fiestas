@@ -48,6 +48,27 @@
                     }
                 }
 
+            }).state('productosCreate', {
+                url: '/create',
+                parent: 'productos',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/productos.new.html',
+                        controller: 'productosNewCtrl'
+                    }
+                }
+            }).state('productoUpdate', {
+                url: '/update/{productoId:int}',
+                parent: 'productos',
+                param: {
+                    productoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/productos.new.html',
+                        controller: 'productoUpdateCtrl'
+                    }
+                }
             });
         }
     

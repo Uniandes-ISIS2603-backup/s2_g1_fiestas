@@ -15,7 +15,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ProductoEntity extends BaseEntity implements Serializable {
     
 
-    private String nombree;
+    private String nombre;
     private Integer precio;
     private String descripcion;
     private String incluye;
@@ -29,14 +29,14 @@ public class ProductoEntity extends BaseEntity implements Serializable {
      * @return nombre del producto
      */
     public String getNombre() {
-        return nombree;
+        return nombre;
     }
 
     /**
      * @param nombre a asignar al producto
      */
     public void setNombre(String nombre) {
-        this.nombree = nombre;
+        this.nombre = nombre;
     }
 
     /**
