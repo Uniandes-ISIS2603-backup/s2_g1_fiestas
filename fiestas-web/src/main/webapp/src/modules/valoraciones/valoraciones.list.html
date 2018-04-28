@@ -6,14 +6,12 @@
                     <th>id</th>
                     <th>Calificación</th>
                     <th>Comentario</th>
-                     
-                    
             </thead>
             <tbody>
                 <tr ng-repeat="valoracion in valoracionesRecords">
                     <td id="{{$index}}-id">{{valoracion.id}}</td>
-                    <td id="{{$index}}-name">{{valoracion.calificacion}}</td>
-                    <td id="{{$index}}-name">{{valoracion.comentario}}</td>
+                    <td id="{{$index}}-calificacion">{{valoracion.calificacion}}</td>
+                    <td id="{{$index}}-comentario">{{valoracion.comentario}}</td>
                     <td id="{{$index}}-actions">
                         <a id="{{$index}}-edit" class="btn btn-default btn-sm" ui-sref="valoracionUpdate({valoracionId: valoracion.id})"><span class="glyphicon glyphicon-edit"></span></a>
                         <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ui-sref="valoracionDelete({valoracionId: valoracion.id})"><span class="glyphicon glyphicon-trash"></span></a>
@@ -22,7 +20,7 @@
             </tbody>
         </table>
         
-         <body>
+        <body>
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
                             <a class="btn btn-info" ui-sref="valoracionCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Valoracion</a>
