@@ -1,0 +1,44 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createValoracion">Crear un nuevo valoracion</label>
+                <label ng-if="edit" id="editValoracion">Editar Valoracion</label></div>
+            <div class="panel-body">
+                <form name="valoracion">
+                    
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="valoracionComentario" class="col-sm-0">Comentario      </label>
+                            <br>
+                            <textarea id="valoracionComentario" required ng-model="data.comentario" class="col-sm-6"/></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="valoracionCalificacion" class="col-sm-0">Calificacion</label>
+                            <br>
+                            <input type="number" min="1" max="5" id="valoracionCalificacion" required ng-model="data.calificacion" class="col-sm-6"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!valoracion.$valid">
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-if="!edit"  ng-show="valoracion.$valid" ng-click="createValoracion()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="valoracion.$valid" ng-click="updateValoracion()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="valoracionesList">Cancel</a>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

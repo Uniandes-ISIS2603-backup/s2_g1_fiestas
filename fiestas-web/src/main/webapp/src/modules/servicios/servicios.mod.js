@@ -40,6 +40,51 @@
                         controllerAs: 'ctrl'
                     }
                 }
+            }).state('servicioCreate', {
+                url: '/create',
+                parent: 'servicios',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/servicios.new.html',
+                        controller: 'servicioNewCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
+                }
+            }).state('servicioUpdate', {
+                url: '/update/{servicioId:int}',
+                parent: 'servicios',
+                param: {
+                    servicioId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/servicios.new.html',
+                        controller: 'servicioUpdateCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'assistant']
+                }
+            }).state('servicioDelete', {
+                url: '/delete/{servicioId:int}',
+                parent: 'servicio',
+                param: {
+                    servicioId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/delete/servicios.delete.html',
+                        controller: 'servicioDeleteCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
+                }
             });
         }
     ]);
