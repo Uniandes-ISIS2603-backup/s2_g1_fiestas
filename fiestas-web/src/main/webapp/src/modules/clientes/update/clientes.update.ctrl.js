@@ -56,10 +56,7 @@
              */
             $scope.updateCliente = function () {
                 $http.put(clientesContext + "/" + idCliente, $scope.data).then(function (response) {
-                    if ($scope.selectedItems.length >= 0) {
-                        $http.put(clientesContext + "/" + response.data.id, $scope.selectedItems).then(function (response) {
-                        });
-                    }
+                    
                     //Cliente created successfully
                     $state.go('clientesList', {clienteId: response.data.id}, {reload: true});
                 });
