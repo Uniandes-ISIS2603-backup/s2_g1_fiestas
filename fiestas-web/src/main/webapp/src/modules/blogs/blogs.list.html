@@ -1,29 +1,48 @@
 <div class="container-fluid">
-    <div class="row">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Likes</th>
-                    <th scope="col">Evento</th>
-                    <th scope="col">Cliente</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="blogs in blogsRecords">
-                    <td >
-                        <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
-                    </td>          
-                    <td >{{blogs.titulo}}</td>
-                    <td >{{blogs.likes}}</td>
-                    <td >{{blogs.evento.nombre}}</td>
-                    <td >{{blogs.cliente.nombre}}</td>                    
-                </tr>
-            </tbody>
-        </table>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <a class="btn btn-info" ui-sref="blogsCreate"><span class="glyphicon glyphicon-plus-sign"></span> Agregar nuevo blog</a>
+        </div>
+    </div>
+    <div class="panel-group">
+        <div class="panel panel-primary" >
+            <div class="panel-heading"><label>Lista de blogs</label></div>
+            <div class="panel-body">
+                <div class="row">
+                    <table class="table thead-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Likes</th>
+                                <th scope="col">Evento</th>
+                                <th scope="col">Cliente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="blogs in blogsRecords">
+                                <td Id="{{$index}}-Id">
+                                    <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
+                                </td>          
+                                <td >{{blogs.titulo}}</td>
+                                <td >{{blogs.likes}}</td>
+                                <td >{{blogs.evento.nombre}}</td>
+                                <td >{{blogs.cliente.nombre}}</td> 
+                                <td id="{{$index}}-actions">
+                                    <a class="btn btn-default btn-sm" ui-sref="blogsUpdate({blogsId: blogs.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="btn btn-danger btn-sm" ui-sref="blogsDelete({blogsId: blogs.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
 
 
 

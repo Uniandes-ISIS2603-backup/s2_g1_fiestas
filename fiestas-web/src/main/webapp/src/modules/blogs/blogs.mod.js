@@ -41,6 +41,18 @@
                     }
                 }
 
+            }).state('blogsCreate', {
+                url: 'create',
+                parent: 'blogs',
+                param: {blogsId: null},
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/create/blogs.new.html',
+                        controller: 'blogsNewCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }
+
             });
         }
     ]);
