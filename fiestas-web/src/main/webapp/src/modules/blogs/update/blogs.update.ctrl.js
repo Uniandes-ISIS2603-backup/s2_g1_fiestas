@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("blogsModule");
-    mod.constant("bonosContext", "api/bonos");
-    mod.controller('bonosUpdateCtrl', ['$scope', '$http', 'bonosContext', '$state',
+    mod.constant("blogsContext", "api/blogs");
+    mod.controller('blogsUpdateCtrl', ['$scope', '$http', 'blogsContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -19,28 +19,24 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, bonosContext, $state) {
+        function ($scope, $http, blogsContext, $state, $rootScope) {
 
             $scope.data = {};
+            
+            $rootScope.edit=true;
 
             $scope.selectedItems = [];
 
             $scope.availableItems = [];
 
-            var idBono = $state.params.bonosId;
+            var idBlog = $state.params.blogsId;
 
             //Consulto el evento a editar.
-            $http.get(bonodContext + '/' + idBono).then(function (response) {
-                var evento = response.data;
-                $scope.data.celebrado = evento.celebrado;
-                $scope.data.fecha = new Date(evento.fecha);
-                $scope.data.descripcion = evento.descripcion;
-                $scope.data.invitados = evento.invitados;
-                $scope.data.lugar = evento.lugar;
-                $scope.data.nombre = evento.nombre;
-                $scope.data.pagos  = evento.pagos;
-                $scope.data.cliente = evento.cliente;
-                $scope.data.tematica = evento.tematica;
+            $http.get(blogsContext + '/' + idBlog).then(function (response) {
+                var blog = response.data;
+                $scope.data.cuerpo = blog.cuerpo;
+                $scope.data.likes = blog.likes;
+                $scope.data.titulo = blog.titulo;
             });
 
             /**
@@ -51,10 +47,10 @@
              * Actualiza un evento con la información del
              * $scope.
              */
-            $scope.updateEvento = function () {
-                $http.put(eventosContext + "/" + idEvento, $scope.data).then(function (response) {
+            $scope.updateBlogs = function () {
+                $http.put(blogsContext + "/" + idBlog, $scope.data).then(function (response) {
                     //Evento created successfully
-                    $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
+                    $state.go('blogsList', {blogsId: response.data.id}, {reload: true});
                 });
             };
         }
