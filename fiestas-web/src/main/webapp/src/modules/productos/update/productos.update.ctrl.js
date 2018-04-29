@@ -1,5 +1,5 @@
 (function (ng) {
-    var mod = ng.module("productoModule");
+    var mod = ng.module("productosModule");
     mod.constant("productosContext", "api/productos");
     mod.constant("booksContext", "api/books");
     mod.controller('productoUpdateCtrl', ['$scope', '$http', 'productosContext', '$state', 'booksContext', '$rootScope', '$filter',
