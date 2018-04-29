@@ -45,6 +45,39 @@
                     }
                 }
 
+            }).state('tematicasCreate', {
+                url: '/create',
+                parent: 'tematicas',
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/tematicas.new.html',
+                        controller: 'tematicasNewCtrl'
+                    }
+                }
+            }).state('tematicasUpdate', {
+                url: '/update/{tematicaId:int}',
+                parent: 'tematicas',
+                param: {
+                    tematicaId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/new/tematicas.new.html',
+                        controller: 'tematicasUpdateCtrl'
+                    }
+                }
+            }).state('tematicasDelete', {
+                url: '/delete/{tematicaId:int}',
+                parent: 'tematicas',
+                param: {
+                    tematicaId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/delete/tematicas.delete.html',
+                        controller: 'tematicasDeleteCtrl'
+                    }
+                }
             });
         }
     
