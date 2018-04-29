@@ -4,10 +4,10 @@
     mod.controller('tematicasDetailCtrl', ['$scope', '$http', 'tematicasContext', '$state', '$filter',
         function ($scope, $http, tematicasContext, $state, $filter) {
 
-            if (($state.params.tematicaId !== undefined) && ($state.params.tematicaId !== null)) {
+            if (($state.params.tematicaID !== undefined) && ($state.params.tematicaID !== null)) {
                 $http.get(tematicasContext).then(function (response) {
                     $scope.tematicasRecords = response.data;
-                    $scope.currentTematica = $filter('filter')($scope.tematicasRecords, {id: $state.params.tematicaId}, true)[0];
+                    $scope.currentTematica = $filter('filter')($scope.tematicasRecords, {ID: $state.params.tematicaID}, true)[0];
                 });
             }
         }

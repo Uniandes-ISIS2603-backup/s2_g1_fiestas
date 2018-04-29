@@ -26,8 +26,6 @@
             $rootScope.edit = true;
 
             var idProducto = $state.params.productoId;
-            
-            var idServicio = $state.params.servicioId;
 
             //Consulto el autor a editar.
             $http.get(productosContext + '/' + idProducto).then(function (response) {
@@ -76,16 +74,17 @@
              * Crea un nuevo autor con los libros nuevos y la información del
              * $scope.
              */
-            $scope.createProducto = function () {
+            $scope.updateProducto = function () {
                 /*Se llama a la función newBooks() para buscar cada uno de los ids de los books
                  en el array que tiene todos los books y así saber como queda la lista final de los books asociados al autor.
                  */
                 $scope.newBooks();
                 $http.put(productosContext + "/" + idProducto, {
-                    name: $scope.productoName,
-                    birthDate: $scope.productoBirthDate,
-                    description: $scope.productoDescription,
-                    image: $scope.productoImage
+                name = $scope.productoName = producto.name,
+                descripcion = $scope.productoDescripcion,
+                personal = $scope.productoPersonal,
+                incluidos = $scope.prodcutoIncluye,
+                precio = $scope.prodcutoPrecio,
                 }).then(function (response) {
                     if (idsBook.length >= 0) {
                         $http.put(productosContext + "/" + response.data.id + "/books", $scope.allBooksProducto).then(function (response) {

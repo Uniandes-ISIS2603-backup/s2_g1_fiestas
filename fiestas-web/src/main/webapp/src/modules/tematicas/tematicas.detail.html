@@ -13,8 +13,10 @@ and open the template in the editor.
             <dt class="bold">Descripcion</dt>
             <dd>{{currentTematica.descripcion}}</dd>
             <hr>
-            <dt class="bold">Nombre</dt>
-            <dd>{{currentTematica.nombre}}</dd>
+            <dt class="bold">Servicios</dt>
+            <ul ng-repeat="servicio in currentTematica.servicios">
+                <a ui-sref="authorDetail({authorId: author.id})">{{author.name}}</a>
+            </ul>
         </dl>
     </div>
 </div>
