@@ -41,6 +41,39 @@
                     }
                 }
 
+            }).state("bonosCreate",{
+              url: '/create',
+                parent: 'bonos',
+                param: {bonosId: null},
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/create/bonos.new.html',
+                        controller: 'bonosNewCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }).state("bonosUpdate",{
+              url: '/{bonosId:int}/update',
+                parent: 'bonos',
+                param: {bonosId: null},
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/create/bonos.new.html',
+                        controller: 'bonosUpdateCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }  
+            }).state("bonosDelete",{
+              url: '/{bonosId:int}/delete',
+                parent: 'bonos',
+                param: {bonosId: null},
+                views: {
+                    'listView': {
+                        templateUrl: basePath + '/delete/bonos.delete.html',
+                        controller: 'bonosDeleteCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }  
             });
         }
     ]);
