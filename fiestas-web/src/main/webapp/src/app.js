@@ -14,7 +14,10 @@
         'pagoModule',
         'eventoModule',
         'productosModule',
-        'tematicasModule'
+        'tematicasModule',
+        'contratoModule',
+        'horarioModule'
+   
 
 
     ]);
