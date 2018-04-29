@@ -197,6 +197,12 @@ public class ContratoLogic {
         
     }
     
+    public HorarioEntity getHorario(Long id)
+    {
+        HorarioEntity he = getContrato(id).getHorario();
+        return he;
+    }
+    
     public BonoEntity getBono(Long id){
         BonoEntity bE=getContrato(id).getBono();
         return bE;

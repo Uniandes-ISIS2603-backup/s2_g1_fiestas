@@ -33,8 +33,14 @@
              * @param {Object} producto Objeto con la nueva de la producto.
              */
             $scope.createProducto = function () {
-                $http.post(productosContext, $scope.data).then(function (response) {
-                    $state.go('productosList', {productosId: response.data.id}, {reload: true});
+                $http.post(productosContext, {
+                    name: $scope.productoName,
+                    incluidos: $scope.productoIncluidos,
+                    description: $scope.productosDescripcion,
+                    image: $scope.productosPrecio,
+                    personal: $scope.productosPersonal
+                }).then(function (response) {
+                    $state.go('productosList', {productosId: response.data.ID}, {reload: true});
                 });
             };
         }
