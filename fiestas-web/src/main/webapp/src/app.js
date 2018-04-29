@@ -1,3 +1,4 @@
+
 (function (ng) {
     var app = angular.module('mainApp', [
         // External dependencies
@@ -21,4 +22,3 @@
             $qProvider.errorOnUnhandledRejections(false);
         }]);
 })(window.angular);
-

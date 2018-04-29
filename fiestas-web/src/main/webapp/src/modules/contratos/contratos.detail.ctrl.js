@@ -34,6 +34,8 @@
                 $http.get(contratoContext).then(function (response) {
                     $scope.contratosRecords = response.data;
                     $scope.currentContrato = $filter('filter')($scope.contratosRecords, {id: $state.params.contratoId}, true)[0];
+                    $scope.horariosRecords=response.data.horarios;
+                    
                 });
             }
         }

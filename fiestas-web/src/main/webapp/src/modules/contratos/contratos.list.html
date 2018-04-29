@@ -19,9 +19,8 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="contrato in contratosRecords">
-                                    <td id="{{$index}}-id">{{contrato.id}}</td>
-                                    <td id="{{$index}}-name">
-                                        <a ui-sref="contratoDetail({contratoId: contrato.id})">{{contrato.nombre}}</a>
+                                    <td id="{{$index}}-id">
+                                        <a ui-sref="contratoDetail({contratoId: contrato.id})">{{contrato.id}}</a>
                                     </td>
                                     <td id="{{$index}}-actions">
                                         <a class="btn btn-default btn-sm" ui-sref="contratoUpdate({contratoId: contrato.id})"><span class="glyphicon glyphicon-edit"></span></a>

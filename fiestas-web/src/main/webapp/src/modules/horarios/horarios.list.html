@@ -1,0 +1,44 @@
+<div class="container-fluid" style="padding-top: 20px">
+    <div class="panel-group">
+        <div class="panel panel-primary" >
+            <div class="panel-heading"><label>Horario</label></div>
+            <div class="panel-body">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <a class="btn btn-info" ui-sref="horariosCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Horario</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Hora de Inicio</th>
+                                    <th>Hora de Fin</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="horario in horariosRecords">
+                                    <td id="{{$index}}-id">
+                                        <a ui-sref="horarioDetail({horarioId: horario.id})">{{horario.id}}</a>
+                                    </td>
+                                    <td id="{{$index}}-fecha">{{horario.fecha}}</td>
+                                    <td id="{{$index}}-horaInicio">{{horario.horaInicio}}</td>
+                                    <td id="{{$index}}-horaFin">{{horario.horaFin}}</td>
+                                    <td id="{{$index}}-actions">
+                                        <a class="btn btn-default btn-sm" ui-sref="horarioUpdate({horarioId: horario.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-danger btn-sm" ui-sref="horarioDelete({horarioId: horario.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
