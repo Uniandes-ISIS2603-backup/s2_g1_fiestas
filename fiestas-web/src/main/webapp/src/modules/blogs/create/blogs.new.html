@@ -1,0 +1,53 @@
+<div class="container-fluid" style="padding-top: 20px">
+    <div  class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><label ng-if="!edit" id="createBlog">Crear un nuevo Blog</label>
+                <label ng-if="edit" id="editBlog">Editar Blog</label></div>
+            <div class="panel-body">
+                <form name="blogs">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="cuerpo" class="col-sm-2">Cuerpo:</label>
+                            <input id="cuerpo" required ng-model="data.cuerpo" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="titulo" class="col-sm-2">Título</label>
+                            <input id="titulo" required ng-model="data.titulo" class="col-sm-6"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <!--<div class="form-group col-md-6">
+                            <label for="evento" class="col-sm-2">Evento</label>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    Evento
+                                </button>
+                                <div class="dropdown-menu" ng-repeat="evrento in eventosRecords">
+                                    <a class="dropdown-item" href="#">Link 1</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="form-group row">
+                        <div class="form-group col-sm-4" ng-if="!blogs.$valid">
+                            <div class="alert alert-warning" >
+                                <strong>Warning!</strong><p>All inputs are required*</p>
+                            </div> 
+                        </div> 
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-sm-12">
+                            <input ng-if="!edit" ng-show="blogs.$valid" ng-click="createBlogs()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit" ng-show="blogs.$valid" ng-click="updateBlogs()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="blogsList">Cancel</a>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

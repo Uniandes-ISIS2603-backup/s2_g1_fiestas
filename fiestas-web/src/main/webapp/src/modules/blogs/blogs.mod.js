@@ -76,6 +76,42 @@
                     }
                 }
 
+            }).state('blogsCreate', {
+                url: 'create',
+                parent: 'blogs',
+                param: {blogsId: null},
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/create/blogs.new.html',
+                        controller: 'blogsNewCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }
+
+            }).state('blogsUpdate', {
+                url: '/{blogsId:int}/update',
+                parent: 'blogs',
+                param: {blogsId: null},
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/create/blogs.new.html',
+                        controller: 'blogsUpdateCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }
+
+            }).state('blogsDelete', {
+                url: '/{blogsId:int}/delete',
+                parent: 'blogs',
+                param: {blogsId: null},
+                views: {
+                    'listView': {
+                        templateUrl: basePath + '/delete/blogs.delete.html',
+                        controller: 'blogsDeleteCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                }
+
             });
         }
     ]);
