@@ -69,6 +69,7 @@ public class ContratoDTO {
             this.id = entity.getId();
             this.valor = entity.getValor();
             this.tyc = entity.getTyc();
+            this.estado = entity.getEstado();
         }
     }
 
