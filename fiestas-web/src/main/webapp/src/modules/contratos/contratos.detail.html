@@ -3,9 +3,6 @@
         <div class="row">
             <div class="col-md-3">
                 <dl> 
-                    <dt class="bold">Proveedor</dt>
-                    <dd>{{currentContrato.proveedor.nombre}}</dd>
-                    <hr>
                     <dt class ="bold">Estado</dt>
                     <dt>{{currentContrato.estado}}</dt>
                     <hr>
@@ -15,29 +12,13 @@
                     <dt class="bold">Términos y condiciones</dt>
                     <dd>{{currentContrato.tyc}}</dd>
                     <hr>
-                    <dt class="bold">Evento</dt>
-                    <dd>{{currentContrato.evento}}</dd>
-                    <hr>
-                    
-                    <!--Pendiente productos-->
+                  
+
                 </dl>
             </div>
-            <div class="col-md-3">
-                <dl>  
-                    <dt>Horario</dt>  
-                    <hr>                    
-                    <dt class="bold">Fecha</dt>
-                    <dd>{{currentContrato.horario.fecha}}</dd>
-                    <hr>
-                    <dt class="bold">Hora Inicio</dt>
-                    <dd>{{currentContrato.horario.horaInicio}}</dd>
-                    <hr>
-                    <dt class="bold">Hora Fin</dt>
-                    <dd>{{ currentContrato.horario.horaFin}}</dd>
-                    <hr>
-                    
-                </dl>
-            </div>
+            <ul class="nav nav-pills">
+                    <li role="presentation" class="active"> <a ui-sref="horariosList({contratoId: currentContrato.id})">Horario</a></li>
+            </ul>
         </div>
     </div>
 </div>

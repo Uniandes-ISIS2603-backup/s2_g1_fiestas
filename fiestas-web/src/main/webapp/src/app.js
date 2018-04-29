@@ -15,7 +15,8 @@
         'eventoModule',
         'productosModule',
         'tematicasModule',
-        'contratoModule'
+        'contratoModule',
+        'horarioModule'
    
 
 

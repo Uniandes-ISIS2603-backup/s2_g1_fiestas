@@ -38,6 +38,7 @@
              */
             $http.get(contratoContext).then(function (response) {
                 $scope.contratosRecords = response.data;
+               
             });
         }
     ]);
