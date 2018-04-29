@@ -54,7 +54,7 @@
                         controller: 'tematicasNewCtrl'
                     }
                 }
-            }).state('tematicaUpdate', {
+            }).state('tematicasUpdate', {
                 url: '/update/{tematicaId:int}',
                 parent: 'tematicas',
                 param: {
@@ -66,7 +66,7 @@
                         controller: 'tematicasUpdateCtrl'
                     }
                 }
-            }).state('tematicaDelete', {
+            }).state('tematicasDelete', {
                 url: '/delete/{tematicaId:int}',
                 parent: 'tematicas',
                 param: {
