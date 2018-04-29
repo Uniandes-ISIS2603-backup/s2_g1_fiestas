@@ -1,70 +1,70 @@
 /**
  * @ngdoc overview
- * @name pagos.module:pagoModule
+ * @name horarios.module:horarioModule
  * @description
  * Definición del módulo de Angular de Pago. El módulo encapsula todos los 
  * controladores y los templates HTML que estén relacionados con la Pago 
  * directamente. En la configuración del módulo se injecta la dependencia de 
  * ui.router que es la que se utiliza para la configuración de las URLs bajo las
  * cuales se accede al módulo. Por ejemplo, para mostrar las editoriales en la 
- * URL: 'localhost:8080/pagos/list' es necesario configurar el router por 
+ * URL: 'localhost:8080/horarios/list' es necesario configurar el router por 
  * medio del stateProvider que informa a AngularJS de la relación entre la URL, 
  * un estado definido (estado de mostrar editoriales), el controlador y la vista 
  * correspondiente. Los estados definidos en este modulo son:
  * ```
  * | ESTADO          | URL                        | VISTAS                 |
  * |-----------------|----------------------------|------------------------|
- * | pagos           | /pagos                     | mainView:              |
- * |                 |                            | pagos.html             |
+ * | horarios           | /horarios                     | mainView:              |
+ * |                 |                            | horarios.html             |
  * |                 |                            |                        |
- * | pagosList       | /list                      | listView:              |
- * |                 |                            | pagos.list.html        |
+ * | horariosList       | /list                      | listView:              |
+ * |                 |                            | horarios.list.html        |
  * |                 |                            |                        |
  * |-----------------|----------------------------|------------------------|
  *```
  */
 (function (ng) {
 
-    var mod = ng.module("pagoModule", ['eventoModule','ui.router']);
-    mod.constant("pagosContext", "pagos");
+    var mod = ng.module("horarioModule", ['eventoModule','ui.router']);
+    mod.constant("horariosContext", "horarios");
      mod.constant("eventosContext", "api/eventos");
      
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-            var basePath = 'src/modules/pagos/';
+            var basePath = 'src/modules/horarios/';
 
-            $urlRouterProvider.otherwise("/pagosList");
+            $urlRouterProvider.otherwise("/horariosList");
 
-            $stateProvider.state('pagos', {
-                url: '/pagos',
+            $stateProvider.state('horarios', {
+                url: '/horarios',
                 abstract: true,
                 parent:'eventoDetail',
                 views: {
                     'childrenView': {
-                        templateUrl: basePath + 'pagos.html',
+                        templateUrl: basePath + 'horarios.html',
                     }
                 }
-            }).state('pagosList', {
+            }).state('horariosList', {
                 url: '/list',
-                parent: 'pagos',
+                parent: 'horarios',
                 views: {
                     'listView': {
-                        templateUrl: basePath + 'pagos.list.html',
-                        controller: 'pagoCtrl',
+                        templateUrl: basePath + 'horarios.list.html',
+                        controller: 'horarioCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
-            }).state('pagoDetail', {
-                url: '/{pagoId:int}/detail',
-                parent: 'pagos',
-                param: {pagoId: null},
+            }).state('horarioDetail', {
+                url: '/{horarioId:int}/detail',
+                parent: 'horarios',
+                param: {horarioId: null},
                 views: {
                     'listView': {
-                        templateUrl: basePath + 'pagos.list.html'
+                        templateUrl: basePath + 'horarios.list.html'
                     },
                     'detailView': {
-                        templateUrl: basePath + 'pagos.detail.html',
-                        controller: 'pagoDetailCtrl',
+                        templateUrl: basePath + 'horarios.detail.html',
+                        controller: 'horarioDetailCtrl',
                         controllerAs: 'ctrl'
                     }
                 }
@@ -73,3 +73,4 @@
         }
     ]);
 })(window.angular);
+
