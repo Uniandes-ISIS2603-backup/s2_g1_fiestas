@@ -61,6 +61,18 @@
                         controller: 'productoUpdateCtrl'
                     }
                 }
+            }).state('productoDelete', {
+                url: '/delete/{productoId:int}',
+                parent: 'productos',
+                param: {
+                    productoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + '/delete/productos.delete.html',
+                        controller: 'productoDeleteCtrl'
+                    }
+                }
             });
         }
 
