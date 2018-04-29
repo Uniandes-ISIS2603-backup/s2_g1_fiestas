@@ -26,8 +26,6 @@
             $rootScope.edit = true;
 
             var idProducto = $state.params.productoId;
-            
-            var idServicio = $state.params.servicioId;
 
             //Consulto el autor a editar.
             $http.get(productosContext + '/' + idProducto).then(function (response) {
@@ -35,38 +33,9 @@
                 $scope.productoName = producto.name;
                 $scope.productoDescripcion = producto.description;
                 $scope.productoPersonal = producto.personal;
-                $scope.prodcutoIncluye = producto.incluye;
-                $scope.prodcutoPrecio = producto.precio;
+                $scope.productoIncluye = producto.incluye;
+                $scope.produtoPrecio = producto.precio;
             });
-
-            //funciones para el drag and drop de HTML5 nativo
-            $scope.allowDrop = function (ev) {
-                ev.preventDefault();
-            };
-
-            $scope.drag = function (ev) {
-                ev.dataTransfer.setData("text", ev.target.id);
-            };
-
-            $scope.dropAdd = function (ev) {
-                ev.preventDefault();
-                var data = ev.dataTransfer.getData("text");
-                ev.target.appendChild(document.getElementById(data));
-                //Cuando un book se añade al autor, se almacena su id en el array idsBook
-                idsBook.push("" + data);
-            };
-
-            $scope.dropDelete = function (ev) {
-                ev.preventDefault();
-                var data = ev.dataTransfer.getData("text");
-                ev.target.appendChild(document.getElementById(data));
-                //Para remover el book que no se va asociar, por eso se usa el splice que quita el id del book en el array idsBook
-                var index = idsBook.indexOf(data);
-                if (index > -1) {
-                    idsBook.splice(index, 1);
-                }
-            };
-
 
             /**
              * @ngdoc function
@@ -76,25 +45,13 @@
              * Crea un nuevo autor con los libros nuevos y la información del
              * $scope.
              */
-            $scope.createProducto = function () {
-                /*Se llama a la función newBooks() para buscar cada uno de los ids de los books
-                 en el array que tiene todos los books y así saber como queda la lista final de los books asociados al autor.
-                 */
-                $scope.newBooks();
-                $http.put(productosContext + "/" + idProducto, {
-                    name: $scope.productoName,
-                    birthDate: $scope.productoBirthDate,
-                    description: $scope.productoDescription,
-                    image: $scope.productoImage
-                }).then(function (response) {
-                    if (idsBook.length >= 0) {
-                        $http.put(productosContext + "/" + response.data.id + "/books", $scope.allBooksProducto).then(function (response) {
-                        });
-                    }
+            $scope.updateProducto = function () {
+                $http.put(productosContext + "/" + idProducto, $scope.data).then(function (response) {
+                    
                     //Producto created successfully
                     $state.go('productosList', {productoId: response.data.id}, {reload: true});
                 });
-            };
+            };;
         }
     ]);
 }

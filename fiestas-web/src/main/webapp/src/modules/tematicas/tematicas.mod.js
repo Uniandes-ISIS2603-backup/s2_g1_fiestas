@@ -31,8 +31,8 @@
                     }
                 }
             }).state('tematicasDetail', {
-                url: '/{tematicaId:int}/detail',
-                parent: 'tematica',
+                url: '/{tematicaID:int}/detail',
+                parent: 'tematicas',
                 param: {tematicaId: null},
                 views: {
                     'listView': {

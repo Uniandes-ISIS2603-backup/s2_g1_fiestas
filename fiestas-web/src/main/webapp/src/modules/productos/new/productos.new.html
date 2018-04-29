@@ -42,20 +42,15 @@
                                 <strong>Warning!</strong><p>All inputs are required*</p>
                             </div> 
                         </div> 
-                    </div> 
-                    <div class="form-group row">
+                    </div>
+                     <div class="form-group row">
                         <div class="form-group col-sm-12">
-                            <input ng-show="producto.$valid" type="submit" value="Save" class="btn btn-success"/>
-                            <a class="btn btn-info" ui-sref="productosList">Guardar</a>
+                            <input ng-if="!edit"  ng-show="producto.$valid" ng-click="createProducto()" value="Save" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="evento.$valid" ng-click="updateProducto()" value="Update" class="btn btn-success"/>
+                            <a class="btn btn-info" ui-sref="productosList">Cancel</a>
                         </div>
                     </div>
                 </form>
-                <div class="form-group row">
-                    <div class="form-group col-sm-12">
-                        <input ng-show="evento.$valid" ng-click="createEvento()" value="Save" class="btn btn-success"/>
-                        <a class="btn btn-info" ui-sref="productosList">Cancelar</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
