@@ -101,7 +101,7 @@ public class ContratoEntity extends BaseEntity implements Serializable {
        this.estado = estado;
     }
     
-    public String getEstado(String estado) {
+    public String getEstado() {
         return estado;
     }
 

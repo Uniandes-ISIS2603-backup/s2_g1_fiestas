@@ -25,9 +25,9 @@
  */
 (function (ng) {
 
-    var mod = ng.module("horarioModule", ['eventoModule','ui.router']);
+    var mod = ng.module("horarioModule", ['contratoModule','ui.router']);
     mod.constant("horariosContext", "horarios");
-     mod.constant("eventosContext", "api/eventos");
+     mod.constant("contratosContext", "api/contratosfos");
      
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -38,7 +38,7 @@
             $stateProvider.state('horarios', {
                 url: '/horarios',
                 abstract: true,
-                parent:'eventoDetail',
+                parent:'contratoDetail',
                 views: {
                     'childrenView': {
                         templateUrl: basePath + 'horarios.html',

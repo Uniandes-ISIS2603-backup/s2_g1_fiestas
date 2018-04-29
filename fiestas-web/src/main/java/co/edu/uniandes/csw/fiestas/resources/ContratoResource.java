@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.resources;
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.HorarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ContratoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
@@ -13,6 +14,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "contratos".
@@ -140,6 +142,32 @@ public class ContratoResource {
         if(ent== null)
             throw new BusinessLogicException("No existe el contrato a eliminar.");
         logic.deleteContrato(id);
+    }
+    
+    @GET
+    @Path("{contratosId: \\d+}/horarios/{horariosId: \\d+}")
+    public HorarioDetailDTO getHorario(@PathParam("contratosId") Long contratosId) throws BusinessLogicException {
+        return new HorarioDetailDTO(logic.getHorario(contratosId));
+    }
+    
+    /**
+     * Conexión con el servicio de pagos para un contrato. {@link PagoResource}
+     *
+     * Este método conecta la ruta de /contratos con las rutas de /pagos que
+     * dependen del contrato, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de las reseñas.
+     *
+     * @param contratosId El ID del contrato con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de Pagos para ese pagoo en paricular.
+     */
+    @Path("{idContrato: \\d+}/contratos")
+    public Class<PagoResource> getPagoResource(@PathParam("idContrato") Long contratosId) {
+        ContratoEntity entity = logic.getContrato(contratosId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /contratos/" + contratosId + "/pagos no existe.", 404);
+        }
+        return PagoResource.class;
     }
 }
     
