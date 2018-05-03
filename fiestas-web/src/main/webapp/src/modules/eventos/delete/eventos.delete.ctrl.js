@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
-    mod.constant("eventosContext", "api/eventos");
-    mod.controller('eventoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state',
+    mod.constant("eventosContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
+    mod.controller('eventoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state','clientesContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoDeleteCtrl
@@ -17,7 +18,7 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, eventosContext, $state) {
+        function ($scope, $http, eventosContext, $state,clientesContext) {
             var idEvento = $state.params.eventoId;
             /**
              * @ngdoc function
@@ -28,7 +29,7 @@
              * @param {String} id El ID del evento a eliminar.
              */
             $scope.deleteEvento = function () {
-                $http.delete(eventosContext + '/' + idEvento, {}).then(function (response) {
+                $http.delete(clientesContext+ '/' + $state.params.clienteId + '/' +eventosContext + '/' + idEvento, {}).then(function (response) {
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
                 });
             };

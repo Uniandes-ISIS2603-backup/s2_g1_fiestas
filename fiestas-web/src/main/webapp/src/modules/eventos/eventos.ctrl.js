@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
-    mod.constant("eventoContext", "api/eventos");
-    mod.controller('eventoCtrl', ['$scope', '$http', 'eventoContext',
+    mod.constant("eventoContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
+    mod.controller('eventoCtrl', ['$scope', '$http', 'eventoContext','$state', 'clientesContext',
         
         /**
          * @ngdoc controller
@@ -21,7 +22,7 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, eventoContext) {
+        function ($scope, $http, eventoContext,$state,clientesContext) {
             /**
              * @ngdoc function
              * @name getAuthors
@@ -36,7 +37,7 @@
              * de los eventos o API donde se puede consultar. Se utiliza el
              * contexto definido anteriormente.
              */
-            $http.get(eventoContext).then(function (response) {
+            $http.get(clientesContext+ '/' + $state.params.clienteId + '/' + eventoContext).then(function (response) {
                 $scope.eventosRecords = response.data;
             });
         }

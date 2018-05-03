@@ -27,8 +27,8 @@
 
     var mod = ng.module("pagoModule", ['eventoModule','ui.router']);
     mod.constant("pagosContext", "pagos");
-     mod.constant("eventosContext", "api/eventos");
-     
+    mod.constant("eventosContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
             var basePath = 'src/modules/pagos/';
@@ -82,7 +82,7 @@
                 url: '/update/{pagoId:int}',
                 parent: 'pagos',
                 param: {
-                    eventoId: null
+                    pagoId: null
                 },
                 views: {
                     'detailView': {

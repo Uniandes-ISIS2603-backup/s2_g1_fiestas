@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
@@ -48,6 +49,8 @@ public class EventoLogicTest {
 
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
 
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
+
     private List<ContratoEntity> contratosData = new ArrayList<ContratoEntity>();
 
     @Deployment
@@ -87,7 +90,7 @@ public class EventoLogicTest {
     private void clearData() {
         em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
-
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
 
     /**
@@ -95,6 +98,12 @@ public class EventoLogicTest {
      * pruebas.
      */
     private void insertData() {
+        for (int i = 0; i < 3; i++) {
+            ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(cliente);
+            dataCliente.add(cliente);
+        }
+
         for (int i = 0; i < 3; i++) {
             ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
             em.persist(contrato);
@@ -111,6 +120,8 @@ public class EventoLogicTest {
             Date date = calendar.getTime();
             entity.setFecha(date);
             entity.setInvitados(10);
+            entity.setCliente(dataCliente.get(1));
+            
             em.persist(entity);
             data.add(entity);
 
@@ -138,7 +149,7 @@ public class EventoLogicTest {
 
         EventoEntity result = new EventoEntity();
         try {
-            result = eventoLogic.createEvento(newEntity);
+            result = eventoLogic.createEvento(dataCliente.get(0).getId(),newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -168,13 +179,13 @@ public class EventoLogicTest {
 
         EventoEntity result = new EventoEntity();
         try {
-            result = eventoLogic.createEvento(newEntity);
+            result = eventoLogic.createEvento(dataCliente.get(0).getId(),newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
 
         try {
-            result = eventoLogic.createEvento(newEntity);
+            result = eventoLogic.createEvento(dataCliente.get(0).getId(),newEntity);
             fail("No se puede crear duplicado");
         } catch (BusinessLogicException ex) {
 
@@ -193,7 +204,7 @@ public class EventoLogicTest {
         newEntity.setInvitados(10);
         EventoEntity result;
         try {
-            result = eventoLogic.createEvento(newEntity);
+            result = eventoLogic.createEvento(dataCliente.get(0).getId(),newEntity);
             fail("No se debio haber creado el evento");
         } catch (BusinessLogicException ex) {
 
@@ -220,7 +231,7 @@ public class EventoLogicTest {
 
         EventoEntity result;
         try {
-            result = eventoLogic.createEvento(newEntity);
+            result = eventoLogic.createEvento(dataCliente.get(0).getId(),newEntity);
             fail("No se debio haber creado el evento");
         } catch (BusinessLogicException ex) {
 
@@ -232,7 +243,7 @@ public class EventoLogicTest {
      */
     @Test
     public void getEventosTest() {
-        List<EventoEntity> lista = eventoLogic.getEventos();
+        List<EventoEntity> lista = eventoLogic.getEventos(dataCliente.get(1).getId());
         Assert.assertEquals(data.size(), lista.size());
         for (EventoEntity entity : lista) {
             boolean encontrado = false;
@@ -252,8 +263,8 @@ public class EventoLogicTest {
     @Test
     public void deleteEventoTest() {
         EventoEntity entity = data.get(0);
-        eventoLogic.removeContrato(contratosData.get(0).getId(), entity.getId());
-        eventoLogic.deleteEvento(entity.getId());
+        eventoLogic.removeContrato(dataCliente.get(1).getId(),entity.getId(),contratosData.get(0).getId());
+        eventoLogic.deleteEvento(dataCliente.get(1).getId(),entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         org.junit.Assert.assertNull(deleted);
     }
@@ -265,7 +276,7 @@ public class EventoLogicTest {
     public void addContratoTest() {
         EventoEntity entity = data.get(0);
         ContratoEntity contratoEntity = contratosData.get(0);
-        ContratoEntity creado = eventoLogic.addContrato(contratoEntity.getId(), entity.getId());
+        ContratoEntity creado = eventoLogic.addContrato(dataCliente.get(1).getId(),entity.getId(),contratoEntity.getId());
         Assert.assertEquals(creado.getId(), contratoEntity.getId());
         Assert.assertEquals(creado.getTyc(), contratoEntity.getTyc());
     }
@@ -279,7 +290,7 @@ public class EventoLogicTest {
         ContratoEntity contratoEntity = contratosData.get(0);
         ContratoEntity respuesta = new ContratoEntity();
         try {
-            respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
+            respuesta = eventoLogic.getContrato(dataCliente.get(1).getId(),entity.getId(), contratoEntity.getId());
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -294,7 +305,7 @@ public class EventoLogicTest {
     public void getContratosTest() {
         EventoEntity entity = data.get(0);
         ContratoEntity contratoEntity = contratosData.get(0);
-        List<ContratoEntity> respuesta = eventoLogic.getContratos(entity.getId());
+        List<ContratoEntity> respuesta = eventoLogic.getContratos(dataCliente.get(1).getId(),entity.getId());
         Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
         Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
     }
@@ -308,7 +319,7 @@ public class EventoLogicTest {
         ContratoEntity contratoEntity = contratosData.get(0);
         ContratoEntity otherContratoEntity = contratosData.get(1);
 
-        List<ContratoEntity> respuesta = eventoLogic.replaceContratos(entity.getId(), contratosData);
+        List<ContratoEntity> respuesta = eventoLogic.replaceContratos(dataCliente.get(1).getId(),entity.getId(), contratosData);
         Assert.assertEquals(respuesta.get(0).getId(), contratoEntity.getId());
         Assert.assertEquals(respuesta.get(0).getTyc(), contratoEntity.getTyc());
         Assert.assertEquals(respuesta.get(1).getId(), otherContratoEntity.getId());
@@ -322,9 +333,9 @@ public class EventoLogicTest {
     public void removeContratoTest() {
         EventoEntity entity = data.get(0);
         ContratoEntity contratoEntity = contratosData.get(0);
-        eventoLogic.removeContrato(contratoEntity.getId(), entity.getId());
+        eventoLogic.removeContrato(dataCliente.get(1).getId(),entity.getId(), contratoEntity.getId());
         try {
-            ContratoEntity respuesta = eventoLogic.getContrato(entity.getId(), contratoEntity.getId());
+            ContratoEntity respuesta = eventoLogic.getContrato(dataCliente.get(1).getId(),entity.getId(), contratoEntity.getId());
             fail("No deberia encontrar el contrato en el evento");
         } catch (BusinessLogicException ex) {
 
@@ -353,7 +364,7 @@ public class EventoLogicTest {
         newEntity.setInvitados(10);
 
         try {
-            eventoLogic.updateEvento(newEntity);
+            eventoLogic.updateEvento(dataCliente.get(1).getId(),newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -378,10 +389,10 @@ public class EventoLogicTest {
         newEntity.setFecha(date);
         newEntity.setId(entity.getId());
         try {
-            eventoLogic.updateEvento(newEntity);
+            eventoLogic.updateEvento(dataCliente.get(1).getId(),newEntity);
             fail("El evento se actualizo no cumpliendo las reglas de negocio");
         } catch (BusinessLogicException ex) {
         }
     }
- 
+
 }

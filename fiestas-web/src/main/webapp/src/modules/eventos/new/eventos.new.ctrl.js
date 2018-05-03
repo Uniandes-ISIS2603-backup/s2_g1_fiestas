@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
-    mod.constant("eventoContext", "api/eventos");
-    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$rootScope',
+    mod.constant("eventoContext", "eventos");
+    mod.constant("clientesContext", "clientes");
+    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$rootScope','clientesContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoNewCtrl
@@ -19,7 +20,7 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, eventoContext, $state, $rootScope) {
+        function ($scope, $http, eventoContext, $state, $rootScope,clientesContext) {
             $rootScope.edit = false;
             
             $scope.data = {};
@@ -33,7 +34,7 @@
              * @param {Object} autor Objeto con el nuevo autor.
              */
             $scope.createEvento = function () {
-                $http.post(eventoContext, $scope.data).then(function (response) {
+                $http.post(clientesContext + '/' + $state.params.clienteId + '/' +eventoContext, $scope.data).then(function (response) {
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
                 });
             };
