@@ -50,6 +50,7 @@ public class ProveedorDTO
     private String login;
     private String contrasena;
     private boolean penalizado;   
+    private Double valoracion;
     
     /**
      * @return El id del usuario.
@@ -256,5 +257,19 @@ public class ProveedorDTO
         e.setPenalizado(isPenalizado());
         e.setImagen(getImagen());
         return e;
+    }
+
+    /**
+     * @return the valoracion
+     */
+    public Double getValoracion() {
+        return valoracion;
+    }
+
+    /**
+     * @param valoracion the valoracion to set
+     */
+    public void setValoracion(Double valoracion) {
+        this.valoracion = valoracion;
     }
 }

@@ -3,7 +3,7 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
@@ -50,9 +50,7 @@ public class ProveedorLogicTest
 
     private List<ContratoEntity> contratosData;
 
-    private List<ValoracionEntity> valoracionesData;
-
-    private List<ServicioEntity> serviciosData;
+    private List<ProductoEntity> productosData;
 
     @Deployment
     public static JavaArchive createDeployment() 
@@ -94,7 +92,7 @@ public class ProveedorLogicTest
     {
         em.createQuery("delete from ContratoEntity").executeUpdate();
         em.createQuery("delete from ProveedorEntity").executeUpdate();
-        em.createQuery("delete from ServicioEntity").executeUpdate();
+        em.createQuery("delete from ProductoEntity").executeUpdate();
     }
 
     /**
@@ -103,8 +101,7 @@ public class ProveedorLogicTest
      */
     private void insertData() {
         contratosData = new ArrayList<>();
-        valoracionesData = new ArrayList<>();
-        serviciosData = new ArrayList<>();
+        productosData = new ArrayList<>();
         data = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) 
@@ -119,19 +116,13 @@ public class ProveedorLogicTest
                     contratosData.add(entityC);
                 }
                 for (int j = 0; j < 3; j++) {
-                    ValoracionEntity entityV = factory.manufacturePojo(ValoracionEntity.class);
-                    em.persist(entityV);
-                    valoracionesData.add(entityV);
-                }
-                for (int j = 0; j < 3; j++) {
-                    ServicioEntity entityS = factory.manufacturePojo(ServicioEntity.class);
+                    ProductoEntity entityS = factory.manufacturePojo(ProductoEntity.class);
                     em.persist(entityS);
-                    serviciosData.add(entityS);
+                    productosData.add(entityS);
                 }
                 entity.setPenalizado(false);
                 entity.setContratos(contratosData);
-                entity.setValoraciones(valoracionesData);
-                entity.setServicios(serviciosData);
+                entity.setProductos(productosData);
             } 
             else if (i == 1)
             {
@@ -161,8 +152,7 @@ public class ProveedorLogicTest
         contratos.add(contrato);
         
         newEntity.setContratos(contratos);
-        newEntity.setValoraciones(valoracionesData);
-        newEntity.setServicios(serviciosData);
+        newEntity.setProductos(productosData);
 
         ProveedorEntity result = new ProveedorEntity();
         try 
@@ -185,9 +175,9 @@ public class ProveedorLogicTest
         Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
         Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
         Assert.assertEquals(newEntity.isPenalizado(), entidad.isPenalizado());
-        Assert.assertEquals(newEntity.getServicios().size(), entidad.getServicios().size());
+        Assert.assertEquals(newEntity.getValoracion(), entidad.getValoracion());
+        Assert.assertEquals(newEntity.getProductos().size(), entidad.getProductos().size());
         Assert.assertEquals(newEntity.getContratos().size(), entidad.getContratos().size());
-        Assert.assertEquals(newEntity.getValoraciones().size(), entidad.getValoraciones().size());
     }
 
     /**
@@ -239,8 +229,7 @@ public class ProveedorLogicTest
         ProveedorEntity newEntity = factory.manufacturePojo(ProveedorEntity.class);
         newEntity.setPenalizado(false);
         newEntity.setContratos(contratosData);
-        newEntity.setValoraciones(valoracionesData);
-        newEntity.setServicios(serviciosData);
+        newEntity.setProductos(productosData);
 
         newEntity.setId(entity.getId());
         newEntity.setLogin(entity.getLogin());
@@ -316,8 +305,7 @@ public class ProveedorLogicTest
         newEntity.setLogin("Soy diferente");
         newEntity.setPenalizado(false);
         newEntity.setContratos(contratosData);
-        newEntity.setValoraciones(valoracionesData);
-        newEntity.setServicios(serviciosData);
+        newEntity.setProductos(productosData);
         ProveedorEntity result = new ProveedorEntity();
         try {
             result = proveedorLogic.updateProveedor(newEntity);
@@ -340,8 +328,7 @@ public class ProveedorLogicTest
         newEntity.setId(entity.getId());
         newEntity.setPenalizado(false);
         newEntity.setContratos(contratosData);
-        newEntity.setValoraciones(valoracionesData);
-        newEntity.setServicios(serviciosData);
+        newEntity.setProductos(productosData);
         
         ProveedorEntity result = new ProveedorEntity();
         try {
@@ -578,328 +565,115 @@ public class ProveedorLogicTest
             passed();
         }
     }
-
-    /**
-     * Prueba para agregar valoraciones a un Proveedor.
-     *
-     * Se agregan los tres valoraciones creados a los tres proveedores creados
-     */
-    @Test
-    public void addValoracionTest() {
-        try {
-            for (int i = 1; i < 3; i++) {
-                proveedorLogic.addValoracion(valoracionesData.get(i).getId(), data.get(i).getId());
-            }
-
-            Assert.assertEquals(valoracionesData.get(1), em.find(ProveedorEntity.class, data.get(1).getId()).getValoraciones().get(0));
-            Assert.assertEquals(valoracionesData.get(2), em.find(ProveedorEntity.class, data.get(2).getId()).getValoraciones().get(0));
-        } catch (BusinessLogicException x) {
-            fail(x.getMessage());
-        }
-    }
-
-    /**
-     * Prueba de falla para agregar valoraciones a un Proveedor 1.
-     *
-     * Falla si se agrega una valoración a un proveedor inexistente
-     */
-    @Test
-    public void addValoracionTestFail1() {
-        try {
-            proveedorLogic.addValoracion(valoracionesData.get(0).getId(), Long(999999));
-            fail("No debe agregarse el valoraciones a un proveedor inexistente");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba de falla para agregar valoraciones a un Proveedor 2.
-     *
-     * Falla si se agrega una valoración a un proveedor que ya tiene ese
-     * valoraciones
-     */
-    @Test
-    public void addValoracionTestFail2() {
-        try {
-            proveedorLogic.addValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
-            proveedorLogic.addValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
-            fail("No debe agregarse una valoración a un proveedor que ya tiene dicha valoración");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba para remover valoraciones a un Proveedor.
-     *
-     * Falla si se remueve el único valoraciones de un proveedor y éste sigue
-     * teniendo valoraciones
-     */
-    @Test
-    public void removeValoracionTest() {
-        try {
-            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(0).getId());
-            Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().size());
-        } catch (BusinessLogicException x) {
-            fail(x.getMessage());
-        }
-    }
-
-    /**
-     * Prueba de falla para remover valoraciones a un Proveedor 1.
-     *
-     * Falla si se remueve una valoración de un proveedor inexistente
-     */
-    @Test
-    public void removeValoracionTestFail1() {
-        try {
-            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), Long(99999999));
-            fail("Se removió una valoración de un proveedor inexistente");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba de falla para remover valoraciones a un Proveedor 2.
-     *
-     * Falla si se remueve una valoración de un proveedor que no lo tiene
-     */
-    @Test
-    public void removeValoracionTestFail2() {
-        try {
-            proveedorLogic.removeValoracion(valoracionesData.get(0).getId(), data.get(1).getId());
-            fail("Se removió una valoración de un proveedor que no tiene dicha valoración");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba para remover valoraciones a un Proveedor.
-     *
-     * Falla si se reemplaza todos los elementos de la lista y estos son
-     * diferentes a la lista despues de ser reemplazada
-     */
-    @Test
-    public void replaceValoracionesTest() {
-        try {
-            proveedorLogic.replaceValoraciones(data.get(0).getId(), valoracionesData);
-            for (ValoracionEntity ee : valoracionesData) {
-                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().contains(ee)) {
-                    fail("No está alguno de los valoraciones reemplazados en la nueva lista del proveedor");
-                }
-            }
-            passed();
-        } catch (BusinessLogicException x) {
-            fail(x.getMessage());
-        }
-    }
-
-    /**
-     * Prueba de falla para remover valoraciones a un Proveedor.
-     *
-     * Falla si se reemplazan valoraciones de un proveedor inexistente
-     */
-    @Test
-    public void replaceValoracionesTestFail() {
-        try {
-            proveedorLogic.replaceValoraciones(Long(99999999), valoracionesData);
-            fail("Se removió una valoración de un proveedor inexistente");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba obtener valoraciones de un Proveedor.
-     *
-     * Falla si se obtienen valoraciones diferentes a los que se tiene
-     */
-    @Test
-    public void getValoracionesTest() {
-        try {
-            List<ValoracionEntity> obtenida = proveedorLogic.getValoraciones(data.get(0).getId());
-            for (ValoracionEntity ve : obtenida) {
-                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getValoraciones().contains(ve)) {
-                    fail("Alguna valoración que sí debería estar no está persistida para el proveedor en la lista relación");
-                }
-            }
-            passed();
-        } catch (BusinessLogicException x) {
-            fail(x.getMessage());
-        }
-    }
-
-    /**
-     * Prueba de falla para obtener valoraciones de un Proveedor.
-     *
-     * Falla si se obtienen valoraciones de un proveedor inexistente
-     */
-    @Test
-    public void getValoracionesTestFail() {
-        try {
-            List<ValoracionEntity> obtenida = proveedorLogic.getValoraciones(Long(99999999));
-            fail("Se removió una valoración de un proveedor inexistente");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba obtener valoraciones de un Proveedor.
-     *
-     * Falla si se obtiene valoraciones diferente al que se tiene
-     */
-    @Test
-    public void getValoracionTest() {
-        try {
-            ValoracionEntity obtenida = proveedorLogic.getValoracion(data.get(0).getId(), valoracionesData.get(0).getId());
-            Assert.assertEquals(valoracionesData.get(0), obtenida);
-        } catch (BusinessLogicException x) {
-            fail(x.getMessage());
-        }
-    }
-
-    /**
-     * Prueba de falla para obtene valoraciones de un Proveedor 1.
-     *
-     * Falla si se obtiene una valoración de un proveedor inexistente
-     */
-    @Test
-    public void getValoracionTestFail1() {
-        try {
-            ValoracionEntity obtenida = proveedorLogic.getValoracion(Long(9999999), valoracionesData.get(0).getId());
-            fail("Se removió una valoración de un proveedor inexistente");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
-
-    /**
-     * Prueba de falla para obtener valoraciones de un Proveedor 2.
-     *
-     * Falla si se obtiene una valoración de un proveedor que no lo tiene
-     */
-    @Test
-    public void getValoracionTestFail2() {
-        try {
-            proveedorLogic.getValoracion(data.get(1).getId(), valoracionesData.get(0).getId());
-            fail("Se obtiene una valoración de un proveedor que no tiene dicha valoración");
-        } catch (BusinessLogicException x) {
-            passed();
-        }
-    }
     
     /**
-     * Prueba para agregar servicio a un Proveedor.
+     * Prueba para agregar producto a un Proveedor.
      *
-     * Se agregan los tres servicios creados a los tres proveedores creados
+     * Se agregan los tres productos creados a los tres proveedores creados
      */
     @Test
-    public void addServicioTest() {
+    public void addProductoTest() {
         try {
             for (int i = 1; i < 3; i++) {
-                proveedorLogic.addServicio(data.get(i).getId(), serviciosData.get(i).getId());
+                proveedorLogic.addProducto(data.get(i).getId(), productosData.get(i).getId());
             }
 
-            Assert.assertEquals(serviciosData.get(1), em.find(ProveedorEntity.class, data.get(1).getId()).getServicios().get(0));
-            Assert.assertEquals(serviciosData.get(2), em.find(ProveedorEntity.class, data.get(2).getId()).getServicios().get(0));
+            Assert.assertEquals(productosData.get(1), em.find(ProveedorEntity.class, data.get(1).getId()).getProductos().get(0));
+            Assert.assertEquals(productosData.get(2), em.find(ProveedorEntity.class, data.get(2).getId()).getProductos().get(0));
         } catch (BusinessLogicException x) {
             fail(x.getMessage());
         }
     }
 
     /**
-     * Prueba de falla para agregar servicio a un Proveedor 1.
+     * Prueba de falla para agregar producto a un Proveedor 1.
      *
-     * Falla si se agrega un servicio a un proveedor inexistente
+     * Falla si se agrega un producto a un proveedor inexistente
      */
     @Test
-    public void addServicioTestFail1() {
+    public void addProductoTestFail1() {
         try {
-            proveedorLogic.addServicio(Long(999999), serviciosData.get(0).getId());
-            fail("No debe agregarse el servicio a un proveedor inexistente");
+            proveedorLogic.addProducto(Long(999999), productosData.get(0).getId());
+            fail("No debe agregarse el producto a un proveedor inexistente");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba de falla para agregar servicio a un Proveedor 2.
+     * Prueba de falla para agregar producto a un Proveedor 2.
      *
-     * Falla si se agrega un servicio a un proveedor que ya tiene ese servicio
+     * Falla si se agrega un producto a un proveedor que ya tiene ese producto
      */
     @Test
-    public void addServicioTestFail2() {
+    public void addProductoTestFail2() {
         try {
-            proveedorLogic.addServicio(data.get(0).getId(), serviciosData.get(0).getId());
-            fail("No debe agregarse un servicio a un proveedor que ya tiene dicho servicio");
+            proveedorLogic.addProducto(data.get(0).getId(), productosData.get(0).getId());
+            fail("No debe agregarse un producto a un proveedor que ya tiene dicho producto");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba para remover servicio a un Proveedor 1.
+     * Prueba para remover producto a un Proveedor 1.
      *
-     * Falla si se remueve el único servicio de un proveedor y éste sigue
-     * teniendo servicios
+     * Falla si se remueve el único producto de un proveedor y éste sigue
+     * teniendo productos
      */
     @Test
-    public void removeServicioTest1() {
+    public void removeProductoTest1() {
         try {
-            proveedorLogic.removeServicio(data.get(0).getId(), serviciosData.get(0).getId());
-            Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getServicios().size());
+            proveedorLogic.removeProducto(data.get(0).getId(), productosData.get(0).getId());
+            Assert.assertEquals(2, em.find(ProveedorEntity.class, data.get(0).getId()).getProductos().size());
         } catch (BusinessLogicException x) {
             fail(x.getMessage());
         }
     }
 
     /**
-     * Prueba de falla para remover servicio a un Proveedor 1.
+     * Prueba de falla para remover producto a un Proveedor 1.
      *
-     * Falla si se remueve un servicio de un proveedor inexistente
+     * Falla si se remueve un producto de un proveedor inexistente
      */
     @Test
-    public void removeServicioTestFail1() {
+    public void removeProductoTestFail1() {
         try {
-            proveedorLogic.removeServicio(serviciosData.get(0).getId(), Long(99999999));
-            fail("Se removió un servicio de un proveedor inexistente");
+            proveedorLogic.removeProducto(productosData.get(0).getId(), Long(99999999));
+            fail("Se removió un producto de un proveedor inexistente");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba de falla para remover servicio a un Proveedor 2.
+     * Prueba de falla para remover producto a un Proveedor 2.
      *
-     * Falla si se remueve un servicio de un proveedor que no lo tiene
+     * Falla si se remueve un producto de un proveedor que no lo tiene
      */
     @Test
-    public void removeServicioTestFail2() {
+    public void removeProductoTestFail2() {
         try {
-            proveedorLogic.removeServicio(data.get(1).getId(), serviciosData.get(0).getId());
-            fail("Se removió un servicio de un proveedor que no tiene dicho servicio");
+            proveedorLogic.removeProducto(data.get(1).getId(), productosData.get(0).getId());
+            fail("Se removió un producto de un proveedor que no tiene dicho producto");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba para remover servicio a un Proveedor.
+     * Prueba para remover producto a un Proveedor.
      *
      * Falla si se reemplaza todos los elementos de la lista y estos son
      * diferentes a la lista despues de ser reemplazada
      */
     @Test
-    public void replaceServiciosTest() {
+    public void replaceProductosTest() {
         try {
-            proveedorLogic.replaceServicios(data.get(0).getId(), serviciosData);
-            for (ServicioEntity ee : serviciosData) {
-                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getServicios().contains(ee)) {
-                    fail("No está alguno de los servicios reemplazados en la nueva lista del proveedor");
+            proveedorLogic.replaceProductos(data.get(0).getId(), productosData);
+            for (ProductoEntity ee : productosData) {
+                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getProductos().contains(ee)) {
+                    fail("No está alguno de los productos reemplazados en la nueva lista del proveedor");
                 }
             }
             passed();
@@ -909,32 +683,32 @@ public class ProveedorLogicTest
     }
 
     /**
-     * Prueba de falla para remover servicio a un Proveedor.
+     * Prueba de falla para remover producto a un Proveedor.
      *
-     * Falla si se reemplazan servicios de un proveedor inexistente
+     * Falla si se reemplazan productos de un proveedor inexistente
      */
     @Test
-    public void replaceServiciosTestFail() {
+    public void replaceProductosTestFail() {
         try {
-            proveedorLogic.replaceServicios(Long(99999999), serviciosData);
-            fail("Se removió un servicio de un proveedor inexistente");
+            proveedorLogic.replaceProductos(Long(99999999), productosData);
+            fail("Se removió un producto de un proveedor inexistente");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba obtener servicios de un Proveedor.
+     * Prueba obtener productos de un Proveedor.
      *
-     * Falla si se obtienen servicios diferentes a los que se tiene
+     * Falla si se obtienen productos diferentes a los que se tiene
      */
     @Test
-    public void getServiciosTest() {
+    public void getProductosTest() {
         try {
-            List<ServicioEntity> obtenida = proveedorLogic.getServicios(data.get(0).getId());
-            for (ServicioEntity so : obtenida) {
-                if (!data.get(0).getServicios().contains(so)) {
-                    fail("Alguno de los servicios que debería estar persistido en la lista relación de proveedor no lo está");
+            List<ProductoEntity> obtenida = proveedorLogic.getProductos(data.get(0).getId());
+            for (ProductoEntity so : obtenida) {
+                if (!data.get(0).getProductos().contains(so)) {
+                    fail("Alguno de los productos que debería estar persistido en la lista relación de proveedor no lo está");
                 }
             }
             passed();
@@ -944,60 +718,60 @@ public class ProveedorLogicTest
     }
 
     /**
-     * Prueba de falla para obtener servicios de un Proveedor.
+     * Prueba de falla para obtener productos de un Proveedor.
      *
-     * Falla si se obtienen servicios de un proveedor inexistente
+     * Falla si se obtienen productos de un proveedor inexistente
      */
     @Test
-    public void getServiciosTestFail() {
+    public void getProductosTestFail() {
         try {
-            List<ServicioEntity> obtenida = proveedorLogic.getServicios(Long(99999999));
-            fail("Se removió un servicio de un proveedor inexistente");
+            List<ProductoEntity> obtenida = proveedorLogic.getProductos(Long(99999999));
+            fail("Se removió un producto de un proveedor inexistente");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba obtener servicio de un Proveedor.
+     * Prueba obtener producto de un Proveedor.
      *
-     * Falla si se obtiene servicio diferente al que se tiene
+     * Falla si se obtiene producto diferente al que se tiene
      */
     @Test
-    public void getServicioTest() {
+    public void getProductoTest() {
         try {
-            ServicioEntity obtenida = proveedorLogic.getServicio(data.get(0).getId(), serviciosData.get(0).getId());
-            Assert.assertEquals(serviciosData.get(0), obtenida);
+            ProductoEntity obtenida = proveedorLogic.getProducto(data.get(0).getId(), productosData.get(0).getId());
+            Assert.assertEquals(productosData.get(0), obtenida);
         } catch (BusinessLogicException x) {
             fail(x.getMessage());
         }
     }
 
     /**
-     * Prueba de falla para obtene servicio de un Proveedor 1.
+     * Prueba de falla para obtene producto de un Proveedor 1.
      *
-     * Falla si se obtiene un servicio de un proveedor inexistente
+     * Falla si se obtiene un producto de un proveedor inexistente
      */
     @Test
-    public void getServicioTestFail1() {
+    public void getProductoTestFail1() {
         try {
-            ServicioEntity obtenida = proveedorLogic.getServicio(serviciosData.get(0).getId(), Long(9999999));
-            fail("Se removió un servicio de un proveedor inexistente");
+            ProductoEntity obtenida = proveedorLogic.getProducto(productosData.get(0).getId(), Long(9999999));
+            fail("Se removió un producto de un proveedor inexistente");
         } catch (BusinessLogicException x) {
             passed();
         }
     }
 
     /**
-     * Prueba de falla para obtener servicio de un Proveedor 2.
+     * Prueba de falla para obtener producto de un Proveedor 2.
      *
-     * Falla si se obtiene un servicio de un proveedor que no lo tiene
+     * Falla si se obtiene un producto de un proveedor que no lo tiene
      */
     @Test
-    public void getServicioTestFail2() {
+    public void getProductoTestFail2() {
         try {
-            proveedorLogic.removeServicio(data.get(1).getId(), serviciosData.get(0).getId());
-            fail("Se obtiene un servicio de un proveedor que no tiene dicho servicio");
+            proveedorLogic.removeProducto(data.get(1).getId(), productosData.get(0).getId());
+            fail("Se obtiene un producto de un proveedor que no tiene dicho producto");
         } catch (BusinessLogicException x) {
             passed();
         }
