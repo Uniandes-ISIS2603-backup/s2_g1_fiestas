@@ -22,15 +22,27 @@ public class ContratoLogic {
     private static final Logger LOGGER = Logger.getLogger(ContratoLogic.class.getName());
 
     @Inject
+    /**
+     * Inyección de la clase de lógica de contrato
+     */
     private ContratoPersistence persistence;
 
     @Inject
+    /**
+     * Inyección de la clase de lógica de producto
+     */
     private ProductoLogic productoLogic;
     
     @Inject
+    /**
+     * Inyección de la clase de lógica de horario
+     */
     private HorarioLogic horarioLogic;
     
     @Inject
+    /**
+     * Inyección de la clase de lógica de bono
+     */
     private BonoLogic bonoLogic;
 
     /**
@@ -59,7 +71,6 @@ public class ContratoLogic {
      * Se encarga de crear un Contrato en la base de datos.
      *
      * @param entity Objeto de ContratoEntity con los datos nuevos
-     * @param entityH
      * @return Objeto de ContratoEntity con los datos nuevos y su ID.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
