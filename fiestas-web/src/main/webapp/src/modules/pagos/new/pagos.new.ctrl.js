@@ -1,8 +1,9 @@
 (function (ng) {
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
-    mod.constant("eventosContext", "api/eventos");
-    mod.controller('pagoNewCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', '$rootScope',
+    mod.constant("eventosContext", "eventos");
+     mod.constant("clientesContext", "api/clientes");
+    mod.controller('pagoNewCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', '$rootScope','clientesContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoNewCtrl
@@ -22,10 +23,11 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, eventosContext, $state, pagoContext, $rootScope) {
+        function ($scope, $http, eventosContext, $state, pagoContext, $rootScope,clientesContext) {
             $rootScope.edit = false;
 
             $scope.data = {};
+            $scope.data.realizado = false;
 
             /**
              * @ngdoc function
@@ -35,7 +37,8 @@
              * Esta función utiliza el protocolo HTTP para crear el pago.
              */
             $scope.createPago = function () {
-                $http.post(eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
+                console.log($scope.data);
+                $http.post(clientesContext + '/' + $state.params.clienteId + '/' +eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
                     $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };

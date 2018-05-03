@@ -36,10 +36,7 @@ public class BlogLogicTest {
 
     @Inject
     private BlogLogic blogLogic;
-    
-    @Inject
-    private EventoLogic eventoLogic;
-    
+
     @PersistenceContext
     private EntityManager em;
 
@@ -47,11 +44,10 @@ public class BlogLogicTest {
     private UserTransaction utx;
 
     private List<BlogEntity> data = new ArrayList<>();
-    
+
     private List<ClienteEntity> Udata = new ArrayList<>();
-    
+
     private List<EventoEntity> Edata = new ArrayList<>();
-    
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -100,22 +96,25 @@ public class BlogLogicTest {
     private void insertData() {
 
         for (int i = 0; i < 3; i++) {
-            EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
             ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
-            BlogEntity entity = factory.manufacturePojo(BlogEntity.class); 
+
+            EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
+            evento.setCliente(cliente);
+            em.persist(evento);
+            Edata.add(evento);
+            cliente.addEvento(evento);
+            em.persist(cliente);
+            Udata.add(cliente);
+
+            BlogEntity entity = factory.manufacturePojo(BlogEntity.class);
             entity.setCliente(cliente);
             entity.setEvento(evento);
-            em.persist(evento);
-            ArrayList lista=new ArrayList<>();
+
+            List lista = new ArrayList<>();
             lista.add(entity);
             cliente.setBlogs(lista);
-            em.persist(cliente);
-            Edata.add(evento);
-            Udata.add(cliente);
             em.persist(entity);
-            BlogEntity prueba = em.find(BlogEntity.class, entity.getId());
-            data.add(entity); 
-           
+            data.add(entity);
         }
     }
 
@@ -127,6 +126,8 @@ public class BlogLogicTest {
     @Test
     public void createBlogTest() throws BusinessLogicException {
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
+        newEntity.setCliente(Udata.get(1));
+        newEntity.setEvento(Edata.get(1));
         BlogEntity result = blogLogic.createBlog(newEntity);
         Assert.assertNotNull(result);
         BlogEntity entidad = em.find(BlogEntity.class, result.getId());
@@ -161,8 +162,8 @@ public class BlogLogicTest {
      * Se prueba el método para obtener un solo blog.
      */
     @Test
-    public void getBlogTest(){
-        BlogEntity blogE =data.get(0);
+    public void getBlogTest() {
+        BlogEntity blogE = data.get(0);
         BlogEntity blogE1 = blogLogic.getBlog(blogE.getId());
         assertNotNull(blogE1);
         Assert.assertEquals(blogE.getId(), blogE1.getId());
@@ -171,8 +172,9 @@ public class BlogLogicTest {
         Assert.assertEquals(blogE.getLikes(), blogE1.getLikes());
         Assert.assertEquals(blogE.getCliente(), blogE1.getCliente());
         Assert.assertEquals(blogE.getEvento(), blogE1.getEvento());
-        
+
     }
+
     /**
      * Prueba para eliminar un blog
      */
@@ -196,14 +198,12 @@ public class BlogLogicTest {
         newEntity.setEvento(entity.getEvento());
         newEntity.setCliente(entity.getCliente());
 
-        
-        try{
-        BlogEntity actualizado=blogLogic.updateBlog(newEntity);
+        try {
+            BlogEntity actualizado = blogLogic.updateBlog(newEntity);
+        } catch (BusinessLogicException e) {
+            fail(e.getLocalizedMessage());
         }
-        catch(BusinessLogicException e){
-            fail();
-        }
-               
+
         BlogEntity resp = em.find(BlogEntity.class, newEntity.getId());
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
@@ -212,71 +212,7 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getLikes(), resp.getLikes());
         Assert.assertEquals(newEntity.getCliente(), resp.getCliente());
         Assert.assertEquals(newEntity.getEvento(), resp.getEvento());
-        
+
     }
-    /**
-     * Se prueba consistencia entre los eventos en el blog y los eventos como entidades.
-     */
-    @Test 
-    public void getEventoest(){
-        BlogEntity entity = data.get(0);
-        EventoEntity eventoE= entity.getEvento();
-        EventoEntity eventoE1=eventoLogic.getEvento(eventoE.getId());
-        assertNotNull(eventoE1);
-        assertEquals(eventoE1.getId(), eventoE.getId());
-        assertEquals(eventoE1.getId(), eventoE.getId());
-        assertEquals(eventoE1.getCliente(), eventoE.getCliente());
-        assertEquals(eventoE1.getDescripcion(), eventoE.getDescripcion());
-        assertEquals(eventoE1.getLugar(), eventoE.getLugar());
-    }
-    
-    /**
-     * Se prueba consistencia entre los eventos en el blog y los eventos como entidades.
-     */
-    @Test
-    public void getEventoExistenteTTest(){
-         BlogEntity entity = data.get(0);
-         EventoEntity eventoE = entity.getEvento();
-         EventoEntity eventoE1=blogLogic.getEventoExistente(eventoE.getId());
-        
-        assertNotNull(eventoE1);
-        assertEquals(eventoE1.getId(), eventoE.getId());
-        assertEquals(eventoE1.getId(), eventoE.getId());
-        assertEquals(eventoE1.getCliente(), eventoE.getCliente());
-        assertEquals(eventoE1.getDescripcion(), eventoE.getDescripcion());
-        assertEquals(eventoE1.getLugar(), eventoE.getLugar());
-    }
-    
-    @Test
-    public void addEventoTest(){
-        BlogEntity blogE = data.get(0);
-        blogE.setEvento(null);
-        try{
-        blogLogic.updateBlog(blogE);
-        }
-        catch(BusinessLogicException e){
-            fail();
-        }
-        EventoEntity evento= factory.manufacturePojo(EventoEntity.class);
-        
-        try{
-            blogLogic.addEvento(evento, blogE.getId());      
-        }
-        catch(BusinessLogicException e){
-            fail("No pudo guardarse el evento. Debería haberse guardado.");
-        }       
-    }
-    
-    @Test
-    public void addEventoFailTest(){
-        BlogEntity blogE = data.get(0);
-        EventoEntity evento= factory.manufacturePojo(EventoEntity.class);
-        
-        try{
-            blogLogic.addEvento(evento, blogE.getId());
-            fail("No pudo guardarse el evento");
-        }
-        catch(BusinessLogicException e){
-        }       
-    }
+
 }

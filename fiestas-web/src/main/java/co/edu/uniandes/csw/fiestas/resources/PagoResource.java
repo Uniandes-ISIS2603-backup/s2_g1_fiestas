@@ -34,7 +34,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author cm.amaya10
  */
-@Path("eventos/{idEvento: \\d+}/pagos")
+@Path("clientes/{idCliente: \\d+}/eventos/{idEvento: \\d+}/pagos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -70,12 +70,13 @@ public class PagoResource {
      * </pre>
      *
      * @param idEvento El ID del evento del cual se buscan los pago
+     *  @param idCliente El ID del cliente dueño del evento
      * @return JSONArray {@link PagoDTO} - Los clientes encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<PagoDTO> getPagos(@PathParam("idEvento") Long idEvento){
-        return listEntity2DTO(pagoLogic.getPagos(idEvento));
+    public List<PagoDTO> getPagos(@PathParam("idCliente") Long idCliente,@PathParam("idEvento") Long idEvento){
+        return listEntity2DTO(pagoLogic.getPagos(idCliente,idEvento));
     }
 
     /**
@@ -125,6 +126,7 @@ public class PagoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente El ID del cliente dueño del evento
      * @param idEvento El ID del evento del cual se buscan los pago
      * @param pago {@link PagoDTO} - El pago que se desea guardar.
      * @return JSON {@link PagoDTO} - El pago guardado con el atributo id
@@ -134,8 +136,8 @@ public class PagoResource {
      * - Error de lógica
      */
     @POST
-    public PagoDTO createPago(@PathParam("idEvento") Long idEvento, PagoDTO pago) throws BusinessLogicException {
-        return new PagoDTO(pagoLogic.createPago(idEvento, pago.toEntity()));
+    public PagoDTO createPago(@PathParam("idCliente") Long idCliente,@PathParam("idEvento") Long idEvento, PagoDTO pago) throws BusinessLogicException {
+        return new PagoDTO(pagoLogic.createPago(idCliente,idEvento, pago.toEntity()));
     }
 
     /**
@@ -153,6 +155,7 @@ public class PagoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente El ID del cliente dueño del evento
      * @param idEvento El ID del evento del cual se buscan los pago
      * @param id Identificador del pago que se esta buscando. Este debe ser una
      * cadena de dígitos.
@@ -164,13 +167,13 @@ public class PagoResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public PagoDTO updatePago(@PathParam("idEvento") Long idEvento, @PathParam("id") Long id, PagoDTO pago) throws BusinessLogicException {
+    public PagoDTO updatePago(@PathParam("idCliente") Long idCliente,@PathParam("idEvento") Long idEvento, @PathParam("id") Long id, PagoDTO pago) throws BusinessLogicException {
         pago.setId(id);
         PagoEntity oldEntity = pagoLogic.getPago(idEvento, id);
         if (oldEntity == null) {
             throw new WebApplicationException("El pago no existe", 404);
         }
-        return new PagoDTO(pagoLogic.updatePago(idEvento, pago.toEntity()));
+        return new PagoDTO(pagoLogic.updatePago(idCliente,idEvento, pago.toEntity()));
     }
 
     /**

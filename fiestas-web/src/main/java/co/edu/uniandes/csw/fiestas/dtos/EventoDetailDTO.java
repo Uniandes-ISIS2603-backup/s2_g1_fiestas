@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class EventoDetailDTO extends EventoDTO {
 
-    private ClienteDTO cliente;
     private List<PagoDTO> pagos;
     private List<ContratoDTO> contratos;
     private TematicaDTO tematica;
@@ -37,11 +36,6 @@ public class EventoDetailDTO extends EventoDTO {
      */
     public EventoDetailDTO(EventoEntity entity) {
         super(entity);
-        if (entity.getCliente() != null) {
-            this.cliente = new ClienteDTO(entity.getCliente());
-        } else {
-            entity.setCliente(null);
-        }
         if (entity.getTematica() != null) {
             this.tematica = new TematicaDTO(entity.getTematica());
         } else {
@@ -85,31 +79,10 @@ public class EventoDetailDTO extends EventoDTO {
             }
             entity.setPagos(pagosEntity);
         }
-        if (this.getCliente() != null) {
-            entity.setCliente(cliente.toEntity());
-        }
         if (this.getTematica() != null) {
             entity.setTematica(tematica.toEntity());
         }
         return entity;
-    }
-
-    /**
-     * Se retorna el cliente asociado al evento
-     *
-     * @return Cliente organizador del evento.
-     */
-    public ClienteDTO getCliente() {
-        return cliente;
-    }
-
-    /**
-     * Asigna el cliente asociado al evento
-     *
-     * @param cliente organizador del evento
-     */
-    public void setCliente(ClienteDTO cliente) {
-        this.cliente = cliente;
     }
 
     /**

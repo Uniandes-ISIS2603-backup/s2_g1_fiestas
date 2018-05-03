@@ -1,6 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
-
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
 import java.util.ArrayList;
@@ -89,12 +89,14 @@ public class EventoPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
 
     /**
      * Lista donde se guardaran las entidades creadas para las pruebas
      */
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -103,7 +105,15 @@ public class EventoPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
+            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(entity);
+            dataCliente.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
             EventoEntity entidad = factory.manufacturePojo(EventoEntity.class);
+            if (i == 0) {
+                entidad.setCliente(dataCliente.get(0));
+            }
             em.persist(entidad);
             data.add(entidad);
         }
@@ -124,6 +134,7 @@ public class EventoPersistenceTest {
         Assert.assertEquals(creado.getCelebrado(), entidad.getCelebrado());
         Assert.assertEquals(creado.getInvitados(), entidad.getInvitados());
     }
+
     /**
      * Prueba para obtener la lista de eventos.
      */
@@ -149,7 +160,7 @@ public class EventoPersistenceTest {
     @Test
     public void getEventoTest() {
         EventoEntity entidad = data.get(0);
-        EventoEntity encontrado = eventoPersistence.find(entidad.getId());
+        EventoEntity encontrado = eventoPersistence.find(dataCliente.get(0).getId(),entidad.getId());
         Assert.assertNotNull(encontrado);
         Assert.assertEquals(encontrado.getDescripcion(), entidad.getDescripcion());
         Assert.assertEquals(encontrado.getLugar(), entidad.getLugar());
@@ -157,39 +168,38 @@ public class EventoPersistenceTest {
         Assert.assertEquals(encontrado.getInvitados(), entidad.getInvitados());
         Assert.assertEquals(entidad.getId(), encontrado.getId());
     }
-    
-     /**
+
+    /**
      * Prueba para eliminar un evento especifico.
      */
     @Test
     public void deleteEventoTest() {
-      EventoEntity entidad = data.get(0);
-      eventoPersistence.delete(entidad.getId());
-      EventoEntity borrado =em.find(EventoEntity.class, entidad.getId());
-      Assert.assertNull(borrado);
-      
+        EventoEntity entidad = data.get(0);
+        eventoPersistence.delete(entidad.getId());
+        EventoEntity borrado = em.find(EventoEntity.class, entidad.getId());
+        Assert.assertNull(borrado);
+
     }
-    
-     /**
+
+    /**
      * Prueba para actualizar un evento.
      */
     @Test
     public void updateEventoTest() {
-      EventoEntity entidad = data.get(0);
-      PodamFactory factory = new PodamFactoryImpl();
-      EventoEntity nuevo = factory.manufacturePojo(EventoEntity.class);
-      
-      nuevo.setId(entidad.getId());
-      
-      
-      eventoPersistence.update(nuevo);
-      EventoEntity actualizado =em.find(EventoEntity.class, entidad.getId());
-      
-              Assert.assertNotNull(actualizado);
+        EventoEntity entidad = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        EventoEntity nuevo = factory.manufacturePojo(EventoEntity.class);
+
+        nuevo.setId(entidad.getId());
+
+        eventoPersistence.update(nuevo);
+        EventoEntity actualizado = em.find(EventoEntity.class, entidad.getId());
+
+        Assert.assertNotNull(actualizado);
         Assert.assertEquals(actualizado.getLugar(), nuevo.getLugar());
         Assert.assertEquals(actualizado.getCelebrado(), nuevo.getCelebrado());
         Assert.assertEquals(actualizado.getInvitados(), nuevo.getInvitados());
         Assert.assertEquals(nuevo.getId(), actualizado.getId());
-      
+
     }
 }

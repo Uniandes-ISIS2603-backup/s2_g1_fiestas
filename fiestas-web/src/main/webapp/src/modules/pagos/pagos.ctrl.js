@@ -1,9 +1,10 @@
 (function (ng) {
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
-    mod.constant("eventosContext", "api/eventos");
-    mod.controller('pagoCtrl', ['$scope', '$http','eventosContext','$state','pagoContext',
-                /**
+    mod.constant("eventosContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
+    mod.controller('pagoCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', 'clientesContext',
+        /**
          * @ngdoc controller
          * @name pagos.controller:pagosCtrl
          * @description
@@ -23,8 +24,8 @@
          * @param {Object} pagosContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Pagos en el Backend.
          */
-        function ($scope, $http,eventosContext,$state, pagoContext) {
-            $http.get(eventosContext+'/'+$state.params.eventoId+'/'+pagoContext).then(function (response) {
+        function ($scope, $http, eventosContext, $state, pagoContext, clientesContext) {
+            $http.get(clientesContext + '/' + $state.params.clienteId + '/' + eventosContext + '/' + $state.params.eventoId + '/' + pagoContext).then(function (response) {
                 $scope.pagosRecords = response.data;
             });
         }
