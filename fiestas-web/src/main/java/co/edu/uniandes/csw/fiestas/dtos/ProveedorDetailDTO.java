@@ -3,9 +3,10 @@ package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
-import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import java.util.List;
  *      "Tipo": String
  *      }, 
  *      ],
- *      "valoraciones":[{"id": 12,
+ *      "bonos":[{"id": 12,
  *      "descripcion": "Entrega de invitaciones",
  *      "Tipo": "Entrega"
  *      }, 
@@ -65,8 +66,8 @@ import java.util.List;
  */
 public class ProveedorDetailDTO extends ProveedorDTO
 {
-    private List<ServicioDTO> servicios = new ArrayList<>();
-    private List<ValoracionDTO> valoraciones= new ArrayList<>();
+    private List<ProductoDTO> productos = new ArrayList<>();
+    private List<BonoDTO> bonos= new ArrayList<>();
     private List<ContratoDTO> contratos= new ArrayList<>();    
     
     /**
@@ -80,31 +81,31 @@ public class ProveedorDetailDTO extends ProveedorDTO
     /**
      * @return El sevicio del proveedor.
      */
-    public List<ServicioDTO> getServicios()
+    public List<ProductoDTO> getProductos()
     {
-        return servicios;
+        return productos;
     }
     
     /**
-     * @param servicios El nuevo servicio del proveedor..
+     * @param productos El nuevo servicio del proveedor..
      */
-    public void setServicios(List<ServicioDTO> servicios)
+    public void setProductos(List<ProductoDTO> productos)
     {
-        this.servicios = servicios;
+        this.productos = productos;
     }
 
     /**
-     * @return the valoraciones
+     * @return the bonos
      */
-    public List<ValoracionDTO> getValoraciones() {
-        return valoraciones;
+    public List<BonoDTO> getBonos() {
+        return bonos;
     }
 
     /**
-     * @param valoraciones the valoraciones to set
+     * @param bonos the bonos to set
      */
-    public void setValoraciones(List<ValoracionDTO> valoraciones) {
-        this.valoraciones = valoraciones;
+    public void setBonos(List<BonoDTO> bonos) {
+        this.bonos = bonos;
     }
 
     /**
@@ -129,22 +130,23 @@ public class ProveedorDetailDTO extends ProveedorDTO
     {
         super(entity); 
         if (entity != null)
-        {            
-            contratos = new ArrayList<>();
+        {       
             for(ContratoEntity ent : entity.getContratos())
             {
                 ContratoDTO dto = new ContratoDTO(ent);
                 contratos.add(dto);
             }
-            for(ServicioEntity ent : entity.getServicios())
+            
+            for(ProductoEntity ent : entity.getProductos())
             {
-                ServicioDTO dto = new ServicioDTO(ent);
-                servicios.add(dto);
+                ProductoDTO dto = new ProductoDTO(ent);
+                productos.add(dto);
             }
-            for(ValoracionEntity ent : entity.getValoraciones())
+            
+            for(BonoEntity ent : entity.getBonos())
             {
-                ValoracionDTO dto = new ValoracionDTO(ent);
-                valoraciones.add(dto);
+                BonoDTO dto = new BonoDTO(ent);
+                bonos.add(dto);
             }
         }
     }
@@ -158,29 +160,29 @@ public class ProveedorDetailDTO extends ProveedorDTO
     {
         ProveedorEntity entity = super.toEntity();
         List<ContratoEntity> listContratos = new ArrayList<>();
-        List<ValoracionEntity> listValoraciones = new ArrayList<>();
-        List<ServicioEntity> listServicios = new ArrayList<>();
+        List<BonoEntity> listBonos = new ArrayList<>();
+        List<ProductoEntity> listProductos = new ArrayList<>();
         if(!contratos.isEmpty())
         for(ContratoDTO dto : getContratos())
         {
             ContratoEntity ent = dto.toEntity();
             listContratos.add(ent);
         }
-        if(!valoraciones.isEmpty())
-        for(ValoracionDTO dto : getValoraciones())
+        if(!bonos.isEmpty())
+        for(BonoDTO dto : getBonos())
         {
-            ValoracionEntity ent = dto.toEntity();
-            listValoraciones.add(ent);
+            BonoEntity ent = dto.toEntity();
+            listBonos.add(ent);
         }
-        if(!servicios.isEmpty())
-        for(ServicioDTO dto : getServicios())
+        if(!productos.isEmpty())
+        for(ProductoDTO dto : getProductos())
         {
-            ServicioEntity ent = dto.toEntity();
-            listServicios.add(ent);
+            ProductoEntity ent = dto.toEntity();
+            listProductos.add(ent);
         }
         entity.setContratos(listContratos);
-        entity.setServicios(listServicios);
-        entity.setValoraciones(listValoraciones);
+        entity.setProductos(listProductos);
+        entity.setBonos(listBonos);
         return entity;
     }
 }

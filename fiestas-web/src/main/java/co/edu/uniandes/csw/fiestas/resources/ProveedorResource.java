@@ -4,7 +4,7 @@ import co.edu.uniandes.csw.fiestas.dtos.BonoDTO;
 import co.edu.uniandes.csw.fiestas.dtos.BonoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
-import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.ProductoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
@@ -13,7 +13,7 @@ import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,8 @@ import javax.ws.rs.container.Suspended;
  * <h2>Anotaciones </h2>
  * <pre>
  * Path: indica la dirección después de "api" para acceder al recurso
- * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
- * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio).
+ * Produces/Consumes: indica que los productos definidos en este recurso reciben y devuelven objetos en formato JSON
+ * RequestScoped: Inicia una transacción desde el llamado de cada método (producto).
  * </pre>
  *
  * @author nm.hernandez10
@@ -406,233 +406,28 @@ public class ProveedorResource {
     }
     
     /**
-     * <h1>GET /{proveedorId}/valoraciones/ : Obtener todos los valoraciones de
-     * un proveedor.</h1>
-     *
-     * <pre>Busca y devuelve todos los valoraciones que existen en el proveedor.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todos los valoraciones del proveedor.</code>
-     * </pre>
-     *
-     * @param proveedorId Identificador del proveedor que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @return JSONArray {@link ValoracionDetailDTO} - Los valoraciones
-     * encontrados en el proveedor. Si no hay ninguno retorna una lista vacía.
-     */
-    @GET
-    @Path("{proveedorId: \\d+}/valoraciones")
-    public List<ValoracionDTO> listValoraciones(@PathParam("proveedorId") Long proveedorId)
-    {
-        try
-        {
-            return valoracionesListEntity2DTO(proveedorLogic.getValoraciones(proveedorId));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
-    }
-    
-    /**
-     * <h1>PUT /{proveedorId}/valoraciones: Edita losvaloraciones de un proveedor..</h1>
-     * <pre> Remplaza las instancias de Valoracion asociadas a una instancia de Proveedor
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Guardó los valoraciones del proveedor.
-     * </code>
-     * </pre>
-     *
-     * @param proveedorId Identificador del proveedor que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @param valoraciones JSONArray {@link ValoracionDetailDTO} El arreglo de
-     * valoraciones nuevo para la proveedor.
-     * @return JSON {@link ValoracionDetailDTO} - El arreglo de valoraciones
-     * guardado en la proveedor.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
-     * hay errores de logica
-     */
-    @PUT
-    @Path("{proveedorId: \\d+}/valoraciones")
-    public List<ValoracionDTO> replaceValoraciones(@PathParam("proveedorId") Long proveedorId, List<ValoracionDTO> valoraciones)
-    {
-        try
-        {
-            return valoracionesListEntity2DTO(proveedorLogic.replaceValoraciones(proveedorId, valoracionesListDTO2Entity(valoraciones)));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
-    }
-    
-    /**
-     * <h1>POST /{proveedorId}/valoraciones/{valoracionId} : Guarda un
-     * valoracion dentro del proveedor.</h1>
-     *
-     * <pre> Guarda un valoracion dentro de un proveedor con la informacion que
-     * recibe el la URL. Se devuelve el valoracion que se guarda en la proveedor.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Guardó el nuevo valoracion .
-     * </code>
-     * </pre>
-     *
-     * @param proveedorId Identificador del proveedor que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @param valoracionId Identificador del valoracion que se desea guardar.
-     * Este debe ser una cadena de dígitos.
-     * @return JSON {@link ValoracionDetailDTO} - El valoracion guardado en la
-     * proveedor.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
-     * hay errores de logica
-     */
-    @POST
-    @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public ValoracionDTO addValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId)
-    {
-        try
-        {
-            return new ValoracionDTO(proveedorLogic.addValoracion(valoracionId, proveedorId));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
-    }
-    
-    /**
-     * <h1>DELETE /{proveedorId}/valoraciones/{valoracionId} : Elimina un
-     * valoracion dentro del proveedor.</h1>
-     *
-     * <pre> Elimina la referencia del valoracion asociado al ID dentro del proveedor
-     * con la informacion que recibe el la URL.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Se eliminó la referencia del valoracion.
-     * </code>
-     * </pre>
-     *
-     * @param proveedorId Identificador del proveedor que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @param valoracionId Identificador del valoracion que se desea guardar.
-     * Este debe ser una cadena de dígitos.
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
-     * hay errores de logica
-     */
-    @DELETE
-    @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public void removeValoraciones(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId)
-    {
-        try
-        {
-            proveedorLogic.removeValoracion(valoracionId, proveedorId);
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
-    }
-    
-    /**
-     * <h1>GET /{proveedorId}/valoraciones/{valoracionId} : Obtener valoracion
-     * por id del proveedor por id.</h1>
-     *
-     * <pre>Busca el valoracion con el id asociado dentro del proveedor con id asociado.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve el valoracion correspondiente al id.
-     * </code>
-     * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found No existe un valoracion con el id dado dentro del proveedor.
-     * </code>
-     * </pre>
-     *
-     * @param proveedorId Identificador del proveedor que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @param valoracionId Identificador del valoracion que se esta buscando.
-     * Este debe ser una cadena de dígitos.
-     * @return JSON {@link ValoracionDetailDTO} - El valoracion buscado
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -Error de lógica
-     * que se genera cuando no se encuentra la proveedor o el
-     * valoracion.
-     */
-    @GET
-    @Path("{proveedorId: \\d+}/valoraciones/{valoracionId: \\d+}")
-    public ValoracionDTO getValoracion(@PathParam("proveedorId") Long proveedorId, @PathParam("valoracionId") Long valoracionId)
-    {
-        try
-        {
-            return new ValoracionDTO(proveedorLogic.getValoracion(proveedorId, valoracionId));
-        }
-        catch(BusinessLogicException e)
-        {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
-    }
-    
-    /**
-     * Convierte una lista de ValoracionEntity a una lista de
-     * ValoracionDetailDTO.
-     *
-     * @param entityList Lista de ValoracionEntity a convertir.
-     * @return Lista de ValoracionDetailDTO convertida.
-     *
-     */
-    private List<ValoracionDTO> valoracionesListEntity2DTO(List<ValoracionEntity> entityList)
-    {
-        List<ValoracionDTO> list = new ArrayList<>();
-        for (ValoracionEntity entity : entityList) {
-            list.add(new ValoracionDTO(entity));
-        }
-        return list;
-    }
-    
-    /**
-     * Convierte una lista de ValoracionDetailDTO a una lista de
-     * ValoracionEntity.
-     *
-     * @param dtos Lista de ValoracionDetailDTO a convertir.
-     * @return Lista de ValoracionEntity convertida.
-     *
-     */
-    private List<ValoracionEntity> valoracionesListDTO2Entity(List<ValoracionDTO> dtos)
-    {
-        List<ValoracionEntity> list = new ArrayList<>();
-        for (ValoracionDTO dto : dtos) {
-            list.add(dto.toEntity());
-        }
-        return list;
-    }
-    
-    /**
-     * <h1>GET /{proveedorId}/servicios/ : Obtener todos los servicios de un
+     * <h1>GET /{proveedorId}/productos/ : Obtener todos los productos de un
      * proveedor.</h1>
      *
-     * <pre>Busca y devuelve todos los servicios que existen en el proveedor.
+     * <pre>Busca y devuelve todos los productos que existen en el proveedor.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve todos los servicios del proveedor.</code>
+     * 200 OK Devuelve todos los productos del proveedor.</code>
      * </pre>
      *
      * @param proveedorId Identificador del proveedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @return JSONArray {@link ServicioDetailDTO} - Los servicios encontrados
+     * @return JSONArray {@link ProductoDetailDTO} - Los productos encontrados
      * en el proveedor. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    @Path("{proveedorId: \\d+}/servicios")
-    public List<ServicioDetailDTO> getServicios(@PathParam("proveedorId") Long proveedorId)
+    @Path("{proveedorId: \\d+}/productos")
+    public List<ProductoDetailDTO> getProductos(@PathParam("proveedorId") Long proveedorId)
     {
         try
         {
-            return serviciosListEntity2DTO(proveedorLogic.getServicios(proveedorId));
+            return productosListEntity2DTO(proveedorLogic.getProductos(proveedorId));
         }
         catch(BusinessLogicException e)
         {
@@ -641,30 +436,30 @@ public class ProveedorResource {
     }
     
     /**
-     * <h1>PUT /{proveedorId}/servicios: Edita losservicios de un proveedor..</h1>
-     * <pre> Remplaza las instancias de Servicio asociadas a una instancia de Proveedor
+     * <h1>PUT /{proveedorId}/productos: Edita losproductos de un proveedor..</h1>
+     * <pre> Remplaza las instancias de Producto asociadas a una instancia de Proveedor
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Guardó los servicios del proveedor.
+     * 200 OK Guardó los productos del proveedor.
      * </code>
      * </pre>
      *
      * @param proveedorId Identificador del proveedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param servicios JSONArray {@link ServicioDetailDTO} El arreglo de
-     * servicios nuevo para la proveedor.
-     * @return JSON {@link ServicioDetailDTO} - El arreglo de servicios guardado
+     * @param productos JSONArray {@link ProductoDetailDTO} El arreglo de
+     * productos nuevo para la proveedor.
+     * @return JSON {@link ProductoDetailDTO} - El arreglo de productos guardado
      * en la proveedor.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * hay errores de logica
      */
     @PUT
-    @Path("{proveedorId: \\d+}/servicios")
-    public List<ServicioDetailDTO> replaceServicios(@PathParam("proveedorId") Long proveedorId, List<ServicioDetailDTO> servicios)
+    @Path("{proveedorId: \\d+}/productos")
+    public List<ProductoDetailDTO> replaceProductos(@PathParam("proveedorId") Long proveedorId, List<ProductoDetailDTO> productos)
     {
         try
         {
-            return serviciosListEntity2DTO(proveedorLogic.replaceServicios(proveedorId, serviciosListDTO2Entity(servicios)));
+            return productosListEntity2DTO(proveedorLogic.replaceProductos(proveedorId, productosListDTO2Entity(productos)));
         }
         catch(BusinessLogicException e)
         {
@@ -673,34 +468,34 @@ public class ProveedorResource {
     }
     
     /**
-     * <h1>POST /{proveedorId}/servicios/{serviciosId} : Guarda un servicio
+     * <h1>POST /{proveedorId}/productos/{productosId} : Guarda un producto
      * dentro del proveedor.</h1>
      *
-     * <pre> Guarda un servicio dentro de un proveedor con la informacion que
-     * recibe el la URL. Se devuelve el servicio que se guarda en la proveedor.
+     * <pre> Guarda un producto dentro de un proveedor con la informacion que
+     * recibe el la URL. Se devuelve el producto que se guarda en la proveedor.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Guardó el nuevo servicio .
+     * 200 OK Guardó el nuevo producto .
      * </code>
      * </pre>
      *
      * @param proveedorId Identificador del proveedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param servicioId Identificador del servicio que se desea guardar. Este
+     * @param productoId Identificador del producto que se desea guardar. Este
      * debe ser una cadena de dígitos.
-     * @return JSON {@link ServicioDetailDTO} - El servicio guardado en la
+     * @return JSON {@link ProductoDetailDTO} - El producto guardado en la
      * proveedor.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * hay errores de logica
      */
     @POST
-    @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public ServicioDetailDTO addServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long servicioId)
+    @Path("{proveedorId: \\d+}/productos/{productosId: \\d+}")
+    public ProductoDetailDTO addProducto(@PathParam("proveedorId") Long proveedorId, @PathParam("productosId") Long productoId)
     {
         try
         {
-            return new ServicioDetailDTO(proveedorLogic.addServicio(servicioId, proveedorId));
+            return new ProductoDetailDTO(proveedorLogic.addProducto(productoId, proveedorId));
         }
         catch(BusinessLogicException e)
         {
@@ -709,32 +504,32 @@ public class ProveedorResource {
     }
     
     /**
-     * <h1>DELETE /{proveedorId}/servicios/{serviciosId} : Elimina un servicio
+     * <h1>DELETE /{proveedorId}/productos/{productosId} : Elimina un producto
      * dentro del proveedor.</h1>
      *
-     * <pre> Elimina la referencia del servicio asociado al ID dentro del proveedor
+     * <pre> Elimina la referencia del producto asociado al ID dentro del proveedor
      * con la informacion que recibe el la URL.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Se eliminó la referencia del servicio.
+     * 200 OK Se eliminó la referencia del producto.
      * </code>
      * </pre>
      *
      * @param proveedorId Identificador del proveedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param servicioId Identificador del servicio que se desea guardar. Este
+     * @param productoId Identificador del producto que se desea guardar. Este
      * debe ser una cadena de dígitos.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * hay errores de logica
      */
     @DELETE
-    @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public void removeServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("servicioId") Long serviciosId)
+    @Path("{proveedorId: \\d+}/productos/{productosId: \\d+}")
+    public void removeProducto(@PathParam("proveedorId") Long proveedorId, @PathParam("productoId") Long productosId)
     {
         try
         {
-            proveedorLogic.removeServicio(serviciosId, proveedorId);
+            proveedorLogic.removeProducto(productosId, proveedorId);
         }
         catch(BusinessLogicException e)
         {
@@ -743,36 +538,36 @@ public class ProveedorResource {
     }
     
     /**
-     * <h1>GET /{proveedorId}/servicios/{serviciosId} : Obtener servicio por id
+     * <h1>GET /{proveedorId}/productos/{productosId} : Obtener producto por id
      * del proveedor por id.</h1>
      *
-     * <pre>Busca el servicio con el id asociado dentro del proveedor con id asociado.
+     * <pre>Busca el producto con el id asociado dentro del proveedor con id asociado.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve el servicio correspondiente al id.
+     * 200 OK Devuelve el producto correspondiente al id.
      * </code>
      * <code style="color: #c7254e; background-color: #f9f2f4;">
-     * 404 Not Found No existe un servicio con el id dado dentro del proveedor.
+     * 404 Not Found No existe un producto con el id dado dentro del proveedor.
      * </code>
      * </pre>
      *
      * @param proveedorId Identificador del proveedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param serviciosId Identificador del servicio que se esta buscando. Este
+     * @param productosId Identificador del producto que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @return JSON {@link ServicioDetailDTO} - El servicio buscado
+     * @return JSON {@link ProductoDetailDTO} - El producto buscado
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la proveedor o el
-     * servicio.
+     * producto.
      */
     @GET
-    @Path("{proveedorId: \\d+}/servicios/{serviciosId: \\d+}")
-    public ServicioDetailDTO getServicio(@PathParam("proveedorId") Long proveedorId, @PathParam("serviciosId") Long serviciosId)
+    @Path("{proveedorId: \\d+}/productos/{productosId: \\d+}")
+    public ProductoDetailDTO getProducto(@PathParam("proveedorId") Long proveedorId, @PathParam("productosId") Long productosId)
     {
         try
         {
-            return new ServicioDetailDTO(proveedorLogic.getServicio(proveedorId, serviciosId));
+            return new ProductoDetailDTO(proveedorLogic.getProducto(proveedorId, productosId));
         }
         catch(BusinessLogicException e)
         {
@@ -781,30 +576,30 @@ public class ProveedorResource {
     }
     
     /**
-     * Convierte una lista de ServicioEntity a una lista de ServicioDetailDTO.
+     * Convierte una lista de ProductoEntity a una lista de ProductoDetailDTO.
      *
-     * @param entityList Lista de ServicioEntity a convertir.
-     * @return Lista de ServicioDetailDTO convertida.
+     * @param entityList Lista de ProductoEntity a convertir.
+     * @return Lista de ProductoDetailDTO convertida.
      *
      */
-    private List<ServicioDetailDTO> serviciosListEntity2DTO(List<ServicioEntity> entityList) {
-        List<ServicioDetailDTO> list = new ArrayList<>();
-        for (ServicioEntity entity : entityList) {
-            list.add(new ServicioDetailDTO(entity));
+    private List<ProductoDetailDTO> productosListEntity2DTO(List<ProductoEntity> entityList) {
+        List<ProductoDetailDTO> list = new ArrayList<>();
+        for (ProductoEntity entity : entityList) {
+            list.add(new ProductoDetailDTO(entity));
         }
         return list;
     }
     
     /**
-     * Convierte una lista de ServicioDetailDTO a una lista de ServicioEntity.
+     * Convierte una lista de ProductoDetailDTO a una lista de ProductoEntity.
      *
-     * @param dtos Lista de ServicioDetailDTO a convertir.
-     * @return Lista de ServicioEntity convertida.
+     * @param dtos Lista de ProductoDetailDTO a convertir.
+     * @return Lista de ProductoEntity convertida.
      *
      */
-    private List<ServicioEntity> serviciosListDTO2Entity(List<ServicioDetailDTO> dtos) {
-        List<ServicioEntity> list = new ArrayList<>();
-        for (ServicioDetailDTO dto : dtos) {
+    private List<ProductoEntity> productosListDTO2Entity(List<ProductoDetailDTO> dtos) {
+        List<ProductoEntity> list = new ArrayList<>();
+        for (ProductoDetailDTO dto : dtos) {
             list.add(dto.toEntity());
         }
         return list;

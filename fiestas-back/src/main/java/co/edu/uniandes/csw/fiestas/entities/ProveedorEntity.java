@@ -24,6 +24,7 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     private String direccion;
     private String login;
     private String contrasena;
+    private Double valoracion;
     
     @PodamExclude
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -35,11 +36,9 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     
     @PodamExclude
     @ManyToMany
-    private List<ServicioEntity> servicios;
+    private List<ProductoEntity> productos;
     
-    @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ValoracionEntity> valoraciones;
+
     
     /**
      * @return nombre del usuario
@@ -163,17 +162,17 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     }
 
     /**
-     * @return the servicios
+     * @return the productos
      */
-    public List<ServicioEntity> getServicios() {
-        return servicios;
+    public List<ProductoEntity> getProductos() {
+        return productos;
     }
 
     /**
-     * @param servicios the servicios to set
+     * @param productos the productos to set
      */
-    public void setServicios(List<ServicioEntity> servicios) {
-        this.servicios = servicios;
+    public void setProductos(List<ProductoEntity> productos) {
+        this.productos = productos;
     }    
 
     /**
@@ -194,25 +193,25 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     /**
      * @return the valoraciones
      */
-    public List<ValoracionEntity> getValoraciones() {
-        return valoraciones;
+    public Double getValoracion() {
+        return valoracion;
     }
 
     /**
-     * @param valoraciones the valoraciones to set
+     * @param valoracion the valoraciones to set
      */
-    public void setValoraciones(List<ValoracionEntity> valoraciones) {
-        this.valoraciones = valoraciones;
+    public void setValoracion(double valoracion) {
+        this.valoracion = valoracion;
     }
     
-    public void agregarServicio(ServicioEntity pServicio)
+    public void agregarProducto(ProductoEntity pProducto)
     {
-        servicios.add(pServicio);
+        productos.add(pProducto);
     }
     
-    public void removerServicio(ServicioEntity pServicio)
+    public void removerProducto(ProductoEntity pProducto)
     {
-        servicios.remove(pServicio);
+        productos.remove(pProducto);
     }
     
     public void agregarContrato(ContratoEntity pContrato)
@@ -223,16 +222,6 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     public void removerContrato(ContratoEntity pContrato)
     {
         contratos.remove(pContrato);
-    }
-    
-    public void agregarValoracion(ValoracionEntity pValoracion)
-    {
-        valoraciones.add(pValoracion);
-    }
-    
-    public void removerValoracion(ValoracionEntity pValoracion)
-    {
-        valoraciones.remove(pValoracion);
     }
 
     /**
@@ -274,4 +263,6 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+    
+    
 }

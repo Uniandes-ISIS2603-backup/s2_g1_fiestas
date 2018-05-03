@@ -130,7 +130,7 @@ public class ServicioLogicTest {
             data.add(entity);
             
             if (i == 0) {
-                proveedorData.get(i).setServicios(data);
+               // proveedorData.get(i).setServicios(data);
             }
             
         } 
@@ -292,7 +292,7 @@ public class ServicioLogicTest {
     public void addProveedorTest() throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
         ServicioEntity servicio = data.get(0);
         ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
-        proveedor.setServicios(data);
+//        proveedor.setServicios(data);
         utx.begin();
         em.persist(proveedor);
         utx.commit();
