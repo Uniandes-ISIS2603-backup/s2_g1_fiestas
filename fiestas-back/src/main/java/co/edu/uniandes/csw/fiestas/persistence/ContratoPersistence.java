@@ -13,10 +13,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+
 
 /**
- * Clase que maneja la persistencia para Pago. Se conecta a través del Entity
+ * Clase que maneja la persistencia para Contrato. Se conecta a través del Entity
  * Manager de javax.persistance con la base de datos SQL.
  *
  * @author mc.gonzalez15
@@ -30,13 +30,13 @@ public class ContratoPersistence {
     protected EntityManager em;
     
     /**
-     * Buscar un pago
+     * Buscar un contrato
      *
-     * Busca si hay algun pago asociado a un evento y con un ID específico
+     * Busca si hay algun contrato asociado a un evento y con un ID específico
      *
-     * @param eventoId El ID del evento con respecto al cual se busca
-     * @param pagoId El ID del pago buscado
-     * @return El pago encontrado o null. Nota: Si existe una o más pagos
+     * 
+     * @param id El ID del contrato buscado
+     * @return El contrato encontrado o null. Nota: Si existe una o más contratos
      * devuelve siempre el primer que encuentra
      */
     public ContratoEntity find(Long id) {
@@ -45,11 +45,11 @@ public class ContratoPersistence {
     }
 
     /**
-     * Buscar todos los pago
+     * Buscar todos los contrato
      *
-     * Busca todos los pagos del sistema
+     * Busca todos los contratos del sistema
      *
-     * @return Lista con todos los pagos.
+     * @return Lista con todos los contratos.
      */
     public List<ContratoEntity> findAll() {
         LOGGER.info("Consultando todos los contratos");
@@ -58,11 +58,11 @@ public class ContratoPersistence {
     }
 
     /**
-     * Crear un pago
+     * Crear un contrato
      *
-     * Crea una nuevo pago con la información recibida en la entidad.
+     * Crea una nuevo contrato con la información recibida en la entidad.
      *
-     * @param entity La entidad que representa el nuevo pago
+     * @param entity La entidad que representa el nuevo contrato
      * @return La entidad creada
      */
     public ContratoEntity create(ContratoEntity entity) {
@@ -73,11 +73,11 @@ public class ContratoPersistence {
     }
 
     /**
-     * Actualizar un pago
+     * Actualizar un contrato
      *
      * Actualiza la entidad que recibe en la base de datos
      *
-     * @param entidad La entidad actualizada que se desea guardar
+     * @param entity La entidad actualizada que se desea guardar
      * @return La entidad resultante luego de la acutalización
      */
     public ContratoEntity update(ContratoEntity entity) {
@@ -87,11 +87,11 @@ public class ContratoPersistence {
     }
 
     /**
-     * Eliminar un pago
+     * Eliminar un contrato
      *
-     * Elimina el pago asociada al ID que recibe
+     * Elimina el contrato asociada al ID que recibe
      *
-     * @param id El ID del pago que se desea borrar
+     * @param id El ID del contrato que se desea borrar
      */
     public void delete(Long id) {
         LOGGER.log(Level.INFO, "Borrando contrato con id={0}", id);
