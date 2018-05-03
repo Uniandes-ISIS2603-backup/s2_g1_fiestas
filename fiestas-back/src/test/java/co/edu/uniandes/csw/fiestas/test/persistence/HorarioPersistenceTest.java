@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.HorarioPersistence;
 import java.util.ArrayList;
@@ -96,9 +97,10 @@ public class HorarioPersistenceTest {
     }
 
     /**
-     *
+     * Listas donde se guardan los datos
      */
     private List<HorarioEntity> data = new ArrayList<HorarioEntity>();
+    private List<ContratoEntity> dataContrato = new ArrayList<ContratoEntity>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -107,12 +109,19 @@ public class HorarioPersistenceTest {
      *
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
+       PodamFactory factory = new PodamFactoryImpl();
+       for (int i = 0; i < 3; i++) {
+            ContratoEntity entidad = factory.manufacturePojo(ContratoEntity.class);
+            em.persist(entidad);
+            dataContrato.add(entidad);
+        }
         for (int i = 0; i < 3; i++) {
-            HorarioEntity entity = factory.manufacturePojo(HorarioEntity.class);
-
-            em.persist(entity);
-            data.add(entity);
+            HorarioEntity entidad = factory.manufacturePojo(HorarioEntity.class);
+            if (i == 0) {
+                dataContrato.get(0).setHorario(entidad);
+            }
+            em.persist(entidad);
+            data.add(entidad);
         }
     }
 
@@ -166,14 +175,13 @@ public class HorarioPersistenceTest {
     @Test
     public void getHorarioTest() {
         HorarioEntity entity = data.get(0);
-        HorarioEntity newEntity = horarioPersistence.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getFecha().getDay(), entity.getFecha().getDay());
-        Assert.assertEquals(newEntity.getHoraInicio().getHours(), entity.getHoraInicio().getHours());
-        Assert.assertEquals(newEntity.getHoraInicio().getMinutes(), entity.getHoraInicio().getMinutes());
-        Assert.assertEquals(newEntity.getHoraFin().getHours(), entity.getHoraFin().getHours());
-        Assert.assertEquals(newEntity.getHoraFin().getMinutes(), entity.getHoraFin().getMinutes());
+        HorarioEntity entidad = data.get(0);
+        HorarioEntity encontrado = horarioPersistence.find(dataContrato.get(0).getId(),entidad.getId());
+        Assert.assertNotNull(encontrado);
+        Assert.assertTrue(entidad.getFecha().equals(encontrado.getFecha()));
+        Assert.assertTrue(entidad.getHoraInicio().equals(encontrado.getHoraFin()));
+        Assert.assertTrue(entidad.getHoraFin().equals(encontrado.getHoraFin()));
+       
     }
 
     /**
