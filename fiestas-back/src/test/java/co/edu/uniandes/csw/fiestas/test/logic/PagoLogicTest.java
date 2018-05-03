@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.PagoLogic;
+import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
 import co.edu.uniandes.csw.fiestas.enums.Estado;
@@ -46,6 +47,8 @@ public class PagoLogicTest {
     private List<PagoEntity> data = new ArrayList<>();
 
     private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
+    
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -84,6 +87,7 @@ public class PagoLogicTest {
     private void clearData() {
         em.createQuery("delete from PagoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
 
     /**
@@ -92,9 +96,14 @@ public class PagoLogicTest {
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
-            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            em.persist(entity);
-            dataEvento.add(entity);
+            ClienteEntity entityC = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(entityC);
+            dataCliente.add(entityC);
+            
+            EventoEntity entityE = factory.manufacturePojo(EventoEntity.class);
+            entityE.setCliente(entityC);
+            em.persist(entityE);
+            dataEvento.add(entityE);
         }
 
         for (int i = 0; i < 3; i++) {
@@ -121,7 +130,7 @@ public class PagoLogicTest {
 
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
+            result = pagoLogic.createPago(dataCliente.get(0).getId(),dataEvento.get(0).getId(), newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -150,7 +159,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
+            result = pagoLogic.createPago(dataCliente.get(0).getId(),dataEvento.get(0).getId(), newEntity);
             fail("No se debio crear el pago");
         } catch (BusinessLogicException ex) {
 
@@ -171,7 +180,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
+            result = pagoLogic.createPago(dataCliente.get(0).getId(),dataEvento.get(0).getId(), newEntity);
             fail("No se debio crear el pago");
         } catch (BusinessLogicException ex) {
 
@@ -192,7 +201,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago("Efecty");
         PagoEntity result = new PagoEntity();
         try {
-            result = pagoLogic.createPago(dataEvento.get(0).getId(), newEntity);
+            result = pagoLogic.createPago(dataCliente.get(0).getId(),dataEvento.get(0).getId(), newEntity);
             fail("No se debio crear el pago");
         } catch (BusinessLogicException ex) {
 
@@ -206,7 +215,7 @@ public class PagoLogicTest {
     public void getPagosTest() {
         List<PagoEntity> lista = new ArrayList<>();
 
-        lista = pagoLogic.getPagos(dataEvento.get(1).getId());
+        lista = pagoLogic.getPagos(dataCliente.get(1).getId(),dataEvento.get(1).getId());
 
         Assert.assertEquals(data.size(), lista.size());
         for (PagoEntity entity : lista) {
@@ -261,7 +270,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
 
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
+            pagoLogic.updatePago(dataCliente.get(1).getId(),dataEvento.get(1).getId(), newEntity);
         } catch (BusinessLogicException ex) {
             fail(ex.getMessage());
         }
@@ -290,7 +299,7 @@ public class PagoLogicTest {
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
 
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
+            pagoLogic.updatePago(dataCliente.get(1).getId(),dataEvento.get(1).getId(), newEntity);
             fail("No se debio poder actualizar el pago");
         } catch (BusinessLogicException ex) {
 
@@ -313,7 +322,7 @@ public class PagoLogicTest {
         newEntity.setRealizado(true);
         newEntity.setMetodoDePago(MetodoDePago.CONSIGNACION.toString());
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
+            pagoLogic.updatePago(dataCliente.get(1).getId(),dataEvento.get(1).getId(), newEntity);
             fail("No se debio poder actualizar el pago");
         } catch (BusinessLogicException ex) {
 
@@ -336,7 +345,7 @@ public class PagoLogicTest {
         newEntity.setRealizado(true);
         newEntity.setMetodoDePago("Tarjeta de Debito");
         try {
-            pagoLogic.updatePago(dataEvento.get(1).getId(), newEntity);
+            pagoLogic.updatePago(dataCliente.get(1).getId(),dataEvento.get(1).getId(), newEntity);
             fail("No se debio poder actualizar el pago");
         } catch (BusinessLogicException ex) {
 

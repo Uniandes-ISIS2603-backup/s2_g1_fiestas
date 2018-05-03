@@ -31,12 +31,13 @@ public class PagoLogic {
     /**
      * Devuelve todos los pagos de un evento que hay en la base de datos.
      *
+     * @param clienteId identificador del cliente
      * @param eventoId identificador del evento
      * @return Lista de entidades de tipo pago.
      */
-    public List<PagoEntity> getPagos(Long eventoId){
+    public List<PagoEntity> getPagos(Long clienteId, Long eventoId){
         LOGGER.info("Inicia proceso de consultar todos los pagos");
-        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        EventoEntity evento = eventoLogic.getEvento(clienteId,eventoId);
         LOGGER.info("Termina proceso de consultar todos los pagos");
         return evento.getPagos();
     }
@@ -56,14 +57,15 @@ public class PagoLogic {
      * Se encarga de crear un pago en la base de datos.
      *
      * @param entity Objeto de PagoEntity con los datos nuevos
+     * @param clienteId identificador del cliente
      * @param eventoId identificador del evento
      * @return Objeto de PagoEntity con los datos nuevos y su ID.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no se cumple reglas de negocio
      */
-    public PagoEntity createPago(Long eventoId, PagoEntity entity) throws BusinessLogicException {
+    public PagoEntity createPago(Long clienteId,Long eventoId, PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un pago ");
-        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        EventoEntity evento = eventoLogic.getEvento(clienteId,eventoId);
         
         String newEstado = verifyEstado(entity.getEstado());
         if (newEstado == null) {
@@ -88,14 +90,15 @@ public class PagoLogic {
      * Actualiza la información de una instancia de Pago.
      *
      * @param entity Instancia de PagoEntity con los nuevos datos.
+     * @param clienteId identificador del cliente
      * @param eventoId identificador del evento
      * @return Instancia de PagoEntity con los datos actualizados.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no se cumple reglas de negocio
      */
-    public PagoEntity updatePago(Long eventoId, PagoEntity entity) throws BusinessLogicException {
+    public PagoEntity updatePago(Long clienteId,Long eventoId, PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
-        EventoEntity evento = eventoLogic.getEvento(eventoId);
+        EventoEntity evento = eventoLogic.getEvento(clienteId,eventoId);
         String newEstado = verifyEstado(entity.getEstado());
         if (newEstado == null) {
             throw new BusinessLogicException("No existe el estado ingresado para el pago");

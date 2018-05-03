@@ -36,7 +36,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author cm.amaya10
  */
-@Path("eventos")
+@Path("clientes/{idCliente: \\d+}/eventos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -74,8 +74,8 @@ public class EventoResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<EventoDetailDTO> getEventos() {
-        return listEntity2DTO(eventoLogic.getEventos());
+    public List<EventoDetailDTO> getEventos(@PathParam("idCliente") Long idCliente) {
+        return listEntity2DTO(eventoLogic.getEventos(idCliente));
     }
 
     /**
@@ -98,8 +98,8 @@ public class EventoResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public EventoDetailDTO getEvento(@PathParam("id") Long id) {
-        EventoEntity entity = eventoLogic.getEvento(id);
+    public EventoDetailDTO getEvento(@PathParam("idCliente") Long idCliente,@PathParam("id") Long id) {
+        EventoEntity entity = eventoLogic.getEvento(idCliente,id);
         if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
@@ -132,8 +132,8 @@ public class EventoResource {
      * - Error de lógica que se genera cuando ya existe el evento.
      */
     @POST
-    public EventoDetailDTO createEvento(EventoDetailDTO evento) throws BusinessLogicException {
-        return new EventoDetailDTO(eventoLogic.createEvento(evento.toEntity()));
+    public EventoDetailDTO createEvento(@PathParam("idCliente") Long idCliente,EventoDetailDTO evento) throws BusinessLogicException {
+        return new EventoDetailDTO(eventoLogic.createEvento(idCliente,evento.toEntity()));
     }
 
     /**
@@ -161,14 +161,14 @@ public class EventoResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public EventoDetailDTO updateEvento(@PathParam("id") Long id, EventoDetailDTO evento) throws BusinessLogicException {
+    public EventoDetailDTO updateEvento(@PathParam("idCliente") Long idCliente,@PathParam("id") Long id, EventoDetailDTO evento) throws BusinessLogicException {
         EventoEntity entity = evento.toEntity();
         entity.setId(id);
-        EventoEntity oldEntity = eventoLogic.getEvento(id);
+        EventoEntity oldEntity = eventoLogic.getEvento(idCliente,id);
         if (oldEntity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        return new EventoDetailDTO(eventoLogic.updateEvento(entity));
+        return new EventoDetailDTO(eventoLogic.updateEvento(idCliente,entity));
     }
 
     /**
@@ -190,12 +190,12 @@ public class EventoResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteEvento(@PathParam("id") Long id) {
-        EventoEntity entity = eventoLogic.getEvento(id);
+    public void deleteEvento(@PathParam("idCliente") Long idCliente,@PathParam("id") Long id) {
+        EventoEntity entity = eventoLogic.getEvento(idCliente,id);
         if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        eventoLogic.deleteEvento(id);
+        eventoLogic.deleteEvento(idCliente,id);
     }
 
     /**
@@ -216,8 +216,8 @@ public class EventoResource {
      */
     @GET
     @Path("{eventosId: \\d+}/contratos")
-    public List<ContratoDetailDTO> listContratos(@PathParam("eventosId") Long eventosId) {
-        return contratosListEntity2DTO(eventoLogic.getContratos(eventosId));
+    public List<ContratoDetailDTO> listContratos(@PathParam("idCliente") Long idCliente,@PathParam("eventosId") Long eventosId) {
+        return contratosListEntity2DTO(eventoLogic.getContratos(idCliente,eventosId));
     }
 
     /**
@@ -239,8 +239,8 @@ public class EventoResource {
      */
     @PUT
     @Path("{eventosId: \\d+}/contratos")
-    public List<ContratoDetailDTO> replaceContratos(@PathParam("eventosId") Long eventosId, List<ContratoDetailDTO> contratos) {
-        return contratosListEntity2DTO(eventoLogic.replaceContratos(eventosId, contratosListDTO2Entity(contratos)));
+    public List<ContratoDetailDTO> replaceContratos(@PathParam("idCliente") Long idCliente,@PathParam("eventosId") Long eventosId, List<ContratoDetailDTO> contratos) {
+        return contratosListEntity2DTO(eventoLogic.replaceContratos(idCliente,eventosId, contratosListDTO2Entity(contratos)));
     }
 
     /**
@@ -265,8 +265,8 @@ public class EventoResource {
      */
     @POST
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")
-    public ContratoDetailDTO addContrato(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratoId) {
-        return new ContratoDetailDTO(eventoLogic.addContrato(contratoId, eventosId));
+    public ContratoDetailDTO addContrato(@PathParam("idCliente") Long idCliente,@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratoId) {
+        return new ContratoDetailDTO(eventoLogic.addContrato(idCliente,contratoId, eventosId));
     }
 
     /**
@@ -289,8 +289,8 @@ public class EventoResource {
      */
     @DELETE
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")
-    public void removeContratos(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) {
-        eventoLogic.removeContrato(contratosId, eventosId);
+    public void removeContratos(@PathParam("idCliente") Long idCliente,@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) {
+        eventoLogic.removeContrato(idCliente, contratosId, eventosId);
     }
 
     /**
@@ -320,8 +320,8 @@ public class EventoResource {
      */
     @GET
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")
-    public ContratoDetailDTO getContrato(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) throws BusinessLogicException {
-        return new ContratoDetailDTO(eventoLogic.getContrato(eventosId, contratosId));
+    public ContratoDetailDTO getContrato(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) throws BusinessLogicException {
+        return new ContratoDetailDTO(eventoLogic.getContrato(idCliente,eventosId, contratosId));
     }
 
     /**
@@ -365,9 +365,9 @@ public class EventoResource {
      * servicio.
      * @return El servicio de Pagos para ese pagoo en paricular.
      */
-    @Path("{idEvento: \\d+}/eventos")
-    public Class<PagoResource> getPagoResource(@PathParam("idEvento") Long eventosId) {
-        EventoEntity entity = eventoLogic.getEvento(eventosId);
+    @Path("{idEvento: \\d+}/pagos")
+    public Class<PagoResource> getPagoResource(@PathParam("idCliente") Long idCliente, @PathParam("idEvento") Long eventosId) {
+        EventoEntity entity = eventoLogic.getEvento(idCliente,eventosId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /eventos/" + eventosId + "/pagos no existe.", 404);
         }

@@ -36,8 +36,9 @@
  */
 (function (ng) {
 
-    var mod = ng.module("eventoModule", ['ui.router']);
-    mod.constant("eventosContext", "api/eventos");
+    var mod = ng.module("eventoModule", ['clienteModule', 'ui.router']);
+    mod.constant("eventosContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/eventos/';
             //var basePathContratos = 'src/modules/contratos/';
@@ -46,11 +47,10 @@
             $stateProvider.state('eventos', {
                 url: '/eventos',
                 abstract: true,
+                parent: 'clienteDetail',
                 views: {
-                    'mainView': {
+                    'childrenView': {
                         templateUrl: basePath + 'eventos.html',
-                        controller: 'eventoCtrl',
-                        controllerAs: 'ctrl'
                     }
                 }
             }).state('eventosList', {
@@ -58,7 +58,9 @@
                 parent: 'eventos',
                 views: {
                     'listView': {
-                        templateUrl: basePath + 'eventos.list.html'
+                        templateUrl: basePath + 'eventos.list.html',
+                        controller: 'eventoCtrl',
+                        controllerAs: 'ctrl'
                     }
                 }
             }).state('eventoDetail', {

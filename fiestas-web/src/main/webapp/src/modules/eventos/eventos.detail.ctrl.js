@@ -1,8 +1,9 @@
 (function (ng) {
     var mod = ng.module("eventoModule");
-    mod.constant("eventoContext", "api/eventos");
-    mod.controller('eventoDetailCtrl', ['$scope', '$http', 'eventoContext', '$state',
-        function ($scope, $http, eventoContext, $state) {
+    mod.constant("eventoContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
+    mod.controller('eventoDetailCtrl', ['$scope', '$http', 'eventoContext', '$state','clientesContext','$filter',
+        function ($scope, $http, eventoContext, $state,clientesContext,$filter) {
             /**
              * @ngdoc controller
              * @name eventos.controller:eventoDetailCtrl
@@ -31,8 +32,9 @@
                  * @param {String} URL Dirección donde se encuentra el recurso
                  * del evento o API donde se puede consultar.
                  */
-                $http.get(eventoContext+'/' + $state.params.eventoId).then(function (response) {
-                    $scope.currentEvento = response.data;
+                $http.get(clientesContext+ '/' + $state.params.clienteId + '/' +eventoContext).then(function (response) {
+                    $scope.eventosRecords = response.data;
+                    $scope.currentEvento = $filter('filter')($scope.eventosRecords, {id: $state.params.eventoId}, true)[0];
                     $scope.pagosRecords=response.data.pagos;
                     $scope.contratosRecords=response.data.contratos;
                     

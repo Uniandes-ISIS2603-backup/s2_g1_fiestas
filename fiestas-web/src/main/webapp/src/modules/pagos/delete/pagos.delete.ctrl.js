@@ -2,7 +2,7 @@
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
     mod.constant("eventosContext", "api/eventos");
-    mod.controller('pagoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext',
+    mod.controller('pagoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','clientesContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoDeleteCtrl
@@ -20,9 +20,10 @@
          * @param {Object} pagoContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Pagos en el Backend.
          */
-        function ($scope, $http, eventosContext, $state, pagoContext) {
+        function ($scope, $http, eventosContext, $state, pagoContext,clientesContext) {
             var idEvento = $state.params.eventoId;
             var idPago = $state.params.pagoId;
+            var idCliente = $state.params.clienteId;
             /**
              * @ngdoc function
              * @name deletePago
@@ -32,7 +33,7 @@
              * @param {String} id El ID del pago a eliminar.
              */
             $scope.deletePago = function () {
-                $http.delete(eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago, {}).then(function (response) {
+                $http.delete(clientesContext + '/' + idCliente + '/' +eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago, {}).then(function (response) {
                     $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };
