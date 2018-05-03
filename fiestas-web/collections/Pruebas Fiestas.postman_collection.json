@@ -1153,7 +1153,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1162,6 +1162,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos"
 							]
 						},
@@ -1191,7 +1193,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1200,6 +1202,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001"
 							]
@@ -1230,7 +1234,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/400",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1239,8 +1243,10 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
-								"400"
+								"10003"
 							]
 						},
 						"description": "GET evento no existente"
@@ -1271,10 +1277,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 10004,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
+							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 10004,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\"\n }"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1283,6 +1289,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos"
 							]
 						},
@@ -1314,10 +1322,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 10001,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\",\n        \"cliente\": {},\n        \"pago\": {\n            \"id\": 0,\n            \"valor\": 0\n        },\n        \"tematica\": {}\n }"
+							"raw": " {\n        \"celebrado\": \"Valentina Ayala\",\n        \"descripcion\": \"Quinceañera de Valentina Ayala\",\n        \"fecha\": \"2018-07-03T00:00:00-05:00\",\n        \"id\": 10001,\n        \"invitados\": 55,\n        \"lugar\": \"Calle 44 45-72\",\n        \"nombre\": \"Quinceañera de Valentina Ayala\"\n }"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1326,6 +1334,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos"
 							]
 						},
@@ -1355,7 +1365,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10013/eventos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1364,6 +1374,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10013",
 								"eventos",
 								"10003"
 							]
@@ -1394,7 +1406,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10013/eventos/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1403,6 +1415,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10013",
 								"eventos",
 								"10003"
 							]
@@ -1438,7 +1452,7 @@
 							"raw": "{\n        \"celebrado\": \"Juan Jose Jose\",\n        \"descripcion\": \"Juan Jose\",\n        \"fecha\": \"2018-08-04T00:00:00-05:00\",\n        \"id\": 10002,\n        \"invitados\": 15,\n        \"lugar\": \"Carrera 89 90-86\",\n        \"nombre\": \"Bautizo Juan\",\n        \"cliente\": {\n            \"contrasena\": \"chao1234\",\n            \"correo\": \"s.arias@uniandes.edu.co\",\n            \"direccion\": \"cll.94 # 7-12\",\n            \"documento\": \"1012345682\",\n            \"id\": 10012,\n            \"imagen\": \"https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg\",\n            \"login\": \"df.galan\",\n            \"nombre\": \"Sofía Arias\",\n            \"telefono\": 3112121213\n        },\n        \"pagos\": [\n            {\n                \"estado\": \"Rechazado\",\n                \"id\": 10003,\n                \"metodoPago\": \"Consignacion\",\n                \"realizado\": false,\n                \"valor\": 350000\n            },\n            {\n                \"estado\": \"Confirmado\",\n                \"id\": 10004,\n                \"metodoPago\": \"Consignacion\",\n                \"realizado\": true,\n                \"valor\": 350000\n            }\n        ],\n        \"tematica\": {\n            \"ID\": 10016,\n            \"descripcion\": \"Bautizos\",\n            \"nombre\": \"Bautizo\"\n        }\n    }"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10002",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10012/eventos/10002",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1447,6 +1461,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10012",
 								"eventos",
 								"10002"
 							]
@@ -1482,7 +1498,7 @@
 							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 400,\n    \"invitados\": 35,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/400",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10012/eventos/10004",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1491,8 +1507,10 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10012",
 								"eventos",
-								"400"
+								"10004"
 							]
 						},
 						"description": "UPDATE evento no existente"
@@ -1523,10 +1541,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": -10,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\",\n    \"cliente\": {},\n    \"pago\": {\n        \"id\": 0,\n        \"valor\": 0\n    },\n    \"tematica\": {}\n}"
+							"raw": "{\n    \"celebrado\": \"Luciana Ayala\",\n    \"descripcion\": \"Luciana Ayala cumple 3 años\",\n    \"fecha\": \"2018-08-18T00:00:00-05:00\",\n    \"id\": 100,\n    \"invitados\": -10,\n    \"lugar\": \"Calle 44 45-86 Apto 6-123\",\n    \"nombre\": \"Cumpleaños Luciana\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1535,6 +1553,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001"
 							]
@@ -1571,7 +1591,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1580,6 +1600,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos"
@@ -1611,7 +1633,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1620,6 +1642,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos",
@@ -1652,7 +1676,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pago/10003",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pago/10003",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1661,6 +1685,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pago",
@@ -1698,7 +1724,7 @@
 							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 10005,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003/pagos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10013/eventos/10003/pagos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1707,6 +1733,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10013",
 								"eventos",
 								"10003",
 								"pagos"
@@ -1743,7 +1771,7 @@
 							"raw": "{   \n\t\"estado\": \"Todavia en Revision\",\n    \"id\": 10005,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 1000000\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003/pagos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10013/eventos/10003/pagos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1752,6 +1780,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10013",
 								"eventos",
 								"10003",
 								"pagos"
@@ -1788,7 +1818,7 @@
 							"raw": "{   \n\t\"estado\": \"En Revision\",\n    \"id\": 10005,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": false,\n    \"valor\": 5000000\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003/pagos",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10013/eventos/10003/pagos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1797,6 +1827,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10013",
 								"eventos",
 								"10003",
 								"pagos"
@@ -1828,7 +1860,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos/10002",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10002",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1837,6 +1869,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos",
@@ -1869,7 +1903,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos/10002",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10002",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1878,6 +1912,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos",
@@ -1915,7 +1951,7 @@
 							"raw": "{\n    \"estado\":\"Confirmado\",\n    \"id\": 10002,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": true,\n    \"valor\": 100000\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1924,6 +1960,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos",
@@ -1961,7 +1999,7 @@
 							"raw": "{\n    \"estado\": \"EN_REVISION\",\n    \"id\": 400,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": false,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10003/pagos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10013/eventos/10003/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1970,6 +2008,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10013",
 								"eventos",
 								"10003",
 								"pagos",
@@ -2007,7 +2047,7 @@
 							"raw": "{\n    \"estado\":\"En Proceso\",\n    \"id\": 100,\n    \"metodoPago\": \"PSE\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2016,6 +2056,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos",
@@ -2053,7 +2095,7 @@
 							"raw": "{\n    \"estado\":\"Confirmado\",\n    \"id\": 100,\n    \"metodoPago\": \"Tarjeta Debito\",\n    \"realizado\": true,\n    \"valor\": 100000,\n    \"evento\": {\n        \"id\": 0\n    }\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/fiestas-web/api/eventos/10001/pagos/10001",
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2062,6 +2104,8 @@
 							"path": [
 								"fiestas-web",
 								"api",
+								"clientes",
+								"10011",
 								"eventos",
 								"10001",
 								"pagos",
