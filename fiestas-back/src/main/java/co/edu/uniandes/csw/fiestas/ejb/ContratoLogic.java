@@ -87,7 +87,7 @@ public class ContratoLogic {
             throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
         }
        
-        horarioLogic.createHorario(entity.getHorario());
+        horarioLogic.createHorario(entity.getHorario(),entity.getId() );
         
         return persistence.create(entity);
     }
