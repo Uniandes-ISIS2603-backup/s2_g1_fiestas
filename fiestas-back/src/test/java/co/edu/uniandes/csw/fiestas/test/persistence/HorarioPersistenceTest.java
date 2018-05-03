@@ -94,13 +94,14 @@ public class HorarioPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from HorarioEntity").executeUpdate();
+        em.createQuery("delete from ContratoEntity").executeUpdate();
     }
 
     /**
      * Listas donde se guardan los datos
      */
-    private List<HorarioEntity> data = new ArrayList<HorarioEntity>();
-    private List<ContratoEntity> dataContrato = new ArrayList<ContratoEntity>();
+    private List<HorarioEntity> data = new ArrayList<>();
+    private List<ContratoEntity> dataContrato = new ArrayList<>();
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -110,7 +111,7 @@ public class HorarioPersistenceTest {
      */
     private void insertData() {
        PodamFactory factory = new PodamFactoryImpl();
-       for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             ContratoEntity entidad = factory.manufacturePojo(ContratoEntity.class);
             em.persist(entidad);
             dataContrato.add(entidad);

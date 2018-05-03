@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.HorarioLogic;
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.HorarioPersistence;
@@ -43,6 +44,7 @@ public class HorarioLogicTest {
     private UserTransaction utx;
 
     private List<HorarioEntity> data = new ArrayList<>();
+    private List<ContratoEntity> dataContrato = new ArrayList<ContratoEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -83,6 +85,7 @@ public class HorarioLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from HorarioEntity").executeUpdate();
+        em.createQuery("delete from ContratoEntity").executeUpdate();
 
     }
 
@@ -95,7 +98,14 @@ public class HorarioLogicTest {
     private void insertData() {
 
         for (int i = 0; i < 3; i++) {
+            ContratoEntity centity = factory.manufacturePojo(ContratoEntity.class);
+            em.persist(centity);
+            dataContrato.add(centity);
+        }
+        
+        for (int i = 0; i < 3; i++) {
             HorarioEntity entity = factory.manufacturePojo(HorarioEntity.class);
+            dataContrato.get(0).setHorario(entity);
             em.persist(entity);
             data.add(entity);
         }
@@ -112,11 +122,13 @@ public class HorarioLogicTest {
 
         HorarioEntity newEntity2 = factory.manufacturePojo(HorarioEntity.class);
         
+        dataContrato.get(0).setHorario(newEntity2);
+        
         //Caso 1: Normal
         try {
             newEntity2.setHoraInicio(new Date(System.currentTimeMillis() + 1000));
             newEntity2.setHoraFin(new Date(System.currentTimeMillis() + 1000000));
-            HorarioEntity result = horarioLogic.createHorario(newEntity2);
+            HorarioEntity result = horarioLogic.createHorario(newEntity2, dataContrato.get(0).getId());
             Assert.assertNotNull(result);
             Assert.assertEquals(result.getFecha(), newEntity2.getFecha());
             Assert.assertEquals(result.getHoraFin(), newEntity2.getHoraFin());
@@ -125,11 +137,12 @@ public class HorarioLogicTest {
             Assert.fail();
         }
 
+        dataContrato.get(1).setHorario(newEntity);
         //Caso 2: La fecha inicial ya ocurrió
         try {
             newEntity.setHoraInicio(new Date(System.currentTimeMillis() - 1000));
             newEntity.setHoraFin(new Date(System.currentTimeMillis() - 1000000));
-            HorarioEntity result = horarioLogic.createHorario(newEntity);
+            HorarioEntity result = horarioLogic.createHorario(newEntity, dataContrato.get(1).getId());
             Assert.fail();
 
         } catch (Exception e) {
@@ -140,7 +153,7 @@ public class HorarioLogicTest {
         try {
             newEntity.setHoraInicio(new Date(System.currentTimeMillis() + 1000000000));
             newEntity.setHoraFin(new Date(System.currentTimeMillis() + 1000));
-            HorarioEntity result = horarioLogic.createHorario(newEntity);
+            HorarioEntity result = horarioLogic.createHorario(newEntity, dataContrato.get(1).getId());
             Assert.fail();
 
         } catch (Exception e) {
@@ -150,7 +163,7 @@ public class HorarioLogicTest {
         //Caso 4: Se intenta crear un horario que ya existe
         try {
 
-            HorarioEntity result = horarioLogic.createHorario(newEntity2);
+            HorarioEntity result = horarioLogic.createHorario(newEntity2, dataContrato.get(0).getId());
             Assert.fail();
 
         } catch (Exception e) {
@@ -187,7 +200,7 @@ public class HorarioLogicTest {
     @Test
     public void getHorarioTest() {
         HorarioEntity entity = data.get(0);
-        HorarioEntity resultEntity = horarioLogic.getHorario(entity.getId());
+        HorarioEntity resultEntity = horarioLogic.getHorario(entity.getId(), dataContrato.get(0).getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
 
