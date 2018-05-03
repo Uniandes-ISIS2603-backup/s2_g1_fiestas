@@ -34,7 +34,7 @@ public class HorarioPersistence {
      * @return El horario encontrado o null. Nota: Si existe una o más horarios
      * devuelve siempre el primer que encuentra
      */
-    public HorarioEntity find(Long contratoId, long horarioId){
+    public HorarioEntity find(Long contratoId, Long horarioId){
         TypedQuery<HorarioEntity> q = em.createQuery("select p from HorarioEntity p where (p.contrato.id = :contratoid) and (p.id = :horarioid)", HorarioEntity.class);
         q.setParameter("contratoid", contratoId);
         q.setParameter("horarioid", horarioId);
