@@ -206,9 +206,7 @@ public class TematicaLogicTest
         Assert.assertEquals(servicioEntity.getNombre(), response.getNombre());
         Assert.assertEquals(servicioEntity.getDescripcion(), response.getDescripcion());
         Assert.assertEquals(servicioEntity.getProductos(), response.getProductos());
-        Assert.assertEquals(servicioEntity.getProveedores(), response.getProveedores());
         Assert.assertEquals(servicioEntity.getTipo(), response.getTipo());
-        Assert.assertEquals(servicioEntity.getValoraciones(), response.getValoraciones());
     }
 
     /**

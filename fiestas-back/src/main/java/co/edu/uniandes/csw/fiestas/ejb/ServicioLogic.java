@@ -5,12 +5,13 @@
  */
 package co.edu.uniandes.csw.fiestas.ejb;
 
-import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -29,9 +30,6 @@ public class ServicioLogic {
     
     @Inject
     private ServicioPersistence persistence;
-    
-    @Inject 
-    private ValoracionLogic valoracionLogic;
     
  
      /**
@@ -99,32 +97,32 @@ public class ServicioLogic {
     }
     
     /**
-     * Obtiene una colección de instancias de ProveedorEntity asociadas a una
+     * Obtiene una colección de instancias de ProductoEntity asociadas a una
      * instancia de Servicio
      *
      * @param servicioId Identificador de la instancia de Servicio
-     * @return Colección de instancias de ProveedorEntity asociadas a la instancia
+     * @return Colección de instancias de ProductoEntity asociadas a la instancia
      * de Servicio
      * 
      */
-    public List<ProveedorEntity> listProveedores(Long servicioId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la lista de proveedores asocida a un servicio.");
-        return getServicio(servicioId).getProveedores();
+    public List<ProductoEntity> listProductos(Long servicioId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la lista de productos asocida a un servicio.");
+        return getServicio(servicioId).getProductos();
     }
     
     /**
-     * Obtiene una instancia de ProveedorEntity asociada a una instancia de Servicio
+     * Obtiene una instancia de ProductoEntity asociada a una instancia de Servicio
      *
      * @param servicioId Identificador de la instancia de Servicio
-     * @param proveedoresId Identificador de la instancia de Proveedor
-     * @return La entidad del Proveedor asociada al servicio
+     * @param productosId Identificador de la instancia de Producto
+     * @return La entidad del Producto asociada al servicio
      */
-    public ProveedorEntity getProveedor(Long servicioId, Long proveedoresId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el proveedor con el id dado asociado al servicio");
-        List<ProveedorEntity> list = getServicio(servicioId).getProveedores();
-        ProveedorEntity proveedoresEntity = new ProveedorEntity();
-        proveedoresEntity.setId(proveedoresId);
-        int index = list.indexOf(proveedoresEntity);
+    public ProductoEntity getProducto(Long servicioId, Long productosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el producto con el id dado asociado al servicio");
+        List<ProductoEntity> list = getServicio(servicioId).getProductos();
+        ProductoEntity productosEntity = new ProductoEntity();
+        productosEntity.setId(productosId);
+        int index = list.indexOf(productosEntity);
         if (index >= 0) {
             return list.get(index);
         }
@@ -133,75 +131,35 @@ public class ServicioLogic {
     
     
      /**
-     * Asocia un Proveedor existente a un Servicio
+     * Asocia un Producto existente a un Servicio
      *
      * @param servicioId Identificador de la instancia de Servicio
-     * @param proveedorId Identificador de la instancia de Proveedor
-     * @return Instancia de ProveedorEntity que fue asociada a Servicio
+     * @param productoId Identificador de la instancia de Producto
+     * @return Instancia de ProductoEntity que fue asociada a Servicio
      * 
      */
-    public ProveedorEntity addProveedor(Long servicioId, Long proveedorId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregar un proveedor al servicio");
+    public ProductoEntity addProducto(Long servicioId, Long productoId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar un producto al servicio");
         ServicioEntity servicioEntity = getServicio(servicioId);
-        ProveedorEntity proveedorEntity = new ProveedorEntity();
-        proveedorEntity.setId(proveedorId);
-        servicioEntity.getProveedores().add(proveedorEntity);
-        return getProveedor(servicioId, proveedorId);
+        ProductoEntity productoEntity = new ProductoEntity();
+        productoEntity.setId(productoId);
+        servicioEntity.getProductos().add(productoEntity);
+        return getProducto(servicioId, productoId);
     }
 
    
     /**
-     * Desasocia un Proveedor existente de un Servicio existente
-     *
+     * Desasocia un Producto existente de un Servicio existente
      * @param servicioId Identificador de la instancia de Servicio
-     * @param proveedoresId Identificador de la instancia de Proveedor
+     * @param productosId Identificador de la instancia de Producto
      * 
      */
-    public void removeProveedor(Long servicioId, Long proveedoresId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de eliminar el proveedor asociado al servicio");
+    public void removeProducto(Long servicioId, Long productosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de eliminar el producto asociado al servicio");
         ServicioEntity entity = getServicio(servicioId);
-        ProveedorEntity proveedoresEntity = new ProveedorEntity();
-        proveedoresEntity.setId(proveedoresId);
-        entity.getProveedores().remove(proveedoresEntity);
+        ProductoEntity productosEntity = new ProductoEntity();
+        productosEntity.setId(productosId);
+        entity.getProductos().remove(productosEntity);
     }
-     
-    /**
-    * Obtiene la lista de los registros de Valoracion que pertenecen a un Servicio.
-     *
-    * @param servicioid id del Servicio el cual es padre de las Valoraciones.
-    * @return Colección de objetos de ValoracionEntity.
-    * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si no hay valoraciones
-    */
-    public List<ValoracionEntity> getValoraciones(Long servicioid) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las valoraciones asociadas al servicio");
-        ServicioEntity servicio = getServicio(servicioid);
-        if (servicio.getValoraciones() == null) {
-           throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
-       }
-       if (servicio.getValoraciones().isEmpty()) {
-           throw new BusinessLogicException("El servicio que consulta aún no tiene valoraciones");
-       }
-       return servicio.getValoraciones();
-    }
-    
-     /**
-     * Retorna un valoracion asociado a un servicio
-     *
-     * @param servicioId El id del servicio a buscar.
-     * @param valoracionId El id del valoracion a buscar
-     * @return El valoracion encontrado dentro del servicio.
-     * @throws BusinessLogicException Si el valoracion no se encuentra en el servicio
-     */
-    public ValoracionEntity getValoracion(Long servicioId, Long valoracionId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la valoracion asociada al servicio");
-        List<ValoracionEntity> valoraciones = getServicio(servicioId).getValoraciones();
-        ValoracionEntity valoracion = valoracionLogic.getValoracion(valoracionId);
-        int index = valoraciones.indexOf(valoracion);
-        if (index >= 0) {
-            return valoraciones.get(index);
-        }
-        throw new BusinessLogicException("El valoracion no está asociado al proveedor");
-    }
-    
 }
 
