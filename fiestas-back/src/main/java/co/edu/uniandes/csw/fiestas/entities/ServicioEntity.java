@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -22,17 +20,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ServicioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="servicio")
-    private List<ValoracionEntity> valoraciones;
-
-    @PodamExclude
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoEntity> productos;
-
-    @PodamExclude
-    @ManyToMany(mappedBy = "servicios")
-    private List<ProveedorEntity> proveedores;
 
     private String nombre;
     private String descripcion;
@@ -72,28 +61,12 @@ public class ServicioEntity extends BaseEntity implements Serializable {
         this.tipo = pTipo;
     }
 
-    public List<ValoracionEntity> getValoraciones() {
-        return valoraciones;
-    }
-
-    public void setValoraciones(List<ValoracionEntity> valoraciones) {
-        this.valoraciones = valoraciones;
-    }
-
-    public List<ProductoEntity> getProductos() {
+     public List<ProductoEntity> getProductos() {
         return productos;
     }
 
     public void setProductos(List<ProductoEntity> productos) {
         this.productos = productos;
-    }
-
-    public List<ProveedorEntity> getProveedores() {
-        return proveedores;
-    }
-
-    public void setProveedores(List<ProveedorEntity> proveedores) {
-        this.proveedores = proveedores;
     }
 
 }
