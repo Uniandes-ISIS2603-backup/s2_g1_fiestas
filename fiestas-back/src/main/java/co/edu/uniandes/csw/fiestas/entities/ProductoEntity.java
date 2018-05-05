@@ -13,7 +13,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class ProductoEntity extends BaseEntity implements Serializable {
-    
+
+   
 
     private String nombre;
     private Integer precio;
@@ -24,6 +25,9 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private ServicioEntity servicio;
+    @PodamExclude
+    @ManyToOne
+    private ProveedorEntity proveedor;
 
     /**
      * @return nombre del producto
@@ -108,9 +112,20 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     public void setServicio(ServicioEntity servicio) {
         this.servicio = servicio;
     }
+    
+     /**
+     * @return the proveedor
+     */
+    public ProveedorEntity getProveedor() {
+        return proveedor;
+    }
 
-    
-    
+    /**
+     * @param proveedor the proveedor to set
+     */
+    public void setProveedor(ProveedorEntity proveedor) {
+        this.proveedor = proveedor;
+    }
     
     
     
