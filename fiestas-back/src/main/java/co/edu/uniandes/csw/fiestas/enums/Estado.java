@@ -15,16 +15,16 @@ public enum Estado {
     private final String value;
 
     /**
-     * 
-     * @param value 
+     * Metodo constructor
+     * @param value Valor a asignar
      */
     Estado(final String value) {
         this.value = value;
     }
 
     /**
-     * 
-     * @return string
+     * Metodo que retornar el valor asociado al Estado
+     * @return retorna el valor asociado al Estado
      */
     @Override
     public String toString(){

@@ -35,6 +35,7 @@ public class EventoLogic {
 
     /**
      * Devuelve todos los eventos de un cliente que hay en la base de datos.
+     *
      * @param clienteid identificador del cliente
      * @return Lista de entidades de tipo evento.
      */
@@ -53,7 +54,7 @@ public class EventoLogic {
      * @return El evento encontrado, null si no lo encuentra.
      */
     public EventoEntity getEvento(Long clienteid, Long id) {
-        return persistence.find(clienteid,id);
+        return persistence.find(clienteid, id);
     }
 
     /**
@@ -65,10 +66,10 @@ public class EventoLogic {
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no se cumple reglas de negocio
      */
-    public EventoEntity createEvento(Long clienteid,EventoEntity entity) throws BusinessLogicException {
+    public EventoEntity createEvento(Long clienteid, EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un evento ");
-        ClienteEntity cliente= clienteLogic.getCliente(clienteid);
-        
+        ClienteEntity cliente = clienteLogic.getCliente(clienteid);
+
         EventoEntity buscado = getEvento(clienteid, entity.getId());
         if (buscado != null) {
             throw new BusinessLogicException("Ya existe el evento con este Id");
@@ -90,7 +91,12 @@ public class EventoLogic {
         if (entity.getInvitados() < 1) {
             throw new BusinessLogicException("El evento tiene un numero de invitados no valido");
         }
-        
+
+        //Tercera regla: El nombre no puede estar vacio
+        if (entity.getNombre() == null) {
+            throw new BusinessLogicException("El evento debe ter un nombre");
+        }
+
         entity.setCliente(cliente);
         return persistence.create(entity);
     }
@@ -103,9 +109,9 @@ public class EventoLogic {
      * @return Instancia de EventoEntity con los datos actualizados.
      * @throws BusinessLogicException - Error de lógica
      */
-    public EventoEntity updateEvento(Long clienteid,EventoEntity entity) throws BusinessLogicException {
+    public EventoEntity updateEvento(Long clienteid, EventoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
-        ClienteEntity cliente= clienteLogic.getCliente(clienteid);
+        ClienteEntity cliente = clienteLogic.getCliente(clienteid);
 
         //Primera regla de negocio: El evento debe tener plazo minimo de una semana
         int noOfDays = 7;
@@ -123,6 +129,12 @@ public class EventoLogic {
         if (entity.getInvitados() < 1) {
             throw new BusinessLogicException("El evento tiene un numero de invitados no valido");
         }
+
+        //Tercera regla: El nombre no puede estar vacio
+        if (entity.getNombre() == null) {
+            throw new BusinessLogicException("El evento debe ter un nombre");
+        }
+
         entity.setCliente(cliente);
 
         EventoEntity newEntity = persistence.update(entity);
@@ -138,7 +150,7 @@ public class EventoLogic {
      */
     public void deleteEvento(Long clienteid, Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar evento con id={0}", id);
-        EventoEntity old = getEvento(clienteid,id);
+        EventoEntity old = getEvento(clienteid, id);
         persistence.delete(old.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar evento con id={0}", id);
     }
@@ -151,7 +163,7 @@ public class EventoLogic {
      * @param clienteid identificador del cliente
      * @return entidad del contato agregado
      */
-    public ContratoEntity addContrato(Long clienteid,Long eventoId,Long contratoId) {
+    public ContratoEntity addContrato(Long clienteid, Long eventoId, Long contratoId) {
         EventoEntity evento = persistence.find(clienteid, eventoId);
         ContratoEntity contrato = contratoLogic.getContrato(contratoId);
         contrato.setEvento(evento);
@@ -165,8 +177,8 @@ public class EventoLogic {
      * @param eventoId id del evento en el cual se borrara el contrato
      * @param clienteid identificador del cliente
      */
-    public void removeContrato(Long clienteid,Long eventoId,Long contratoId) {
-        EventoEntity evento = persistence.find(clienteid,eventoId);
+    public void removeContrato(Long clienteid, Long eventoId, Long contratoId) {
+        EventoEntity evento = persistence.find(clienteid, eventoId);
         ContratoEntity contrato = contratoLogic.getContrato(contratoId);
         contrato.setEvento(null);
         evento.getContratos().remove(contrato);
@@ -180,8 +192,8 @@ public class EventoLogic {
      * @param contratos Lista de contratos que se quiere actualizar
      * @return Lista de contratos actualizados
      */
-    public List<ContratoEntity> replaceContratos(Long clienteid,Long eventoId, List<ContratoEntity> contratos) {
-        EventoEntity evento = persistence.find(clienteid,eventoId);
+    public List<ContratoEntity> replaceContratos(Long clienteid, Long eventoId, List<ContratoEntity> contratos) {
+        EventoEntity evento = persistence.find(clienteid, eventoId);
         List<ContratoEntity> listaContratos = evento.getContratos();
         for (ContratoEntity contrato : listaContratos) {
             if (contratos.contains(contrato)) {
@@ -203,8 +215,8 @@ public class EventoLogic {
      * @throws BusinessLogicException Si el contrato no se encuentra en el
      * evento
      */
-    public ContratoEntity getContrato(Long clienteId,Long eventoId, Long contratoId) throws BusinessLogicException {
-        List<ContratoEntity> contratos = getEvento(clienteId,eventoId).getContratos();
+    public ContratoEntity getContrato(Long clienteId, Long eventoId, Long contratoId) throws BusinessLogicException {
+        List<ContratoEntity> contratos = getEvento(clienteId, eventoId).getContratos();
         ContratoEntity contrato = contratoLogic.getContrato(contratoId);
         int index = contratos.indexOf(contrato);
         if (index >= 0) {
@@ -220,8 +232,8 @@ public class EventoLogic {
      * @param eventoId El id del evento a buscar
      * @return la lista de contratos del evento
      */
-    public List<ContratoEntity> getContratos(Long clienteId,Long eventoId) {
-        return getEvento(clienteId,eventoId).getContratos();
+    public List<ContratoEntity> getContratos(Long clienteId, Long eventoId) {
+        return getEvento(clienteId, eventoId).getContratos();
     }
 
 }
