@@ -33,9 +33,9 @@ insert into ValoracionEntity(id, calificacion, comentario) values(10022,5,'Excel
 insert into ValoracionEntity(id, calificacion, comentario) values(10023,4,'Me encanto');
 insert into ValoracionEntity(id, calificacion, comentario) values(10024,2, 'Pesimo servicio');
 
-insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10016,'Comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros',4);
-insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10017,'Audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6);
-insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal) values(10018,'Recreaciones para boda',200000, 'Recreadores para mantener activa a la gente','Incluye lo que necesiten los recreadores',2);
+insert into ProductoEntity(id,nombree,precio,descripcion,incluye,personal) values(10016,'Comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros',4);
+insert into ProductoEntity(id,nombree,precio,descripcion,incluye,personal) values(10017,'Audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6);
+insert into ProductoEntity(id,nombree,precio,descripcion,incluye,personal) values(10018,'Recreaciones para boda',200000, 'Recreadores para mantener activa a la gente','Incluye lo que necesiten los recreadores',2);
 
 insert into TematicaEntity(id,nombre, descripcion) values(10014,'Bodas','Matrimonis');
 insert into TematicaEntity(id,nombre, descripcion) values(10015,'Fiestas Infantiles','Fiestas para niños y niñas');
