@@ -2,8 +2,10 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,8 +26,10 @@ public class ProductoLogic
     
     @Inject
     private ProductoPersistence persistence;
-        @Inject
+    @Inject
     private ServicioPersistence perSer;
+    @Inject
+    private ProveedorPersistence perPro;
     
     /**
      * Obtiene la lista de los registros de Producto.
@@ -105,6 +109,13 @@ public class ProductoLogic
         ServicioEntity find = perSer.find(idSer);
         ProductoEntity faind = persistence.find(id);
         faind.setServicio(find);
+        return find;
+    }
+
+    public ProveedorEntity addProveedor(Long productoId, Long proveedorId) {
+        ProveedorEntity find = perPro.find(proveedorId);
+        ProductoEntity faind = persistence.find(productoId);
+        faind.setProveedor(find);
         return find;
     }
 }

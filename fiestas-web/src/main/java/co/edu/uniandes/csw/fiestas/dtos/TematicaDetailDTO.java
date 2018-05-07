@@ -64,12 +64,11 @@ public class TematicaDetailDTO extends TematicaDTO {
         super(entity);
         
         List<ServicioEntity> list = entity.getServicios();
-        List<ServicioDTO> list2 = new ArrayList<ServicioDTO>();
+        List<ServicioDTO> list2 = new ArrayList<>();
         for (ServicioEntity servicioEntity : list) 
         {
             list2.add(new ServicioDTO(servicioEntity));
         }
-        
         setServicios(list2);
     }
 
@@ -85,7 +84,7 @@ public class TematicaDetailDTO extends TematicaDTO {
     {
         TematicaEntity entity = super.toEntity();
         List<ServicioDTO> list1 = getServicios();
-        ArrayList<ServicioEntity> list2 = new ArrayList<ServicioEntity>();
+        ArrayList<ServicioEntity> list2 = new ArrayList<>();
         if (list1 != null)
         {
         for (ServicioDTO servicioDTO : list1) 
