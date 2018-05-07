@@ -91,6 +91,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que retorna el ID del evento
+     * 
      * @return El ID del evento
      */
     public Long getId() {
@@ -98,6 +100,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que asigna un nuevo ID al evento
+     * 
      * @param id El nuevo ID
      */
     public void setId(Long id) {
@@ -105,6 +109,8 @@ public class EventoDTO {
     }
     
     /**
+     * Metodo que retorna el nombre del evento
+     * 
      * @return El nombre del evento
      */
     public String getNombre() {
@@ -112,6 +118,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que asigna el nombre del evento
+     * 
      * @param nombre El nuevo nombre
      */
     public void setNombre(String nombre) {
@@ -119,6 +127,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que retorna la fecha del evento.
+     * 
      * @return La fecha del evento
      */
     public Date getFecha() {
@@ -126,6 +136,8 @@ public class EventoDTO {
     }
    
     /**
+     * Metodo que asigna una nueva fecha al evento.
+     * 
      * @param fecha del evento
      */
     public void setFecha(Date fecha) {
@@ -133,6 +145,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que retorna la descripcion del evento.
+     * 
      * @return la descripcion del evento
      */
     public String getDescripcion() {
@@ -140,6 +154,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que asigna una nueva descripcion del evento.
+     * 
      * @param descripcion nueva del evento
      */
     public void setDescripcion(String descripcion) {
@@ -147,6 +163,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que retorna el nombre o nombres de los celebrados.
+     * 
      * @return la descripcion del evento
      */
     public String getCelebrado() {
@@ -154,7 +172,7 @@ public class EventoDTO {
     }
 
     /**
-     * Asignacion del celebrado
+     * Metodo que asigna el nombre o nombres de los celebrados.
      *
      * @param celebrado del evento
      */
@@ -163,6 +181,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que retorna el lugar/direccion del evento
+     * 
      * @return lugar del evento
      */
     public String getLugar() {
@@ -170,7 +190,7 @@ public class EventoDTO {
     }
 
     /**
-     * Asignacion del lugar del evento
+     * Metodo que asigna un nuevo lugar a el evento
      *
      * @param lugar del evento
      */
@@ -179,6 +199,8 @@ public class EventoDTO {
     }
 
     /**
+     * Metodo que retorna el numero de invitados
+     * 
      * @return numeros de invitados del evento
      */
     public Integer getInvitados() {
@@ -186,7 +208,7 @@ public class EventoDTO {
     }
 
      /**
-     * Asignacion del numeros de invitados
+     * Metodo que asigna un nuevo numero de invitados
      *
      * @param numInvitados, numero de invitados del evento
      */
