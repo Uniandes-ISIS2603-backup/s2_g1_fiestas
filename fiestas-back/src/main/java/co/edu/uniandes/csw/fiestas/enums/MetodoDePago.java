@@ -14,8 +14,8 @@ public enum MetodoDePago {
     }
 
     /**
-     * 
-     * @return string
+     * Retorna el valor asociado al Metodo de Pago
+     * @return valor asociado al metodo de pago
      */
     @Override
     public String toString(){

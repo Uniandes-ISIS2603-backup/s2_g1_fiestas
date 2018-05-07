@@ -17,15 +17,17 @@
          * funciones que se definen en este controlador y que son utilizadas 
          * desde el HTML.
          * @param {Object} $http Objeto injectado para la manejar consultas HTTP
-         * @param {Object} authorsContext Constante injectada que contiene la ruta
+         * @param {Object} eventoContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Eventos en el Backend.
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
+         * @param {Object} clientesContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Clientes en el Backend.
          */
         function ($scope, $http, eventoContext,$state,clientesContext) {
             /**
              * @ngdoc function
-             * @name getAuthors
+             * @name getEventos
              * @methodOf eventos.controller:eventoCtrl
              * @description
              * Esta función utiliza el protocolo HTTP para obtener el recurso 

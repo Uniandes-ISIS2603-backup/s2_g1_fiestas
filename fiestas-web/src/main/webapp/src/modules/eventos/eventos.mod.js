@@ -10,7 +10,7 @@
  * cuales se accede al módulo. Por ejemplo, para mostrar los autores en la 
  * URL: 'localhost:8080/eventos/list' es necesario configurar el router por 
  * medio del stateProvider que informa a AngularJS de la relación entre la URL, 
- * un estado definido (estado de mostrar autores), el controlador y la vista 
+ * un estado definido (estado de mostrar eventos), el controlador y la vista 
  * correspondiente. Los estados definidos en este modulo son:
  * ```
  * | ESTADO           | URL                        | VISTAS                 |

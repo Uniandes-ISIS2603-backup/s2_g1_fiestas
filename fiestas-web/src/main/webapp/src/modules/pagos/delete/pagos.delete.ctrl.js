@@ -5,9 +5,9 @@
     mod.controller('pagoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','clientesContext',
         /**
          * @ngdoc controller
-         * @name eventos.controller:eventoDeleteCtrl
+         * @name pagos.controller:pagoDeleteCtrl
          * @description
-         * Definición del controlador auxiliar para eliminar Eventos. 
+         * Definición del controlador auxiliar para eliminar Pagos. 
          * @param {Object} $scope Referencia injectada al Scope definida para este
          * controlador, el scope es el objeto que contiene las variables o 
          * funciones que se definen en este controlador y que son utilizadas 
@@ -19,6 +19,8 @@
          * estado actual de la navegación definida en el módulo.
          * @param {Object} pagoContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Pagos en el Backend.
+         * @param {Object} clientesContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Clientes en el Backend.
          */
         function ($scope, $http, eventosContext, $state, pagoContext,clientesContext) {
             var idEvento = $state.params.eventoId;

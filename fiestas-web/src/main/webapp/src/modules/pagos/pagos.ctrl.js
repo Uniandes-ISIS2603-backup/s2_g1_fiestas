@@ -21,10 +21,26 @@
          * donde se encuentra el API de Eventos en el Backend.
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
-         * @param {Object} pagosContext Constante injectada que contiene la ruta
+         * @param {Object} pagoContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Pagos en el Backend.
+         * @param {Object} clientesContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Clientes en el Backend.
          */
         function ($scope, $http, eventosContext, $state, pagoContext, clientesContext) {
+             /**
+             * @ngdoc function
+             * @name getPagos
+             * @methodOf pagos.controller:pagoCtrl
+             * @description
+             * Esta función utiliza el protocolo HTTP para obtener el recurso 
+             * donde se encuentran los eventos en formato JSON. El recurso
+             * puede ser un archivo o un API Rest. La función se ejecuta
+             * automáticamente cuando el controlador es accedido desde el
+             * navegador.
+             * @param {String} URL Dirección donde se encuentra el recurso
+             * de los eventos o API donde se puede consultar. Se utiliza el
+             * contexto definido anteriormente.
+             */
             $http.get(clientesContext + '/' + $state.params.clienteId + '/' + eventosContext + '/' + $state.params.eventoId + '/' + pagoContext).then(function (response) {
                 $scope.pagosRecords = response.data;
             });
