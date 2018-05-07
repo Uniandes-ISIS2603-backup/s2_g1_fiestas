@@ -18,8 +18,10 @@
          * donde se encuentra el API de Eventos en el Backend.
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
-         * @param {Object} $filter Dependencia injectada para hacer filtros sobre
-         * arreglos.
+         * @param {Object} $rootScope Referencia injectada al Scope definida para
+         * toda la aplicación.
+         * @param {Object} clientesContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Clientes en el Backend
          */
         function ($scope, $http, eventosContext, $state, pagosContext, $rootScope,clientesContext) {
             $rootScope.edit = true;

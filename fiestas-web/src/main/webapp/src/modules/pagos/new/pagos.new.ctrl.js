@@ -6,7 +6,7 @@
     mod.controller('pagoNewCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', '$rootScope','clientesContext',
         /**
          * @ngdoc controller
-         * @name eventos.controller:eventoNewCtrl
+         * @name pagos.controller:pagoNewCtrl
          * @description
          * Definición del controlador auxiliar para crear Eventos. 
          * @param {Object} $scope Referencia injectada al Scope definida para este
@@ -22,6 +22,8 @@
          * donde se encuentra el API de Pago en el Backend.
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
+         * @param {Object} clientesContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Cliente en el Backend.
          */
         function ($scope, $http, eventosContext, $state, pagoContext, $rootScope,clientesContext) {
             $rootScope.edit = false;
