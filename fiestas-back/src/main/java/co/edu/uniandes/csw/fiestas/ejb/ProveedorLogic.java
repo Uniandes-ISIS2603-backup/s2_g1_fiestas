@@ -583,7 +583,7 @@ public class ProveedorLogic
         
         for(ProductoEntity producto : productos)
         {
-            valoracionProveedor += producto.getValoracion().getCalificacion();
+         //   valoracionProveedor += producto.getValoracion().getCalificacion();
         }
         
         if(!productos.isEmpty())
