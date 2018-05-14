@@ -35,7 +35,7 @@ public class BonoPersistence {
     
     public List<BonoEntity> findAllC(long proveedorId) {
         LOGGER.log(Level.INFO, "Consultando Bono cuyo dueño es el proveedor con id={0}", proveedorId);
-        Query q = em.createQuery("SELECT c FROM BONOENTITY WHERE c.PROVEEDOR_ID = ?1");
+        Query q = em.createNativeQuery("SELECT * FROM BONOENTITY WHERE PROVEEDOR_ID = ?1", BonoEntity.class);
         q.setParameter(1, proveedorId);
         List<BonoEntity> bE = q.getResultList();
         return bE;
