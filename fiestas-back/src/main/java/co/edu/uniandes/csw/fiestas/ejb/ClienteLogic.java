@@ -4,6 +4,7 @@ package co.edu.uniandes.csw.fiestas.ejb;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
 import java.util.List;
@@ -32,6 +33,8 @@ public class ClienteLogic
     @Inject
     private BlogLogic blogLogic;
     
+    @Inject
+    private UsuarioLogic usuarioLogic;
     
     /**
      * Obtiene la lista de los registros de Cliente.
@@ -98,7 +101,20 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede crear un cliente sin contraseña");
         }
+        usuarioLogic.createUsuario(crearUsuario(entity));
         return persistence.create(entity);
+    }
+    
+    public UsuarioEntity crearUsuario(ClienteEntity entity)
+    {
+        UsuarioEntity nuevoUsuario = new UsuarioEntity();
+        nuevoUsuario.setId(entity.getId());
+        nuevoUsuario.setContrasena(entity.getContrasena());
+        nuevoUsuario.setLogin(entity.getLogin());
+        nuevoUsuario.setRol("Cliente");
+        nuevoUsuario.setNombre(entity.getNombre());
+        nuevoUsuario.setToken(entity.getId());
+        return nuevoUsuario;
     }
 
     /**
@@ -135,6 +151,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede actualizar a un cliente sin contraseña");
         }
+        usuarioLogic.updateUsuario(crearUsuario(entity));
         return persistence.update(entity);
     }
 
@@ -150,6 +167,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No existe un cliente con dicho id para eliminar");
         }
+        usuarioLogic.deleteUsuario(id);
         persistence.delete(id);
     }
 

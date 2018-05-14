@@ -5,6 +5,7 @@ import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
@@ -43,7 +44,7 @@ public class ProveedorLogic
     private BonoLogic bonoLogic;
     
     @Inject
-    private ValoracionLogic valoracionLogic;
+    private UsuarioLogic usuarioLogic;
     
     /**
      * Obtiene la lista de los registros de Proveedor.
@@ -115,7 +116,21 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No puede crear un proveedor con valoración mayor a 5, valoración negativa o valoración nula");
         }
+        calcularValoracion(entity);
+        usuarioLogic.createUsuario(crearUsuario(entity));
         return persistence.create(entity);
+    }
+    
+    public UsuarioEntity crearUsuario(ProveedorEntity entity)
+    {
+        UsuarioEntity nuevoUsuario = new UsuarioEntity();
+        nuevoUsuario.setId(entity.getId() + 10000);
+        nuevoUsuario.setContrasena(entity.getContrasena());
+        nuevoUsuario.setLogin(entity.getLogin());
+        nuevoUsuario.setRol("Proveedor");
+        nuevoUsuario.setNombre(entity.getNombre());
+        nuevoUsuario.setToken(entity.getId() + 10000);
+        return nuevoUsuario;
     }
 
     /**
@@ -158,6 +173,8 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No puede actualizar un proveedor con valoración mayor a 5, valoración negativa o valoración nula");
         }
+        calcularValoracion(entity);
+        usuarioLogic.updateUsuario(crearUsuario(entity));
         return persistence.update(entity);
     }
 
@@ -174,6 +191,7 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No existe un proveedor con dicho id para eliminar");
         }
+        usuarioLogic.deleteUsuario(id + 10000);
         persistence.delete(id);
     }
 
@@ -255,7 +273,6 @@ public class ProveedorLogic
             updateProveedor(ent);
             return entS;            
         }
-
     }
 
     /**
@@ -557,5 +574,27 @@ public class ProveedorLogic
         updateProveedor(proveedor);
         bonoLogic.deleteBono(bonosId);
     }
-
+    
+    public void calcularValoracion(ProveedorEntity entity)
+    {
+        List<ProductoEntity> productos = entity.getProductos();
+        
+        double valoracionProveedor = 0;
+        
+        for(ProductoEntity producto : productos)
+        {
+         //   valoracionProveedor += producto.getValoracion().getCalificacion();
+        }
+        
+        if(!productos.isEmpty())
+        {
+            valoracionProveedor = valoracionProveedor/productos.size();
+        }
+        else
+        {
+            valoracionProveedor = 5;
+        }
+        
+        entity.setValoracion(valoracionProveedor);                
+    }
 }

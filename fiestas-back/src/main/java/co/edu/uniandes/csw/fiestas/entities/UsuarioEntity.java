@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -12,15 +13,15 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author df.nino10
  */
 @Entity
-public class UsuarioEntity extends BaseEntity 
+public class UsuarioEntity
 {
     private String nombre;
-    private String documento;
-    private Long telefono;
-    private String correo;
-    private String direccion;
+    private String rol;
     private String login;
-    private String contraseña;
+    private String contrasena;
+    private Long token;
+    @Id
+    private Long id;    
     
     /**
      * @return nombre del usuario
@@ -35,68 +36,6 @@ public class UsuarioEntity extends BaseEntity
     public void setNombre(String nombre)
     {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return the documento
-     */
-    public String getDocumento() {
-        return documento;
-    }
-
-    /**
-     * @param documento the documento to set
-     */
-    public void setDocumento(String documento)
-    {
-        this.documento = documento;
-    }
-
-    /**
-     * @return the telefono
-     */
-    public Long getTelefono() 
-    {
-        return telefono;
-    }
-
-    /**
-     * @param telefono the telefono to set
-     */
-    public void setTelefono(Long telefono) 
-    {
-        this.telefono = telefono;
-    }
-
-    /**
-     * @return the correo
-     */
-    public String getCorreo() {
-        return correo;
-    }
-
-    /**
-     * @param correo the correo to set
-     */
-    public void setCorreo(String correo) 
-    {
-        this.correo = correo;
-    }
-
-    /**
-     * @return the direccion
-     */
-    public String getDireccion()
-    {
-        return direccion;
-    }
-
-    /**
-     * @param direccion the direccion to set
-     */
-    public void setDireccion(String direccion)
-    {
-        this.direccion = direccion;
     }
 
     /**
@@ -117,17 +56,59 @@ public class UsuarioEntity extends BaseEntity
     /**
      * @return the contraseña
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contrasena the contraseña to set
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }  
+
+    /**
+     * @return the rol
+     */
+    public String getRol() {
+        return rol;
+    }
+
+    /**
+     * @param rol the rol to set
+     */
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    /**
+     * @return the token
+     */
+    public Long getToken() {
+        return token;
+    }
+
+    /**
+     * @param token the token to set
+     */
+    public void setToken(Long token) {
+        this.token = token;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     
 }
