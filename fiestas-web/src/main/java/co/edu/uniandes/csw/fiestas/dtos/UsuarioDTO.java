@@ -11,12 +11,8 @@ import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
  * <pre>
  *   {
  *      "id": number,
- *      "nombre": string,
- *      "documento": string,
- *      "telefono": number,
- *      "correo": string,
- *      "direccion": string,
  *      "login": string
+ *      "contrasena":
  *   }
  * </pre>
  * Por ejemplo un usuario se representa asi:<br>
@@ -40,14 +36,11 @@ import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 public class UsuarioDTO 
 {
     private Long id;
-    private String imagen;
     private String nombre;
-    private String documento;
-    private Long telefono;
-    private String correo;
-    private String direccion;
+    private String rol;
     private String login;
-    private String contraseña;
+    private String contrasena;
+    private Long token;
 
     /**
      * Constructor por defecto
@@ -58,13 +51,12 @@ public class UsuarioDTO
     
     public UsuarioDTO(UsuarioEntity e)
     { 
-        (this.contraseña)=e.getContraseña();
-        (this.correo)=e.getCorreo();
-        this.direccion=e.getDireccion();
-        this.documento=e.getDocumento();
+        (this.contrasena)=e.getContrasena();
+        
         this.login=e.getLogin();
         this.nombre=e.getNombre();
-        this.telefono=e.getTelefono();
+        this.rol = e.getRol();
+        this.token = e.getToken();
     }
     
     /**
@@ -88,7 +80,7 @@ public class UsuarioDTO
      */
     public String getContraseña()
     {
-        return contraseña;
+        return getContrasena();
     }
     
     /**
@@ -96,7 +88,7 @@ public class UsuarioDTO
      */
     public void setContraseña(String contraseña) 
     {
-        this.contraseña = contraseña;
+        this.setContrasena(contraseña);
     }
 
     /**
@@ -113,70 +105,6 @@ public class UsuarioDTO
     public void setNombre(String nombre) 
     {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return El documento del usuario.
-     */
-    public String getDocumento()
-    {
-        return documento;
-    }
-
-    /**
-     * @param documento El nuevo documento.
-     */
-    public void setDocumento(String documento)
-    {
-        this.documento = documento;
-    }
-
-    /**
-     * @return El número de teléfono del usuario.
-     */
-    public Long getTelefono() 
-    {
-        return telefono;
-    }
-
-    /**
-     * @param telefono El nuevo número de teléfono.
-     */
-    public void setTelefono(Long telefono) 
-    {
-        this.telefono = telefono;
-    }
-
-    /**
-     * @return El correo del usuario.
-     */
-    public String getCorreo()
-    {
-        return correo;
-    }
-
-    /**
-     * @param correo El nuevo correo.
-     */
-    public void setCorreo(String correo) 
-    {
-        this.correo = correo;
-    }
-
-    /**
-     * @return La dirección del usuario.
-     */
-    public String getDireccion() 
-    {
-        return direccion;
-    }
-
-    /**
-     * @param direccion La nueva dirección.
-     */
-    public void setDireccion(String direccion) 
-    {
-        this.direccion = direccion;
     }
 
     /**
@@ -204,27 +132,53 @@ public class UsuarioDTO
     public UsuarioEntity toEntity()
     {
         UsuarioEntity e = new UsuarioEntity(); 
-        e.setContraseña(this.contraseña);
-        e.setCorreo(this.correo);
-        e.setDireccion(this.direccion);
-        e.setDocumento(this.documento);
+        e.setContrasena(this.getContrasena());
+        e.setRol(this.getRol());
+        e.setToken(this.getToken());
         e.setLogin(this.login);
         e.setNombre(this.nombre);
-        e.setTelefono(this.telefono);
         return e;
     }
 
     /**
-     * @return the imagen
+     * @return the rol
      */
-    public String getImagen() {
-        return imagen;
+    public String getRol() {
+        return rol;
     }
 
     /**
-     * @param imagen the imagen to set
+     * @param rol the rol to set
      */
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    /**
+     * @return the contrasena
+     */
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    /**
+     * @param contrasena the contrasena to set
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    /**
+     * @return the token
+     */
+    public Long getToken() {
+        return token;
+    }
+
+    /**
+     * @param token the token to set
+     */
+    public void setToken(Long token) {
+        this.token = token;
     }
 }
