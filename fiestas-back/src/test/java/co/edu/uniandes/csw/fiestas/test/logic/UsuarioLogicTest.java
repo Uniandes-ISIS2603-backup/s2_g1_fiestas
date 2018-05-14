@@ -110,14 +110,11 @@ public class UsuarioLogicTest {
         UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
         Assert.assertNotNull(result);
         UsuarioEntity entidad = em.find(UsuarioEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
-        Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
-        Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
-        Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
-        Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
         Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
-        Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
+        Assert.assertEquals(newEntity.getRol(), entidad.getRol());
+        Assert.assertEquals(newEntity.getToken(), entidad.getToken());
+        Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
+        Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
     }
     
     
@@ -146,23 +143,11 @@ public class UsuarioLogicTest {
         UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
         Assert.assertNotNull(usuarioT);
         UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
-        Assert.assertEquals(usuario.getId(), usuarioT.getId());
-        Assert.assertEquals(usuario.getContraseña(), usuarioT.getContraseña());
-        Assert.assertEquals(usuario.getCorreo(), usuarioT.getCorreo());
-        Assert.assertEquals(usuario.getDireccion(), usuarioT.getDireccion());
-        Assert.assertEquals(usuario.getDocumento(), usuarioT.getDocumento());
-        Assert.assertEquals(usuario.getLogin(), usuarioT.getLogin());
-        Assert.assertEquals(usuario.getNombre(), usuarioT.getNombre());
-        Assert.assertEquals(usuario.getTelefono(), usuarioT.getTelefono());
-        //List<BlogEntity> lista=usuario.getBlogs();
-        //List<BlogEntity> lista1=usuarioT.getBlogs();
-        //assertNotNull(lista);
-        //assertNotNull(lista1);
-        //assertTrue(lista.size()==lista1.size());
-        //for (int i = 0; i < lista.size(); i++) {
-            //assertTrue(lista.contains(lista1.get(i)));
-        //}
-        
+        Assert.assertEquals(usuario.getNombre(), resultado.getNombre());
+        Assert.assertEquals(usuario.getRol(), resultado.getRol());
+        Assert.assertEquals(usuario.getToken(), resultado.getToken());
+        Assert.assertEquals(usuario.getLogin(), resultado.getLogin());
+        Assert.assertEquals(usuario.getContrasena(), resultado.getContrasena());
         
     }
     
@@ -216,14 +201,11 @@ public class UsuarioLogicTest {
         }
 
         UsuarioEntity entidad = em.find(UsuarioEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getId(), entidad.getId());
-        Assert.assertEquals(newEntity.getContraseña(), entidad.getContraseña());
-        Assert.assertEquals(newEntity.getCorreo(), entidad.getCorreo());
-        Assert.assertEquals(newEntity.getDireccion(), entidad.getDireccion());
-        Assert.assertEquals(newEntity.getDocumento(), entidad.getDocumento());
-        Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
         Assert.assertEquals(newEntity.getNombre(), entidad.getNombre());
-        Assert.assertEquals(newEntity.getTelefono(), entidad.getTelefono());
+        Assert.assertEquals(newEntity.getRol(), entidad.getRol());
+        Assert.assertEquals(newEntity.getToken(), entidad.getToken());
+        Assert.assertEquals(newEntity.getLogin(), entidad.getLogin());
+        Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
     }
     
      /**
