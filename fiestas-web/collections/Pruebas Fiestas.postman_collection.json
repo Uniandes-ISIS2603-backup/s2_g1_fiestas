@@ -1,13 +1,14 @@
 {
 	"info": {
+		"_postman_id": "25425e9f-4b44-449c-b9b8-24737d1cf943",
 		"name": "Pruebas Fiestas",
-		"_postman_id": "6efa468e-7db0-fdff-18ee-80b72af63964",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Proveedor",
+			"description": null,
 			"item": [
 				{
 					"name": "get proveedores con 200",
@@ -372,6 +373,7 @@
 		},
 		{
 			"name": "Cliente",
+			"description": null,
 			"item": [
 				{
 					"name": "get clientes con 200",
@@ -751,6 +753,7 @@
 		},
 		{
 			"name": "Blog",
+			"description": null,
 			"item": [
 				{
 					"name": "get blog con 200",
@@ -1126,6 +1129,7 @@
 		},
 		{
 			"name": "Bono",
+			"description": null,
 			"item": [
 				{
 					"name": "get bono con 200",
@@ -1501,6 +1505,7 @@
 		},
 		{
 			"name": "Eventos",
+			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Eventos",
@@ -1938,6 +1943,7 @@
 		},
 		{
 			"name": "Pagos",
+			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Pagos",
@@ -2485,11 +2491,99 @@
 						"description": "UPDATE pago fallido por que el metodo de pago no cumple la condicion"
 					},
 					"response": []
+				},
+				{
+					"name": "Prueba GET Pago Pagar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"10011",
+								"eventos",
+								"10001",
+								"pagos",
+								"10001"
+							]
+						},
+						"description": "GET pagos exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba GET Pago Cancelar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001/cancel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"10011",
+								"eventos",
+								"10001",
+								"pagos",
+								"10001",
+								"cancel"
+							]
+						},
+						"description": "GET pagos exitoso"
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "Horario",
+			"description": null,
 			"item": [
 				{
 					"name": "get horarios con 200",
@@ -2864,7 +2958,7 @@
 		},
 		{
 			"name": "Producto",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "http://localhost:8080/fiestas-web/api/productos",
@@ -2904,8 +2998,7 @@
 								"api",
 								"productos"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2948,8 +3041,7 @@
 								"productos",
 								"10016"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2991,8 +3083,7 @@
 								"api",
 								"productos"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3035,8 +3126,7 @@
 								"productos",
 								"0"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3079,8 +3169,7 @@
 								"productos",
 								"0"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -3088,7 +3177,7 @@
 		},
 		{
 			"name": "Temática",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "http://localhost:8080/fiestas-web/api/tematicas/3",
@@ -3129,8 +3218,7 @@
 								"tematicas",
 								"3"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3172,8 +3260,7 @@
 								"api",
 								"tematicas"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3216,8 +3303,7 @@
 								"tematicas",
 								"1"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3259,8 +3345,7 @@
 								"api",
 								"tematicas"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3302,8 +3387,7 @@
 								"api",
 								"tematicas"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}

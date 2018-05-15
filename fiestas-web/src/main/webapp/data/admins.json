@@ -1,5 +1,21 @@
 [
     {
+        "id": 1,
+        "nombre": "David",
+        "login": "david",
+        "contrasena": "asd123",
+        "rol": "proveedor",
+        "token": 997
+    },
+    {
+        "id": 2,
+        "nombre": "Nicolas",
+        "login": "nicolas",
+        "contrasena": "asd123",
+        "rol": "cliente",
+        "token": 998
+    },
+    {
         "id": 3,
         "nombre": "Cristian",
         "login": "cm.amaya10",
