@@ -136,6 +136,7 @@ public class BonoLogicTest {
     public void createBonoTest() throws BusinessLogicException {
         BonoEntity newEntity = data.get(1);
         newEntity.setDescuento(50);
+        newEntity.setCodigo("bi23uu9");
         BonoEntity result = bonoLogic.createBono(newEntity);
         Assert.assertNotNull(result);
         BonoEntity entidad = em.find(BonoEntity.class, result.getId());
