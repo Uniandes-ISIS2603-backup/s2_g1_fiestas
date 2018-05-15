@@ -10,7 +10,8 @@ import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *
+ *Entidad Bono
+ * 
  * @author df.nino10
  */
 @Entity

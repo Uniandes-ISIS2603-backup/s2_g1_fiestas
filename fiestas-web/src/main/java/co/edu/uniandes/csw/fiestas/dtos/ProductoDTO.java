@@ -41,6 +41,7 @@ public class ProductoDTO {
     private String descripcion;
     private String incluye;
     private int personal;
+    private String imagen;
 
     /**
      * Constructor por defecto
@@ -63,6 +64,7 @@ public class ProductoDTO {
             this.incluye = productoE.getIncluye();
             this.personal = productoE.getPersonal();
             this.precio = productoE.getPrecio();
+            this.imagen = productoE.getImagen();
 
         }
     }
@@ -154,6 +156,20 @@ public class ProductoDTO {
      */
     public void setPersonal(int pPer) {
         personal = pPer;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
 

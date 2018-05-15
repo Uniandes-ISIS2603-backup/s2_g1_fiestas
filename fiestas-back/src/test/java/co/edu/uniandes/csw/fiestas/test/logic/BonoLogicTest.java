@@ -136,6 +136,7 @@ public class BonoLogicTest {
     public void createBonoTest() throws BusinessLogicException {
         BonoEntity newEntity = data.get(1);
         newEntity.setDescuento(50);
+        newEntity.setCodigo("bi23uu9");
         BonoEntity result = bonoLogic.createBono(newEntity);
         Assert.assertNotNull(result);
         BonoEntity entidad = em.find(BonoEntity.class, result.getId());
@@ -180,22 +181,6 @@ public class BonoLogicTest {
     public void getBonoTest(){
         BonoEntity entidad =data.get(0);
         BonoEntity result = bonoLogic.getBono(entidad.getId());
-        assertNotNull(result);
-        assertEquals(result.getId(), entidad.getId());
-        assertEquals(result.getDescuento(), entidad.getDescuento());
-        assertEquals(result.getMotivo(), entidad.getMotivo());
-        assertEquals(result.getCodigo(), entidad.getCodigo());
-        assertEquals(result.getProveedor(), entidad.getProveedor());
-        
-    }
-    /**
-     * Se prueba el método para obtener un solo bono dado el id de proveedor y contrato
-     */
-    @Test
-    public void getBonoPandCTest(){
-        BonoEntity entidad = data.get(0);
-        ProveedorEntity proveedor =pData.get(0);
-        BonoEntity result = bonoLogic.getBono(proveedor.getId());
         assertNotNull(result);
         assertEquals(result.getId(), entidad.getId());
         assertEquals(result.getDescuento(), entidad.getDescuento());
