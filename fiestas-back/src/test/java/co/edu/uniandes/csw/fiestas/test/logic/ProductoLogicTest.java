@@ -42,9 +42,6 @@ public class ProductoLogicTest
 
     @Inject
     private ProductoLogic productoLogic;
-    
-    @Inject
-    private ProveedorLogic proveedorLogic;
 
     @PersistenceContext
     private EntityManager em;
