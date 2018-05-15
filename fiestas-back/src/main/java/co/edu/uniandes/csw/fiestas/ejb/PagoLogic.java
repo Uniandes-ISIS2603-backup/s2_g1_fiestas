@@ -146,7 +146,9 @@ public class PagoLogic {
             return Estado.EN_REVISION.toString();
         } else if (estado.equalsIgnoreCase(Estado.RECHAZADO.toString())) {
             return Estado.RECHAZADO.toString();
-        } else {
+        } else if (estado.equalsIgnoreCase(Estado.CANCELADO.toString())) {
+            return Estado.CANCELADO.toString();
+        }else {
             return null;
         }
     }

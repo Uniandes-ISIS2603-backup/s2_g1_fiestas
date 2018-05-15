@@ -6,7 +6,7 @@ package co.edu.uniandes.csw.fiestas.enums;
  * @author cm.amaya10
  */
 public enum Estado {
-    CONFIRMADO("Confirmado"), EN_REVISION("En Revision"), RECHAZADO("Rechazado");
+    CONFIRMADO("Confirmado"),CANCELADO("Cancelado"),EN_REVISION("En Revision"), RECHAZADO("Rechazado");
 
     public static String toSting() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
