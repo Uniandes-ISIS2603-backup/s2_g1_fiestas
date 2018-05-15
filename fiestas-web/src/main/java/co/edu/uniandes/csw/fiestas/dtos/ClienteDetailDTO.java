@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Clase que extiende de {@link ClienteDTO} para manejar la transformacion entre
  * los objetos JSON y las Entidades de la base de datos. Para conocer el
- * contenido de el cliente vaya a la documentacion de {@link ClienteDTO}
- * * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * contenido de el cliente vaya a la documentacion de {@link ClienteDTO} * Al
+ * serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
  *   {
  *      "id": number,
@@ -19,7 +19,7 @@ import java.util.List;
  *      "correo": string
  *      "direccion": string
  *      "login": string
- *   "eventos": 
+ *   "eventos":
  *      {
  *      "id": number,
  *      "fecha": string,
@@ -41,8 +41,8 @@ import java.util.List;
  *      "correo": df.nino10@uniandes.edu.co,
  *      "direccion": cll 1#1-1,
  *      "login": df.nino10,
- * 
- *      "eventos": 
+ *
+ *      "eventos":
  *      [{
  *      "id": 3425,
  *      "fecha": 01/01/12,
@@ -61,34 +61,51 @@ import java.util.List;
  *
  * </pre>
  */
-public class ClienteDetailDTO extends ClienteDTO 
-{
-    
-    private List<EventoDTO> eventos = new ArrayList<>();
+public class ClienteDetailDTO extends ClienteDTO {
+
+    private List<EventoDTO> eventos;
 
     /**
      * Constructor por defecto
      */
-    public ClienteDetailDTO() 
-    {
+    public ClienteDetailDTO() {
         super();
     }
-    
+
     /**
      * Convierte un CLienteEntity en un ClienteDetailDTO
+     *
      * @param entity ClienteEntity instancia
-     */    
-    public ClienteDetailDTO(ClienteEntity entity)
-    {
-        super(entity);  
-        if (entity != null)
-        {                       
-            for(EventoEntity ent : entity.getEventos())
-            {
+     */
+    public ClienteDetailDTO(ClienteEntity entity) {
+        super(entity);
+        if (entity.getEventos() != null) {
+            eventos = new ArrayList<>();
+            for (EventoEntity ent : entity.getEventos()) {
                 EventoDTO dto = new EventoDTO(ent);
                 eventos.add(dto);
-            }            
+            }
         }
+    }
+    
+      /**
+     * Método que transforma la clase ClienteDetailDTO a ClienteEntity.
+     *
+     * @return ClienteEntity instancia.
+     */
+    @Override
+    public ClienteEntity toEntity() {
+        ClienteEntity entity = super.toEntity();
+        if (eventos!=null) {
+            List<EventoEntity> listEventos = new ArrayList<>();
+            for (EventoDTO dto : getEventos()) {
+                EventoEntity ent = dto.toEntity();
+                listEventos.add(ent);
+            }
+            entity.setEventos(listEventos);
+        }
+
+        return entity;
     }
 
     /**
@@ -101,28 +118,7 @@ public class ClienteDetailDTO extends ClienteDTO
     /**
      * @param eventos Los nuevos eventos.
      */
-    public void setClienteDTO(List<EventoDTO> eventos) 
-    {
+    public void setEventos(List<EventoDTO> eventos) {
         this.eventos = eventos;
-    }     
-    
-    /**
-     * Método que transforma la clase ClienteDetailDTO a ClienteEntity.
-     * @return ClienteEntity instancia.
-     */
-    @Override
-    public ClienteEntity toEntity()
-    {
-        ClienteEntity entity = super.toEntity();
-        List<EventoEntity> listEventos = new ArrayList<>();
-        if(!eventos.isEmpty())
-        for(EventoDTO dto : getEventos())
-        {
-            EventoEntity ent = dto.toEntity();
-            listEventos.add(ent);
-        }
-        
-        entity.setEventos(listEventos);
-        return entity;
     }
 }

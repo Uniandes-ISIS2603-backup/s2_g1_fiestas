@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.BlogDetailDTO;
@@ -22,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-    /**
+ /**
  * <pre>Clase que implementa el recurso "blogs".
  * URL: /api/blogs
  * </pre>
@@ -191,63 +186,5 @@ public class BlogResource {
             list.add(new BlogDetailDTO(entity));
         }
         return list;
-    }
-    
-   /**
-     * <h1>POST /{blogId}/eventos/{eventosId} : Guarda un
-     * evento dentro del blog.</h1>
-     *
-     * <pre> Guarda un evento dentro de un blog con la informacion que
-     * recibe el la URL. Se devuelve el evento que se guarda en el blog.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Guardó el nuevo evento .
-     * </code>
-     * </pre>
-     *
-     * @param id Identificador del blog que se esta buscando. Este debe
-     * ser una cadena de dígitos.
-     * @param eventoId Identificador del evento que se desea guardar. Este
-     * debe ser una cadena de dígitos.
-     * @return JSON {@link BlogDetailDTO} - El evento guardado en la
-     * blog.
-     * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica
-     */
-    @POST
-    @Path("/{id: \\d+}/evento/{eventosId: \\d+}")
-    public void addEvento(@PathParam("eventosId")Long eventoId, @PathParam("id")Long id) {
-        EventoEntity eE=logic.getEventoExistente(eventoId);
-        try{
-            logic.addEvento(eE, id);
-        }
-        catch(BusinessLogicException e){
-            throw  new WebApplicationException(e.getMessage(),404);
-        }
-    }
-    
-    /**
-     * <h1>GET /{blogId}/eventos/{eventoId} : Obtener un evento de un
-     * blog.</h1>
-     *
-     * <pre>Busca y devuelve un evento con id en el blog.
-     *
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve un evento con id del blog.</code>
-     * </pre>
-     *
-     * @param id Identificador del blog que se esta buscando. Este
-     * debe ser una cadena de dígitos.
-     * @param eventoId Identificador del evento que se está buscando.
-     * @return JSON {@link BlogDetailDTO} - En evento encontrado
-     * en el blog.
-     */
-    @GET
-    @Path("{id: \\d+}/evento")
-     public EventoDTO getEvento(@PathParam("id") Long id) {
-        EventoEntity eE=logic.getEvento(id);
-        
-        return new EventoDTO(eE);
     }
 }

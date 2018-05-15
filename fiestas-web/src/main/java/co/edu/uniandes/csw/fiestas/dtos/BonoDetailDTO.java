@@ -8,7 +8,9 @@ package co.edu.uniandes.csw.fiestas.dtos;
 import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 
 /**
- *
+ * Clase que extiende de {@link BonoDTO} para manejar la transformacion entre
+ * los objetos JSON y las Entidades de la base de datos. Para conocer el
+ * contenido del bono, vaya a la documentacion de {@link BonoDTO}
  * @author df.nino10
  */
 public class BonoDetailDTO extends BonoDTO{

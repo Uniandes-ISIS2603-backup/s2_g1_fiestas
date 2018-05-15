@@ -1,7 +1,7 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.TematicaLogic;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.TematicaPersistence;
@@ -43,7 +43,7 @@ public class TematicaLogicTest
 
     private List<TematicaEntity> data = new ArrayList<TematicaEntity>();
     
-    private List<ServicioEntity> serviciosData = new ArrayList<ServicioEntity>();
+    private List<ProductoEntity> productosData = new ArrayList<ProductoEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -90,17 +90,17 @@ public class TematicaLogicTest
      */
     private void insertData() 
     {
-        List<ServicioEntity> listaServicio = new ArrayList<ServicioEntity>();
+        List<ProductoEntity> listaProducto = new ArrayList<ProductoEntity>();
         for (int i = 0; i < 3; i++) {
-            ServicioEntity servicio = factory.manufacturePojo(ServicioEntity.class);
-            em.persist(servicio);
-            serviciosData.add(servicio);
-            listaServicio.add(servicio);
+            ProductoEntity producto = factory.manufacturePojo(ProductoEntity.class);
+            em.persist(producto);
+            productosData.add(producto);
+            listaProducto.add(producto);
         }
         for (int i = 0; i < 3; i++) 
         {
             TematicaEntity entity = factory.manufacturePojo(TematicaEntity.class);
-            entity.setServicios(listaServicio);
+            entity.setProductos(listaProducto);
             em.persist(entity);
             data.add(entity);
         }
@@ -163,7 +163,7 @@ public class TematicaLogicTest
     @Test
     public void deleteTematicaTest() throws BusinessLogicException {
         TematicaEntity entity = data.get(0);
-        tematicaLogic.removeServicio(data.get(0).getId(), entity.getId());
+        tematicaLogic.removeProducto(data.get(0).getId(), entity.getId());
         tematicaLogic.deleteTematica(entity.getId());
         TematicaEntity deleted = em.find(TematicaEntity.class, entity.getId());
         Assert.assertNull(deleted);
@@ -190,82 +190,77 @@ public class TematicaLogicTest
     }
 
     /**
-     * Prueba para obtener una instancia de Servicios asociada a una instancia
+     * Prueba para obtener una instancia de Productos asociada a una instancia
      * Tematica
      *
      * 
      */
     @Test
-    public void getServiciosTest() 
+    public void getProductosTest() 
     {
         TematicaEntity entity = data.get(0);
-        ServicioEntity servicioEntity = serviciosData.get(0);
-        ServicioEntity response = tematicaLogic.getServicio(entity.getId(), servicioEntity.getId());
+        ProductoEntity productoEntity = productosData.get(0);
+        ProductoEntity response = tematicaLogic.getProducto(entity.getId(), productoEntity.getId());
 
-        Assert.assertEquals(servicioEntity.getId(), response.getId());
-        Assert.assertEquals(servicioEntity.getNombre(), response.getNombre());
-        Assert.assertEquals(servicioEntity.getDescripcion(), response.getDescripcion());
-        Assert.assertEquals(servicioEntity.getProductos(), response.getProductos());
-        Assert.assertEquals(servicioEntity.getProveedores(), response.getProveedores());
-        Assert.assertEquals(servicioEntity.getTipo(), response.getTipo());
-        Assert.assertEquals(servicioEntity.getValoraciones(), response.getValoraciones());
+        Assert.assertEquals(productoEntity.getId(), response.getId());
+        Assert.assertEquals(productoEntity.getNombre(), response.getNombre());
     }
 
     /**
-     * Prueba para obtener una colección de instancias de Servicios asociadas a una
+     * Prueba para obtener una colección de instancias de Productos asociadas a una
      * instancia Tematica
      *
      * 
      */
     @Test
-    public void listServiciosTest() {
-        List<ServicioEntity> list = tematicaLogic.listServicios(data.get(0).getId());
+    public void listProductosTest() {
+        List<ProductoEntity> list = tematicaLogic.listProductos(data.get(0).getId());
         Assert.assertEquals(3, list.size());
     }
 
     /**
-     * Prueba para asociar un Servicios existente a un Tematica
+     * Prueba para asociar un Productos existente a un Tematica
      *
      * 
      */
     @Test
-    public void addServiciosTest() {
+    public void addProductosTest() {
         TematicaEntity entity = data.get(0);
-        ServicioEntity servicioEntity = serviciosData.get(0);
-        ServicioEntity response = tematicaLogic.addServicio (entity.getId(),servicioEntity.getId());
+        ProductoEntity productoEntity = productosData.get(0);
+        ProductoEntity response = tematicaLogic.addProducto (entity.getId(),productoEntity.getId());
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(servicioEntity.getId(), response.getId());
+        Assert.assertEquals(productoEntity.getId(), response.getId());
     }
 
     /**
-     * Prueba para remplazar las instancias de Servicios asociadas a una instancia
+     * Prueba para remplazar las instancias de Productos asociadas a una instancia
      * de Tematica
      *
      * 
      */
     @Test
-    public void replaceServiciosTest() {
+    public void replaceProductosTest() {
         TematicaEntity entity = data.get(0);
-        List<ServicioEntity> list = serviciosData.subList(1, 3);
-        tematicaLogic.replaceServicios(list, entity.getId());
+        List<ProductoEntity> list = productosData.subList(1, 3);
+        tematicaLogic.replaceProductos(list, entity.getId());
 
         entity = tematicaLogic.getTematica(entity.getId());
-        Assert.assertTrue(entity.getServicios().contains(serviciosData.get(0)));
-        Assert.assertTrue(entity.getServicios().contains(serviciosData.get(1)));
-        Assert.assertTrue(entity.getServicios().contains(serviciosData.get(2)));
+        Assert.assertTrue(entity.getProductos().contains(productosData.get(0)));
+        Assert.assertTrue(entity.getProductos().contains(productosData.get(1)));
+        Assert.assertTrue(entity.getProductos().contains(productosData.get(2)));
     }
 
     /**
-     * Prueba para desasociar un Servicio existente de un Tematica existente
+     * Prueba para desasociar un Producto existente de un Tematica existente
      *
      * 
      */
     @Test
-    public void removeServiciosTest() 
+    public void removeProductosTest() 
     {
-        tematicaLogic.removeServicio(data.get(0).getId(), serviciosData.get(0).getId());
-        ServicioEntity response = tematicaLogic.getServicio(data.get(0).getId(), serviciosData.get(0).getId());
+        tematicaLogic.removeProducto(data.get(0).getId(), productosData.get(0).getId());
+        ProductoEntity response = tematicaLogic.getProducto(data.get(0).getId(), productosData.get(0).getId());
 
     } 
 }

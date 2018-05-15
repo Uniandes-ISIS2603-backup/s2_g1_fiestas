@@ -21,7 +21,7 @@ public class TematicaEntity  extends BaseEntity implements Serializable
     
     @PodamExclude
     @OneToMany
-    private List<ServicioEntity> servicios;
+    private List<ProductoEntity> productos;
     
     
     /**
@@ -41,17 +41,17 @@ public class TematicaEntity  extends BaseEntity implements Serializable
     }
     
     /**
-     * @return the servicios
+     * @return the productos
      */
-    public List<ServicioEntity> getServicios() {
-        return servicios;
+    public List<ProductoEntity> getProductos() {
+        return productos;
     }
 
     /**
-     * @param servicios the servicios to set
+     * @param productos the productos to set
      */
-    public void setServicios(List<ServicioEntity> servicios) {
-        this.servicios = servicios;
+    public void setProductos(List<ProductoEntity> productos) {
+        this.productos = productos;
     }
 
     /**

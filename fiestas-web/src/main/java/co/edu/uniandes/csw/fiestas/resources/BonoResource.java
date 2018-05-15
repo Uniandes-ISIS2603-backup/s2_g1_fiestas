@@ -22,7 +22,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 
 /**
+ * <pre>Clase que implementa el recurso "bonos".
+ * URL: /api/bonos
+ * </pre>
+ * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta "/api" y
+ * este recurso tiene la ruta "bono".</i>
  *
+ * <h2>Anotaciones </h2>
+ * <pre>
+ * Path: indica la dirección después de "api" para acceder al recurso
+ * Produces/Consumes: indica que los servicios definidos en este recurso reciben y devuelven objetos en formato JSON
+ * RequestScoped: Inicia una transacción desde el llamado de cada método (servicio). 
+ * </pre>
  * @author df.nino10
  */
 @Path("/bonos")

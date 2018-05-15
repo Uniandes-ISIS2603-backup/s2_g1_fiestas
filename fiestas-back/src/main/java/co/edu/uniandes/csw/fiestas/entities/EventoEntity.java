@@ -45,7 +45,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<PagoEntity> pagos = new ArrayList<>();
 
     @PodamExclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private ClienteEntity cliente;
 
     @PodamExclude

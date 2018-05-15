@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +18,15 @@ import java.util.List;
  * <pre>
  *   {
  *      "id": number,
- *      "comentario": string,
- *      "calificacion": string,
- *      "proveedores": [{"id": 1,
  *      "nombre": string,
- *      "documento": string,
- *      "telefono": number,
- *      "correo": string,
- *      "direccion": string,
+ *      "descripcion": string,
+ *      "tipo": string,
+ *      "productos": [{"id": 1,
+ *      "nombre": string,
+ *      "precio": number,
+ *      "descripcion": string,
+ *      "incluye": string,
+ *      "personal": Integer
  *      },
  *      ...
  *      ]
@@ -36,21 +37,23 @@ import java.util.List;
  *
  *   {
  *      "id": 524,
- *      "comentario": "Servicio de catering",
- *      "calificacion": "Comida",
- *      "proveedores": [{"id": 123,
- *      "nombre": "Pepito Perez",
- *      "documento": "1254699749",
- *      "telefono": 84645589,
- *      "correo": "pepito@hotmail.com",
- *      "direccion": "avenida feliz #85-24",
+ *      "nombre": "orquesta la 104",
+ *      "descripcion": "Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos",
+ *      "tipo": "Entretenimiento",
+ *      "productos": [{"id": 123,
+ *      "nombre": "orquesta profesional",
+ *      "precio": 500000,
+ *      "descripcion": "orquesta profesional por 4 horas",
+ *      "incluye": "Músicos profesionales con amplio repertorio de música tropical ",
+ *      "personal": 15
  *      },
- *      {"id": 124,
- *      "nombre": "Juanito Perez",
- *      "documento": "8752646467",
- *      "telefono": 98755589,
- *      "correo": "juanito@hotmail.com",
- *      "direccion": "avenida retiro #86-41",
+ *      {{"id": 124,
+ *      "nombre": "Escenario orquesta profesional",
+ *      "precio": 120000,
+ *      "descripcion": "Tarima de 20x20",
+ *      "incluye": "Montaje del escenario",
+ *      "personal": 5
+ *      }
  *      ]
  *   }
  *
@@ -60,7 +63,7 @@ import java.util.List;
  */
 public class ServicioDetailDTO extends ServicioDTO {
 
-    private List<ProveedorDTO> proveedores;
+    private List<ProductoDTO> productos;
 
     /**
      * Constructor por defecto
@@ -77,45 +80,44 @@ public class ServicioDetailDTO extends ServicioDTO {
     public ServicioDetailDTO(ServicioEntity e) {
         super(e);
         if (e != null) {
-            proveedores = new ArrayList<>();
-            for (ProveedorEntity entityProveedor : e.getProveedores()) {
-                proveedores.add(new ProveedorDTO(entityProveedor));
+            productos = new ArrayList<>();
+            for (ProductoEntity entityProducto : e.getProductos()) {
+                productos.add(new ProductoDTO(entityProducto));
             }
 
         }
     }
 
     /**
-     * @return La lista de proveedores del servicio
+     * @return La lista de productos del servicio
      */
-    public List<ProveedorDTO> getProveedores() {
-        return proveedores;
+    public List<ProductoDTO> getProductos() {
+        return productos;
     }
 
     /**
-     * @param proveedores La nueva lista de proveedores del servicio
+     * @param productos La nueva lista de productos del servicio
      */
 
-    public void setProveedores(List<ProveedorDTO> proveedores) {
-        this.proveedores = proveedores;
+    public void setProductos(List<ProductoDTO> productos) {
+        this.productos = productos;
     }
 
     /**
      * Convertir DTO a Entity
-     *
      * @return Un Entity con los valores del DTO
      */
     @Override
     public ServicioEntity toEntity() {
         ServicioEntity entity = super.toEntity();
-        if (proveedores != null) {
-            List<ProveedorEntity> listProveedores = new ArrayList<>();
-            for (ProveedorDTO dto : getProveedores()) {
-                ProveedorEntity ent = dto.toEntity();
-                listProveedores.add(ent);
+        if (productos != null) {
+            List<ProductoEntity> listProductos = new ArrayList<>();
+            for (ProductoDTO dto : getProductos()) {
+                ProductoEntity ent = dto.toEntity();
+                listProductos.add(ent);
             }
 
-            entity.setProveedores(listProveedores);
+            entity.setProductos(listProductos);
         }
         return entity;
     }

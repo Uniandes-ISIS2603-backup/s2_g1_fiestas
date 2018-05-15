@@ -1,6 +1,6 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
  * }
  *      ]
  *   }
- * </pre> Por ejemplo una entidad de Servicio se representa asi:<br>
+ * </pre> Por ejemplo una entidad de Producto se representa asi:<br>
  * <pre>
  *
  *   {
@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class TematicaDetailDTO extends TematicaDTO {
     
-    List<ServicioDTO> serviciosSugeridos;
+    List<ProductoDTO> productosSugeridos;
 
     /*
     * El constructor 
@@ -63,14 +63,13 @@ public class TematicaDetailDTO extends TematicaDTO {
     public TematicaDetailDTO(TematicaEntity entity) {
         super(entity);
         
-        List<ServicioEntity> list = entity.getServicios();
-        List<ServicioDTO> list2 = new ArrayList<ServicioDTO>();
-        for (ServicioEntity servicioEntity : list) 
+        List<ProductoEntity> list = entity.getProductos();
+        List<ProductoDTO> list2 = new ArrayList<>();
+        for (ProductoEntity productoEntity : list) 
         {
-            list2.add(new ServicioDTO(servicioEntity));
+            list2.add(new ProductoDTO(productoEntity));
         }
-        
-        setServicios(list2);
+        setProductos(list2);
     }
 
     /**
@@ -84,34 +83,34 @@ public class TematicaDetailDTO extends TematicaDTO {
     public TematicaEntity toEntity()
     {
         TematicaEntity entity = super.toEntity();
-        List<ServicioDTO> list1 = getServicios();
-        ArrayList<ServicioEntity> list2 = new ArrayList<ServicioEntity>();
+        List<ProductoDTO> list1 = getProductos();
+        ArrayList<ProductoEntity> list2 = new ArrayList<>();
         if (list1 != null)
         {
-        for (ServicioDTO servicioDTO : list1) 
+        for (ProductoDTO productoDTO : list1) 
         {
-            list2.add(servicioDTO.toEntity());
+            list2.add(productoDTO.toEntity());
         }
         }
-        entity.setServicios(list2);
+        entity.setProductos(list2);
         return entity;
     }
 
     /**
      * *
      *
-     * @return La lista de Servicios sugeridos para esta temática
+     * @return La lista de Productos sugeridos para esta temática
      */
-    public List<ServicioDTO> getServicios() {
-        return serviciosSugeridos;
+    public List<ProductoDTO> getProductos() {
+        return productosSugeridos;
     }
 
     /**
      * 
      * @param lista Es la nueva lista de serivcios sugeridos
      */
-    public void setServicios(List<ServicioDTO> lista) {
-        serviciosSugeridos = lista;
+    public void setProductos(List<ProductoDTO> lista) {
+        productosSugeridos = lista;
     }     
     
 }

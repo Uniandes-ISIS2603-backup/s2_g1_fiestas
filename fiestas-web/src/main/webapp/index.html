@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html ng-app="mainApp">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,18 +9,17 @@
 
         <!-- Dependencias Externas -->
         <link rel="shortcut icon" href="resources/images/globo-2.png">
-        
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Fjalla+One" />
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Fjalla+One" />
+        <!-- Dependencias Externas -->
         <link rel="stylesheet" href="resources/css/app.css" />
+        <link rel="stylesheet" href="resources/css/login.css" />
+        <!-- Dependencias Externas -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
-        <!-- Cities -->
-        <script src="src/modules/cities/cities.mod.js" type="text/javascript"></script>
-        <script src="src/modules/cities/cities.ctrl.js" type="text/javascript"></script>
-
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        
         <!-- Clientes -->
         <script src="src/modules/clientes/clientes.mod.js" type="text/javascript"></script>
         <script src="src/modules/clientes/clientes.ctrl.js" type="text/javascript"></script>
@@ -44,7 +43,7 @@
         <script src="src/modules/servicios/new/servicios.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/servicios/delete/servicios.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/servicios/update/servicios.update.ctrl.js" type="text/javascript"></script>
-        
+
         <!-- Contratos -->
         <script src="src/modules/contratos/contratos.mod.js" type="text/javascript"></script>
         <script src="src/modules/contratos/contratos.ctrl.js" type="text/javascript"></script>
@@ -52,15 +51,15 @@
         <script src="src/modules/contratos/new/contratos.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/contratos/delete/contratos.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/contratos/update/contratos.update.ctrl.js" type="text/javascript"></script>
-        
-         <!-- Horarios -->
+
+        <!-- Horarios -->
         <script src="src/modules/horarios/horarios.mod.js" type="text/javascript"></script>
         <script src="src/modules/horarios/horarios.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/horarios/horarios.detail.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/horarios/delete/horarios.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/horarios/new/horarios.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/horarios/update/horarios.update.ctrl.js" type="text/javascript"></script>
-        
+
         <!-- Valoraciones -->
         <script src="src/modules/valoraciones/valoraciones.mod.js" type="text/javascript"></script>
         <script src="src/modules/valoraciones/valoraciones.ctrl.js" type="text/javascript"></script>
@@ -76,7 +75,7 @@
         <script src="src/modules/blogs/create/blogs.new.ctrl.js" type="text/javascript"></script>        
         <script src="src/modules/blogs/update/blogs.update.ctrl.js"></script>
 
-         <!-- Bono -->
+        <!-- Bono -->
         <script src="src/modules/bonos/bonos.mod.js" type="text/javascript"></script>
         <script src="src/modules/bonos/bonos.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/bonos/bonos.detail.ctrl.js" type="text/javascript"></script>
@@ -91,7 +90,7 @@
         <script src="src/modules/eventos/delete/eventos.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/eventos/new/eventos.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/eventos/update/eventos.update.ctrl.js" type="text/javascript"></script>
-        
+
         <!-- Pagos -->
         <script src="src/modules/pagos/pagos.mod.js" type="text/javascript"></script>
         <script src="src/modules/pagos/pagos.ctrl.js" type="text/javascript"></script>
@@ -107,14 +106,19 @@
         <script src="src/modules/productos/delete/productos.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/productos/new/productos.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/productos/update/productos.update.ctrl.js" type="text/javascript"></script>
+        
         <!-- Tematica -->
         <script src="src/modules/tematicas/tematicas.mod.js" type="text/javascript"></script>
         <script src="src/modules/tematicas/tematicas.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/tematicas/tematicas.detail.ctrl.js" type="text/javascript"></script>
-        
+
+        <!-- Login-->
+        <script src="src/modules/login/login.mod.js" type="text/javascript"></script>
+        <script src="src/modules/login/login.ctrl.js" type="text/javascript"></script>        
+        <script src="src/modules/login/logout.ctrl.js" type="text/javascript"></script>
+
         <script src="src/app.js" type="text/javascript"></script> 
         <script src="src/http-interceptor.factory.js" type="text/javascript"></script>
-
 
     </head>
     <body>
@@ -123,39 +127,50 @@
                 <div class="col-md-1"> 
                     <img src="resources/images/logonegro.png" alt="Pásala Bomba" class="img-responsive logo"/>                    
                 </div>
+                <div class="col-md-6">
+                    <h2 class="mainTitle">PASALA BOMBA</h2>
+                </div>
+                <div class="col-md-5">
+                    <ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
+                        <li><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                    <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
+                        <li class="nameUser">Hola, {{currentUser}}</li>
+                        <li><a ui-sref="logout">Logout</a></li>
+                    </ul>
+                </div>
             </div> 
-                <div>
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-inverse">
-                            <div class="container-fluid">
-                                <div class="navbar-header">
-                                    <a class="navbar-brand" >KULTEM</a>
-                                </div>
-                                <ul class="nav navbar-nav">
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="eventosList">Eventos</a><   </li>                   
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li> 
-                                    <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="contratosList">Contratos</a></li>
-                                </ul>
-                           </div>
-                        </nav>                  
-                    </div>                     
-                <div ui-view="mainView">                
-            </div>     
-
-
-        </div>
-<!--        <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" >KULTEM</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li> 
+                                <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="contratosList">Contratos</a></li>
+                            </ul>
+                        </div>
+                    </nav>                  
+                </div>      
+            </div>
+            <div ui-view="mainView">    </div>            
+        </div>     
+        <br>
         <br>
         <div class="navbar navbar-default navbar-fixed-bottom">
-           <div> Logo made by <a href="https://www.flaticon.com/clientes/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-        </div>-->
+                <p class="navbar-text pull-left">© Grupo Logos
+                    <a ui-sref="booksList">Fiestas</a>
+                </p>
+        </div>
     </body>
-
+</html>
 

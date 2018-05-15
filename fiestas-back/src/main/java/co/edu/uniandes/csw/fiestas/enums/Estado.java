@@ -6,7 +6,7 @@ package co.edu.uniandes.csw.fiestas.enums;
  * @author cm.amaya10
  */
 public enum Estado {
-    CONFIRMADO("Confirmado"), EN_REVISION("En Revision"), RECHAZADO("Rechazado");
+    CONFIRMADO("Confirmado"),CANCELADO("Cancelado"),EN_REVISION("En Revision"), RECHAZADO("Rechazado");
 
     public static String toSting() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -15,16 +15,16 @@ public enum Estado {
     private final String value;
 
     /**
-     * 
-     * @param value 
+     * Metodo constructor
+     * @param value Valor a asignar
      */
     Estado(final String value) {
         this.value = value;
     }
 
     /**
-     * 
-     * @return string
+     * Metodo que retornar el valor asociado al Estado
+     * @return retorna el valor asociado al Estado
      */
     @Override
     public String toString(){

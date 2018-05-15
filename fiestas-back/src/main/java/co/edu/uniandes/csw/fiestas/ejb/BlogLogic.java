@@ -21,10 +21,7 @@ public class BlogLogic {
 
     @Inject
     private BlogPersistence persistence;
-    
-    @Inject
-    private EventoLogic logicEvento;
-    
+
     @Inject 
     private ClientePersistence clientePersistence;
     
@@ -82,7 +79,7 @@ public class BlogLogic {
         if(entity.getEvento()== null )
             throw new BusinessLogicException("El blog debe tener evento");       
         
-        if(logicEvento.getEvento(entity.getEvento().getId())==null)
+        if(!entity.getCliente().getEventos().contains(entity.getEvento()))
             throw new BusinessLogicException("El evento del blog no existe");
 
         if(clientePersistence.find((long)entity.getCliente().getId())==null)
@@ -100,7 +97,7 @@ public class BlogLogic {
     public BlogEntity updateBlog(BlogEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un blog ");
         
-        
+        BlogEntity old = getBlog(entity.getId());
         
         if(entity.getTitulo()== null && entity.getTitulo().equals(""))
             throw new BusinessLogicException("El blog debe tener título");
@@ -114,16 +111,16 @@ public class BlogLogic {
         if(entity.getEvento()== null )
             throw new BusinessLogicException("El blog debe tener evento");       
         
-        if(logicEvento.getEvento(entity.getEvento().getId())==null)
+        if(!entity.getCliente().getEventos().contains(entity.getEvento()))
             throw new BusinessLogicException("El evento del blog no existe");
 
         if(clientePersistence.find(entity.getCliente().getId())==null)
             throw new BusinessLogicException("El cliente del blog no existe");    
         
-        if(clientePersistence.find(entity.getCliente().getId())!=entity.getCliente())
+        if(!old.getCliente().equals(entity.getCliente()))
             throw new BusinessLogicException("No es posible cambiar el cliente del blog.");    
         
-        if(logicEvento.getEvento(entity.getEvento().getId())!=entity.getEvento())
+        if(!old.getEvento().equals(entity.getEvento()))
             throw new BusinessLogicException("No es posible cambiar el evento del blog");
         
         return persistence.update(entity);
@@ -138,29 +135,5 @@ public class BlogLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un autor ");
         persistence.delete(id);
     }
-    
-    /**
-     * 
-     * @param id
-     * @return 
-     */
-    public EventoEntity getEventoExistente(Long id){
-        return logicEvento.getEvento(id);
-    }
-    
-    public EventoEntity getEvento(Long id){
-        BlogEntity bE=persistence.find(id);
-        return bE.getEvento();
-    }
-    
-    
-    public void addEvento(EventoEntity eE, Long id) throws BusinessLogicException{
-        BlogEntity bE = getBlog(id);
-        if(bE.getEvento()==null){
-        bE.setEvento(eE);
-        persistence.update(bE);
-        }
-        else 
-            throw new BusinessLogicException("El blog ya tiene evento.");
-    }
+
 }

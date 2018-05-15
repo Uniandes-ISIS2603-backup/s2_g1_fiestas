@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="thumb">
-                <img class="img-responsive" ng-src="{{currentCliente.imagen}}"/>
+                    <img class="img-responsive" ng-src="{{currentCliente.imagen}}"/>
                 </div>
             </div>
             <div class="col-md-6">
                 <dl>     
                     <dt>{{currentCliente.nombre}}</dt>                 
-                
+
                     <hr>
                     <dt>Contraseña</dt>
                     <dd>{{currentCliente.contrasena}}</dd>
@@ -34,8 +34,16 @@
                     <dt>Telefono</dt>
                     <dd>{{currentCliente.telefono}}</dd>
                 </dl>
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="active"> <a ui-sref="eventosList({clienteId: currentCliente.id})">Eventos</a></li>
+                </ul>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <div ui-view="childrenView"></div>
+            </div>
+        </div>
     </div>
 </div>

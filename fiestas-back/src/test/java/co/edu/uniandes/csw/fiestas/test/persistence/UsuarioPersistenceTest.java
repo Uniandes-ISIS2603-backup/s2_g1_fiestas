@@ -133,12 +133,10 @@ public class UsuarioPersistenceTest {
         UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-        Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getContraseña(), entity.getContraseña());
-        Assert.assertEquals(newEntity.getCorreo(), entity.getCorreo());
+        Assert.assertEquals(newEntity.getRol(), entity.getRol());
+        Assert.assertEquals(newEntity.getToken(), entity.getToken());
         Assert.assertEquals(newEntity.getLogin(), entity.getLogin());
-        Assert.assertEquals(newEntity.getTelefono(), entity.getTelefono());
+        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
     }
 
     /**
@@ -172,12 +170,10 @@ public class UsuarioPersistenceTest {
         UsuarioEntity newEntity = usuarioPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-        Assert.assertEquals(newEntity.getDocumento(), entity.getDocumento());
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getContraseña(), entity.getContraseña());
-        Assert.assertEquals(newEntity.getCorreo(), entity.getCorreo());
+        Assert.assertEquals(newEntity.getRol(), entity.getRol());
+        Assert.assertEquals(newEntity.getToken(), entity.getToken());
         Assert.assertEquals(newEntity.getLogin(), entity.getLogin());
-        Assert.assertEquals(newEntity.getTelefono(), entity.getTelefono());
+        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
     }
 
     /**
@@ -210,13 +206,10 @@ public class UsuarioPersistenceTest {
 
         UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getDocumento(), resp.getDocumento());
-        Assert.assertEquals(newEntity.getDireccion(), resp.getDireccion());
-        Assert.assertEquals(newEntity.getContraseña(), resp.getContraseña());
-        Assert.assertEquals(newEntity.getCorreo(), resp.getCorreo());
-        Assert.assertEquals(newEntity.getLogin(), resp.getLogin());
-        Assert.assertEquals(newEntity.getTelefono(), resp.getTelefono());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getRol(), entity.getRol());
+        Assert.assertEquals(newEntity.getToken(), entity.getToken());
+        Assert.assertEquals(newEntity.getLogin(), entity.getLogin());
+        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
     }
 }

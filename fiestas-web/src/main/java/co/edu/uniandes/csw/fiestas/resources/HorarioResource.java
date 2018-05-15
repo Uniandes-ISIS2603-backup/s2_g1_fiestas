@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
-import co.edu.uniandes.csw.fiestas.dtos.EventoDTO;
+import co.edu.uniandes.csw.fiestas.dtos.ContratoDTO;
 import co.edu.uniandes.csw.fiestas.dtos.HorarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.HorarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
@@ -37,7 +37,7 @@ import javax.ws.rs.WebApplicationException;
  * @author df.nino10
  */
 
-@Path("horarios")
+@Path("contratos/{idContrato: \\d+}/horarios")
 @Produces ("application/json")
 @Consumes ("application/json")
 @RequestScoped
@@ -63,29 +63,14 @@ public class HorarioResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public HorarioDetailDTO getHorario(@PathParam("id") Long id) {
-        HorarioEntity entity=logic.getHorario(id);
+    public HorarioDetailDTO getHorario(@PathParam("idContrato") Long id, @PathParam("id") Long hId) {
+        HorarioEntity entity = logic.getHorario(hId, id);
         if(entity == null){
             throw new WebApplicationException("El horario a buscar no existe.", 404);
         }
         return new HorarioDetailDTO(entity);
     }
-    
-     /**
-     * <h1>GET /api/horarios : Obtener todos los horarios.</h1>
-     * <pre> Busca y devuelve todos los horarios que existen en la aplicación.
-     * 
-     * Codigos de respuesta:
-     * <code style="color: mediumseagreen; background-color: #eaffe0;">
-     * 200 OK Devuelve el horario correspondiente al id.
-     * </code>
-     * </pre>
-     * @return JSONArray {@link HorarioDetailDTO} - Los horarios encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
-     */
-    @GET
-    public List<HorarioDetailDTO> getHorarios(){
-      return listEntity2DTO(logic.getHorarios());
-    }
+   
     
     /**
      * <h1>POST /api/horarios : Crear un horario.</h1>
@@ -109,8 +94,8 @@ public class HorarioResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica que se genera cuando ya existe el horario.
      */
     @POST
-    public HorarioDetailDTO createHorario(HorarioDetailDTO horario) throws BusinessLogicException {
-        return new HorarioDetailDTO(logic.createHorario(horario.toEntity()));
+    public HorarioDetailDTO createHorario(@PathParam("idContrato") Long id, HorarioDetailDTO horario) throws BusinessLogicException {
+        return new HorarioDetailDTO(logic.createHorario(horario.toEntity(),id ));
     }
     
      /**
@@ -132,11 +117,11 @@ public class HorarioResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public HorarioDetailDTO updateHorario(@PathParam("id") Long id, HorarioDetailDTO horario)
+    public HorarioDetailDTO updateHorario(@PathParam("idContrato") Long cId, @PathParam("id") Long id, HorarioDetailDTO horario)
     {
         HorarioEntity entity = horario.toEntity();
         entity.setId(id);
-        HorarioEntity oldEntity = logic.getHorario(id);
+        HorarioEntity oldEntity = logic.getHorario(id, cId);
         if(oldEntity == null)
             throw new WebApplicationException("El horario no existe.",404);
         return new HorarioDetailDTO(logic.updateHorario(entity));
@@ -158,8 +143,8 @@ public class HorarioResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteHorario(@PathParam("id") Long id){
-        HorarioEntity entity = logic.getHorario(id);
+    public void deleteHorario(@PathParam("id") Long id, @PathParam("idContrato") Long cId){
+        HorarioEntity entity = logic.getHorario(id, cId);
         if(entity == null)
             throw new WebApplicationException("El horario no existe.",404);
         logic.deleteHorario(id);

@@ -6,9 +6,10 @@ import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *
- * @author mc.gonzalez15
- */
+* Entidad Blog
+* 
+* @author mc.gonzalez15
+*/
 @Entity
 public class BlogEntity extends BaseEntity implements Serializable {
 

@@ -9,26 +9,36 @@
  * cuales se accede al módulo. Por ejemplo, para mostrar las editoriales en la 
  * URL: 'localhost:8080/pagos/list' es necesario configurar el router por 
  * medio del stateProvider que informa a AngularJS de la relación entre la URL, 
- * un estado definido (estado de mostrar editoriales), el controlador y la vista 
+ * un estado definido (estado de mostrar pagos), el controlador y la vista 
  * correspondiente. Los estados definidos en este modulo son:
  * ```
- * | ESTADO          | URL                        | VISTAS                 |
- * |-----------------|----------------------------|------------------------|
- * | pagos           | /pagos                     | mainView:              |
- * |                 |                            | pagos.html             |
- * |                 |                            |                        |
- * | pagosList       | /list                      | listView:              |
- * |                 |                            | pagos.list.html        |
- * |                 |                            |                        |
- * |-----------------|----------------------------|------------------------|
+ * | ESTADO           | URL                        | VISTAS                 |
+ * |------------------|----------------------------|------------------------|
+ * | pagos            | /pagos                     | mainView:              |
+ * |                  |                            | pagos.html           |
+ * |                  |                            |                        |
+ * | pagosList        | /list                      | listView:              |
+ * |                  |                            | pagos.list.html      |
+ * |                  |                            |                        |
+ * | pagoDetail       | /{pagoId:int}/detail       | listView:              |
+ * |                  |                            | pagos.list.html      |
+ * |                  |                            | detailView:            |
+ * |                  |                            | pagos.detail.html    |
+ * | pagosCreate      | /create                    | detailView: (/new)     |
+ * |                  |                            | /pagos.new.html      |
+ * | pagoUpdate       | /update/{pagoId:int}       | detailView: (/new)     |
+ * |                  |                            | /pagos.new.html      |
+ * | pagoDelete       | /delete/{pagoId:int}       | detailView: (/delete)  |
+ * |                  |                            | /pago.delete.html    |
+ * |------------------|----------------------------|------------------------|
  *```
  */
 (function (ng) {
 
-    var mod = ng.module("pagoModule", ['eventoModule','ui.router']);
+    var mod = ng.module("pagoModule", ['pagoModule', 'ui.router']);
     mod.constant("pagosContext", "pagos");
-     mod.constant("eventosContext", "api/eventos");
-     
+    mod.constant("pagosContext", "pagos");
+    mod.constant("clientesContext", "api/clientes");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
             var basePath = 'src/modules/pagos/';
@@ -38,7 +48,7 @@
             $stateProvider.state('pagos', {
                 url: '/pagos',
                 abstract: true,
-                parent:'eventoDetail',
+                parent: 'eventoDetail',
                 views: {
                     'childrenView': {
                         templateUrl: basePath + 'pagos.html',
@@ -82,7 +92,7 @@
                 url: '/update/{pagoId:int}',
                 parent: 'pagos',
                 param: {
-                    eventoId: null
+                    pagoId: null
                 },
                 views: {
                     'detailView': {

@@ -10,7 +10,7 @@
  * cuales se accede al módulo. Por ejemplo, para mostrar los autores en la 
  * URL: 'localhost:8080/eventos/list' es necesario configurar el router por 
  * medio del stateProvider que informa a AngularJS de la relación entre la URL, 
- * un estado definido (estado de mostrar autores), el controlador y la vista 
+ * un estado definido (estado de mostrar eventos), el controlador y la vista 
  * correspondiente. Los estados definidos en este modulo son:
  * ```
  * | ESTADO           | URL                        | VISTAS                 |
@@ -36,8 +36,9 @@
  */
 (function (ng) {
 
-    var mod = ng.module("eventoModule", ['ui.router']);
-    mod.constant("eventosContext", "api/eventos");
+    var mod = ng.module("eventoModule", ['clienteModule', 'ui.router']);
+    mod.constant("eventosContext", "eventos");
+    mod.constant("clientesContext", "api/clientes");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/eventos/';
             //var basePathContratos = 'src/modules/contratos/';
@@ -46,11 +47,10 @@
             $stateProvider.state('eventos', {
                 url: '/eventos',
                 abstract: true,
+                parent: 'clienteDetail',
                 views: {
-                    'mainView': {
+                    'childrenView': {
                         templateUrl: basePath + 'eventos.html',
-                        controller: 'eventoCtrl',
-                        controllerAs: 'ctrl'
                     }
                 }
             }).state('eventosList', {
@@ -58,7 +58,9 @@
                 parent: 'eventos',
                 views: {
                     'listView': {
-                        templateUrl: basePath + 'eventos.list.html'
+                        templateUrl: basePath + 'eventos.list.html',
+                        controller: 'eventoCtrl',
+                        controllerAs: 'ctrl'
                     }
                 }
             }).state('eventoDetail', {

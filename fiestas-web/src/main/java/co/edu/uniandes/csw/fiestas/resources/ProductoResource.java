@@ -187,13 +187,23 @@ public class ProductoResource
     }
     
     
-    @POST
+    @PUT
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{productoId: \\d+}/servicio/{servicioId: \\d+}")
     public ProductoEntity addServicio(@PathParam("servicioId") Long servicioId,@PathParam("productoId") Long productoId )
     {
         productoLogic.addServicio(productoId, servicioId);
+        return productoLogic.getProducto(productoId);
+    }
+    
+    @PUT
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Path("{productoId: \\d+}/proveedor/{proveedorId: \\d+}")
+    public ProductoEntity addProveedor(@PathParam("proveedorId") Long proveedorId,@PathParam("productoId") Long productoId )
+    {
+        productoLogic.addProveedor(productoId, proveedorId);
         return productoLogic.getProducto(productoId);
     }
     

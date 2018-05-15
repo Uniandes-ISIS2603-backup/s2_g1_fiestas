@@ -77,13 +77,17 @@ public class PagoDTO {
     }
 
     /**
-     * @return El ID del evento
+     * Metodo que retorna el ID del pago.
+     *
+     * @return El ID del pago
      */
     public Long getId() {
         return id;
     }
 
     /**
+     * Metodo que asigna el nuevo ID del pago.
+     *
      * @param id El nuevo ID
      */
     public void setId(Long id) {
@@ -91,6 +95,8 @@ public class PagoDTO {
     }
 
     /**
+     * Metodo que retorna un booleano que determina si el pago fue realizado.
+     *
      * @return boolean representando si el pago fue realizado
      */
     public Boolean getRealizado() {
@@ -98,6 +104,8 @@ public class PagoDTO {
     }
 
     /**
+     * Metodo que asigna la variable realizado al pago.
+     *
      * @param realizado: boolean a asignar si se realizo el pago exitosamente.
      */
     public void setRealizado(Boolean realizado) {
@@ -105,6 +113,8 @@ public class PagoDTO {
     }
 
     /**
+     * Metodo que obtiene el estado actual del pago.
+     *
      * @return Estado del proceso de pago
      */
     public String getEstado() {
@@ -112,16 +122,16 @@ public class PagoDTO {
     }
 
     /**
-     * Asigna el nuevo estado del proceso de pago
+     * Metodo que asigna el nuevo estado del proceso de pago
      *
-     * @param estado  estado nuevo del pago
+     * @param estado estado nuevo del pago
      */
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
     /**
-     * Retorna el metodo de pago
+     * Metodo que retorna el metodo de pago
      *
      * @return metodo de pago usado en el pago
      */
@@ -130,7 +140,7 @@ public class PagoDTO {
     }
 
     /**
-     * Asigna el metodo de pago al proceso
+     * Metodo que asigna el metodo de pago al proceso
      *
      * @param metodo de pago
      */
@@ -139,7 +149,7 @@ public class PagoDTO {
     }
 
     /**
-     * Retorna el valor del pago
+     * Metodo que retorna el valor del pago
      *
      * @return valor del pago
      */
@@ -148,7 +158,7 @@ public class PagoDTO {
     }
 
     /**
-     * Asigna el valor del pago
+     * Metodo que asigna el valor del pago
      *
      * @param valor del pago
      */

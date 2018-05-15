@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +60,9 @@ public class ProductoDetailDTO extends ProductoDTO
 
 private ServicioDTO servicio;
 
+private ProveedorDTO proveedor;
+
+private List<ValoracionDTO> valoraciones;
 /**
 * Constructor por defecto
 */
@@ -68,9 +71,48 @@ public ProductoDetailDTO()
     //El constructor vacio solo se usa para instanciar la clase, sin los atributos inicializados, porque esto hace parte del otro tipo de método constructor. 
 }
 
+
+    /**
+     * Crea un objeto ProductoDetailDTO a partir de un objeto ProductoEntity
+     * incluyendo los atributos de ProductoDTO.
+     *
+     * @param entity Entidad ProductoEntity desde la cual se va a crear el nuevo
+     * objeto.
+     *
+     */ 
+    public ProductoDetailDTO(ProductoEntity entity) {
+        super(entity);
+        if(entity.getServicio() != null)
+        {
+        servicio = new ServicioDTO(entity.getServicio());
+        }
+        else
+        {
+        servicio = null;
+        }
+        if(entity.getProveedor() != null)
+        {
+        proveedor = new ProveedorDTO(entity.getProveedor());
+        }
+        else
+        {
+        proveedor = null;
+        }
+    }
+
+
 /*
 Getters
 */
+    
+    
+    /**
+     * @return the proveedor
+     */
+    public ProveedorDTO getProveedor() {
+        return proveedor;
+    }
+
 
 
 /**
@@ -93,29 +135,29 @@ void setServicio(ServicioDTO pServ)
 {
     servicio = pServ;
 }
-    
-
 
 
     /**
-     * Crea un objeto ProductoDetailDTO a partir de un objeto ProductoEntity
-     * incluyendo los atributos de ProductoDTO.
-     *
-     * @param entity Entidad ProductoEntity desde la cual se va a crear el nuevo
-     * objeto.
-     *
-     */ 
-    public ProductoDetailDTO(ProductoEntity entity) {
-        super(entity);
-        if(entity.getServicio() != null)
-        {
-        servicio = (new ServicioDTO(entity.getServicio()));
-        }
-        else
-        {
-        servicio = null;
-        }
+     * @param proveedor the proveedor to set
+     */
+    public void setProveedor(ProveedorDTO proveedor) {
+        this.proveedor = proveedor;
     }
+
+    /**
+     * @return the valoraciones
+     */
+    public List<ValoracionDTO> getValoraciones() {
+        return valoraciones;
+    }
+
+    /**
+     * @param valoraciones the valoraciones to set
+     */
+    public void setValoraciones(List<ValoracionDTO> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
 
     /**
      * Convierte un objeto ProductoDetailDTO a ProductoEntity incluyendo los
@@ -128,8 +170,20 @@ void setServicio(ServicioDTO pServ)
     public ProductoEntity toEntity()
     {
         ProductoEntity producto = super.toEntity();
-        if(this.getServicio() != null)
-        producto.setServicio(this.getServicio().toEntity());
+        if(this.getProveedor() != null)
+        {
+        producto.setProveedor(this.getProveedor().toEntity());
+        }
+        if(this.getValoraciones() != null)
+        {
+            List<ValoracionDTO> actual = this.getValoraciones();
+            List<ValoracionEntity> rta = new ArrayList<>();
+            for(int i = 0; i < actual.size(); i++)
+            {
+                rta.add(actual.get(i).toEntity());
+            }
+            producto.setValoraciones(rta);
+        }
         return producto;
     }
     

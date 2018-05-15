@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.PagoEntity;
@@ -52,6 +47,11 @@ public class PagoPersistence {
         return pago;
     }
 
+    /**
+     * Retorna todos los pagos en la base de datos
+     *
+     * @return devulve todas las entidades pagos de la base de datos
+     */
     public List<PagoEntity> findAll() {
         Query q = em.createQuery("select u from PagoEntity u");
         return q.getResultList();

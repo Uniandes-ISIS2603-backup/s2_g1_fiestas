@@ -1,11 +1,12 @@
 (function (ng) {
     var mod = ng.module("pagoModule");
     mod.constant("pagoContext", "pagos");
-    mod.constant("eventosContext", "api/eventos");
-    mod.controller('pagoNewCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', '$rootScope',
+    mod.constant("eventosContext", "eventos");
+     mod.constant("clientesContext", "api/clientes");
+    mod.controller('pagoNewCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext', '$rootScope','clientesContext',
         /**
          * @ngdoc controller
-         * @name eventos.controller:eventoNewCtrl
+         * @name pagos.controller:pagoNewCtrl
          * @description
          * Definición del controlador auxiliar para crear Eventos. 
          * @param {Object} $scope Referencia injectada al Scope definida para este
@@ -21,11 +22,14 @@
          * donde se encuentra el API de Pago en el Backend.
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
+         * @param {Object} clientesContext Constante injectada que contiene la ruta
+         * donde se encuentra el API de Cliente en el Backend.
          */
-        function ($scope, $http, eventosContext, $state, pagoContext, $rootScope) {
+        function ($scope, $http, eventosContext, $state, pagoContext, $rootScope,clientesContext) {
             $rootScope.edit = false;
 
             $scope.data = {};
+            $scope.data.realizado = false;
 
             /**
              * @ngdoc function
@@ -35,7 +39,8 @@
              * Esta función utiliza el protocolo HTTP para crear el pago.
              */
             $scope.createPago = function () {
-                $http.post(eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
+                console.log($scope.data);
+                $http.post(clientesContext + '/' + $state.params.clienteId + '/' +eventosContext+'/'+$state.params.eventoId+'/'+pagoContext, $scope.data).then(function (response) {
                     $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };

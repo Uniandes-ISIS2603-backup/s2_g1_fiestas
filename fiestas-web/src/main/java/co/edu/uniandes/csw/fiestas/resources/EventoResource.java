@@ -22,7 +22,7 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "eventos".
- * URL: /api/eventos
+ * URL: /api/clientes/{idCliente: \\d+}/eventos
  * </pre>
  * <i>Note que la aplicación (definida en {@link RestConfig}) define la ruta
  * "/api" y este recurso tiene la ruta "eventos".</i>
@@ -36,7 +36,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author cm.amaya10
  */
-@Path("eventos")
+@Path("clientes/{idCliente: \\d+}/eventos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -61,27 +61,30 @@ public class EventoResource {
     }
 
     /**
-     * <h1>GET /eventos : Obtener todos los eventos.</h1>
+     * <h1>GET clientes/{idCliente: \\d+}//eventos : Obtener todos los eventos
+     * de un cliente.</h1>
      *
-     * <pre>Busca y devuelve todos los eventos que existen en la aplicacion.
+     * <pre>Busca y devuelve todos los eventos que existen para un cliente dado en la aplicacion.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Devuelve todas los eventos de la aplicacion.</code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @return JSONArray {@link EventoDetailDTO} - Los eventos encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<EventoDetailDTO> getEventos() {
-        return listEntity2DTO(eventoLogic.getEventos());
+    public List<EventoDetailDTO> getEventos(@PathParam("idCliente") Long idCliente) {
+        return listEntity2DTO(eventoLogic.getEventos(idCliente));
     }
 
     /**
-     * <h1>GET /eventos/{id} : Obtener evento por id.</h1>
+     * <h1>GET clientes/{idCliente: \\d+}/eventos/{id} : Obtener evento de un
+     * cliente por los ids.</h1>
      *
-     * <pre>Busca el evento con el id asociado recibido en la URL y lo devuelve.
+     * <pre>Busca el evento de un cliente con los ids asociado recibido en la URL y lo devuelve.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -94,12 +97,13 @@ public class EventoResource {
      *
      * @param id Identificador del evento que se esta buscando. Este debe ser
      * una cadena de dígitos.
+     * @param idCliente Identificador del cliente, dueño del evento
      * @return JSON {@link EventoDetailDTO} - El evento buscado
      */
     @GET
     @Path("{id: \\d+}")
-    public EventoDetailDTO getEvento(@PathParam("id") Long id) {
-        EventoEntity entity = eventoLogic.getEvento(id);
+    public EventoDetailDTO getEvento(@PathParam("idCliente") Long idCliente, @PathParam("id") Long id) {
+        EventoEntity entity = eventoLogic.getEvento(idCliente, id);
         if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
@@ -107,7 +111,8 @@ public class EventoResource {
     }
 
     /**
-     * <h1>POST /eventos : Crear un evento.</h1>
+     * <h1>POST clientes/{idCliente: \\d+}/eventos : Crear un evento por parte
+     * de un cliente.</h1>
      *
      * <pre>Cuerpo de petición: JSON {@link EventoDetailDTO}.
      *
@@ -124,7 +129,8 @@ public class EventoResource {
      * </code>
      * </pre>
      *
-     * @param evento {@link EventoDetailDTO} - La ciudad que se desea guardar.
+     * @param idCliente Identificador del cliente, dueño del evento
+     * @param evento {@link EventoDetailDTO} - El evento que se desea guardar.
      * @return JSON {@link EventoDetailDTO} - El evento guardado con el atributo
      * id autogenerado.
      * @throws BusinessLogicException
@@ -132,14 +138,15 @@ public class EventoResource {
      * - Error de lógica que se genera cuando ya existe el evento.
      */
     @POST
-    public EventoDetailDTO createEvento(EventoDetailDTO evento) throws BusinessLogicException {
-        return new EventoDetailDTO(eventoLogic.createEvento(evento.toEntity()));
+    public EventoDetailDTO createEvento(@PathParam("idCliente") Long idCliente, EventoDetailDTO evento) throws BusinessLogicException {
+        return new EventoDetailDTO(eventoLogic.createEvento(idCliente, evento.toEntity()));
     }
 
     /**
-     * <h1>PUT /eventos/{id} : Actualizar evento por id.</h1>
+     * <h1>PUT clientes/{idCliente: \\d+}/eventos/{id} : Actualizar evento de un
+     * cliente por ids.</h1>
      *
-     * <pre>Busca el evento con el id asociado recibido en la URL, actualiza os paramteros
+     * <pre>Busca el evento de un cliente con los ids asociados recibido en la URL, actualiza os parametros
      * y lo devuelve.
      *
      * Codigos de respuesta:
@@ -153,6 +160,7 @@ public class EventoResource {
      *
      * @param id Identificador del evento que se esta buscando. Este debe ser
      * una cadena de dígitos.
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param evento evento a actualizar en la base de datos
      * @return JSON {@link EventoDetailDTO} - El evento buscado y actualizado
      * @throws BusinessLogicException
@@ -161,20 +169,21 @@ public class EventoResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public EventoDetailDTO updateEvento(@PathParam("id") Long id, EventoDetailDTO evento) throws BusinessLogicException {
+    public EventoDetailDTO updateEvento(@PathParam("idCliente") Long idCliente, @PathParam("id") Long id, EventoDetailDTO evento) throws BusinessLogicException {
         EventoEntity entity = evento.toEntity();
         entity.setId(id);
-        EventoEntity oldEntity = eventoLogic.getEvento(id);
+        EventoEntity oldEntity = eventoLogic.getEvento(idCliente, id);
         if (oldEntity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        return new EventoDetailDTO(eventoLogic.updateEvento(entity));
+        return new EventoDetailDTO(eventoLogic.updateEvento(idCliente, entity));
     }
 
     /**
-     * <h1>DELETE /eventos/{id} : Elimina un evento por id.</h1>
+     * <h1>DELETE clientes/{idCliente: \\d+}/eventos/{id} : Elimina un evento de
+     * un cliente por los ids.</h1>
      *
-     * <pre>Busca el evento con el id asociado recibido en la URL y lo elimina
+     * <pre>Busca el evento de un cliente con los ids asociados recibidos en la URL y lo elimina
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -185,22 +194,23 @@ public class EventoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param id Identificador del evento que se esta buscando. Este debe ser
      * una cadena de dígitos.
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteEvento(@PathParam("id") Long id) {
-        EventoEntity entity = eventoLogic.getEvento(id);
+    public void deleteEvento(@PathParam("idCliente") Long idCliente, @PathParam("id") Long id) {
+        EventoEntity entity = eventoLogic.getEvento(idCliente, id);
         if (entity == null) {
             throw new WebApplicationException("El evento no existe", 404);
         }
-        eventoLogic.deleteEvento(id);
+        eventoLogic.deleteEvento(idCliente, id);
     }
 
     /**
-     * <h1>GET /{eventosId}/contratos/ : Obtener todos los contratos de un
-     * evento.</h1>
+     * <h1>GET clientes/{idCliente: \\d+}/eventos/{eventosId}/contratos/ :
+     * Obtener todos los contratos de un evento de un cliente.</h1>
      *
      * <pre>Busca y devuelve todos los contratos que existen en el evento.
      *
@@ -209,6 +219,7 @@ public class EventoResource {
      * 200 OK Devuelve todos los contratos del evento.</code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param eventosId Identificador del evento que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @return JSONArray {@link ContratoDetailDTO} - Los contratos encontrados
@@ -216,13 +227,14 @@ public class EventoResource {
      */
     @GET
     @Path("{eventosId: \\d+}/contratos")
-    public List<ContratoDetailDTO> listContratos(@PathParam("eventosId") Long eventosId) {
-        return contratosListEntity2DTO(eventoLogic.getContratos(eventosId));
+    public List<ContratoDetailDTO> listContratos(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId) {
+        return contratosListEntity2DTO(eventoLogic.getContratos(idCliente, eventosId));
     }
 
     /**
-     * <h1>PUT /{eventosId}/contratos: Edita loscontratos de un evento..</h1>
-     * <pre> Remplaza las instancias de Contrato asociadas a una instancia de Evento
+     * <h1>PUT clientes/{idCliente: \\d+}/eventos/{eventosId}/contratos: Edita
+     * los contratos de un evento.</h1>
+     * <pre> Reemplaza las instancias de Contrato asociadas a una instancia de Evento de un cliente.
      *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
@@ -230,6 +242,7 @@ public class EventoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param eventosId Identificador del evento que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @param contratos JSONArray {@link ContratoDetailDTO} El arreglo de
@@ -239,13 +252,14 @@ public class EventoResource {
      */
     @PUT
     @Path("{eventosId: \\d+}/contratos")
-    public List<ContratoDetailDTO> replaceContratos(@PathParam("eventosId") Long eventosId, List<ContratoDetailDTO> contratos) {
-        return contratosListEntity2DTO(eventoLogic.replaceContratos(eventosId, contratosListDTO2Entity(contratos)));
+    public List<ContratoDetailDTO> replaceContratos(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId, List<ContratoDetailDTO> contratos) {
+        return contratosListEntity2DTO(eventoLogic.replaceContratos(idCliente, eventosId, contratosListDTO2Entity(contratos)));
     }
 
     /**
-     * <h1>POST /{eventosId}/contratos/{contratosId} : Guarda un contrato dentro
-     * del evento.</h1>
+     * <h1>POST clientes/{idCliente:
+     * \\d+}/eventos/{eventosId}/contratos/{contratosId} : Guarda un contrato
+     * dentro del evento.</h1>
      *
      * <pre> Guarda un contrato dentro de un evento con la informacion que
      * recibe en la URL. Se devuelve el contrato que se guarda en la evento.
@@ -256,6 +270,7 @@ public class EventoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param eventosId Identificador del evento que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @param contratoId Identificador del contrato que se desea guardar. Este
@@ -265,12 +280,13 @@ public class EventoResource {
      */
     @POST
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")
-    public ContratoDetailDTO addContrato(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratoId) {
-        return new ContratoDetailDTO(eventoLogic.addContrato(contratoId, eventosId));
+    public ContratoDetailDTO addContrato(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratoId) {
+        return new ContratoDetailDTO(eventoLogic.addContrato(idCliente, contratoId, eventosId));
     }
 
     /**
-     * <h1>DELETE /{eventosId}/contratos/{contratosId} : Elimina un contrato
+     * <h1>DELETE clientes/{idCliente:
+     * \\d+}/eventos/{eventosId}/contratos/{contratosId} : Elimina un contrato
      * dentro del evento.</h1>
      *
      * <pre> Elimina la referencia del contrato asociado al ID dentro del evento
@@ -282,6 +298,7 @@ public class EventoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param eventosId Identificador del evento que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @param contratosId Identificador del contrato que se desea guardar. Este
@@ -289,13 +306,14 @@ public class EventoResource {
      */
     @DELETE
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")
-    public void removeContratos(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) {
-        eventoLogic.removeContrato(contratosId, eventosId);
+    public void removeContratos(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) {
+        eventoLogic.removeContrato(idCliente, contratosId, eventosId);
     }
 
     /**
-     * <h1>GET /{eventosId}/contratos/{contratosId} : Obtener contrato por id
-     * del evento por id.</h1>
+     * <h1>GET clientes/{idCliente:
+     * \\d+}/eventos/{eventosId}/contratos/{contratosId} : Obtener contrato por
+     * id del evento por id.</h1>
      *
      * <pre>Busca el contrato con el id asociado dentro del evento con id asociado.
      *
@@ -308,6 +326,7 @@ public class EventoResource {
      * </code>
      * </pre>
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param eventosId Identificador del evento que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @param contratosId Identificador del contrato que se esta buscando. Este
@@ -320,8 +339,8 @@ public class EventoResource {
      */
     @GET
     @Path("{eventosId: \\d+}/contratos/{contratosId: \\d+}")
-    public ContratoDetailDTO getContrato(@PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) throws BusinessLogicException {
-        return new ContratoDetailDTO(eventoLogic.getContrato(eventosId, contratosId));
+    public ContratoDetailDTO getContrato(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId, @PathParam("contratosId") Long contratosId) throws BusinessLogicException {
+        return new ContratoDetailDTO(eventoLogic.getContrato(idCliente, eventosId, contratosId));
     }
 
     /**
@@ -361,13 +380,14 @@ public class EventoResource {
      * dependen del evento, es una redirección al servicio que maneja el
      * segmento de la URL que se encarga de las reseñas.
      *
+     * @param idCliente Identificador del cliente, dueño del evento
      * @param eventosId El ID del evento con respecto al cual se accede al
      * servicio.
      * @return El servicio de Pagos para ese pagoo en paricular.
      */
-    @Path("{idEvento: \\d+}/eventos")
-    public Class<PagoResource> getPagoResource(@PathParam("idEvento") Long eventosId) {
-        EventoEntity entity = eventoLogic.getEvento(eventosId);
+    @Path("{idEvento: \\d+}/pagos")
+    public Class<PagoResource> getPagoResource(@PathParam("idCliente") Long idCliente, @PathParam("idEvento") Long eventosId) {
+        EventoEntity entity = eventoLogic.getEvento(idCliente, eventosId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /eventos/" + eventosId + "/pagos no existe.", 404);
         }
