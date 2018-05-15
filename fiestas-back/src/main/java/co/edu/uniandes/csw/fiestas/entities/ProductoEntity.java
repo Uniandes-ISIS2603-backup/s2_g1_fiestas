@@ -1,9 +1,11 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -21,6 +23,7 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     private String descripcion;
     private String incluye;
     private Integer personal;
+    private String imagen;
 
     @PodamExclude
     @ManyToOne
@@ -28,6 +31,10 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private ProveedorEntity proveedor;
+    
+    @PodamExclude 
+    @OneToMany 
+    private List<ValoracionEntity> valoraciones;
 
     /**
      * @return nombre del producto
@@ -125,6 +132,34 @@ public class ProductoEntity extends BaseEntity implements Serializable {
      */
     public void setProveedor(ProveedorEntity proveedor) {
         this.proveedor = proveedor;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    /**
+     * @return the valoraciones
+     */
+    public List<ValoracionEntity> getValoraciones() {
+        return valoraciones;
+    }
+
+    /**
+     * @param valoraciones the valoraciones to set
+     */
+    public void setValoraciones(List<ValoracionEntity> valoraciones) {
+        this.valoraciones = valoraciones;
     }
     
     
