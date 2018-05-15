@@ -17,7 +17,7 @@
             if (sessionStorage.getItem("username")) {
                 sessionStorage.clear();
             } else {
-                $state.go('productosList', {}, {reload: true});
+                $state.go('main', {}, {reload: true});
             }
         }
     ]);
