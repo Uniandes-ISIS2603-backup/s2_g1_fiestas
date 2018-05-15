@@ -1,13 +1,14 @@
 {
 	"info": {
+		"_postman_id": "fa1ea504-bc3a-4aa4-bf78-183f845ebfb8",
 		"name": "Pruebas Fiestas",
-		"_postman_id": "6efa468e-7db0-fdff-18ee-80b72af63964",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Proveedor",
+			"description": null,
 			"item": [
 				{
 					"name": "get proveedores con 200",
@@ -372,6 +373,7 @@
 		},
 		{
 			"name": "Cliente",
+			"description": null,
 			"item": [
 				{
 					"name": "get clientes con 200",
@@ -751,6 +753,7 @@
 		},
 		{
 			"name": "Blog",
+			"description": null,
 			"item": [
 				{
 					"name": "get blog con 200",
@@ -1126,6 +1129,7 @@
 		},
 		{
 			"name": "Bono",
+			"description": null,
 			"item": [
 				{
 					"name": "get bono con 200",
@@ -1500,7 +1504,752 @@
 			]
 		},
 		{
+			"name": "Valoracion",
+			"description": "",
+			"item": [
+				{
+					"name": "get valoracion con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6bba38ab-dc48-4e82-822d-76c9a26f1659",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones/10023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones",
+								"10023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get valoraciones con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36df3d7b-49b8-4caa-8cc0-c357e5dc911c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get valoracion con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fe2c0a3-09f2-48c6-87cb-92dbe6f79c97",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones/99999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post valoracion con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "87e9757e-6c32-4637-bb32-e08e353bac39",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calificacion\": 5,\n    \"comentario\": \"Super servicio\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post valoracion con 412",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a8eea106-6a20-4a66-85f3-009cdef49a4c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calificacion\": 6,\n    \"comentario\": \"Super servicio\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put valoracion con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "87e9757e-6c32-4637-bb32-e08e353bac39",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calificacion\": 3,\n    \"comentario\": \"Super servicio\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put valoracion con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9510fecc-3941-448c-a948-f8f1fe5b13a3",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calificacion\": 3,\n    \"comentario\": \"Super servicio\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete valoracion con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6bba38ab-dc48-4e82-822d-76c9a26f1659",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete valoracion con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "05d32045-fb94-4e75-b15c-240ac075ac1b",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/valoraciones/10022",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"valoraciones",
+								"10022"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Servicio",
+			"description": "",
+			"item": [
+				{
+					"name": "get servicios con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6bba38ab-dc48-4e82-822d-76c9a26f1659",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get servicio con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6bba38ab-dc48-4e82-822d-76c9a26f1659",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio/10019",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio",
+								"10019"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get servicio con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fbf5016-5222-4efe-90fb-a12c65b31ccc",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio/999999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio",
+								"999999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put servicio con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c86166c8-e2a1-46cb-a687-87927149385a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descripcion\": \"Carrito de comida\",\n    \"tipo\": \"comida\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio/10019",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio",
+								"10019"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put servicio con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4230c436-0b23-4793-8276-0041ce1d937b",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descripcion\": \"Carrito de comida\",\n    \"tipo\": \"comida\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio/10018",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio",
+								"10018"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete servicio con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81c475a7-76bb-4a6b-838f-7c8f88c821c5",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio/10023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio",
+								"10023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete servicio con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4230c436-0b23-4793-8276-0041ce1d937b",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/servicio/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"servicio",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Eventos",
+			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Eventos",
@@ -1938,6 +2687,7 @@
 		},
 		{
 			"name": "Pagos",
+			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Pagos",
@@ -2485,11 +3235,99 @@
 						"description": "UPDATE pago fallido por que el metodo de pago no cumple la condicion"
 					},
 					"response": []
+				},
+				{
+					"name": "Prueba GET Pago Pagar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"10011",
+								"eventos",
+								"10001",
+								"pagos",
+								"10001"
+							]
+						},
+						"description": "GET pagos exitoso"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba GET Pago Cancelar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51d2ffa9-c4ad-46c5-a951-82da486e3087",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/pagos/10001/cancel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"10011",
+								"eventos",
+								"10001",
+								"pagos",
+								"10001",
+								"cancel"
+							]
+						},
+						"description": "GET pagos exitoso"
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "Horario",
+			"description": null,
 			"item": [
 				{
 					"name": "get horarios con 200",
@@ -2864,7 +3702,7 @@
 		},
 		{
 			"name": "Producto",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "http://localhost:8080/fiestas-web/api/productos",
@@ -2904,8 +3742,7 @@
 								"api",
 								"productos"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2948,8 +3785,7 @@
 								"productos",
 								"10016"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2991,8 +3827,7 @@
 								"api",
 								"productos"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3035,8 +3870,7 @@
 								"productos",
 								"0"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3079,8 +3913,7 @@
 								"productos",
 								"0"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -3088,7 +3921,7 @@
 		},
 		{
 			"name": "Temática",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "http://localhost:8080/fiestas-web/api/tematicas/3",
@@ -3129,8 +3962,7 @@
 								"tematicas",
 								"3"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3172,8 +4004,7 @@
 								"api",
 								"tematicas"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3216,8 +4047,7 @@
 								"tematicas",
 								"1"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3259,8 +4089,7 @@
 								"api",
 								"tematicas"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3302,8 +4131,7 @@
 								"api",
 								"tematicas"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}

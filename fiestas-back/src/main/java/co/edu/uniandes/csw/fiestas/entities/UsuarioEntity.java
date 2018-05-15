@@ -13,15 +13,13 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author df.nino10
  */
 @Entity
-public class UsuarioEntity
+public class UsuarioEntity extends BaseEntity
 {
     private String nombre;
     private String rol;
     private String login;
     private String contrasena;
-    private Long token;
-    @Id
-    private Long id;    
+    private long token;  
     
     /**
      * @return nombre del usuario
@@ -85,7 +83,7 @@ public class UsuarioEntity
     /**
      * @return the token
      */
-    public Long getToken() {
+    public long getToken() {
         return token;
     }
 
@@ -94,21 +92,5 @@ public class UsuarioEntity
      */
     public void setToken(Long token) {
         this.token = token;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    
+    }    
 }

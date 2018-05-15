@@ -35,9 +35,9 @@ public class PagoLogic {
      * @param eventoId identificador del evento
      * @return Lista de entidades de tipo pago.
      */
-    public List<PagoEntity> getPagos(Long clienteId, Long eventoId){
+    public List<PagoEntity> getPagos(Long clienteId, Long eventoId) {
         LOGGER.info("Inicia proceso de consultar todos los pagos");
-        EventoEntity evento = eventoLogic.getEvento(clienteId,eventoId);
+        EventoEntity evento = eventoLogic.getEvento(clienteId, eventoId);
         LOGGER.info("Termina proceso de consultar todos los pagos");
         return evento.getPagos();
     }
@@ -63,10 +63,10 @@ public class PagoLogic {
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no se cumple reglas de negocio
      */
-    public PagoEntity createPago(Long clienteId,Long eventoId, PagoEntity entity) throws BusinessLogicException {
+    public PagoEntity createPago(Long clienteId, Long eventoId, PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un pago ");
-        EventoEntity evento = eventoLogic.getEvento(clienteId,eventoId);
-        
+        EventoEntity evento = eventoLogic.getEvento(clienteId, eventoId);
+
         String newEstado = verifyEstado(entity.getEstado());
         if (newEstado == null) {
             throw new BusinessLogicException("No existe el estado ingresado para el pago");
@@ -96,9 +96,9 @@ public class PagoLogic {
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * no se cumple reglas de negocio
      */
-    public PagoEntity updatePago(Long clienteId,Long eventoId, PagoEntity entity) throws BusinessLogicException {
+    public PagoEntity updatePago(Long clienteId, Long eventoId, PagoEntity entity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar evento con id={0}", entity.getId());
-        EventoEntity evento = eventoLogic.getEvento(clienteId,eventoId);
+        EventoEntity evento = eventoLogic.getEvento(clienteId, eventoId);
         String newEstado = verifyEstado(entity.getEstado());
         if (newEstado == null) {
             throw new BusinessLogicException("No existe el estado ingresado para el pago");
@@ -122,14 +122,57 @@ public class PagoLogic {
 
     /**
      * Eliminar un pago por ID
-     *@param eventoId identificador del evento
+     *
+     * @param eventoId identificador del evento
      * @param id El ID del pago a eliminar
      */
-    public void deletePago(Long eventoId,Long id) {
+    public void deletePago(Long eventoId, Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar pago con id={0}", id);
-        PagoEntity old = getPago(eventoId,id);
+        PagoEntity old = getPago(eventoId, id);
         persistence.delete(old.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar pago con id={0}", id);
+    }
+
+    /**
+     * Metodo para el pago de una instancia de Pago.
+     *
+     * @param id Identificador del pago
+     * @param clienteId identificador del cliente
+     * @param eventoId identificador del evento
+     * @return Instancia de PagoEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
+     */
+    public PagoEntity payPago(Long clienteId, Long eventoId, Long id) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de pagar un pago con id={0}", id);
+        EventoEntity evento = eventoLogic.getEvento(clienteId, eventoId);
+        PagoEntity old = getPago(eventoId, id);
+        old.setEstado(Estado.CONFIRMADO.toString());
+        old.setRealizado(true);
+        old.setEvento(evento);
+        PagoEntity newEntity = persistence.update(old);
+        return newEntity;
+    }
+
+    /**
+     * Metodo para cancelar una instancia de Pago.
+     *
+     * @param id Identificador del pago
+     * @param clienteId identificador del cliente
+     * @param eventoId identificador del evento
+     * @return Instancia de PagoEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * no se cumple reglas de negocio
+     */
+    public PagoEntity cancelPago(Long clienteId, Long eventoId, Long id) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de pagar un pago con id={0}", id);
+        EventoEntity evento = eventoLogic.getEvento(clienteId, eventoId);
+        PagoEntity old = getPago(eventoId, id);
+        old.setEstado(Estado.CANCELADO.toString());
+        old.setRealizado(false);
+        old.setEvento(evento);
+        PagoEntity newEntity = persistence.update(old);
+        return newEntity;
     }
 
     /**
@@ -148,7 +191,7 @@ public class PagoLogic {
             return Estado.RECHAZADO.toString();
         } else if (estado.equalsIgnoreCase(Estado.CANCELADO.toString())) {
             return Estado.CANCELADO.toString();
-        }else {
+        } else {
             return null;
         }
     }

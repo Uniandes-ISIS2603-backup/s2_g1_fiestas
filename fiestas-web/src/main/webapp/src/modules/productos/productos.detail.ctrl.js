@@ -1,8 +1,9 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "api/productos");
-    mod.controller('productosDetailCtrl', ['$scope', '$http', 'productosContext', '$state', '$filter',
-        function ($scope, $http, productosContext, $state, $filter) {
+    mod.constant("productosContext", "productos");
+    mod.constant("proveedoresContext", "api/proveedores")
+    mod.controller('productosDetailCtrl', ['$scope', '$http', 'productosContext','proveedoresContext', '$state', '$filter',
+        function ($scope, $http, productosContext, $state, $filter, proveedoresContext) {
 
             if (($state.params.productoId !== undefined) && ($state.params.productoId !== null)) {
                 $http.get(productosContext).then(function (response) {

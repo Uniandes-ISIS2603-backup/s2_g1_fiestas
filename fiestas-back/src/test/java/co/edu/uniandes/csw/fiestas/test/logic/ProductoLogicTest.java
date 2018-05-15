@@ -2,10 +2,11 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
-import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
@@ -13,6 +14,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -36,9 +42,6 @@ public class ProductoLogicTest
 
     @Inject
     private ProductoLogic productoLogic;
-    
-    @Inject
-    private ProveedorLogic servicioLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -46,7 +49,9 @@ public class ProductoLogicTest
     @Inject
     private UserTransaction utx;
 
-    private List<ProductoEntity> data = new ArrayList<ProductoEntity>();
+    private List<ProductoEntity> data = new ArrayList<>();
+    
+    private List<ProveedorEntity> dataProv = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -84,6 +89,7 @@ public class ProductoLogicTest
      */
     private void clearData() {
         em.createQuery("delete from ProductoEntity").executeUpdate();
+        em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
 
     /**
@@ -94,8 +100,11 @@ public class ProductoLogicTest
 
         for (int i = 0; i < 3; i++) {
             ProductoEntity entity = factory.manufacturePojo(ProductoEntity.class);
+            ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
+            em.persist(proveedor);
             em.persist(entity);
             data.add(entity);
+            dataProv.add(proveedor);
         }
     }
 
@@ -162,42 +171,30 @@ public class ProductoLogicTest
     
     
     /**
-     * Prueba para actualizar los servicios
+     * Prueba para añadir el proveedor
      */
     @Test
-    public void setServicioTest() throws BusinessLogicException
+    public void setProveedorTest() throws BusinessLogicException, NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException
     {
-        ProductoEntity entity = data.get(0);
-        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);        
-        productoLogic.createProducto(newEntity);
-        
-        ProveedorEntity newServicio = factory.manufacturePojo(ProveedorEntity.class);
-        servicioLogic.createProveedor(newServicio);
-        
-        productoLogic.addProveedor(entity.getId(), newServicio.getId());
-        productoLogic.addServicio(newEntity.getId(), newServicio.getId());
-        
-        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
+        ProductoEntity producto = data.get(0);
+        ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
+//        producto.setProveedors(data);
+        utx.begin();
+        em.persist(producto);
+        utx.commit();
+        productoLogic.addProveedor(producto.getId(),proveedor.getId());
+       
     }
     
     /**
-     * Prueba para revisar el servicio
+     * Prueba para borrar el proveedor
      */
     @Test
-    public void getServicioTest() throws BusinessLogicException
+    public void deleteProveedorTest() throws BusinessLogicException
     {
-        ProductoEntity entity = data.get(0);
-        ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
-        productoLogic.createProducto(newEntity);
         
-        ProveedorEntity newServicio = factory.manufacturePojo(ProveedorEntity.class);
-        servicioLogic.createProveedor(newServicio);
-        
-        productoLogic.addServicio(entity.getId(), newServicio.getId());
-        productoLogic.addServicio(newEntity.getId(), newServicio.getId());
-        
-        
-        Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
+        productoLogic.deleteProveedor(data.get(0).getId());
+        ProductoEntity response = productoLogic.getProducto(data.get(0).getId());
+        Assert.assertNull(response.getProveedor());
     }
-
 }

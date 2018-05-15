@@ -108,7 +108,6 @@ public class ClienteLogic
     public UsuarioEntity crearUsuario(ClienteEntity entity)
     {
         UsuarioEntity nuevoUsuario = new UsuarioEntity();
-        nuevoUsuario.setId(entity.getId());
         nuevoUsuario.setContrasena(entity.getContrasena());
         nuevoUsuario.setLogin(entity.getLogin());
         nuevoUsuario.setRol("Cliente");
@@ -167,7 +166,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No existe un cliente con dicho id para eliminar");
         }
-        usuarioLogic.deleteUsuario(id);
+        usuarioLogic.deleteUsuario(getCliente(id).getLogin());
         persistence.delete(id);
     }
 
