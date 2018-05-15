@@ -51,7 +51,11 @@
                 views: {
                     'childrenView': {
                         templateUrl: basePath + 'eventos.html',
-                    }
+                    },
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('eventosList', {
                 url: '/list',
@@ -85,6 +89,10 @@
                         templateUrl: basePath + '/new/eventos.new.html',
                         controller: 'eventoNewCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('eventoUpdate', {
                 url: '/update/{eventoId:int}',
@@ -97,6 +105,10 @@
                         templateUrl: basePath + '/new/eventos.new.html',
                         controller: 'eventoUpdateCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('eventoDelete', {
                 url: '/delete/{eventoId:int}',
@@ -109,6 +121,10 @@
                         templateUrl: basePath + '/delete/eventos.delete.html',
                         controller: 'eventoDeleteCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             });
         }]);

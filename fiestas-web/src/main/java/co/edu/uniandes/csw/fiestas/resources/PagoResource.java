@@ -176,6 +176,73 @@ public class PagoResource {
         return new PagoDTO(pagoLogic.updatePago(idCliente,idEvento, pago.toEntity()));
     }
 
+        /**
+     * <h1>PUT api/eventos/{idEvento}/pagos/{id}/pay :Pagar pago por id.</h1>
+     *
+     * <pre>Busca el pago con el id asociado recibido en la URL, actualiza el pago exitoso
+     * y lo devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el pago correspondiente al id, despues de actualizado.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un pago con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param idCliente El ID del cliente dueño del evento
+     * @param idEvento El ID del evento del cual se buscan los pago
+     * @param id Identificador del pago que se esta buscando. Este debe ser una
+     * cadena de dígitos.
+     * @return JSON {@link PagoDTO} - El pago buscado y actuaizado
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica.
+     */
+    @GET
+    @Path("{id: \\d+}/pay")
+    public PagoDTO payPago(@PathParam("idCliente") Long idCliente,@PathParam("idEvento") Long idEvento, @PathParam("id") Long id) throws BusinessLogicException {
+        PagoEntity oldEntity = pagoLogic.getPago(idEvento, id);
+        if (oldEntity == null) {
+            throw new WebApplicationException("El pago no existe", 404);
+        }
+        return new PagoDTO(pagoLogic.payPago(idCliente,idEvento, id));
+    }
+    
+        /**
+     * <h1>PUT api/eventos/{idEvento}/pagos/{id}/cancel :Cancelar pago por id.</h1>
+     *
+     * <pre>Busca el pago con el id asociado recibido en la URL, lo cancela
+     * y lo devuelve.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el pago correspondiente al id, despues de actualizado.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un pago con el id dado.
+     * </code>
+     * </pre>
+     *
+     * @param idCliente El ID del cliente dueño del evento
+     * @param idEvento El ID del evento del cual se buscan los pago
+     * @param id Identificador del pago que se esta buscando. Este debe ser una
+     * cadena de dígitos.
+     * @return JSON {@link PagoDTO} - El pago buscado y actuaizado
+     * @throws BusinessLogicException
+     * {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * - Error de lógica.
+     */
+    @GET
+    @Path("{id: \\d+}/cancel")
+    public PagoDTO cancelPago(@PathParam("idCliente") Long idCliente,@PathParam("idEvento") Long idEvento, @PathParam("id") Long id) throws BusinessLogicException {
+        PagoEntity oldEntity = pagoLogic.getPago(idEvento, id);
+        if (oldEntity == null) {
+            throw new WebApplicationException("El pago no existe", 404);
+        }
+        return new PagoDTO(pagoLogic.cancelPago(idCliente,idEvento, id));
+    }
     /**
      * <h1>DELETE api/eventos/{idEvento}/pagos/{id} : Elimina un pago de un
      * evento por id.</h1>

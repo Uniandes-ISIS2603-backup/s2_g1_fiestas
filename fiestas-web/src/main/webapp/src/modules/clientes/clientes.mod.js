@@ -17,6 +17,10 @@
                         controller: 'clienteCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('clientesList', {
                 url: '/list',
