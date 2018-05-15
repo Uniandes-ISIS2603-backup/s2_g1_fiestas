@@ -44,7 +44,7 @@
                     if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena && $scope.users[item].rol === response.data.rol) {
                         flag = true;
                         $scope.user = $scope.users[item];
-                        $state.go('productosList', {}, {reload: true});
+                        $state.go('main', {}, {reload: true});
                         break;
                     }
                 }
