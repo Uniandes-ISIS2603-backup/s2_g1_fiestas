@@ -48,7 +48,7 @@
             $stateProvider.state('pagos', {
                 url: '/pagos',
                 abstract: true,
-                parent: 'pagoDetail',
+                parent: 'eventoDetail',
                 views: {
                     'childrenView': {
                         templateUrl: basePath + 'pagos.html',

@@ -1,0 +1,10 @@
+[
+    {
+        "id": 3,
+        "nombre": "Cristian",
+        "login": "cm.amaya10",
+        "contrasena": "asd123",
+        "rol": "admin",
+        "token": 999
+    }
+]
