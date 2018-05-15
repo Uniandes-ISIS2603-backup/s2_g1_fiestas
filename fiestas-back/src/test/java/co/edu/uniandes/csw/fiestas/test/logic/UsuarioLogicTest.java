@@ -122,13 +122,13 @@ public class UsuarioLogicTest {
      * Prueba para consultar la lista de Usuarios
      */
     @Test
-    public void getUsuarioesTest() {
+    public void getUsuariosTest() {
         List<UsuarioEntity> lista = usuarioLogic.getUsuarios();
         Assert.assertEquals(data.size(), lista.size());
         for (UsuarioEntity entity : lista) {
             boolean encontrado = false;
             for (UsuarioEntity usuarioEntity : data) {
-                if (entity.getId().equals(usuarioEntity.getId())) {
+                if (entity.getId() == usuarioEntity.getId()) {
                     encontrado = true;
                     break;
                 }
@@ -140,7 +140,7 @@ public class UsuarioLogicTest {
     @Test
     public void getUsuarioTest(){
         UsuarioEntity usuario = data.get(0);
-        UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getId());
+        UsuarioEntity usuarioT = usuarioLogic.getUsuario(usuario.getLogin());
         Assert.assertNotNull(usuarioT);
         UsuarioEntity resultado = em.find(UsuarioEntity.class,usuarioT.getId());
         Assert.assertEquals(usuario.getNombre(), resultado.getNombre());
@@ -158,7 +158,7 @@ public class UsuarioLogicTest {
     public void deleteUsuarioTest(){
         UsuarioEntity entity = data.get(0);
         try{
-        usuarioLogic.deleteUsuario(entity.getId());
+        usuarioLogic.deleteUsuario(entity.getLogin());
         } 
         catch(BusinessLogicException e){
             fail("No debería fallar al eliminar al usuario.");
@@ -173,7 +173,7 @@ public class UsuarioLogicTest {
     public void deleteUsuarioFailTest() {
         UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
         try{
-        usuarioLogic.deleteUsuario(entity.getId());
+        usuarioLogic.deleteUsuario(entity.getLogin());
             fail("Debería fallar al eliminar el usuario.");
         }
         catch(BusinessLogicException e){

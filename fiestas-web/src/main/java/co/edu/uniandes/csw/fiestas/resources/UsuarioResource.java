@@ -92,9 +92,9 @@ public class UsuarioResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica si no existe el usuario
      */
     @GET
-    @Path("{id: \\d+}")
-    public UsuarioDTO getUsuario(@PathParam("id") Long id) throws BusinessLogicException{
-        UsuarioEntity e = logic.getUsuario(id);
+    @Path("{login: \\s+}")
+    public UsuarioDTO getUsuario(@PathParam("login") String login) throws BusinessLogicException{
+        UsuarioEntity e = logic.getUsuario(login);
         if(e == null)
         {
             throw new BusinessLogicException("El usuario con el id buscado no existe.");

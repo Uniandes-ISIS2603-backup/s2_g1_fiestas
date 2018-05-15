@@ -2,13 +2,16 @@ package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import static com.ctc.wstx.util.DataUtil.Long;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -51,6 +54,8 @@ public class ProveedorLogicTest
     private List<ContratoEntity> contratosData;
 
     private List<ProductoEntity> productosData;
+    
+    private List<UsuarioEntity> usuariosData;
 
     @Deployment
     public static JavaArchive createDeployment() 
@@ -102,6 +107,7 @@ public class ProveedorLogicTest
     private void insertData() {
         contratosData = new ArrayList<>();
         productosData = new ArrayList<>();
+        usuariosData = new ArrayList<>();
         data = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) 
@@ -111,6 +117,7 @@ public class ProveedorLogicTest
             if (i == 0) {
                 for (int j = 0; j < 3; j++) {
                     ContratoEntity entityC = factory.manufacturePojo(ContratoEntity.class);
+                    entityC.setValor((int)(Math.random()*1000000));                    
                     entityC.setProveedor(entity);
                     em.persist(entityC);
                     contratosData.add(entityC);
@@ -133,8 +140,11 @@ public class ProveedorLogicTest
                 entity.setPenalizado(false);
             }
 
-            em.persist(entity);
+            
+            UsuarioEntity nuevoUsuario = proveedorLogic.crearUsuario(entity);           
             data.add(entity);
+            em.persist(entity);
+            em.persist(nuevoUsuario);
         }
     }
 
@@ -447,27 +457,6 @@ public class ProveedorLogicTest
             fail("Se removió un contrato de un proveedor que no tiene dicho contrato");
         } catch (BusinessLogicException x) {
             passed();
-        }
-    }
-
-    /**
-     * Prueba para remover contrato a un Proveedor.
-     *
-     * Falla si se reemplaza todos los elementos de la lista y estos son
-     * diferentes a la lista despues de ser reemplazada
-     */
-    @Test
-    public void replaceContratosTest() {
-        try {
-            proveedorLogic.replaceContratos(data.get(0).getId(), contratosData);
-            for (ContratoEntity ce : contratosData) {
-                if (!em.find(ProveedorEntity.class, data.get(0).getId()).getContratos().contains(ce)) {
-                    fail("No está alguno de los contratos reemplazados en la nueva lista del proveedor");
-                }
-            }
-            passed();
-        } catch (BusinessLogicException x) {
-            fail(x.getMessage());
         }
     }
 

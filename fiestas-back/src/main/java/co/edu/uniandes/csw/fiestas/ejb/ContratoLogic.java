@@ -77,7 +77,7 @@ public class ContratoLogic {
         }
        
         horarioLogic.createHorario(entity.getHorario());
-        
+                
         return persistence.create(entity);
     }
 
