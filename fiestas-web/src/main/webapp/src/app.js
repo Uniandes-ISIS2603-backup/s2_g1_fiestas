@@ -25,8 +25,9 @@
         'eventoModule',
         'productosModule',
         'tematicasModule',
+        'contratoModule',
         'loginModule',
-        'contratoModule'
+        'mainModule'
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {
