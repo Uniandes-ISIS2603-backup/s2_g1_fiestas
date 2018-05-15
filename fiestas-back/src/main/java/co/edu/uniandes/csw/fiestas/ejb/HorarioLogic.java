@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
+import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.HorarioPersistence;
@@ -24,22 +25,27 @@ public class HorarioLogic
     @Inject
     private HorarioPersistence persistence;
     
+    @Inject
+    private ContratoLogic contratoLogic;
+    
     
             
     public List<HorarioEntity> getHorarios(){
-        LOGGER.log(Level.INFO,"Inicia proceso de consultar todos los eventos.");
+        LOGGER.log(Level.INFO,"Inicia proceso de consultar todos los horarios.");
         return persistence.findAll();
     }
 
-    public HorarioEntity getHorario(Long id) {
+    public HorarioEntity getHorario(Long id, Long contratoId) {
         LOGGER.log(Level.INFO,"Inicia proceso de consultar el horario con id={0}", id);
-        return persistence.find(id);
+        return persistence.find(id, contratoId);
     }
 
-    public HorarioEntity createHorario(HorarioEntity entity)throws BusinessLogicException {
+    public HorarioEntity createHorario(HorarioEntity entity, Long contratoId)throws BusinessLogicException {
         LOGGER.info("Inicia proceso de creación del horario con id={0}");
+        ContratoEntity contrato = contratoLogic.getContrato(contratoId);
         
-        if(persistence.find(entity.getId())!= null)
+        
+        if(persistence.find(contrato.getId(),entity.getId())!= null)
         {    throw new BusinessLogicException("El horario con el id\""+ entity.getId()+"\" ya existe");
         
         }
@@ -47,7 +53,7 @@ public class HorarioLogic
         if(entity.getHoraInicio().after(entity.getHoraFin()))
         {
             throw new BusinessLogicException("La hora de fin no puede ser antes de la hora de inicio");
-        }
+        } 
         
         if(entity.getHoraInicio().before(new Date()))
         {
@@ -58,7 +64,7 @@ public class HorarioLogic
         {
             throw new BusinessLogicException("La fecha del evento no puede ser una fecha que ya ocurrió");
         }
-        
+        contrato.setHorario(entity);
         LOGGER.info("Termina proceso de creación del horario");
         return persistence.create(entity);
     }

@@ -1,7 +1,7 @@
 package co.edu.uniandes.csw.fiestas.enums;
 
 /**
- * Enumeracion de estados para la clase Pago.
+ * Enumeracion de estados para la clase Pago y Contrato.
  *
  * @author cm.amaya10
  */

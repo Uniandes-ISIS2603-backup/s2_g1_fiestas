@@ -1,3 +1,4 @@
+
 /**
  * @ngdoc overview
  * @name mainApp.module:mainApp
@@ -24,7 +25,8 @@
         'eventoModule',
         'productosModule',
         'tematicasModule',
-        'loginModule'
+        'loginModule',
+        'contratoModule'
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {
@@ -84,3 +86,4 @@
 
         }]);
 })(window.angular);
+
