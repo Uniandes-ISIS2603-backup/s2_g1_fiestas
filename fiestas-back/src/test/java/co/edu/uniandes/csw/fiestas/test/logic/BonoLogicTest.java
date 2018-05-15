@@ -188,22 +188,6 @@ public class BonoLogicTest {
         assertEquals(result.getProveedor(), entidad.getProveedor());
         
     }
-    /**
-     * Se prueba el método para obtener un solo bono dado el id de proveedor y contrato
-     */
-    @Test
-    public void getBonoPandCTest(){
-        BonoEntity entidad = data.get(0);
-        ProveedorEntity proveedor =pData.get(0);
-        BonoEntity result = bonoLogic.getBono(proveedor.getId());
-        assertNotNull(result);
-        assertEquals(result.getId(), entidad.getId());
-        assertEquals(result.getDescuento(), entidad.getDescuento());
-        assertEquals(result.getMotivo(), entidad.getMotivo());
-        assertEquals(result.getCodigo(), entidad.getCodigo());
-        assertEquals(result.getProveedor(), entidad.getProveedor());
-        
-    }
     
     /**
      * Prueba para eliminar un bono

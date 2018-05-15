@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Bono.
  *
  * @author df.nino10
  */
