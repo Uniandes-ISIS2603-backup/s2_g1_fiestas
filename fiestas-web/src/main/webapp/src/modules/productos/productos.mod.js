@@ -1,6 +1,7 @@
 (function (ng) {
     var mod = ng.module("productosModule", ['ui.router']);
-    mod.constant("productosContext", "api/productos");
+    mod.constant("productosContext", "productos");
+    mod.constant("proveedoresContext", "api/proveedores");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
             var basePath = 'src/modules/productos/';
@@ -20,6 +21,7 @@
             }).state('productosList', {
                 url: '/list',
                 parent: 'productos',
+                param: {proveedorId : null, productoId: null},
                 views: {
                     'listView': {
                         templateUrl: basePath + 'productos.list.html'

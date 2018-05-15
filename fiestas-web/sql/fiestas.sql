@@ -63,3 +63,6 @@ insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(1
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
 insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
 
+insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10014, 10016);
+insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10014, 10017);
+insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10014, 10018);

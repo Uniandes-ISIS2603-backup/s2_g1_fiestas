@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
+import co.edu.uniandes.csw.fiestas.dtos.ProductoDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
-import co.edu.uniandes.csw.fiestas.dtos.*;
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
-import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -49,9 +49,6 @@ public class ProductoResource
     
     @Inject
     ProductoLogic productoLogic;
-    
-    @Inject
-    ServicioLogic servicioLogic;
     
         /**
      * <h1>GET /productos/{id} : Obtener producto por id.</h1>
