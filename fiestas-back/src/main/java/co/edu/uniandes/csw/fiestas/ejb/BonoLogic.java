@@ -84,8 +84,11 @@ public class BonoLogic {
         if(entity.getExpira()== null)
             throw new BusinessLogicException("El bono debe tener una fecha de expiración.");
         
-        if(entity.getAplicaDesde().compareTo(old.getAplicaDesde())!=0)
+        if(entity.getAplicaDesde().getDay()!=old.getAplicaDesde().getDay() && entity.getAplicaDesde().getMonth()!=old.getAplicaDesde().getMonth()&& entity.getAplicaDesde().getYear()!=old.getAplicaDesde().getYear())
             throw new BusinessLogicException("No es posible cambiar la fecha desde la cual aplica el bono.");
+        
+        //if(entity.getAplicaDesde().compareTo(old.getAplicaDesde())!=0)
+            //throw new BusinessLogicException("No es posible cambiar la fecha desde la cual aplica el bono.");
         
         if(entity.getExpira().before(old.getExpira()))
             throw new BusinessLogicException("No es posible reucir el rango de aplicación del bono.");
