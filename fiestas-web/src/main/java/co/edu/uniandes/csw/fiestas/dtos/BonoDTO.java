@@ -9,6 +9,32 @@ import co.edu.uniandes.csw.fiestas.entities.BonoEntity;
 import java.util.Date;
 
 /**
+ * BlogDTO Objeto de transferencia de datos de Bono.
+ *
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "id": number,
+ *      "aplicaDesde": Date,
+ *      "expira": Date,
+ *      "motivo": String,
+ *      "codigo": String,
+ *      "descuento": number
+ *   }
+ * </pre> Por ejemplo un bono se representa asi:<br>
+ *
+ * <pre>
+ *
+ *   {
+ *      "id": 10001,
+ *      "aplicaDesde": 2018-04-22,
+ *      "expira": 2018-05-22,
+ *      "motivo": Día de san valentin,
+ *      "codigo": jihrfu9i3,
+ *      "descuento": 15
+ *  }
+ * </pre>
+ *
  *
  * @author df.nino10
  */

@@ -502,7 +502,7 @@ public class ClienteLogicTest
             Assert.assertEquals(blog, em.find(BlogEntity.class, blog.getId()));
         }
         catch(BusinessLogicException e){
-            fail();
+            fail(e.getMessage());
         }
     }
     
