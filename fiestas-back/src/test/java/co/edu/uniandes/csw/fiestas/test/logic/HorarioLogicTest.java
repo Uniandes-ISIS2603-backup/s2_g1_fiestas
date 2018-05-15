@@ -44,7 +44,7 @@ public class HorarioLogicTest {
     private UserTransaction utx;
 
     private List<HorarioEntity> data = new ArrayList<>();
-    private List<ContratoEntity> dataContrato = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> dataContrato = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {

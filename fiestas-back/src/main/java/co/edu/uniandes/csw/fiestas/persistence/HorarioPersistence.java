@@ -68,7 +68,7 @@ public class HorarioPersistence {
      *
      * Crea una nuevo horario con la información recibida en la entidad.
      *
-     * @param entidad La entidad que representa el nuevo horario
+     * @param entity La entidad que representa el nuevo horario
      * @return La entidad creada
      */
     public HorarioEntity create (HorarioEntity entity){
@@ -81,7 +81,7 @@ public class HorarioPersistence {
      *
      * Actualiza la entidad que recibe en la base de datos
      *
-     * @param entidad La entidad actualizada que se desea guardar
+     * @param entity La entidad actualizada que se desea guardar
      * @return La entidad resultante luego de la acutalización
      */
     public HorarioEntity update (HorarioEntity entity){

@@ -143,31 +143,6 @@ public class ContratoResource {
             throw new BusinessLogicException("No existe el contrato a eliminar.");
         logic.deleteContrato(id);
     }
-    
-    @GET
-    @Path("{contratosId: \\d+}/horarios/{horariosId: \\d+}")
-    public HorarioDetailDTO getHorario(@PathParam("contratosId") Long contratosId) throws BusinessLogicException {
-        return new HorarioDetailDTO(logic.getHorario(contratosId));
-    }
-    
-    /**
-     * Conexión con el servicio de pagos para un contrato. {@link PagoResource}
-     *
-     * Este método conecta la ruta de /contratos con las rutas de /pagos que
-     * dependen del contrato, es una redirección al servicio que maneja el
-     * segmento de la URL que se encarga de las reseñas.
-     *
-     * @param contratosId El ID del contrato con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de Pagos para ese pagoo en paricular.
-     */
-    @Path("{idContrato: \\d+}/contratos")
-    public Class<PagoResource> getPagoResource(@PathParam("idContrato") Long contratosId) {
-        ContratoEntity entity = logic.getContrato(contratosId);
-        if (entity == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratosId + "/pagos no existe.", 404);
-        }
-        return PagoResource.class;
-    }
+   
 }
     

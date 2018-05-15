@@ -9,6 +9,7 @@ package co.edu.uniandes.csw.fiestas.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,6 +28,9 @@ public class HorarioEntity extends BaseEntity implements Serializable
     private Date horaInicio;
     @Temporal(TemporalType.TIME)
     private Date horaFin;
+    
+    @OneToOne 
+    private ContratoEntity contrato; 
    
 
     /**
@@ -80,5 +84,14 @@ public class HorarioEntity extends BaseEntity implements Serializable
     {
         this.horaFin = horaFin;
     }
+
+    public ContratoEntity getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(ContratoEntity contrato) {
+        this.contrato = contrato;
+    }
    
+      
 }

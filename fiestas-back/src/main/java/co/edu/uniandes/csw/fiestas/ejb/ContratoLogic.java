@@ -33,18 +33,8 @@ public class ContratoLogic {
      */
     private ProductoLogic productoLogic;
     
-    @Inject
-    /**
-     * Inyección de la clase de lógica de horario
-     */
-    private HorarioLogic horarioLogic;
-    
-    @Inject
-    /**
-     * Inyección de la clase de lógica de bono
-     */
-    private BonoLogic bonoLogic;
 
+   
     /**
      * Obtiene la lista de los registros de Contrato.
      *
@@ -87,7 +77,6 @@ public class ContratoLogic {
             throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
         }
        
-        horarioLogic.createHorario(entity.getHorario(),entity.getId() );
         
         return persistence.create(entity);
     }
