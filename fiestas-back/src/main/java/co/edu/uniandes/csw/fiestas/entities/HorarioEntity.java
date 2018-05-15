@@ -9,6 +9,7 @@ package co.edu.uniandes.csw.fiestas.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,10 +28,14 @@ public class HorarioEntity extends BaseEntity implements Serializable
     private Date horaInicio;
     @Temporal(TemporalType.TIME)
     private Date horaFin;
+    
+    @OneToOne 
+    private ContratoEntity contrato; 
    
 
     /**
-     * @return the fecha
+     * Retorna la fecha del horario
+     * @return fecha - la fecha
      */
     public Date getFecha() 
     {
@@ -38,7 +43,8 @@ public class HorarioEntity extends BaseEntity implements Serializable
     }
 
     /**
-     * @param fecha the fecha to set
+     * Asigna la fecha al horario
+     * @param fecha - la nueva fecha 
      */
     public void setFecha(Date fecha)
     {
@@ -46,6 +52,7 @@ public class HorarioEntity extends BaseEntity implements Serializable
     }
 
     /**
+     * Retorna la hora de inicio del horario
      * @return the horaInicio
      */
     public Date getHoraInicio() {
@@ -53,7 +60,8 @@ public class HorarioEntity extends BaseEntity implements Serializable
     }
 
     /**
-     * @param horaInicio the horaInicio to set
+     * Asigna la hora de inicio al horario
+     * @param horaInicio - la nueva hora de inicio
      */
     public void setHoraInicio(Date horaInicio) 
     { 
@@ -61,18 +69,29 @@ public class HorarioEntity extends BaseEntity implements Serializable
     }
 
     /**
-     * @return the horaFin
+     * Retorna la hora final del horario
+     * @return horaFin - la hora final
      */
     public Date getHoraFin() {
         return horaFin;
     }
 
     /**
-     * @param horaFin the horaFin to set
+     * Asigna la hora final al contrato
+     * @param horaFin - la nueva hora final
      */
     public void setHoraFin(Date horaFin) 
     {
         this.horaFin = horaFin;
     }
+
+    public ContratoEntity getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(ContratoEntity contrato) {
+        this.contrato = contrato;
+    }
    
+      
 }
