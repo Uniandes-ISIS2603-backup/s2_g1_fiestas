@@ -1,14 +1,13 @@
 {
 	"info": {
-		"_postman_id": "b2cd239d-a810-4e11-87fa-c63f3b88145a",
 		"name": "Pruebas Fiestas",
+		"_postman_id": "6efa468e-7db0-fdff-18ee-80b72af63964",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Proveedor",
-			"description": null,
 			"item": [
 				{
 					"name": "get proveedores con 200",
@@ -373,7 +372,6 @@
 		},
 		{
 			"name": "Cliente",
-			"description": null,
 			"item": [
 				{
 					"name": "get clientes con 200",
@@ -753,7 +751,6 @@
 		},
 		{
 			"name": "Blog",
-			"description": null,
 			"item": [
 				{
 					"name": "get blog con 200",
@@ -1128,8 +1125,382 @@
 			]
 		},
 		{
+			"name": "Bono",
+			"item": [
+				{
+					"name": "get bono con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4b6004a-0a02-41b5-9304-95c247cedeb2",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos/10001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos",
+								"10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bono con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd845b79-1212-42b0-9a34-de57ee8006bb",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos/45457",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos",
+								"45457"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bonos con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "419a4158-8dfd-490f-b084-6d3ff81d9223",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos"
+							]
+						},
+						"description": "get blogs correcto 200"
+					},
+					"response": []
+				},
+				{
+					"name": "post bono con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b61cafb5-2fd5-4333-b5bc-a5456c725d92",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"aplicaDesde\": \"2019-04-22T00:00:00-05:00\",\n      \"expira\": \"2019-05-22T00:00:00-05:00\",\n      \"motivo\": \"Día de san valentin\",\n      \"codigo\": \"ckcty6\",\n      \"descuento\": 20,\n      \"proveedor\": \n      {\n    \t\"id\": 10011\n      }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post blog con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "057561e8-fe07-4599-9c73-80e77d32dce0",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 412\"]=responseCode.code===412;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"aplicaDesde\": \"2019-04-22T00:00:00-05:00\",\n      \"expira\": \"2019-05-22T00:00:00-05:00\",\n      \"motivo\": \"Día de san valentin\",\n      \"codigo\": \"ckcty6\",\n      \"descuento\": 20,\n      \"proveedor\": \n      {\n    \t\"id\": 10011\n      }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put blog con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea5a38c2-ca06-41ba-97ce-de9e946c5c7a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"aplicaDesde\": \"2019-04-22T00:00:00-05:00\",\n      \"expira\": \"2020-05-22T00:00:00-05:00\",\n      \"motivo\": \"Día de san valentin\",\n      \"codigo\": \"ckcty6\",\n      \"descuento\": 20,\n      \"proveedor\": \n      {\n    \t\"id\": 10011\n      }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put blog con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd5b362e-3436-44b3-95af-d0a0f0026aac",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"bonoDetailDTO\",\n    \"aplicaDesde\": \"2019-04-22T00:00:00-05:00\",\n    \"codigo\": \"ckcty6\",\n    \"descuento\": 20,\n    \"expira\": \"2020-05-22T00:00:00-05:00\",\n    \"id\": 101,\n    \"motivo\": \"DÃ\\u00ada de san valentin\",\n    \"proveedor\": {\n        \"id\": 10011,\n        \"penalizado\": false\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete blog con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63458a59-24e9-4e19-a674-df4e9d51658e",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]=responseCode.code===204;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete blog con 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99c1cafa-774b-48dc-a6fc-3da47c331e9f",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/bonos/9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"bonos",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Eventos",
-			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Eventos",
@@ -1567,7 +1938,6 @@
 		},
 		{
 			"name": "Pagos",
-			"description": null,
 			"item": [
 				{
 					"name": "Prueba GET All Pagos",
@@ -2120,7 +2490,6 @@
 		},
 		{
 			"name": "Horario",
-			"description": null,
 			"item": [
 				{
 					"name": "get horarios con 200",
@@ -2488,6 +2857,453 @@
 								"9999"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Producto",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:8080/fiestas-web/api/productos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"productos"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/productos/10016",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/productos/10016",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"productos",
+								"10016"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/productos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"productos"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/productos/0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"descripcion\": \"Nuevo producto\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/productos/0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"productos",
+								"0"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/productos/0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"descripcion\": \"Nuevo producto\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/productos/0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"productos",
+								"0"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Temática",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:8080/fiestas-web/api/tematicas/3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"descripcion\" : \"Nueva tematica\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/tematicas/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"tematicas",
+								"3"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/tematicas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/tematicas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"tematicas"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/tematicas/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/tematicas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"tematicas",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/tematicas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/tematicas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"tematicas"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/fiestas-web/api/tematicas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04de0c6-e576-4ccf-b257-4099ed69c8ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/tematicas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"tematicas"
+							]
+						},
+						"description": ""
 					},
 					"response": []
 				}

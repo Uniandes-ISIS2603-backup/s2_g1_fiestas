@@ -64,7 +64,7 @@ public class BonoPersistence {
         TypedQuery<BonoEntity> q = getEm().createQuery("select u from BonoEntity u where u.codigo = :cod", BonoEntity.class);
         q = q.setParameter("cod", codigo);
         List<BonoEntity> bE = q.getResultList();
-        return bE.get(0);
+        return bE.size()==0? null: bE.get(0);
     }
         
     /**
