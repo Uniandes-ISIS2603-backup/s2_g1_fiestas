@@ -6,6 +6,9 @@
 package co.edu.uniandes.csw.fiestas.dtos;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que extiende de {@link ProductoDTO} para manejar los proveedores del negocio con sus relaciones. 
@@ -58,6 +61,8 @@ public class ProductoDetailDTO extends ProductoDTO
 private ServicioDTO servicio;
 
 private ProveedorDTO proveedor;
+
+private List<ValoracionDTO> valoraciones;
 /**
 * Constructor por defecto
 */
@@ -139,6 +144,20 @@ void setServicio(ServicioDTO pServ)
         this.proveedor = proveedor;
     }
 
+    /**
+     * @return the valoraciones
+     */
+    public List<ValoracionDTO> getValoraciones() {
+        return valoraciones;
+    }
+
+    /**
+     * @param valoraciones the valoraciones to set
+     */
+    public void setValoraciones(List<ValoracionDTO> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
 
     /**
      * Convierte un objeto ProductoDetailDTO a ProductoEntity incluyendo los
@@ -151,9 +170,19 @@ void setServicio(ServicioDTO pServ)
     public ProductoEntity toEntity()
     {
         ProductoEntity producto = super.toEntity();
-        if(this.getServicio() != null)
+        if(this.getProveedor() != null)
         {
-        producto.setServicio(this.getServicio().toEntity());
+        producto.setProveedor(this.getProveedor().toEntity());
+        }
+        if(this.getValoraciones() != null)
+        {
+            List<ValoracionDTO> actual = this.getValoraciones();
+            List<ValoracionEntity> rta = new ArrayList<>();
+            for(int i = 0; i < actual.size(); i++)
+            {
+                rta.add(actual.get(i).toEntity());
+            }
+            producto.setValoraciones(rta);
         }
         return producto;
     }

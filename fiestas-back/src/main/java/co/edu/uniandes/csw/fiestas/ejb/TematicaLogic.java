@@ -1,8 +1,8 @@
 package co.edu.uniandes.csw.fiestas.ejb;
 
-import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
-import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.TematicaPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +23,7 @@ public class TematicaLogic {
     private TematicaPersistence persistence;
 
     @Inject
-    private ServicioPersistence servicioPer;
+    private ProductoPersistence productoPer;
 
     /**
      * Obtiene la lista de los registros de Tematica.
@@ -83,32 +83,32 @@ public class TematicaLogic {
     }
 
     /**
-     * Obtiene una colección de instancias de ServicioEntity asociadas a una
+     * Obtiene una colección de instancias de ProductoEntity asociadas a una
      * instancia de Tematica
      *
      * @param TematicaId Identificador de la instancia de Tematica
-     * @return Colección de instancias de ServicioEntity asociadas a la
+     * @return Colección de instancias de ProductoEntity asociadas a la
      * instancia de Tematica
      */
-    public List<ServicioEntity> listServicios(Long TematicaId) {
+    public List<ProductoEntity> listProductos(Long TematicaId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros del autor con id = {0}", TematicaId);
-        return getTematica(TematicaId).getServicios();
+        return getTematica(TematicaId).getProductos();
     }
 
     /**
-     * Obtiene una instancia de ServicioEntity asociada a una instancia de
+     * Obtiene una instancia de ProductoEntity asociada a una instancia de
      * Tematica
      *
      * @param TematicaId Identificador de la instancia de Tematica
-     * @param serviciosId Identificador de la instancia de Servicio
-     * @return La entidadd de Servicio de la tematica
+     * @param productosId Identificador de la instancia de Producto
+     * @return La entidadd de Producto de la tematica
      */
-    public ServicioEntity getServicio(Long TematicaId, Long serviciosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar un libro con id = {0}", serviciosId);
-        List<ServicioEntity> list = getTematica(TematicaId).getServicios();
-        ServicioEntity serviciosEntity = new ServicioEntity();
-        serviciosEntity.setId(serviciosId);
-        int index = list.indexOf(serviciosEntity);
+    public ProductoEntity getProducto(Long TematicaId, Long productosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar un libro con id = {0}", productosId);
+        List<ProductoEntity> list = getTematica(TematicaId).getProductos();
+        ProductoEntity productosEntity = new ProductoEntity();
+        productosEntity.setId(productosId);
+        int index = list.indexOf(productosEntity);
         if (index >= 0) {
             return list.get(index);
         }
@@ -116,34 +116,34 @@ public class TematicaLogic {
     }
 
     /**
-     * Asocia un Servicio existente a un Tematica
+     * Asocia un Producto existente a un Tematica
      *
      * @param TematicaId Identificador de la instancia de Tematica
-     * @param serviciosId Identificador de la instancia de Servicio
-     * @return Instancia de ServicioEntity que fue asociada a Tematica
+     * @param productosId Identificador de la instancia de Producto
+     * @return Instancia de ProductoEntity que fue asociada a Tematica
      */
-    public ServicioEntity addServicio(Long TematicaId, Long serviciosId) {
+    public ProductoEntity addProducto(Long TematicaId, Long productosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al Tematica con id = {0}", TematicaId);
         TematicaEntity tematica = persistence.find(TematicaId);
-        ServicioEntity servicio = servicioPer.find(serviciosId);
-        tematica.getServicios().add(servicio);
-        return servicio;
+        ProductoEntity producto = productoPer.find(productosId);
+        tematica.getProductos().add(producto);
+        return producto;
     }
     
-    public ServicioEntity removeServicio(Long TematicaId, Long servicioId)
+    public ProductoEntity removeProducto(Long TematicaId, Long productoId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un libro al Tematica con id = {0}", TematicaId);
         TematicaEntity tematica = persistence.find(TematicaId);
-        ServicioEntity servicio = servicioPer.find(servicioId);
-        tematica.getServicios().remove(servicio);
-        return servicio;
+        ProductoEntity producto = productoPer.find(productoId);
+        tematica.getProductos().remove(producto);
+        return producto;
     }
     
-    public List<ServicioEntity> replaceServicios(List<ServicioEntity> lista, Long TematicaId)
+    public List<ProductoEntity> replaceProductos(List<ProductoEntity> lista, Long TematicaId)
     {
         if(lista.size() != 0)
         {
-            persistence.find(TematicaId).setServicios(lista);
+            persistence.find(TematicaId).setProductos(lista);
         }
         return lista;
     }
