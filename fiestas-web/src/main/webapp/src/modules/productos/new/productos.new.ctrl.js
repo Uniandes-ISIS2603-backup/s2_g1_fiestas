@@ -19,7 +19,7 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, productosContext, $state, $rootScope) {
+        function ($scope, $http, productosContext, $state, $rootScope, proveedoresContext, serviciosContext) {
             $rootScope.edit = false;
 
             $scope.data = {};
@@ -33,14 +33,9 @@
              * @param {Object} producto Objeto con la nueva de la producto.
              */
             $scope.createProducto = function () {
-                $http.post(productosContext, {
-                    name: $scope.productoName,
-                    incluidos: $scope.productoIncluidos,
-                    description: $scope.productosDescripcion,
-                    image: $scope.productosPrecio,
-                    personal: $scope.productosPersonal
-                }).then(function (response) {
-                    $state.go('productosList', {productosId: response.data.ID}, {reload: true});
+                console.log($scope.data);
+                $http.post(proveedoresContext + '/' + $state.params.proveedorId + '/' +serviciosContext+'/'+$state.params.servicioId+'/'+productosContext, $scope.data).then(function (response) {
+                    $state.go('productosList', {pagoId: response.data.id}, {reload: true});
                 });
             };
         }

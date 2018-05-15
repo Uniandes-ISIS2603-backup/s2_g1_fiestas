@@ -187,6 +187,7 @@ public class ProductoDTO {
         productoE.setIncluye(this.incluye);
         productoE.setPersonal(this.personal);
         productoE.setPrecio(this.precio);
+        productoE.setImagen(this.imagen);
 
         return productoE;
     }
