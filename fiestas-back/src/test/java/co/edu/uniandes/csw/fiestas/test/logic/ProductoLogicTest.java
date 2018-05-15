@@ -1,9 +1,12 @@
 package co.edu.uniandes.csw.fiestas.test.logic;
 
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ProveedorLogic;
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class ProductoLogicTest
     private ProductoLogic productoLogic;
     
     @Inject
-    private ServicioLogic servicioLogic;
+    private ProveedorLogic servicioLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -162,16 +165,16 @@ public class ProductoLogicTest
      * Prueba para actualizar los servicios
      */
     @Test
-    public void setServicioTest()
+    public void setServicioTest() throws BusinessLogicException
     {
         ProductoEntity entity = data.get(0);
         ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);        
         productoLogic.createProducto(newEntity);
         
-        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
-        servicioLogic.createServicio(newServicio);
+        ProveedorEntity newServicio = factory.manufacturePojo(ProveedorEntity.class);
+        servicioLogic.createProveedor(newServicio);
         
-        productoLogic.addServicio(entity.getId(), newServicio.getId());
+        productoLogic.addProveedor(entity.getId(), newServicio.getId());
         productoLogic.addServicio(newEntity.getId(), newServicio.getId());
         
         Assert.assertEquals(entity.getServicio(), newEntity.getServicio());
@@ -181,14 +184,14 @@ public class ProductoLogicTest
      * Prueba para revisar el servicio
      */
     @Test
-    public void getServicioTest()
+    public void getServicioTest() throws BusinessLogicException
     {
         ProductoEntity entity = data.get(0);
         ProductoEntity newEntity = factory.manufacturePojo(ProductoEntity.class);
         productoLogic.createProducto(newEntity);
         
-        ServicioEntity newServicio = factory.manufacturePojo(ServicioEntity.class);
-        servicioLogic.createServicio(newServicio);
+        ProveedorEntity newServicio = factory.manufacturePojo(ProveedorEntity.class);
+        servicioLogic.createProveedor(newServicio);
         
         productoLogic.addServicio(entity.getId(), newServicio.getId());
         productoLogic.addServicio(newEntity.getId(), newServicio.getId());
