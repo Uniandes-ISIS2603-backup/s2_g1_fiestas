@@ -24,6 +24,7 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     private String incluye;
     private Integer personal;
     private String imagen;
+    private Double valoracionPromedio;
 
     @PodamExclude
     @ManyToOne
@@ -160,6 +161,25 @@ public class ProductoEntity extends BaseEntity implements Serializable {
      */
     public void setValoraciones(List<ValoracionEntity> valoraciones) {
         this.valoraciones = valoraciones;
+    }
+
+    /**
+     * @return the valoracionPromedio
+     */
+    public Double getValoracionPromedio() {
+        if(valoracionPromedio == null)
+        {
+            return 0.0;
+        }
+        else
+        return valoracionPromedio;
+    }
+
+    /**
+     * @param valoracionPromedio the valoracionPromedio to set
+     */
+    public void setValoracionPromedio(Double valoracionPromedio) {
+        this.valoracionPromedio = valoracionPromedio;
     }
     
     

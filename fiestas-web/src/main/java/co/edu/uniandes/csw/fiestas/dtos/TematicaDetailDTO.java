@@ -69,7 +69,7 @@ public class TematicaDetailDTO extends TematicaDTO {
         {
             list2.add(new ProductoDTO(productoEntity));
         }
-        setProductos(list2);
+        this.setProductos(list2);
     }
 
     /**

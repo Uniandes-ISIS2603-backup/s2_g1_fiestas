@@ -51,6 +51,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>co.edu.uniandes.csw</groupId>
+            <artifactId>fiestas-web</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>

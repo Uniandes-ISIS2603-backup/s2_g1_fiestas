@@ -22,17 +22,19 @@ public class ContratoLogic {
     private static final Logger LOGGER = Logger.getLogger(ContratoLogic.class.getName());
 
     @Inject
+    /**
+     * Inyección de la clase de lógica de contrato
+     */
     private ContratoPersistence persistence;
 
     @Inject
+    /**
+     * Inyección de la clase de lógica de producto
+     */
     private ProductoLogic productoLogic;
     
-    @Inject
-    private HorarioLogic horarioLogic;
-    
-    @Inject
-    private BonoLogic bonoLogic;
 
+   
     /**
      * Obtiene la lista de los registros de Contrato.
      *
@@ -59,7 +61,6 @@ public class ContratoLogic {
      * Se encarga de crear un Contrato en la base de datos.
      *
      * @param entity Objeto de ContratoEntity con los datos nuevos
-     * @param entityH
      * @return Objeto de ContratoEntity con los datos nuevos y su ID.
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
@@ -75,9 +76,7 @@ public class ContratoLogic {
         {
             throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
         }
-       
-        horarioLogic.createHorario(entity.getHorario());
-                
+
         return persistence.create(entity);
     }
 
