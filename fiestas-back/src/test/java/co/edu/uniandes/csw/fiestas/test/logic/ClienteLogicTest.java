@@ -6,6 +6,7 @@ import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
 import static com.ctc.wstx.util.DataUtil.Long;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -70,6 +72,8 @@ public class ClienteLogicTest
     
     private List<BlogEntity> blogsData;
     
+    private List<UsuarioEntity> usuariosData;
+    
     @Deployment
     public static JavaArchive createDeployment()
     {
@@ -121,6 +125,7 @@ public class ClienteLogicTest
         data = new ArrayList<ClienteEntity>();
         eventosData = new ArrayList<EventoEntity>();
         blogsData = new ArrayList<BlogEntity>();
+        usuariosData = new ArrayList<UsuarioEntity>();
         for (int i = 0; i < 3; i++)
         {
             ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
@@ -140,8 +145,11 @@ public class ClienteLogicTest
                 entity.setEventos(eventosData);
                 entity.setBlogs(blogsData);
             }
-            em.persist(entity);
+            UsuarioEntity nuevoUsuario = clienteLogic.crearUsuario(entity);
+            usuariosData.add(nuevoUsuario);
             data.add(entity);
+            em.persist(entity);
+            em.persist(nuevoUsuario);
         }
     }
     
@@ -211,9 +219,10 @@ public class ClienteLogicTest
      */
     @Test
     public void updateClienteTest() {
-        ClienteEntity entity = data.get(0);
+        ClienteEntity entity = em.find(ClienteEntity.class, data.get(0).getId());
+        
         ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
-        Long idnew= entity.getId();
+        long idnew= entity.getId();
         newEntity.setId(idnew);
         newEntity.setLogin(entity.getLogin());
         try
@@ -224,6 +233,7 @@ public class ClienteLogicTest
         {
             fail(e.getMessage());
         }
+        
         ClienteEntity entidad = em.find(ClienteEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getId(), entidad.getId());
         Assert.assertEquals(newEntity.getContrasena(), entidad.getContrasena());
@@ -493,6 +503,7 @@ public class ClienteLogicTest
         try{
             
             BlogEntity blog = factory.manufacturePojo(BlogEntity.class);
+            blog.setEvento(eventosData.get(0));
             data.get(0).getBlogs().add(blog);
             ClienteEntity cliente = data.get(0);
             clienteLogic.addBlog(blog,cliente.getId() );
@@ -501,11 +512,9 @@ public class ClienteLogicTest
             Assert.assertNotNull(em.find(BlogEntity.class, blog.getId()));
             Assert.assertEquals(blog, em.find(BlogEntity.class, blog.getId()));
         }
-        catch(BusinessLogicException e){
+        catch(BusinessLogicException e)
+        {
             fail(e.getMessage());
         }
-    }
-    
-    
-    
+    }   
 }

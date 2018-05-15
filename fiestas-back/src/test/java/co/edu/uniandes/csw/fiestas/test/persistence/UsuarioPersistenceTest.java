@@ -10,9 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import static org.jboss.arquillian.test.spi.TestResult.passed;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -167,7 +169,7 @@ public class UsuarioPersistenceTest {
     @Test
     public void getUsuarioTest() {
         UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = usuarioPersistence.find(entity.getId());
+        UsuarioEntity newEntity = usuarioPersistence.find(entity.getLogin());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         Assert.assertEquals(newEntity.getRol(), entity.getRol());
@@ -184,11 +186,35 @@ public class UsuarioPersistenceTest {
     @Test
     public void deleteUsuarioTest() {
         UsuarioEntity entity = data.get(0);
-        usuarioPersistence.delete(entity.getId());
+        usuarioPersistence.delete(entity.getLogin());
         UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
+    /**
+     * Prueba para actualizar un Usuario.
+     *
+     *
+     */
+    @Test
+    public void updateUsuarioTestFail() {
+        UsuarioEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        try
+        {
+            usuarioPersistence.update(newEntity);
+            fail("Debió fallar porque el usuario no persistió antes");
+        }
+        catch(Exception e)
+        {
+            passed();
+        }
+    }
+    
     /**
      * Prueba para actualizar un Usuario.
      *
@@ -201,15 +227,22 @@ public class UsuarioPersistenceTest {
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
 
         newEntity.setId(entity.getId());
+        newEntity.setLogin(entity.getLogin());
+        
+        try
+        {
+            usuarioPersistence.update(newEntity);
+            UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
 
-        usuarioPersistence.update(newEntity);
-
-        UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
-
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-        Assert.assertEquals(newEntity.getRol(), entity.getRol());
-        Assert.assertEquals(newEntity.getToken(), entity.getToken());
-        Assert.assertEquals(newEntity.getLogin(), entity.getLogin());
-        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
+            Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+            Assert.assertEquals(newEntity.getRol(), resp.getRol());
+            Assert.assertEquals(newEntity.getToken(), resp.getToken());
+            Assert.assertEquals(newEntity.getLogin(),  resp.getLogin());
+            Assert.assertEquals(newEntity.getContrasena(),  resp.getContrasena());            
+        }
+        catch(Exception e)
+        {
+            fail(e.getMessage());
+        }
     }
 }

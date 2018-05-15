@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.fiestas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,17 +29,15 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     
     @PodamExclude
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ContratoEntity> contratos;
+    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
     
     @PodamExclude
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BonoEntity> bonos;
+    private List<BonoEntity> bonos = new ArrayList<BonoEntity>();
     
     @PodamExclude
     @ManyToMany
-    private List<ProductoEntity> productos;
-    
-
+    private List<ProductoEntity> productos = new ArrayList<ProductoEntity>() ;    
     
     /**
      * @return nombre del usuario

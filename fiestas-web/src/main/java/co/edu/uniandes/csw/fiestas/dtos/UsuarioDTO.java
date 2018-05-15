@@ -76,19 +76,19 @@ public class UsuarioDTO
     }
 
     /**
-     * @return La contraseña del usuario
+     * @return La contrasena del usuario
      */
-    public String getContraseña()
+    public String getContrasena()
     {
-        return getContrasena();
+        return contrasena;
     }
     
     /**
-     * @param contraseña La nueva contraseña
+     * @param contrasena La nueva contraseña
      */
-    public void setContraseña(String contraseña) 
+    public void setContrasena(String contrasena) 
     {
-        this.setContrasena(contraseña);
+        this.contrasena = contrasena;
     }
 
     /**
@@ -121,10 +121,8 @@ public class UsuarioDTO
     public void setLogin(String login) 
     {
         this.login = login;
-    }
-    
-    
-    
+    }    
+        
     /**
      * Método que transforma la clase UsuarioDTO a UsuarioEntity.
      * @return UsuarioEntity instancia.
@@ -152,20 +150,6 @@ public class UsuarioDTO
      */
     public void setRol(String rol) {
         this.rol = rol;
-    }
-
-    /**
-     * @return the contrasena
-     */
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    /**
-     * @param contrasena the contrasena to set
-     */
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 
     /**

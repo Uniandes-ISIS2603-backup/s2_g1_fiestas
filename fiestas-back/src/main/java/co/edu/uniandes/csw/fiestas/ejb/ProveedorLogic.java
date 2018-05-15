@@ -73,6 +73,7 @@ public class ProveedorLogic
     /** Verifica si existe el login en la base de datos.
     * 
      * @param login
+     * 
      * @return true si el login que se pasa por parámetro está en la base de datos.
     */
     public boolean loginRepetido(String login){
@@ -124,7 +125,6 @@ public class ProveedorLogic
     public UsuarioEntity crearUsuario(ProveedorEntity entity)
     {
         UsuarioEntity nuevoUsuario = new UsuarioEntity();
-        nuevoUsuario.setId(entity.getId() + 10000);
         nuevoUsuario.setContrasena(entity.getContrasena());
         nuevoUsuario.setLogin(entity.getLogin());
         nuevoUsuario.setRol("Proveedor");
@@ -191,7 +191,7 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No existe un proveedor con dicho id para eliminar");
         }
-        usuarioLogic.deleteUsuario(id + 10000);
+        usuarioLogic.deleteUsuario(getProveedor(id).getLogin());
         persistence.delete(id);
     }
 
@@ -424,15 +424,22 @@ public class ProveedorLogic
         List<ContratoEntity> contratoList = contratoLogic.getContratos();
         for (ContratoEntity contrato : contratoList) 
         {
-            if (contratos.contains(contrato)) 
+            /**if (contratos.contains(contrato)) 
             {
                 contrato.setProveedor(proveedor);
                 contratoLogic.updateContrato(contrato);
             } 
             else if (null != contrato.getProveedor() && contrato.getProveedor().equals(proveedor)) 
             {
+            * */
                 contratoLogic.deleteContrato(contrato.getId());
-            }
+            //}
+        }
+        
+        for (ContratoEntity contrato : contratos)
+        {
+            contrato.setProveedor(proveedor);
+            contratoLogic.createContrato(contrato);
         }
         proveedor.setContratos(contratos);
         updateProveedor(proveedor);
@@ -583,7 +590,7 @@ public class ProveedorLogic
         
         for(ProductoEntity producto : productos)
         {
-         //   valoracionProveedor += producto.getValoracion().getCalificacion();
+            //valoracionProveedor += producto.getValoracionPromedio().getCalificacion();
         }
         
         if(!productos.isEmpty())

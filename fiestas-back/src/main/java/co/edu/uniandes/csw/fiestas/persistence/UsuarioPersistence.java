@@ -22,9 +22,19 @@ public class UsuarioPersistence
     @PersistenceContext(unitName = "FiestasPU")
     protected EntityManager em;
     
-    public UsuarioEntity find(Long id)
+    public UsuarioEntity find(String login)
     {
-        return em.find(UsuarioEntity.class, id);        
+        Query q = em.createNativeQuery("SELECT * FROM USUARIOENTITY WHERE login = '" + login + "'", UsuarioEntity.class);
+        UsuarioEntity extraido = null;
+        try
+        {
+            extraido = (UsuarioEntity)q.getResultList().get(0);
+        }
+        catch(Exception e)
+        {
+            
+        }
+        return extraido;
     }
     public List<UsuarioEntity> findAll()
     {
@@ -40,11 +50,13 @@ public class UsuarioPersistence
     
     public UsuarioEntity update (UsuarioEntity entity)
     {
+        UsuarioEntity extraido = find(entity.getLogin());
+        entity.setId(extraido.getId());
         return em.merge(entity);
     }
     
-    public void delete (Long id){
-        UsuarioEntity entity = em.find(UsuarioEntity.class, id);
-        em.remove(entity);
+    public void delete (String login){
+        UsuarioEntity extraido = find(login);
+        em.remove(extraido);
     }
 }

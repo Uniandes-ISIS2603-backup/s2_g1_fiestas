@@ -34,12 +34,12 @@ public class UsuarioLogic {
         return usuarios;
     }
     
-    public UsuarioEntity getUsuario(Long id){
-        LOGGER.log(Level.INFO,"Inicia proceso de obtener el usuario con el id dado por parámetro.", id);
-        UsuarioEntity usuario=persistence.find(id);
+    public UsuarioEntity getUsuario(String login){
+        LOGGER.log(Level.INFO,"Inicia proceso de obtener el usuario con el id dado por parámetro.", login);
+        UsuarioEntity usuario=persistence.find(login);
         
-        LOGGER.log(Level.INFO,"Termina proceso de obtener el usuario con el id dado por parámetro.", id);
-        return usuario; 
+        LOGGER.log(Level.INFO,"Termina proceso de obtener el usuario con el id dado por parámetro.", login);
+        return usuario;
     }
 
     public UsuarioEntity createUsuario(UsuarioEntity usuario){
@@ -50,21 +50,21 @@ public class UsuarioLogic {
     
     public UsuarioEntity updateUsuario(UsuarioEntity usuario)throws BusinessLogicException{
         LOGGER.log(Level.INFO,"Inicia el proceso de actualizar el usuario");
-        UsuarioEntity u = persistence.find(usuario.getId());
+        UsuarioEntity u = persistence.find(usuario.getLogin());
         if(u==null)
             throw new BusinessLogicException("El usuario que quiere actualizarse no existe.");
         
         persistence.update(usuario);
         LOGGER.log(Level.INFO,"Termina el proceso de actualizar el usuario");
-        return usuario;    
+        return usuario;
     }
     
-    public void deleteUsuario(Long id)throws BusinessLogicException{
-        LOGGER.log(Level.INFO,"Inicia el proceso de borrar el usuario con el id={0}", id);
-        UsuarioEntity u = persistence.find(id);
+    public void deleteUsuario(String login)throws BusinessLogicException{
+        LOGGER.log(Level.INFO,"Inicia el proceso de borrar el usuario con el id={0}", login);
+        UsuarioEntity u = persistence.find(login);
         if(u==null)
             throw new BusinessLogicException("El usuario que se quiere borrar no existe.");
-        persistence.delete(id);
-        LOGGER.log(Level.INFO,"Termina el proceso de borrar el usuario con el id={0}", id);
+        persistence.delete(login);
+        LOGGER.log(Level.INFO,"Termina el proceso de borrar el usuario con el id={0}", login);
     }    
 }

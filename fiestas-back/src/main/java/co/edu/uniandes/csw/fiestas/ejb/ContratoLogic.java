@@ -76,8 +76,7 @@ public class ContratoLogic {
         {
             throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
         }
-       
-        
+
         return persistence.create(entity);
     }
 
