@@ -7,6 +7,11 @@ and open the template in the editor.
 <div class="container-fluid">
 <div class="row">
     <div class="col-md-3">
+                <div class="thumb">
+                    <img class="img-responsive" ng-src="{{currentProducto.imagen}}"/>
+                </div>
+            </div>
+    <div class="col-md-6">
         <dl>
             <dt>{{currentProducto.ID}}</dt>
             <hr>
@@ -21,6 +26,7 @@ and open the template in the editor.
             <hr>
             <dt class="bold">Precio</dt>
             <dd>{{currentProducto.precio}}</dd>
+            <hr>
         </dl>
     </div>
 </div>

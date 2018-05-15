@@ -4,9 +4,11 @@ package co.edu.uniandes.csw.fiestas.ejb;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
+import co.edu.uniandes.csw.fiestas.persistence.ValoracionPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,8 @@ public class ProductoLogic
     private ServicioPersistence perSer;
     @Inject
     private ProveedorPersistence perPro;
+    @Inject
+    private ValoracionPersistence perValoracion;
     
     /**
      * Obtiene la lista de los registros de Producto.
@@ -87,35 +91,75 @@ public class ProductoLogic
         LOGGER.log(Level.INFO, "Termina proceso de borrar producto con id={0}", id);
     }
     
-    /**
-     * Busca el servicio de este producto
-     * @param id
-     * @return ServicioEntity de este producto
-     */
-    public ServicioEntity getServicio(Long id) 
-    {
-        ProductoEntity faind = persistence.find(id);
-        return faind.getServicio();
-    }
-    
-    /**
-     * Cambia el servicio del producto
-     * @param id id producto    
-     * @param idSer servicio
-     * @return 
-     */
-    public ServicioEntity addServicio(Long id, Long idSer) 
-    {
-        ServicioEntity find = perSer.find(idSer);
-        ProductoEntity faind = persistence.find(id);
-        faind.setServicio(find);
-        return find;
-    }
-
     public ProveedorEntity addProveedor(Long productoId, Long proveedorId) {
         ProveedorEntity find = perPro.find(proveedorId);
         ProductoEntity faind = persistence.find(productoId);
         faind.setProveedor(find);
         return find;
     }
+    
+    public ProductoEntity deleteProveedor(Long productoId)
+    {
+        ProductoEntity producto = persistence.find(productoId);
+        producto.setProveedor(null);
+        return producto;
+    }
+
+    /**
+     *  Busca una valoracion y la agrega a la lista de valoraciones
+     * @param id
+     * @param valoracion 
+     */
+    public void addValoracion(Long id, ValoracionEntity valoracion) 
+    {
+        ProductoEntity producto = persistence.find(id);
+        ValoracionEntity valoracionP = perValoracion.find(valoracion.getId());
+        List<ValoracionEntity> valoraciones = producto.getValoraciones();
+        valoraciones.add(valoracionP);
+        producto.setValoraciones(valoraciones);
+        calcularValoracionPromedio(id);
+    }
+    
+    /**
+     * Calcula la valoracionPromedio cada vez que se llame
+     * @param id 
+     */
+    public void calcularValoracionPromedio(Long id)
+    {
+        ProductoEntity producto = persistence.find(id);
+        List<ValoracionEntity> valoraciones = producto.getValoraciones();
+        Double sum = 0.0;
+        Double prom = 0.0;
+        if(valoraciones.size() > 0)
+        {
+            for(ValoracionEntity valoracione : valoraciones) {
+                sum += valoracione.getCalificacion();
+            }
+            prom = sum/valoraciones.size();
+        }
+        producto.setValoracionPromedio(prom);
+    }
+    /**
+     *  Borra la valoracion que le entra por id de la lista de valoraciones del producto
+     * @param id
+     * @param idProducto 
+     */
+    public void deleteValoracion (Long id, Long idProducto) 
+    {
+        ProductoEntity producto = persistence.find(idProducto);
+        List<ValoracionEntity> valoraciones = producto.getValoraciones();
+        boolean sisa = false;
+        for (ValoracionEntity valoracion : valoraciones) 
+        {
+            if(valoracion.getId().equals(id))
+            {
+                perValoracion.delete(id);
+                sisa = !sisa;
+                calcularValoracionPromedio(id);
+            }
+            if(!sisa)
+                break;
+        }
+    }
+    
 }
