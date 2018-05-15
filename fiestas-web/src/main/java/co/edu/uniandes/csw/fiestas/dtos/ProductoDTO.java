@@ -42,6 +42,7 @@ public class ProductoDTO {
     private String incluye;
     private int personal;
     private String imagen;
+    private double valoracionPromedio;
 
     /**
      * Constructor por defecto
@@ -65,7 +66,7 @@ public class ProductoDTO {
             this.personal = productoE.getPersonal();
             this.precio = productoE.getPrecio();
             this.imagen = productoE.getImagen();
-
+            this.valoracionPromedio = productoE.getValoracionPromedio();
         }
     }
     /*
@@ -170,6 +171,20 @@ public class ProductoDTO {
      */
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    /**
+     * @return the valoracionPromedio
+     */
+    public double getValoracionPromedio() {
+        return valoracionPromedio;
+    }
+
+    /**
+     * @param valoracionPromedio the valoracionPromedio to set
+     */
+    public void setValoracionPromedio(double valoracionPromedio) {
+        this.valoracionPromedio = valoracionPromedio;
     }
 
 
