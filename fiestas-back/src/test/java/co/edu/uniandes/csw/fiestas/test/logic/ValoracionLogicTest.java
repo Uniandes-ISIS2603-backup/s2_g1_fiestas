@@ -90,6 +90,7 @@ public class ValoracionLogicTest {
     private void insertData() {    
         for (int i = 0; i < 3; i++) {
             ValoracionEntity entity = factory.manufacturePojo(ValoracionEntity.class);
+            entity.setCalificacion(4);
             em.persist(entity);
             data.add(entity);
         }
@@ -146,6 +147,7 @@ public class ValoracionLogicTest {
     public void createValoracionTest() throws BusinessLogicException {
         try {
         ValoracionEntity newEntity = factory.manufacturePojo(ValoracionEntity.class);
+        newEntity.setCalificacion(4);
         ValoracionEntity result = valoracionLogic.createValoracion(newEntity);
         Assert.assertNotNull(result);
         ValoracionEntity entity = em.find(ValoracionEntity.class, result.getId());
@@ -167,7 +169,7 @@ public class ValoracionLogicTest {
     public void updateValoracionTest() throws BusinessLogicException {
         ValoracionEntity entity = data.get(0);
         ValoracionEntity pojoEntity = factory.manufacturePojo(ValoracionEntity.class);
-
+        pojoEntity.setCalificacion(4);
         pojoEntity.setId(entity.getId());
 
         valoracionLogic.updateValoracion(pojoEntity);
