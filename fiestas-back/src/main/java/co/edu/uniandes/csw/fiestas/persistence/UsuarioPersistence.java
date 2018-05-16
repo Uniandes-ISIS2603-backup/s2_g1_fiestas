@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.fiestas.persistence;
 
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -24,17 +21,18 @@ public class UsuarioPersistence
     
     public UsuarioEntity find(String login)
     {
-        Query q = em.createNativeQuery("SELECT * FROM USUARIOENTITY WHERE login = '" + login + "'", UsuarioEntity.class);
-        UsuarioEntity extraido = null;
-        try
-        {
-            extraido = (UsuarioEntity)q.getResultList().get(0);
+        TypedQuery<UsuarioEntity> q = em.createQuery("select p from UsuarioEntity p where (p.login = :login)", UsuarioEntity.class);
+        q.setParameter("login", login);
+        List<UsuarioEntity> results = q.getResultList();
+        UsuarioEntity usuario = null;
+        if (results == null) {
+            usuario = null;
+        } else if (results.isEmpty()) {
+            usuario = null;
+        } else if (results.size() >= 1) {
+            usuario = results.get(0);
         }
-        catch(Exception e)
-        {
-            
-        }
-        return extraido;
+        return usuario;
     }
     public List<UsuarioEntity> findAll()
     {

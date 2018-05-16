@@ -43,6 +43,10 @@
                         controller: 'clienteDetailCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
 
             }).state('clientesCreate', {

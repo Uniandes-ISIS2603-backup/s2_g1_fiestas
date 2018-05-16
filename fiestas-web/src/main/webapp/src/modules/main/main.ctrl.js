@@ -1,26 +1,26 @@
 (function (ng) {
     var mod = ng.module("mainModule");
-    mod.controller('mainCtrl', ['$scope', '$http', '$state', '$rootScope',
-        /**
-         * @ngdoc controller
-         * @name login.controller:loginCtrl
-         * @description
-         * Definición del controlador de Angular del módulo Login. 
-         * Se crea el controlador con el cual se maneja el módulo.
-         * En el controlador se definen los atributos y métodos que pueden
-         * ser accedidos desde el HTML utilizando el $scope.
-         * @param {Object} $scope Referencia injectada al Scope definida para este
-         * controlador, el scope es el objeto que contiene las variables o 
-         * funciones que se definen en este controlador y que son utilizadas 
-         * desde el HTML.
-         * @param {Object} $http Objeto injectado para la manejar consultas HTTP
-         * @param {Object} $state Dependencia injectada en la que se recibe el 
-         * estado actual de la navegación definida en el módulo.
-         * @param {Object} $rootScope Referencia injectada al Scope definido
-         * para toda la aplicación.
-         */
-        function ($scope, $http, $state, $rootScope) {
-
+    mod.controller('mainCtrl', ['$scope',
+        function ($scope) {
+            $scope.myInterval = 3000;
+            $scope.slides = [
+                {
+                    image: 'http://djparatufiesta.com.mx/fondos/banners-animacion-para-fiestas-con-dj-1.jpg',
+                    text:'Fiestas'
+                },
+                {
+                    image: 'https://www.bezzia.com/wp-content/uploads/2017/12/trucos-para-ahorrar-en-la-boda.jpg',
+                    text:'Bodas'
+                },
+                {
+                    image: 'https://www.piccolafesta.com/wp-content/uploads/2017/11/Tips-para-organizar-una-fiesta-infantil.jpg',
+                    text:'Fiestas Infantiles'
+                },
+                {
+                    image: 'https://laopinionla.files.wordpress.com/2017/07/quinceac3b1era-vestido-original-main-picture-amaraby.jpg?quality=60&strip=all&w=940',
+                    text:'Quinceañeras'
+                }
+            ];
         }
     ]);
 }

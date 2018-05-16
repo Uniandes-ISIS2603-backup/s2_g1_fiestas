@@ -87,7 +87,7 @@ public class UsuarioResource {
      * 404 Not Found No existe un usuario con el id dado.
      * </code> 
      * </pre>
-     * @param id Identificador del usuario que se esta buscando. Este debe ser una cadena de dígitos.
+     * @param login Identificador del usuario que se esta buscando. Este debe ser una cadena de dígitos.
      * @return JSON {@link UsuarioDetailDTO} - El usuario buscado
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica si no existe el usuario
      */
