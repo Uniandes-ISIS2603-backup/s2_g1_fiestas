@@ -28,7 +28,7 @@
              * @ngdoc function
              * @name createProducto
              * @methodOf productos.controller:productoNewCtrl
-             * @description
+             * @description0
              * Esta función utiliza el protocolo HTTP para crear la producto.
              * @param {Object} producto Objeto con la nueva de la producto.
              */
