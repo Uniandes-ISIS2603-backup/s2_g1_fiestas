@@ -605,14 +605,20 @@ public class ProveedorLogic
         List<ProductoEntity> productos = entity.getProductos();
         
         double valoracionProveedor = 0;
-        
-        for(ProductoEntity producto : productos)
-        {
-            valoracionProveedor += producto.getValoracionPromedio();
-        }
-        
         if(!productos.isEmpty())
         {
+        for(ProductoEntity producto : productos)
+        {
+            if(producto != null)
+            {
+                if(producto.getValoracionPromedio()!= null)
+                {
+                    valoracionProveedor += producto.getValoracionPromedio();
+                }
+            }
+        }
+        
+        
             valoracionProveedor = valoracionProveedor/productos.size();
         }
         else

@@ -2,7 +2,7 @@
     var mod = ng.module("productosModule");
     mod.constant("productosContext", "productos");
     mod.constant("proveedoresContext", "api/proveedores");
-    mod.controller('productosNewCtrl', ['$scope', '$http', 'productosContext', '$state', '$rootScope', 'proveedoresContext',
+    mod.controller('productosNewCtrl', ['$scope', '$http', 'proveedoresContext', 'productosContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name productos.controller:productosNewCtrl
@@ -20,7 +20,7 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, productosContext,proveedoresContext, $state, $rootScope) {
+        function ($scope, $http, productosContext, $state, $rootScope) {
             $rootScope.edit = false;
             $scope.data = {};
 
@@ -33,14 +33,13 @@
              * @param {Object} producto Objeto con la nueva de la producto.
              */
             $scope.createProducto = function () {
-                $http.post("api/" + productosContext, $scope.data).then(function (response) {
-                    $state.go('productosList', {productoId: response.data.ID}, {reload: true});
-                    $http.post("api/proveedores" + '/' + $state.proveedorId + '/' + productosContext + '/' + response.data.ID, $scope.data).then(function (response) {
+                     
+                $http.post("api/productos" , $scope.data).then(function (response) {
+                    $http.put("api/proveedores" + '/' + $rootScope.params.proveedorId + '/' + "productos" + '/' + response.data.ID, $scope.data).then(function (response) {
                     $state.go('productosList', {productoId: response.data.ID}, {reload: true});
                 });
-                });
-                
-            };
+            });   
+          };
         }
     ]);
 }
