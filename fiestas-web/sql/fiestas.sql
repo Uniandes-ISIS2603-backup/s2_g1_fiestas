@@ -4,18 +4,18 @@ delete from PagoEntity;
 delete from EventoEntity;
 delete from ContratoEntity;
 delete from HorarioEntity;
+delete from TEMATICAENTITY_PRODUCTOENTITY;
+delete from CONTRATOENTITY_PRODUCTOENTITY;
+delete from PRODUCTOENTITY_VALORACIONENTITY;
 delete from TematicaEntity;
 delete from ProductoEntity;
 delete from ServicioEntity;
 delete from ValoracionEntity;
-delete from ProveedorEntity;
 delete from EventoEntity;
 delete from TematicaEntity;
+delete from ProveedorEntity;
 delete from ClienteEntity;
 delete from UsuarioEntity;
-delete from CONTRATOENTITY_PRODUCTOENTITY;
-delete from PRODUCTOENTITY_VALORACIONENTITY;
-
 
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','hola123', 0);
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Iluminación de Diana','http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270' ,'1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','dianailu','hola1234', 0);
@@ -25,12 +25,12 @@ insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direc
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias','https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg' ,'1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
 
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10001,'Hamburguesería Mc Donalds','proveedor',1,'mcdonals','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10002,'Iluminación de Diana','proveedor',2,'dianas','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10003,'Decoración Pepitos','proveedor',3,'pepitos','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10004,'Nicolás Hernández','cliente',4,'nicos','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10005,'Sofía Arias','cliente',5,'sofia','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10006,'Cristian Amaya','cliente',6,'cm.amaya','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10001,'Hamburguesería Mc Donalds','proveedor',10011,'mcdonals','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10002,'Iluminación de Diana','proveedor',10012,'dianas','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10003,'Decoración Pepitos','proveedor',10013,'pepitos','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10004,'Nicolás Hernández','cliente',10011,'nicos','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10005,'Sofía Arias','cliente',10012,'sofia','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10006,'Cristian Amaya','cliente',10013,'cm.amaya','asd123');
 insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10007,'David Nino','admin',6,'dnino','asd123');
 
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10001, '04/22/2018','jihrfu9i3', 15, '05/22/2018', 'Día de san valentin', 10011);
@@ -62,9 +62,9 @@ insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10001, 'Po
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10002, 'Pagada la primera cuota', 'Si el cliente cancela despues de 2 semanas de haber contratado el servicio deberá pagar el 100% del costo', 345000000, 10002);
 insert into ContratoEntity(id, estado, tyc, valor, horario_id) values(10003, 'Pagado', 'Sin términos ni condiciones', 20000000, 10003);
 
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10011,10015);
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10012,10016);
-insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10013,10017);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10001,'Cumpleaños Luciana','08/03/2018','Cumpleaños Luciana','Luciana Ayala','Calle 44 45-86',25,10011,10095);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10012,10096);
+insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10013,10098);
 
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10001,0,'Rechazado','PSE',100000,10001);
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10002,1,'Confirmado','Tarjeta de Credito',250000,10001);
