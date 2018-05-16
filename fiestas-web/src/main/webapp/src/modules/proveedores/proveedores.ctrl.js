@@ -5,7 +5,6 @@
         function ($scope, $http, proveedorContext, $rootScope) {
             $http.get(proveedorContext).then(function (response) {
                 $rootScope.proveedoresRecords = response.data;
-                $scope.proveedoresRecords = response.data;
             });
         }
     ]);
