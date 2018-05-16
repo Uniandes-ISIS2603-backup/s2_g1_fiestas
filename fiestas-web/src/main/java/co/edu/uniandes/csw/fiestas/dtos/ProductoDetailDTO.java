@@ -62,7 +62,7 @@ private ServicioDTO servicio;
 
 private ProveedorDTO proveedor;
 
-private List<ValoracionDTO> valoraciones;
+private List<ValoracionDTO> valoracion;
 
 /**
 * Constructor por defecto
@@ -148,15 +148,15 @@ void setServicio(ServicioDTO pServ)
     /**
      * @return the valoraciones
      */
-    public List<ValoracionDTO> getValoraciones() {
-        return valoraciones;
+    public List<ValoracionDTO> getValoracion() {
+        return valoracion;
     }
 
     /**
      * @param valoraciones the valoraciones to set
      */
-    public void setValoraciones(List<ValoracionDTO> valoraciones) {
-        this.valoraciones = valoraciones;
+    public void setValoracion(List<ValoracionDTO> valoracion) {
+        this.valoracion = valoracion;
     }
 
 
@@ -175,9 +175,9 @@ void setServicio(ServicioDTO pServ)
         {
         producto.setProveedor(this.getProveedor().toEntity());
         }
-        if(this.getValoraciones() != null)
+        if(this.getValoracion() != null)
         {
-            List<ValoracionDTO> actual = this.getValoraciones();
+            List<ValoracionDTO> actual = this.getValoracion();
             List<ValoracionEntity> rta = new ArrayList<>();
             for(int i = 0; i < actual.size(); i++)
             {
