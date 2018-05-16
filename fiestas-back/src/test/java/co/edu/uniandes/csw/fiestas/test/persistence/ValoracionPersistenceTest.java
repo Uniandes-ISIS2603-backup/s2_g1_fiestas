@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.fiestas.test.persistence;
 
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.persistence.ValoracionPersistence;
 import java.util.ArrayList;
@@ -84,13 +85,20 @@ public class ValoracionPersistenceTest {
      *
      */
     private void clearData() {
+        em.createQuery("delete from ProductoEntity").executeUpdate();
         em.createQuery("delete from ValoracionEntity").executeUpdate();
     }
 
     /**
      *
      */
-    private List<ValoracionEntity> data = new ArrayList<ValoracionEntity>();
+    private List<ValoracionEntity> data = new ArrayList<>();
+    
+    /**
+     *
+     */
+    private List<ProductoEntity> pData = new ArrayList<>();
+
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -100,12 +108,22 @@ public class ValoracionPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
+        
+        for (int i = 0; i < 3; i++) {
+            ProductoEntity entity = factory.manufacturePojo(ProductoEntity.class);
+            
+            em.persist(entity);
+            pData.add(entity);
+        }
         for (int i = 0; i < 3; i++) {
             ValoracionEntity entity = factory.manufacturePojo(ValoracionEntity.class);
-
+            
             em.persist(entity);
             data.add(entity);
         }
+        ProductoEntity pEntity = pData.get(0);
+        pEntity.setValoraciones(data);    
+        em.merge(pEntity);
     }
 
     /**
@@ -167,7 +185,7 @@ public class ValoracionPersistenceTest {
      */
     @Test
     public void deleteValoracionTest() {
-        ValoracionEntity entity = data.get(0);
+        ValoracionEntity entity = data.get(2);
         valoracionPersistence.delete(entity.getId());
         ValoracionEntity deleted = em.find(ValoracionEntity.class, entity.getId());
         Assert.assertNull(deleted);
@@ -193,6 +211,22 @@ public class ValoracionPersistenceTest {
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getComentario(), resp.getComentario());
         Assert.assertEquals(newEntity.getCalificacion(), resp.getCalificacion());
+    }
+    
+    /**
+     * Prueba para obtener valoraciones de un proveedor.
+     *
+     *
+     */
+    @Test
+    public void getValoracionesPorProveedorTest() {
+        ProductoEntity pE = pData.get(0);
+        List<ValoracionEntity>listaVal= valoracionPersistence.findValoracionesPorProveedor(pE.getId());
+        Assert.assertEquals(listaVal.size(),data.size());
+        for(ValoracionEntity val : data)
+        {
+            Assert.assertTrue(listaVal.contains(val));
+        }
     }
     
 }

@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("valoracionModule");
     mod.constant("valoracionContext", "api/valoraciones");
-    mod.controller('valoracionesCtrl', ['$scope', '$http','valoracionContext',
+    mod.constant("productosContext", "api/productos");
+    mod.controller('valoracionesCtrl', ['$scope', '$http','valoracionContext','productosContext', '$state', '$filter','$rootScope',
          /**
          * @ngdoc controller
          * @name valoracions.controller:valoracionCtrl
@@ -18,23 +19,13 @@
          * @param {Object} valoracionesContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Valoraciones en el Backend.
          */
-       function ($scope, $http, valoracionContext) {
-           $http.get(valoracionContext).then(function (response) {
-               /**
-             * @ngdoc function
-             * @name getValoraciones
-             * @methodOf valoraciones.controller:authorCtrl
-             * @description
-             * Esta función utiliza el protocolo HTTP para obtener el recurso 
-             * donde se encuentran los autores en formato JSON. El recurso
-             * puede ser un archivo o un API Rest. La función se ejecuta
-             * automáticamente cuando el controlador es accedido desde el
-             * navegador.
-             * @param {String} URL Dirección donde se encuentra el recurso
-             * de los autores o API donde se puede consultar. Se utiliza el
-             * contexto definido anteriormente.
-             */
-                $scope.valoracionesRecords = response.data;
+       function ($scope, $http, valoracionContext, productosContext, $state, $filter, $rootScope) {
+                //if (($state.params.productoId !== undefined) && ($state.params.productoId !== null)) 
+                $scope.productoId = $state.params.productoId;
+                $http.get(productosContext + '/' + $state.params.productoId + '/' + valoracionContext).then(function (response) {
+                $rootScope.valoracionesRecords = response.data;
+                $rootScope.currentValoracion = $filter('filter')($rootScope.valoracionesRecords, {id: $state.params.valoracionId}, true)[0];
+            
             });
         }
     ]);

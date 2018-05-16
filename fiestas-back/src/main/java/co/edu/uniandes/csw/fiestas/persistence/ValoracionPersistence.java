@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -33,6 +34,17 @@ public class ValoracionPersistence {
         return q.getResultList();
       }
       
+       public List<ValoracionEntity> findValoracionesPorProveedor(long idProveedor)
+      {
+        Query q = em.createNativeQuery("select valoraciones_id from productoEntity_valoracionEntity where productoEntity_id="+idProveedor);
+        List<Long>lista=q.getResultList();
+        List<ValoracionEntity> listVal = new ArrayList<>();
+        for(long id: lista){
+            listVal.add(em.find(ValoracionEntity.class, id));
+        }
+        return listVal;
+      }
+      
       public ValoracionEntity create (ValoracionEntity entity)
       {
         em.persist(entity);
@@ -48,5 +60,5 @@ public class ValoracionPersistence {
         ValoracionEntity entity = em.find(ValoracionEntity.class, id);
         em.remove(entity);
     }
-    
+               //Query q = em.createNativeQuery("delete from productoEntity_valoracionEntityy where valoraciones_id="+id);
 }
