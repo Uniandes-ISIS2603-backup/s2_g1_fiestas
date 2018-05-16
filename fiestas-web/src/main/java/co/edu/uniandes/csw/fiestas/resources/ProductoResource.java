@@ -217,7 +217,4 @@ public class ProductoResource
         
         productoLogic.getProducto(id).getValoraciones();
     }
-    
-    
-    
 }
