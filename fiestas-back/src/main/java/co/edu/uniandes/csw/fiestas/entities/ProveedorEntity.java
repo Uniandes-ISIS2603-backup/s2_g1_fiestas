@@ -16,7 +16,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class ProveedorEntity extends BaseEntity implements Serializable
 {
-    private boolean penalizado;
+    private boolean penalizado = false;
     private String imagen;
     private String nombre;
     private String documento;
@@ -25,7 +25,7 @@ public class ProveedorEntity extends BaseEntity implements Serializable
     private String direccion;
     private String login;
     private String contrasena;
-    private Double valoracion;
+    private Double valoracion = 5.0;
     
     @PodamExclude
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)

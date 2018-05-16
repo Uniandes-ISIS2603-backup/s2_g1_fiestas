@@ -46,9 +46,9 @@
                             flag = true;
                             $scope.user = $scope.users[item];
                             console.log($scope.user)
-                            if ($scope.user.rol == "cliente") {
+                            if ($scope.user.rol == "Cliente") {
                                 $state.go('clienteDetail', {clienteId: $scope.user.token}, {reload: true});
-                            } else if ($scope.user.rol == "proveedor") {
+                            } else if ($scope.user.rol == "Proveedor") {
                                 $state.go('proveedorDetail', {proveedorId: $scope.user.token}, {reload: true});
                                 console.log("pro")
                             } else {
