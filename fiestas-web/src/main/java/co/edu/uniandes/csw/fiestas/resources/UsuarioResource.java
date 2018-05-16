@@ -93,13 +93,9 @@ public class UsuarioResource {
      * @return JSON {@link UsuarioDetailDTO} - El usuario buscado
      */
     @GET
-<<<<<<< HEAD
     @Path("{login: \\.+}")
-    public UsuarioDTO getUsuario(@PathParam("login") String login) throws BusinessLogicException{
-=======
-    @Path("{login: \\s+}")
-    public UsuarioDTO getUsuario(@PathParam("login") String login) {
->>>>>>> origin/master
+    public UsuarioDTO getUsuario(@PathParam("login") String login) throws BusinessLogicException
+    {
         UsuarioEntity e = logic.getUsuario(login);
         if (e == null) {
             throw new WebApplicationException("El usuario no existe", 404);
