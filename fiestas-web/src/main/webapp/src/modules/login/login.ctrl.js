@@ -1,6 +1,7 @@
 (function (ng) {
     var mod = ng.module("loginModule");
-    mod.controller('loginCtrl', ['$scope', '$http', '$state', '$rootScope',
+    mod.constant("usuarioContext", "api/usuarios");
+    mod.controller('loginCtrl', ['$scope', '$http', '$state', '$rootScope','usuarioContext',
         /**
          * @ngdoc controller
          * @name login.controller:loginCtrl
@@ -19,12 +20,12 @@
          * @param {Object} $rootScope Referencia injectada al Scope definido
          * para toda la aplicación.
          */
-        function ($scope, $http, $state, $rootScope) {
+        function ($scope, $http, $state, $rootScope,usuarioContext) {
 
             $scope.user = {};
             $scope.data = {};
             
-            $http.get('data/admins.json').then(function (response) {
+            $http.get(usuarioContext).then(function (response) {
                 $scope.users = response.data;
             });
 
@@ -38,7 +39,8 @@
              */
             $scope.autenticar = function () {
                 var flag = false;
-                $http.post('api/login',$scope.data).then(function(response){
+                console.log($scope.data)
+                $http.post(usuarioContext,$scope.data).then(function(response){
 
                 for (var item in $scope.users) {
                     if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena && $scope.users[item].rol === response.data.rol) {
