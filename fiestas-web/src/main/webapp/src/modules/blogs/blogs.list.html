@@ -1,13 +1,14 @@
 <div class="container-fluid">
     <div class="panel-group">
         <div class="panel panel-primary" >
-            <div class="panel-heading"><label><h3>Lista de blogs</h3></label></div>
+            <div class="panel-heading"><label><h3><b>Lista de blogs</b></h3></label></div>
             <div class="panel-body">
                 <div class="row">
                 <div ng-repeat="blogs in blogsRecords">
-                <h3 Id="{{$index}}-Id">
-                <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
-                <b>{{blogs.titulo}}</b></h3> 
+                <h3 Id="{{$index}}-Id">    
+                <a ui-sref="blogsDetail({blogsId: blogs.id})"><b>{{blogs.titulo}}</b></a><br>
+                {{blogs.cuerpo}}
+                </h3> 
                     <id="{{$index}}-actions">
                         <a class="btn btn-default btn-sm" ui-sref="blogsUpdate({blogsId: blogs.id})"><span class="glyphicon glyphicon-edit"></span></a>
                         <a class="btn btn-danger btn-sm" ui-sref="blogsDelete({blogsId: blogs.id})"><span class="glyphicon glyphicon-trash"></span></a>
