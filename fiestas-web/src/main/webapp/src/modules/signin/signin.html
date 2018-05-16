@@ -1,0 +1,28 @@
+<div ng-if="!isAuthenticated()" class="container">
+    <form class="form-signin">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
+        <h1 class="form-signin-heading text-muted">Sign In</h1>
+        <input type="text" class="form-control" placeholder="Nombre" required="" autofocus="" ng-model="data.nombre">
+        <input type="text" class="form-control" placeholder="Username" required="" autofocus="" ng-model="data.login">
+        <input type="text" class="form-control" placeholder="Documento" required="" autofocus="" ng-model="data.documento">
+        <input type="text" class="form-control" placeholder="Teléfono" required="" autofocus="" ng-model="data.telefono">
+        <input type="text" class="form-control" placeholder="Dirección" required="" autofocus="" ng-model="data.direccion">
+        <input type="text" class="form-control" placeholder="Correo" required="" autofocus="" ng-model="data.correo">
+        <input type="password" class="form-control" placeholder="Password" required="" ng-model="data.contrasena">
+        <input type="password" class="form-control" placeholder="Confirmar Password" required="" ng-model="data.contrasenaConfirmada">
+        <input type="text" class="form-control" placeholder="Foto de perfil" required="" autofocus="" ng-model="data.imagen">
+        <select class="form-control" name="singleSelect" id="singleSelect" ng-model="data.rol" required="true">
+            <option value="">--- Please select rol ---</option> <!-- not selected / blank option -->
+            <option value="Cliente">Cliente</option>
+            <option value="Proveedor">Proveedor</option>
+        </select>
+        <br>
+        <button ng-if="data.rol === 'Cliente' && data.contrasenaConfirmada === data.contrasena && data.contrasena !== null && data.contrasenaConfirmada !== ''" type="button" class="btn btn-lg btn-primary btn-block" ng-click="registrarCliente()">
+            Sign In
+        </button>
+        <button ng-if="data.rol === 'Proveedor' && data.contrasenaConfirmada === data.contrasena && data.contrasena !== null && data.contrasenaConfirmada !== ''" type="button" class="btn btn-lg btn-primary btn-block" ng-click="registrarProveedor()">
+            Sign In
+        </button>
+        <a class="btn btn-lg btn-primary btn-block" ui-sref="main">Cancel</a>
+    </form>
+</div>
