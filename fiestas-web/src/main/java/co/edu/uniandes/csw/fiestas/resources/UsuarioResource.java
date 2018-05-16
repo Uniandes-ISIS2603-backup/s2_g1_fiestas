@@ -92,7 +92,7 @@ public class UsuarioResource {
      * @throws BusinessLogicException {@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper} - Error de lógica si no existe el usuario
      */
     @GET
-    @Path("{login: \\s+}")
+    @Path("{login: \\.+}")
     public UsuarioDTO getUsuario(@PathParam("login") String login) throws BusinessLogicException{
         UsuarioEntity e = logic.getUsuario(login);
         if(e == null)
