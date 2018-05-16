@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
+import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import java.util.List;
@@ -70,5 +71,13 @@ public class ProductoPersistence
         LOGGER.log(Level.INFO, "Borrando producto con id={0}", id);
         ProductoEntity entity = em.find(ProductoEntity.class, id);
         em.remove(entity);
+    }
+    
+    public List<ProductoEntity> findByProveedor(Long proveedorid)
+    {
+        TypedQuery<ProductoEntity> q = em.createQuery("select p from ProductoEntity p where (p.proveedor.id = :proveedorid)", ProductoEntity.class);
+        q.setParameter("proveedorid", proveedorid);
+        List<ProductoEntity> results = q.getResultList();
+        return results;
     }
 }

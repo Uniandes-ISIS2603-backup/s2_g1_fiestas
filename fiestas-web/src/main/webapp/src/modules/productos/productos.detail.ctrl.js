@@ -1,14 +1,15 @@
 (function (ng) {
     var mod = ng.module("productosModule");
     mod.constant("productosContext", "productos");
-    mod.constant("proveedoresContext", "api/proveedores")
-    mod.controller('productosDetailCtrl', ['$scope', '$http', 'productosContext','proveedoresContext', '$state', '$filter',
-        function ($scope, $http, productosContext, $state, $filter, proveedoresContext) {
+    mod.constant("proveedorContext", "api/proveedores")
+    mod.controller('productosDetailCtrl', ['$scope', '$http', 'productosContext','proveedoresContext', '$state', '$filter','$rootScope',
+        function ($scope, $http, productosContext, proveedorContext, $state, $filter, $rootScope) {
 
-            if (($state.params.productoId !== undefined) && ($state.params.productoId !== null)) {
-                $http.get(productosContext).then(function (response) {
-                    $scope.productosRecords = response.data;
-                    $scope.currentProducto = $filter('filter')($scope.productosRecords, {ID: $state.params.productoId}, true)[0];
+            if (($state.params.proveedorId !== undefined) && ($state.params.proveedorId !== null)) {
+                $scope.proveedorId = $state.params.proveedorId;
+                $http.get(proveedorContext + '/' + $state.params.proveedorId + '/' + productosContext).then(function (response) {
+                $rootScope.productosRecords = response.data;
+                $rootScope.currentProducto = $filter('filter')($rootScope.productosRecords, {ID: $state.params.productoId}, true)[0];
                 });
             }
         }

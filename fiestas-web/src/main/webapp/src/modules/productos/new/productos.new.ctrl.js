@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "api/productos");
-    mod.controller('productosNewCtrl', ['$scope', '$http', 'productosContext', '$state', '$rootScope',
+    mod.constant("productosContext", "productos");
+    mod.constant("proveedoresContext", "api/proveedores");
+    mod.controller('productosNewCtrl', ['$scope', '$http', 'productosContext', '$state', '$rootScope', 'proveedoresContext',
         /**
          * @ngdoc controller
          * @name productos.controller:productosNewCtrl
@@ -19,9 +20,8 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, productosContext, $state, $rootScope, proveedoresContext, serviciosContext) {
+        function ($scope, $http, productosContext,proveedoresContext, $state, $rootScope) {
             $rootScope.edit = false;
-
             $scope.data = {};
 
             /**
@@ -33,10 +33,13 @@
              * @param {Object} producto Objeto con la nueva de la producto.
              */
             $scope.createProducto = function () {
-                console.log($scope.data);
-                $http.post(proveedoresContext + '/' + $state.params.proveedorId + '/' +serviciosContext+'/'+$state.params.servicioId+'/'+productosContext, $scope.data).then(function (response) {
-                    $state.go('productosList', {pagoId: response.data.id}, {reload: true});
+                $http.post("api/" + productosContext, $scope.data).then(function (response) {
+                    $state.go('productosList', {productoId: response.data.ID}, {reload: true});
+                    $http.post("api/proveedores" + '/' + $state.proveedorId + '/' + productosContext + '/' + response.data.ID, $scope.data).then(function (response) {
+                    $state.go('productosList', {productoId: response.data.ID}, {reload: true});
                 });
+                });
+                
             };
         }
     ]);

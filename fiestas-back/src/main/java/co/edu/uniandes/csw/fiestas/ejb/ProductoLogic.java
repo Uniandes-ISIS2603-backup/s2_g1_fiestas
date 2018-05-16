@@ -5,6 +5,7 @@ import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
@@ -29,11 +30,8 @@ public class ProductoLogic
     @Inject
     private ProductoPersistence persistence;
     @Inject
-    private ServicioPersistence perSer;
-    @Inject
-    private ProveedorPersistence perPro;
-    @Inject
-    private ValoracionPersistence perValoracion;
+    private ServicioLogic perSer;
+    private ValoracionLogic perValoracion;
     
     /**
      * Obtiene la lista de los registros de Producto.
@@ -91,29 +89,15 @@ public class ProductoLogic
         LOGGER.log(Level.INFO, "Termina proceso de borrar producto con id={0}", id);
     }
     
-    public ProveedorEntity addProveedor(Long productoId, Long proveedorId) {
-        ProveedorEntity find = perPro.find(proveedorId);
-        ProductoEntity faind = persistence.find(productoId);
-        faind.setProveedor(find);
-        return find;
-    }
-    
-    public ProductoEntity deleteProveedor(Long productoId)
-    {
-        ProductoEntity producto = persistence.find(productoId);
-        producto.setProveedor(null);
-        return producto;
-    }
-
     /**
      *  Busca una valoracion y la agrega a la lista de valoraciones
      * @param id
      * @param valoracion 
      */
-    public void addValoracion(Long id, ValoracionEntity valoracion) 
+    public void addValoracion(Long id, ValoracionEntity valoracion) throws BusinessLogicException
     {
         ProductoEntity producto = persistence.find(id);
-        ValoracionEntity valoracionP = perValoracion.find(valoracion.getId());
+        ValoracionEntity valoracionP = perValoracion.getValoracion(valoracion.getId());
         List<ValoracionEntity> valoraciones = producto.getValoraciones();
         valoraciones.add(valoracionP);
         producto.setValoraciones(valoraciones);
@@ -153,13 +137,37 @@ public class ProductoLogic
         {
             if(valoracion.getId().equals(id))
             {
-                perValoracion.delete(id);
+                perValoracion.deleteValoracion(id);
                 sisa = !sisa;
                 calcularValoracionPromedio(id);
             }
             if(!sisa)
                 break;
         }
+    }
+    
+    /**
+     * Agrega el servicio al producto
+     * @param idServicio
+     * @param idProducto 
+     */
+    public void agregarServicio (Long idServicio, Long idProducto)
+    {
+        ProductoEntity producto = persistence.find(idProducto);
+        ServicioEntity servicio = perSer.getServicio(idServicio);
+        producto.setServicio(servicio);
+    }    
+    
+    
+    public List<ProductoEntity> findProductosByProveedor(Long idProveedor)
+    {
+        return persistence.findByProveedor(idProveedor);
+    }
+
+    public List<ValoracionEntity> getValoraciones(Long id) 
+    {
+        ProductoEntity producto = persistence.find(id);
+        return producto.getValoraciones();
     }
     
 }

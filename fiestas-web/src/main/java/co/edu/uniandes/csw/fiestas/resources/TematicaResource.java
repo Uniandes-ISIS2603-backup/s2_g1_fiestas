@@ -5,10 +5,10 @@
  */
 package co.edu.uniandes.csw.fiestas.resources;
 
+import co.edu.uniandes.csw.fiestas.dtos.TematicaDetailDTO;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import co.edu.uniandes.csw.fiestas.dtos.*;
 import co.edu.uniandes.csw.fiestas.ejb.TematicaLogic;
 import co.edu.uniandes.csw.fiestas.entities.TematicaEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
@@ -171,5 +171,28 @@ public class TematicaResource
     public void deleteTematica(@PathParam("id") Long id)
     {
         tematicaLogic.deleteTematica(id);
+    }
+    
+    /**
+     * Agrega el producto a la lista de productos de la tematica
+     * @param id
+     * @param idProducto 
+     */
+    @POST
+    @Path("{id:\\d+}/productos/{idProducto:\\d+}")
+    public void agregarProducto(@PathParam("id")Long id, @PathParam("idProducto")Long idProducto)
+    {
+        tematicaLogic.addProducto(id, idProducto);
+    }
+    /**
+     * Elimina el producto de la lista de la tematica
+     * @param id
+     * @param idProducto 
+     */
+    @DELETE
+    @Path("{id:\\d+}/productos/{idProducto:\\d+}")
+    public void eliminarProducto(@PathParam("id")Long id, @PathParam("idProducto")Long idProducto)
+    {
+        tematicaLogic.removeProducto(id, idProducto);
     }
 }

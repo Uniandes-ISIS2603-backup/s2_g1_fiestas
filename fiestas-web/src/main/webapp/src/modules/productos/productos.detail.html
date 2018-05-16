@@ -1,35 +1,28 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<div class="container-fluid">
-<div class="row">
-    <div class="col-md-3">
+<div class="panel panel-default"> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3">
                 <div class="thumb">
-                    <img class="img-responsive" ng-src="{{currentProducto.imagen}}"/>
+                <img class="img-responsive" ng-src="{{currentProducto.imagen}}"/>
                 </div>
             </div>
-    <div class="col-md-6">
-        <dl>
-            <dt>{{currentProducto.ID}}</dt>
-            <hr>
-            <dt class="bold">Descripcion</dt>
-            <dd>{{currentProducto.descripcion}}</dd>
-            <hr>
-            <dt class="bold">Incluye</dt>
-            <dd>{{currentProducto.incluidos}}</dd>
-            <hr>
-            <dt class="bold">Personal</dt>
-            <dd>{{currentProducto.personal}}</dd>
-            <hr>
-            <dt class="bold">Precio</dt>
-            <dd>{{currentProducto.precio}}</dd>
-            <hr>
-        </dl>
+            <div class="col-md-6">
+                <dl>     
+                    <dt>{{currentProducto.nombre}}</dt>
+                    <hr>
+                    <dt>Descripcion</dt>
+                    <dd>{{currentProducto.descripcion}}</dd>
+                    <hr>
+                    <dt>Incluidos</dt>
+                    <dd>{{currentProducto.incluidos}}</dd>
+                    <hr>
+                    <dt>Personal</dt>
+                    <dd>{{currentProducto.personal}}</dd>
+                    <hr>
+                    <dt>Precio</dt>
+                    <dd>{{currentProducto.precio}}</dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </div>
-</div>
-
-
