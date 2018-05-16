@@ -1,6 +1,7 @@
 (function (ng) {
     var mod = ng.module("loginModule");
-    mod.controller('loginCtrl', ['$scope', '$http', '$state', '$rootScope',
+    mod.constant("usuarioContext", "api/usuarios");
+    mod.controller('loginCtrl', ['$scope', '$http', '$state', '$rootScope', 'usuarioContext',
         /**
          * @ngdoc controller
          * @name login.controller:loginCtrl
@@ -19,12 +20,12 @@
          * @param {Object} $rootScope Referencia injectada al Scope definido
          * para toda la aplicación.
          */
-        function ($scope, $http, $state, $rootScope) {
+        function ($scope, $http, $state, $rootScope, usuarioContext) {
 
             $scope.user = {};
             $scope.data = {};
-            
-            $http.get('data/admins.json').then(function (response) {
+
+            $http.get(usuarioContext).then(function (response) {
                 $scope.users = response.data;
             });
 
@@ -38,25 +39,33 @@
              */
             $scope.autenticar = function () {
                 var flag = false;
-                $http.post('api/login',$scope.data).then(function(response){
+                $http.post(usuarioContext, $scope.data).then(function (response) {
 
-                for (var item in $scope.users) {
-                    if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena && $scope.users[item].rol === response.data.rol) {
-                        flag = true;
-                        $scope.user = $scope.users[item];
-                        $state.go('main', {}, {reload: true});
-                        break;
+                    for (var item in $scope.users) {
+                        if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena && $scope.users[item].rol === response.data.rol) {
+                            flag = true;
+                            $scope.user = $scope.users[item];
+                            console.log($scope.user)
+                            if ($scope.user.rol == "cliente") {
+                                $state.go('clienteDetail', {clienteId: $scope.user.token}, {reload: true});
+                            } else if ($scope.user.rol == "proveedor") {
+                                $state.go('proveedorDetail', {proveedorId: $scope.user.token}, {reload: true});
+                                console.log("pro")
+                            } else {
+                                $state.go('main', {}, {reload: true});
+                            }
+                            break;
+                        }
                     }
-                }
-                if (!flag) {
-                    $rootScope.alerts.push({type: "danger", msg: "Incorrect username or password."});
-                } else {
-                    sessionStorage.token = $scope.user.token;
-                    sessionStorage.setItem("username", $scope.user.login);
-                    sessionStorage.setItem("name", $scope.user.nombre);
-                    sessionStorage.setItem("rol", $scope.user.rol);
-                    $rootScope.currentUser = $scope.user.nombre; 
-                }
+                    if (!flag) {
+                        $rootScope.alerts.push({type: "danger", msg: "Incorrect username or password."});
+                    } else {
+                        sessionStorage.token = $scope.user.token;
+                        sessionStorage.setItem("username", $scope.user.login);
+                        sessionStorage.setItem("name", $scope.user.nombre);
+                        sessionStorage.setItem("rol", $scope.user.rol);
+                        $rootScope.currentUser = $scope.user.nombre;
+                    }
                 });
             };
         }

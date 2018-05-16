@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fa1ea504-bc3a-4aa4-bf78-183f845ebfb8",
+		"_postman_id": "88f60855-9f09-4ed1-98b5-f3bc476487e2",
 		"name": "Pruebas Fiestas",
 		"description": "Pruebas de los servicios del proyecto Fiestas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -1505,7 +1505,7 @@
 		},
 		{
 			"name": "Valoracion",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "get valoracion con 200",
@@ -1922,7 +1922,7 @@
 		},
 		{
 			"name": "Servicio",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "get servicios con 200",
@@ -4130,6 +4130,97 @@
 								"fiestas-web",
 								"api",
 								"tematicas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"description": "",
+			"item": [
+				{
+					"name": "get usuarios con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "898e00f4-bf7d-4b51-bdd7-a77c1fe05893",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cuerpo\": \"Muy buena fiesta de semana santa. Todo muy respetuoso y acorde con la ocasión\",\n    \"likes\": 10,\n    \"titulo\": \"La mejor semana santa de todas\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get usuario con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "898e00f4-bf7d-4b51-bdd7-a77c1fe05893",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cuerpo\": \"Muy buena fiesta de semana santa. Todo muy respetuoso y acorde con la ocasión\",\n    \"likes\": 10,\n    \"titulo\": \"La mejor semana santa de todas\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/usuarios/dnino",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"usuarios",
+								"dnino"
 							]
 						}
 					},
