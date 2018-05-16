@@ -148,7 +148,7 @@ public class ServicioResource {
     public ServicioDetailDTO getServicio(@PathParam("id") Long id) throws BusinessLogicException {
         ServicioEntity e = logic.getServicio(id);
         if (e == null) {
-            throw new BusinessLogicException("El servicio con el id buscado no existe.");
+            throw new WebApplicationException("El servicio con el id buscado no existe.", 404);
         }
         return new ServicioDetailDTO(e);
     }
@@ -211,7 +211,7 @@ public class ServicioResource {
     public void deleteServicio(@PathParam("id") Long id) throws BusinessLogicException {
         ServicioEntity ent = logic.getServicio(id);
         if (ent == null) {
-            throw new BusinessLogicException("El servicio no existe.");
+            throw new WebApplicationException("l servicio con el id buscado no existe.", 404);
         }
         logic.deleteServicio(id);
     }
