@@ -9,37 +9,18 @@
             <div class="panel-heading"><label>Lista de blogs</label></div>
             <div class="panel-body">
                 <div class="row">
+                <div ng-repeat="blogs in blogsRecords">
+                <h3 Id="{{$index}}-Id">
+                <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
+                <b>{{blogs.titulo}}</b></h3> 
+                    <id="{{$index}}-actions">
+                        <a class="btn btn-default btn-sm" ui-sref="blogsUpdate({blogsId: blogs.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-danger btn-sm" ui-sref="blogsDelete({blogsId: blogs.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                        
+                        
+                        <a class="btn btn-info btn-sm"  ui-sref="blogsUpdate({blogsId: blogs.id})"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                    <hr>
                     
-                    <table class="table thead-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Título</th>
-                                <th scope="col">Likes</th>
-                                <th scope="col">Evento</th>
-                                <th scope="col">Cliente</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="blogs in blogsRecords">
-                                <td Id="{{$index}}-Id">
-                                    <a ui-sref="blogsDetail({blogsId: blogs.id})">{{blogs.id}}</a>
-                                </td>          
-                                <td >{{blogs.titulo}}</td>
-                                <td >{{blogs.likes}}</td>
-                                <td >{{blogs.evento.nombre}}</td>
-                                <td >{{blogs.cliente.nombre}}</td> 
-                                <td id="{{$index}}-actions">
-                                    <a class="btn btn-default btn-sm" ui-sref="blogsUpdate({blogsId: blogs.id})"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a class="btn btn-danger btn-sm" ui-sref="blogsDelete({blogsId: blogs.id})"><span class="glyphicon glyphicon-trash"></span></a>
-                                    
-                                    
-                                    <a class="btn btn-info btn-sm"  ui-sref="blogsUpdate({blogsId: blogs.id})"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> 
             </div>
         </div>
     </div>
