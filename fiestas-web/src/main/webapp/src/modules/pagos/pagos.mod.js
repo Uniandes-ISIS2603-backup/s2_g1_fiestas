@@ -53,6 +53,10 @@
                     'childrenView': {
                         templateUrl: basePath + 'pagos.html',
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('pagosList', {
                 url: '/list',
@@ -87,6 +91,10 @@
                         templateUrl: basePath + 'new/pagos.new.html',
                         controller: 'pagoNewCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('pagoUpdate', {
                 url: '/update/{pagoId:int}',
@@ -99,6 +107,10 @@
                         templateUrl: basePath + 'new/pagos.new.html',
                         controller: 'pagoUpdateCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
                 }
             }).state('pagoDelete', {
                 url: '/delete/{pagoId:int}',
@@ -111,6 +123,10 @@
                         templateUrl: basePath + 'delete/pagos.delete.html',
                         controller: 'pagoDeleteCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin']
                 }
             });
         }]);
