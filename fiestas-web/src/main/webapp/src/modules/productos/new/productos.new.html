@@ -1,3 +1,4 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
 <div class="container-fluid">
     <div class="panel-group">
         <div class="panel panel-primary">
@@ -37,7 +38,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
-                            <label for="productoImagen" class="col-sm-2">Precio: </label>
+                            <label for="productoImagen" class="col-sm-2">Imagen: </label>
                             <input id="productoImagen" required ng-model="data.productoImagen" class="col-sm-6"/>
                         </div>
                     </div>
@@ -52,7 +53,7 @@
                      <div class="form-group row">
                         <div class="form-group col-sm-12">
                             <input ng-if="!edit"  ng-show="producto.$valid" ng-click="createProducto()" value="Save" class="btn btn-success"/>
-                            <input ng-if="edit"  ng-show="evento.$valid" ng-click="updateProducto()" value="Update" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="producto.$valid" ng-click="updateProducto()" value="Update" class="btn btn-success"/>
                             <a class="btn btn-info" ui-sref="productosList">Cancel</a>
                         </div>
                     </div>

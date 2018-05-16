@@ -11,8 +11,9 @@
             $stateProvider.state('productos', {
                 url: '/productos',
                 abstract: true,
+                parent: 'proveedorDetail',
                 views: {
-                    'mainView': {
+                    'childrenView': {
                         templateUrl: basePath + 'productos.html',
                         controller: 'productosCtrl',
                         controllerAs: 'ctrl'
@@ -21,7 +22,6 @@
             }).state('productosList', {
                 url: '/list',
                 parent: 'productos',
-                params: {proveedorId : null, productoId: null},
                 views: {
                     'listView': {
                         templateUrl: basePath + 'productos.list.html'
@@ -30,7 +30,6 @@
             }).state('productosDetail', {
                 url: '/{productoId:int}/detail',
                 parent: 'productos',
-                params: {proveedorId : null,productoId: null},
                 views: {
                     'listView': {
                         templateUrl: basePath + 'productos.list.html'

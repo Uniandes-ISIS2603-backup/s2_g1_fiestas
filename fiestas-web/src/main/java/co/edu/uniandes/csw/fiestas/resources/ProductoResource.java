@@ -9,7 +9,9 @@ import co.edu.uniandes.csw.fiestas.dtos.ValoracionDTO;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import co.edu.uniandes.csw.fiestas.ejb.ProductoLogic;
+import co.edu.uniandes.csw.fiestas.ejb.ValoracionLogic;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,7 @@ import javax.ws.rs.Produces;
  * @author af.losada  
  * @version 1.0
  */
-@Path("proveedores/{idProveedor: \\d+}/productos")
+@Path("productos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -49,6 +51,9 @@ public class ProductoResource
     
     @Inject
     ProductoLogic productoLogic;
+    
+    @Inject
+    ValoracionLogic valoracionesLogic;
     
         /**
      * <h1>GET /productos/{id} : Obtener producto por id.</h1>
@@ -89,14 +94,14 @@ public class ProductoResource
     @GET
     @Produces("application/json")
     @Consumes("application/json")
-    public List<ProductoDetailDTO> getProductos(@PathParam("idProveedor") Long id)
+    public List<ProductoDetailDTO> getProductos()
     {
         List<ProductoEntity> lista = productoLogic.getProductos();
         List<ProductoDetailDTO> nuevaList = new ArrayList<>();
-        
-        lista.stream().filter((productoEntity) -> (productoEntity.getProveedor().getId().equals(id))).forEachOrdered((productoEntity) -> {
-            nuevaList.add(new ProductoDetailDTO(productoEntity));
-        });
+        for (ProductoEntity productoDetailDTO : lista) {
+            
+            nuevaList.add(new ProductoDetailDTO(productoDetailDTO));
+        }
         return nuevaList;
     }
     
@@ -124,10 +129,9 @@ public class ProductoResource
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public ProductoDetailDTO createProducto(ProductoDetailDTO producto, @PathParam("idProveedor") Long id) throws BusinessLogicException{
+    public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
         
         productoLogic.createProducto(producto.toEntity());
-        productoLogic.addProveedor(id, producto.getID());
         return producto;
     }
     
@@ -189,7 +193,7 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}/valoraciones")
-    public void agregarValoracion(@PathParam("id") Long id, ValoracionDTO valoracion)
+    public void agregarValoracion(@PathParam("id") Long id, ValoracionDTO valoracion) throws BusinessLogicException
     {
         productoLogic.addValoracion(id, valoracion.toEntity());
     }
@@ -202,4 +206,18 @@ public class ProductoResource
     {
         productoLogic.deleteValoracion(id, idValoracion);
     }   
+    
+    
+    @GET
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Path("{id: \\d+}/valoraciones")
+    public void getValoraciones(@PathParam("id") Long id)
+    {
+        
+        productoLogic.getProducto(id).getValoraciones();
+    }
+    
+    
+    
 }
