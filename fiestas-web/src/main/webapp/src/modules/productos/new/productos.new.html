@@ -1,3 +1,4 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
 <div class="container-fluid">
     <div class="panel-group">
         <div class="panel panel-primary">
@@ -8,37 +9,37 @@
                     <div class="form-group row">
                         <div class="form-group col-md-6">
                             <label for="productoNombre" class="col-sm-2">Nombre:</label>
-                            <input id="productoNombre" required ng-model="data.productoNombre" class="col-sm-6"/>
+                            <input type="text" id="productoNombre" required ng-model="data.nombre" placeholder = "Nombre del producto"class="col-sm-6"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
                             <label for="productoDescripcion" class="col-sm-2">Descripcion:</label>
-                            <textarea id="productoDescripcion" required ng-model="data.productoDescripcion" class="col-sm-6"></textarea>
+                            <input type ="text" id="productoDescripcion" required ng-model="data.descripcion" placeholder = "Descripcion del Producto" class="col-sm-6"> </input>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
                             <label for="productoIncluye" class="col-sm-2">Incluye: </label>
-                            <input id="productoIncluye" required ng-model="data.productoIncluye" class="col-sm-6"/>
+                            <input type="text" id="productoIncluye" required ng-model="data.incluye" placeholder = "Lo que incluye" class="col-sm-6"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
                             <label for="productoPersonal" class="col-sm-2">Personal: </label>
-                            <input id="productoPersonal" required ng-model="data.productoPersonal" class="col-sm-6"/>
+                            <input type="" id="productoPersonal" required ng-model="data.personal" placeholder = "15" class="col-sm-6"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
                             <label for="productoPrecio" class="col-sm-2">Precio: </label>
-                            <input id="productoPrecio" required ng-model="data.productoPrecio" class="col-sm-6"/>
+                            <input id="productoPrecio" required ng-model="data.precio" placeholder = "Precio del producto"class="col-sm-6"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-6">
-                            <label for="productoImagen" class="col-sm-2">Precio: </label>
-                            <input id="productoImagen" required ng-model="data.productoImagen" class="col-sm-6"/>
+                            <label for="productoImagen" class="col-sm-2">Imagen: </label>
+                            <input id="productoImagen" required ng-model="data.imagen" placeholder = "https://secure-ds.serving-sys.com/BurstingRes/Site-101164/Type-0/324fe49b-8410-4ce6-a5d7-b888eb0534f2.gif" class="col-sm-6"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -52,7 +53,7 @@
                      <div class="form-group row">
                         <div class="form-group col-sm-12">
                             <input ng-if="!edit"  ng-show="producto.$valid" ng-click="createProducto()" value="Save" class="btn btn-success"/>
-                            <input ng-if="edit"  ng-show="evento.$valid" ng-click="updateProducto()" value="Update" class="btn btn-success"/>
+                            <input ng-if="edit"  ng-show="producto.$valid" ng-click="updateProducto()" value="Update" class="btn btn-success"/>
                             <a class="btn btn-info" ui-sref="productosList">Cancel</a>
                         </div>
                     </div>
