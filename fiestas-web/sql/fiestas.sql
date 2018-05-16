@@ -18,12 +18,12 @@ delete from ClienteEntity;
 delete from UsuarioEntity;
 
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','hola123', 0);
-insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Iluminación de Diana','http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270' ,'1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','dianailu','hola1234', 0);
-insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10013, 'Decoración Pepitos','http://www.glits.mx/ckfinder/userfiles/images/Atmosphere%20Gala%204.jpg' ,'1012345670', 3212121214, 'pepitosdec@hotmail.com', 'cll.2 #20-34','decpep10','hola', 1);
+insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Iluminación de Diana','http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270' ,'1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','dianas','hola1234', 0);
+insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10013, 'Decoración Pepitos','http://www.glits.mx/ckfinder/userfiles/images/Atmosphere%20Gala%204.jpg' ,'1012345670', 3212121214, 'pepitosdec@hotmail.com', 'cll.2 #20-34','pepitos','hola', 1);
 
-insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10011, 'Nicolás Hernández','https://www.psicoactiva.com/blog/wp-content/uploads/2017/07/hombre-soltero-feliz.jpg', '1012345681', 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nm.hernandez10', 'chao123');
-insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias','https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg' ,'1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','df.galan', 'chao1234');
-insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya11@uniandes.edu.co', 'chao12345');
+insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10011, 'Nicolás Hernández','https://www.psicoactiva.com/blog/wp-content/uploads/2017/07/hombre-soltero-feliz.jpg', '1012345681', 3112121212, 'nm.hernandez10@uniandes.edu.co', 'cll.2 #25-25','nicos', 'chao123');
+insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias','https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg' ,'1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','sofia', 'chao1234');
+insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya', 'chao12345');
 
 insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10001,'Hamburguesería Mc Donalds','Proveedor',1,'mcdonals','asd123');
 insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10002,'Iluminación de Diana','Proveedor',2,'dianas','asd123');
@@ -78,3 +78,4 @@ insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10095, 10076);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10096, 10077);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10097, 10078);
+>>>>>>> origin/master
