@@ -168,33 +168,5 @@ public class ProductoLogicTest
         Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
     }
-    
-    
-    /**
-     * Prueba para añadir el proveedor
-     */
-    @Test
-    public void setProveedorTest() throws BusinessLogicException, NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException
-    {
-        ProductoEntity producto = data.get(0);
-        ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
-//        producto.setProveedors(data);
-        utx.begin();
-        em.persist(producto);
-        utx.commit();
-        productoLogic.addProveedor(producto.getId(),proveedor.getId());
-       
-    }
-    
-    /**
-     * Prueba para borrar el proveedor
-     */
-    @Test
-    public void deleteProveedorTest() throws BusinessLogicException
-    {
-        
-        productoLogic.deleteProveedor(data.get(0).getId());
-        ProductoEntity response = productoLogic.getProducto(data.get(0).getId());
-        Assert.assertNull(response.getProveedor());
-    }
+
 }

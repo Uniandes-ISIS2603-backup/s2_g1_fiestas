@@ -489,7 +489,7 @@ public class ProveedorResource {
      * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
      * hay errores de logica
      */
-    @POST
+    @PUT
     @Path("{proveedorId: \\d+}/productos/{productosId: \\d+}")
     public ProductoDetailDTO addProducto(@PathParam("proveedorId") Long proveedorId, @PathParam("productosId") Long productoId)
     {

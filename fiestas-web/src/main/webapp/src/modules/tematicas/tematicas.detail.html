@@ -14,8 +14,8 @@ and open the template in the editor.
             <dd>{{currentTematica.descripcion}}</dd>
             <hr>
             <dt class="bold">Servicios</dt>
-            <ul ng-repeat="servicio in currentTematica.servicios">
-                <a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.name}}</a>
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"> <a  ui-sref="productosList({productoId: currentProducto.id})">Productos</a></li>
             </ul>
         </dl>
     </div>

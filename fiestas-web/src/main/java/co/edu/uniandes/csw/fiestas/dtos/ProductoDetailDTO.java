@@ -63,6 +63,7 @@ private ServicioDTO servicio;
 private ProveedorDTO proveedor;
 
 private List<ValoracionDTO> valoraciones;
+
 /**
 * Constructor por defecto
 */
@@ -183,6 +184,10 @@ void setServicio(ServicioDTO pServ)
                 rta.add(actual.get(i).toEntity());
             }
             producto.setValoraciones(rta);
+        }
+        if(this.getServicio() != null)
+        {
+            producto.setServicio(this.getServicio().toEntity());
         }
         return producto;
     }
