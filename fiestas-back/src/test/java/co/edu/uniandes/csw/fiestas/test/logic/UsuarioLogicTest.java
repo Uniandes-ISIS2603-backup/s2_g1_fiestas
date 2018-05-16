@@ -184,7 +184,6 @@ public class UsuarioLogicTest {
 
      /**
      * Prueba para actualizar un usuario
-     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
     public void updateUsuarioTest() {
@@ -192,12 +191,13 @@ public class UsuarioLogicTest {
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
 
         newEntity.setId(entity.getId());
+        newEntity.setLogin(entity.getLogin());
 
         try{
         usuarioLogic.updateUsuario(newEntity);
         }
         catch(BusinessLogicException e){
-            fail("No debería fallar al hacer update.");
+            fail("No debería fallar al hacer update." + e.getMessage());
         }
 
         UsuarioEntity entidad = em.find(UsuarioEntity.class, entity.getId());

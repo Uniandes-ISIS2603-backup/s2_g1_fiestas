@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
 import co.edu.uniandes.csw.fiestas.persistence.ProveedorPersistence;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -206,12 +207,29 @@ public class ProveedorLogic
      */
     public List<ProductoEntity> getProductos(Long proveedorId) throws BusinessLogicException 
     {
+        
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los productos del proveedor con id = {0}", proveedorId);
-        if(getProveedor(proveedorId) == null)
+        ProveedorEntity proveedor = getProveedor(proveedorId);
+        if(proveedor == null)
         {
             throw new BusinessLogicException("No existe un proveedor con dicho id para enlistar productos");
         }
-        return getProveedor(proveedorId).getProductos();
+        List<ProductoEntity> productos = productoLogic.getProductos();
+        List<ProductoEntity> nuevaList = new ArrayList<>();
+        for (ProductoEntity producto : productos) {
+            
+            ProveedorEntity prov = producto.getProveedor();
+            if(producto.getProveedor() != null)
+            {
+                if(prov.getId().equals(proveedorId))
+                {
+                    nuevaList.add(producto);
+                }
+            }
+        }
+        
+       
+        return nuevaList;
     }
 
     /**
@@ -587,14 +605,20 @@ public class ProveedorLogic
         List<ProductoEntity> productos = entity.getProductos();
         
         double valoracionProveedor = 0;
-        
-        for(ProductoEntity producto : productos)
-        {
-            valoracionProveedor += producto.getValoracionPromedio();
-        }
-        
         if(!productos.isEmpty())
         {
+        for(ProductoEntity producto : productos)
+        {
+            if(producto != null)
+            {
+                if(producto.getValoracionPromedio()!= null)
+                {
+                    valoracionProveedor += producto.getValoracionPromedio();
+                }
+            }
+        }
+        
+        
             valoracionProveedor = valoracionProveedor/productos.size();
         }
         else

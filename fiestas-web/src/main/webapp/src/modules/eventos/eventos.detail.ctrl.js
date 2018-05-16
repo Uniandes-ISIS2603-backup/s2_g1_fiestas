@@ -27,7 +27,7 @@
                  /**
                  * @ngdoc function
                  * @name getEventoID
-                 * @methodOf eventos.controller:eventoDetailCtrl
+                 * @methodOf eventos.controller:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      eventoDetailCtrl
                  * @description
                  * Esta función utiliza el protocolo HTTP para obtener el recurso 
                  * donde se encuentra el evento por ID en formato JSON.
