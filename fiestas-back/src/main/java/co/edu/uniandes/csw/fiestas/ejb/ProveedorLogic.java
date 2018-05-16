@@ -144,6 +144,8 @@ public class ProveedorLogic
     public ProveedorEntity updateProveedor(ProveedorEntity entity) throws BusinessLogicException 
     {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un proveedor ");
+        if(entity != null)
+        {
         if(getProveedor(entity.getId()) == null)
         {
             throw new BusinessLogicException("No existe un proveedor con dicho id para actualizar");
@@ -170,13 +172,18 @@ public class ProveedorLogic
         {
             throw new BusinessLogicException("No puede actualizar a un proveedor sin contraseña");
         }
-        if(entity.getValoracion() > 5 || entity.getValoracion() == null || entity.getValoracion() <0 )
-        {
-            throw new BusinessLogicException("No puede actualizar un proveedor con valoración mayor a 5, valoración negativa o valoración nula");
-        }
+       // if(entity.getValoracion() > 5 || entity.getValoracion() == null || entity.getValoracion() <0 )
+      //  {
+      //      throw new BusinessLogicException("No puede actualizar un proveedor con valoración mayor a 5, valoración negativa o valoración nula");
+      //  }
         calcularValoracion(entity);
         usuarioLogic.updateUsuario(crearUsuario(entity));
         return persistence.update(entity);
+        }
+        else
+        {
+            throw new BusinessLogicException("El proveedor que se quiere actualizar no existe");
+        }
     }
 
     /**
