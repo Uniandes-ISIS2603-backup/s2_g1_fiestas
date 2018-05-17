@@ -164,10 +164,9 @@ public class ProductoLogic
         return persistence.findByProveedor(idProveedor);
     }
 
-    public List<ValoracionEntity> getValoraciones(Long id) 
+    public List<ValoracionEntity> getValoraciones(ProductoEntity producto) 
     {
-        ProductoEntity producto = persistence.find(id);
-        return producto.getValoraciones();
+        return persistence.findValoracionesPorPrducto(producto.getId());
     }
     
 }

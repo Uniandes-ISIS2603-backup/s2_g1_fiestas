@@ -17,6 +17,10 @@
                         controller: 'proveedorCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','proveedor']
                 }
             }).state('proveedoresList', {
                 url: '/list',
@@ -39,6 +43,10 @@
                         controller: 'proveedorDetailCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['Admin','Proveedor']
                 }
 
             }).state('proveedoresCreate', {
@@ -52,7 +60,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin']
                 }
             }).state('proveedorUpdate', {
                 url: '/update/{proveedorId:int}',
@@ -68,7 +76,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'assistant']
+                    roles: ['Admin', 'Proveedor']
                 }
             }).state('proveedorDelete', {
                 url: '/delete/{proveedorId:int}',
@@ -84,7 +92,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin','Proveedor']
                 }
             });
         }

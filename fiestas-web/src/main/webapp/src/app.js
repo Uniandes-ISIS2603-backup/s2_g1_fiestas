@@ -28,8 +28,9 @@
         'contratoModule',
         'loginModule',
         'signinModule',
-        'mainModule', 
-        'horarioModule'
+        'horarioModule',
+        'mainModule' 
+        
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {
@@ -55,8 +56,10 @@
                  */
                 $rootScope.isAuthenticated = function () {
 
-                    if (sessionStorage.getItem("username") != null) {
+                    if (sessionStorage.getItem("username") !== null) {
                         $rootScope.currentUser = sessionStorage.getItem("name");
+                        $rootScope.currentRol = sessionStorage.getItem("rol");
+                        $rootScope.currentToken = sessionStorage.getItem("token");
                         return true;
                     } else {
                         return false;

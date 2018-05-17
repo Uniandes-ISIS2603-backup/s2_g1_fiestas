@@ -128,6 +128,38 @@
                     requireLogin: true,
                     roles: ['admin']
                 }
+            }).state('pagoPay', {
+                url: '/pay/{pagoId:int}',
+                parent: 'pagos',
+                param: {
+                    pagoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + 'pay/pagos.pay.html',
+                        controller: 'pagoPayCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
+                }
+            }).state('pagoCancel', {
+                url: '/cancel/{pagoId:int}',
+                parent: 'pagos',
+                param: {
+                    pagoId: null
+                },
+                views: {
+                    'detailView': {
+                        templateUrl: basePath + 'cancel/pagos.cancel.html',
+                        controller: 'pagoCancelCtrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','cliente']
+                }
             });
         }]);
 })(window.angular);

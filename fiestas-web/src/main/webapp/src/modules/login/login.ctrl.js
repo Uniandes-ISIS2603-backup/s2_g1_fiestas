@@ -42,7 +42,7 @@
                 $http.post(usuarioContext, $scope.data).then(function (response) {
 
                     for (var item in $scope.users) {
-                        if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena && $scope.users[item].rol === response.data.rol) {
+                        if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena) {
                             flag = true;
                             $scope.user = $scope.users[item];
                             console.log($scope.user);
@@ -50,7 +50,6 @@
                                 $state.go('clienteDetail', {clienteId: $scope.user.token}, {reload: true});
                             } else if ($scope.user.rol === "Proveedor") {
                                 $state.go('proveedorDetail', {proveedorId: $scope.user.token}, {reload: true});
-                                console.log("pro");
                             } else {
                                 $state.go('main', {}, {reload: true});
                             }
@@ -67,7 +66,7 @@
                         sessionStorage.setItem("id", $scope.user.id);
                         $rootScope.currentUser = $scope.user.nombre;
                         $rootScope.currentRol = $scope.user.rol;
-                        $rootScope.currentId = $scope.user.id;
+                        $rootScope.currentToken = $scope.user.token;
                     }
                 });
             };

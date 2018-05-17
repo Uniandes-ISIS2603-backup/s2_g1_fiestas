@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-9">
-                            <label for="clienteTelefono" class="col-sm-3">Teléfono:</label>
+                            <label for="clienteTelefono" class="col-sm-3">Teléfono:</label>                            
                             <input id="clienteTelefono" required ng-model="data.telefono" class="col-sm-6" placeholder="Teléfono del cliente"/>
                         </div>
                     </div>
@@ -67,25 +67,15 @@
                         <div class="form-group col-sm-12">
                             <input ng-if="!edit" ng-show="cliente.$valid" ng-click="createCliente()" value="Crear" class="btn btn-success"/>
                             <input ng-if="edit" ng-show="cliente.$valid" ng-click="updateCliente()" value="Guardar" class="btn btn-success"/>
-                            <a class="btn btn-info" ui-sref="clientesList">Cancelar</a>
+                            <a ng-if="currentRol === 'Admin'" class="btn btn-info" ui-sref="clientesList">Cancelar</a>
+                            <a ng-if="currentRol === 'Cliente'" class="btn btn-info" ui-sref="clienteDetail({clienteId: currentToken})">Cancelar</a>
                         </div>
                     </div>
                 </form>
 
             </div>
         </div>
-    </div>
-    <div class="center-block well text-center" ng-if="isAuthenticated() && !hasPermissions()">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <h1 class="float-left display-3 mr-4">403 Forbidden</h1>
-                    <h4 >You do not have permission for this action.</h4>
-                    <p >Contact the administrator to obtain permission.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>    
 </div>
 
 
