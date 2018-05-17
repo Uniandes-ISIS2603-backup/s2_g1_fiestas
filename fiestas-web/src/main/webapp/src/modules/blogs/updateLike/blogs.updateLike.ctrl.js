@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("blogsModule");
     mod.constant("blogsContext", "api/blogs");
-    mod.controller('blogsUpdateCtrl', ['$scope', '$http', 'blogsContext', '$state', '$rootScope',
+    mod.controller('blogsUpdateLikeCtrl', ['$scope', '$http', 'blogsContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -20,25 +20,27 @@
          * arreglos.
          */
         function ($scope, $http, blogsContext, $state, $rootScope) {
-
+            
             $scope.data = {};
             
             $rootScope.edit=true;
-
+            
             $scope.selectedItems = [];
-
+            
             $scope.availableItems = [];
-
+            
             var idBlog = $state.params.blogsId;
-
+            
             //Consulto el evento a editar.
             $http.get(blogsContext + '/' + idBlog).then(function (response) {
                 var blog = response.data;
                 $scope.data.cuerpo = blog.cuerpo;
-                $scope.data.likes = blog.likes;
+                $scope.data.likes = blog.likes+1;
                 $scope.data.titulo = blog.titulo;
-            });
-
+                $http.put(blogsContext + "/" + idBlog, $scope.data)})
+                    //Evento created successfully
+                    $state.go('blogsDetail', {blogsId: idBlog}, {reload: true});
+            
             /**
              * @ngdoc function
              * @name updateEvento
@@ -47,13 +49,7 @@
              * Actualiza un evento con la información del
              * $scope.
              */
-            $scope.updateBlogs = function () {
-                console.log("Hola");
-                $http.put(blogsContext + "/" + idBlog, $scope.data).then(function (response) {
-                    //Evento created successfully
-                    $state.go('blogsList', {blogsId: response.data.id}, {reload: true});
-                });
-            };
+            
         }
     ]);
 }
