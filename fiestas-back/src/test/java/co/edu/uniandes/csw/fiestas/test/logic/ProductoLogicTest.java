@@ -145,7 +145,7 @@ public class ProductoLogicTest
      * Prueba para eliminar un producto
      */
     @Test
-    public void deleteProducto() {
+    public void deleteProducto() throws BusinessLogicException {
         ProductoEntity entity = data.get(0);
         productoLogic.deleteProducto(entity.getId());
         ProductoEntity deleted = em.find(ProductoEntity.class, entity.getId());

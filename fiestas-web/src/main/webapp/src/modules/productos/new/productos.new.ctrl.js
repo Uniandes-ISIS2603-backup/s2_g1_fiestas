@@ -1,7 +1,5 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "productos");
-    mod.constant("proveedoresContext", "api/proveedores");
     mod.controller('productosNewCtrl', ['$scope', '$http', 'proveedoresContext', 'productosContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
@@ -32,10 +30,7 @@
              * Esta función utiliza el protocolo HTTP para crear la producto.
              * @param {Object} producto Objeto con la nueva de la producto.
              */
-            $scope.createProducto = function (evt) {
-                
-                console.log(evt);
-                evt.preventDefault();
+            $scope.createProducto = function () {
                      
                 $http.post("api/productos" , $scope.data).then(function (response) {
                     console.log("POST!");

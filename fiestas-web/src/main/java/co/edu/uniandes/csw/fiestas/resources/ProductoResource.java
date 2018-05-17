@@ -180,11 +180,12 @@ public class ProductoResource
      */
     @DELETE
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("{id: \\d+}")
-    public void deleteProducto(@PathParam("id") Long id)
+    public ProductoEntity deleteProducto(@PathParam("id") Long id) throws BusinessLogicException
     {
+        ProductoEntity producto = productoLogic.getProducto(id);
         productoLogic.deleteProducto(id);
+        return producto;
     }   
     
     

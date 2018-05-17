@@ -1,6 +1,7 @@
 delete from TEMATICAENTITY_PRODUCTOENTITY;
 delete from CONTRATOENTITY_PRODUCTOENTITY;
 delete from PRODUCTOENTITY_VALORACIONENTITY;
+delete from CONTRATOENTITY_PRODUCTO_ENTITY;
 delete from BonoEntity;
 delete from BlogEntity;
 delete from PagoEntity;
@@ -80,3 +81,5 @@ insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10095, 10076);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10096, 10077);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10097, 10078);
+
+delte from ProductoEntity where id 

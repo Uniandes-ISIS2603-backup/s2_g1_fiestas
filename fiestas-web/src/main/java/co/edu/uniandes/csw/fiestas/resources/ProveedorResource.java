@@ -515,12 +515,12 @@ public class ProveedorResource {
      * hay errores de logica
      */
     @DELETE
-    @Path("{proveedorId: \\d+}/productos/{productosId: \\d+}")
+    @Path("{proveedorId: \\d+}/productos/{productoId: \\d+}")
     public void removeProducto(@PathParam("proveedorId") Long proveedorId, @PathParam("productoId") Long productosId)
     {
         try
         {
-            proveedorLogic.removeProducto(productosId, proveedorId);
+            proveedorLogic.removeProducto(proveedorId, productosId);
         }
         catch(BusinessLogicException e)
         {

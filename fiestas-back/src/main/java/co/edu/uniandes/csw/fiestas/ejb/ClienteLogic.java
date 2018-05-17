@@ -150,7 +150,7 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede actualizar a un cliente sin contraseña");
         }
-        usuarioLogic.updateUsuario(crearUsuario(entity));
+        usuarioLogic.updateUsuario(usuarioLogic.getUsuario(entity.getLogin()));
         return persistence.update(entity);
     }
 

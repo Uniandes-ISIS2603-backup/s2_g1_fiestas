@@ -1,7 +1,6 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "api/productos");
-    mod.controller('productoDeleteCtrl', ['$scope', '$http', 'productosContext', '$state',
+    mod.controller('productoDeleteCtrl', ['$scope', '$http', '$state',
         /**
          * @ngdoc controller
          * @name productos.controller:productoDeleteCtrl
@@ -17,8 +16,9 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, productosContext, $state) {
+        function ($scope, $http,  $state) {
             var idProducto = $state.params.productoId;
+            var idProveedor = $state.params.proveedorId;
             /**
              * @ngdoc function
              * @name deleteProducto
@@ -27,8 +27,15 @@
              * Esta función utiliza el protocolo HTTP para eliminar el producto.
              * @param {String} id El ID del producto a eliminar.
              */
+            
+            console.log($scope);
+            console.log(idProducto);
+            
             $scope.deleteProducto = function () {
-                $http.delete(productosContext + '/' + idProducto, {}).then(function (response) {
+                $http.delete("api/proveedores" + '/' + idProveedor + '/' + "productos" + '/' + idProducto, {}).then(function (response) {
+                    
+                    console.log(idProducto);
+                    
                     $state.go('productosList', {productoId: response.data.id}, {reload: true});
                 });
             };

@@ -38,12 +38,12 @@
             
             $http.get("api/productos" + "/" + idProducto).then(function (response) {
                 var producto = response.data;
-                $scope.name = producto.name;
-                $scope.descripcion = producto.descripcion;
-                $scope.personal = producto.personal;
-                $scope.incluidos = producto.incluidos;
-                $scope.precio = producto.precio;
-                $scope.imagen = producto.imagen;
+                $scope.data.name = producto.name;
+                $scope.data.descripcion = producto.descripcion;
+                $scope.data.personal = producto.personal;
+                $scope.data.incluidos = producto.incluidos;
+                $scope.data.precio = producto.precio;
+                $scope.data.imagen = producto.imagen;
             });
             
             console.log($scope);

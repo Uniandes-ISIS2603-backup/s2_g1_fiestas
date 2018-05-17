@@ -32,7 +32,6 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private ProveedorEntity proveedor;
-    
     @PodamExclude 
     @OneToMany 
     private List<ValoracionEntity> valoraciones;
