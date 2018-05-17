@@ -1,6 +1,7 @@
 <div ng-if="!isAuthenticated()" class="container">
     <form class="form-signin">
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
+        <img src="resources/images/ballons.png" alt="Kultem" class="img-responsive logo"/>
         <h1 class="form-signin-heading text-muted">Log In</h1>
         <input type="text" class="form-control" placeholder="Username" required="" autofocus="" ng-model="data.login">
         <input type="password" class="form-control" placeholder="Password" required="" ng-model="data.contrasena">
