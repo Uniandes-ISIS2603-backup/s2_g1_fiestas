@@ -16,7 +16,9 @@ delete from EventoEntity;
 delete from TematicaEntity;
 delete from ProveedorEntity;
 delete from ClienteEntity;
+
 delete from UsuarioEntity;
+
 
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','asd123', 0);
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Iluminación de Diana','http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270' ,'1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','dianas','asd123', 0);
@@ -79,4 +81,11 @@ insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un
 
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10095, 10076);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10096, 10077);
+
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10097, 10078);
+
+
+insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id) values (10076, 10022);
+insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id) values (10077, 10023);
+insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id) values (10078, 10024);
+

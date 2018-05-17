@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -33,7 +34,8 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private ProveedorEntity proveedor;
     @PodamExclude 
-    @OneToMany 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "PRODUCTO_ID", nullable = true)
     private List<ValoracionEntity> valoraciones;
 
     /**

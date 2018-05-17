@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.fiestas.persistence;
 
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,5 +49,5 @@ public class ValoracionPersistence {
         ValoracionEntity entity = em.find(ValoracionEntity.class, id);
         em.remove(entity);
     }
-    
+               //Query q = em.createNativeQuery("delete from productoEntity_valoracionEntityy where valoraciones_id="+id);
 }

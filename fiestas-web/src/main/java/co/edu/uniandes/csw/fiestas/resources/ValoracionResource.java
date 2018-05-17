@@ -128,11 +128,17 @@ public class ValoracionResource {
     @GET
     @Path("{id: \\d+}")
     public ValoracionDetailDTO getValoracion(@PathParam("id") Long id) throws BusinessLogicException {
-        ValoracionEntity entity=valoracionLogic.getValoracion(id);
-        if (entity == null) {
-            throw new WebApplicationException("La valoracion no existe", 404);
+        try
+        {
+            ValoracionEntity entity=valoracionLogic.getValoracion(id);
+            return new ValoracionDetailDTO(entity);
         }
-        return new ValoracionDetailDTO(entity);
+        
+        catch (Exception e) {
+            throw new WebApplicationException(e.getMessage(), 404);
+        }
+        
+
     }
 
     /**
@@ -164,9 +170,11 @@ public class ValoracionResource {
     public ValoracionDetailDTO updateValoracion(@PathParam("id") Long id, ValoracionDetailDTO valoracion) throws BusinessLogicException {
         ValoracionEntity entity = valoracion.toEntity();
         entity.setId(id);
-        ValoracionEntity oldEntity=valoracionLogic.getValoracion(id);
-        if (oldEntity == null) {
-            throw new WebApplicationException("La valoracion a actualizar no existe", 404);
+        try{
+            valoracionLogic.getValoracion(id);
+        }
+        catch(Exception e){
+            throw new WebApplicationException(e.getMessage(),404);
         }
         return new ValoracionDetailDTO(valoracionLogic.updateValoracion(entity));
     }
@@ -200,5 +208,3 @@ public class ValoracionResource {
     }
 
 }
-
-
