@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("blogsModule");
     mod.constant("blogsContext", "api/blogs");
-    mod.controller('blogsCtrl', ['$scope', '$http', 'blogsContext',
+    mod.controller('blogsCtrl', ['$scope', '$http', 'blogsContext', '$rootScope',
         /**
          * @ngdoc controller
          * @name blogs.controller:blogCtrl
@@ -20,7 +20,7 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, blogsContext) {
+        function ($scope, $http, blogsContext, $rootScope) {
             /**
              * @ngdoc function
              * @name getBlogs
@@ -38,7 +38,28 @@
             $http.get(blogsContext).then(function (response) {
                 $scope.blogsRecords = response.data;
             });
-        }
-    ]);
+            
+            $scope.addLike = function (idBlog) {
+                
+                //Consulto el evento a editar.
+                $http.get(blogsContext + '/' + idBlog).then(function (response) {
+                    var blog = response.data;
+                    $scope.data={};
+                    $scope.data.cuerpo = blog.cuerpo;
+                    $scope.data.likes = blog.likes+1;
+                    $scope.data.titulo = blog.titulo;
+                    $http.put(blogsContext + "/" + idBlog, $scope.data).then(function(response) {
+                        $rootScope.algo = blog.likes;
+                        $scope.algo = blog.likes;
+                        console.log($rootScope);
+                    });
+                    
+                    //$state.continue('blogsDetail', {blogsId: idBlog}, {reload: true});
+                    //$state.continue('blogsList', {reload: true});
+                })
+            }
+        },
+    ],
+    );
 }
-)(window.angular);
+        )(window.angular);

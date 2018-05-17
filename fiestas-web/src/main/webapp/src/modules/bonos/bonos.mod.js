@@ -45,9 +45,10 @@
 
             $stateProvider.state('bonos', {
                 url: '/bonos',
+                parent: 'proveedorDetail',
                 abstract: true,
                 views: {
-                    'mainView': {
+                    'childrenView': {
                         templateUrl: basePath + 'bonos.html',
                         controller: 'bonosCtrl',
                         controllerAs: 'ctrl'
