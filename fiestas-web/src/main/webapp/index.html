@@ -147,49 +147,53 @@
                         <li><a ui-sref="signin"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
                     </ul>
                     <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-                        <li class="nameUser">Hola, {{currentUser}}</li>
+                        <li ng-if="currentRol ==='Cliente'" > <a ui-sref="clienteDetail({clienteId: currentToken})">Hola, {{currentUser}}</a></li>
+                        <li ng-if="currentRol ==='Proveedor'" > <a ui-sref="proveedorDetail({proveedorId: currentToken})">Hola, {{currentUser}}</a></li>
                         <li><a ui-sref="logout">Logout</a></li>
                     </ul>
                 </div>
             </div> 
 
-
-
             <div class="row">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
-                            <div class="navbar-header">
+                             <div class="navbar-header">
+
+
                                 <a ui-sref="main" style="font-family: Fjalla One; font-size: 20px" class="navbar-brand"  >KULTEM</a>
-                            </div>  
-                            <ul ng-if="!isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav">                
+                                   
+                            </div>
 
-                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                                          
-                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>  
-                                <ul ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav">
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
-                                    <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li>                                                             
-                                </ul>
-                                <ul ng-if="isAuthenticated() && currentRol != 'Cliente'" class="nav navbar-right">
-                                    <div class="shoppingCart-custom ">
-                                        <button type="button" class="btn btn-default btn-sm">
-                                            <a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito de Compras</a>
-                                        </button>
-                                    </div>
-                                </ul>
-
+                            <ul ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav">
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li>                                                             
                             </ul>
-
+                            
+                            <ul ng-if="!isAuthenticated()" class="nav navbar-nav">                
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                                          
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                                                               
+                            </ul>
+                            
+                            <ul ng-if="isAuthenticated() && currentRol !== 'Cliente'" class="nav navbar-right">
+                                <div class="shoppingCart-custom ">
+                                    <button type="button" class="btn btn-default btn-sm">
+                                        <a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito de Compras</a>
+                                    </button>
+                                </div>
+                            </ul>
+                            
                         </div>
                     </nav>                  
                 </div>      
             </div>
+            
             <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">
                 <ul class="nav bd-sidenav"><li>               
                     <li><a class="nav-link" ui-sref="proveedoresList">Mi Perfil</a></li>
@@ -198,6 +202,7 @@
                     <li><a class="nav-link" ui-sref="proveedoresList">Mis Bonos</a></li>
                 </ul>                
             </div>
+            
             <div ui-view="mainView">    </div>            
             <br>
             <br>
