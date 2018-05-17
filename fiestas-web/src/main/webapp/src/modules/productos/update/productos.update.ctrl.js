@@ -1,6 +1,6 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.controller('productoUpdateCtrl', ['$scope', '$http', 'productosContext', '$state', 'booksContext', '$rootScope', '$filter',
+    mod.controller('productoUpdateCtrl', ['$scope', '$http', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name productos.controller:productoUpdateCtrl
@@ -20,33 +20,45 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, productosContext, $state,  $rootScope, $filter) {
+        function ($scope, $http, $state,  $rootScope) {
             $rootScope.edit = true;
 
-            var idProducto = $state.params.productoId;
-            var idProveedor = $state.params.proveedorId;
+            
+            $scope.data = {};
+            
+            $scope.selectedItems = [];
 
-            //Consulto el autor a editar.
-            $http.get("api/proveedores" + '/' + idProveedor + "/" + "productos" + "/" + idProducto).then(function (response) {
+            $scope.availableItems = [];
+            
+            var idProducto = $state.params.productoId;
+
+            //Consulto el producto a editar.
+            
+            console.log($scope);
+            
+            $http.get("api/productos" + "/" + idProducto).then(function (response) {
                 var producto = response.data;
                 $scope.name = producto.name;
-                $scope.descripcion = producto.description;
+                $scope.descripcion = producto.descripcion;
                 $scope.personal = producto.personal;
-                $scope.incluidos = producto.incluye;
+                $scope.incluidos = producto.incluidos;
                 $scope.precio = producto.precio;
+                $scope.imagen = producto.imagen;
             });
+            
+            console.log($scope);
+            
 
             /**
              * @ngdoc function
              * @name updateProducto
              * @methodOf productos.controller:productoUpdateCtrl
              * @description
-             * Crea un nuevo autor con los libros nuevos y la información del
+             * Crea un nuevo producto con los libros nuevos y la información del
              * $scope.
              */
             $scope.updateProducto = function () {
-                $http.put(productosContext + "/" + idProducto, $scope.data).then(function (response) {
-                    
+                $http.put("api/productos" + "/" + idProducto, $scope.data).then(function (response) {
                     //Producto created successfully
                     $state.go('productosList', {productoId: response.data.id}, {reload: true});
                 });

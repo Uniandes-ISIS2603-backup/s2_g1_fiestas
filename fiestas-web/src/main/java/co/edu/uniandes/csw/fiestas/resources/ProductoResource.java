@@ -75,7 +75,7 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}")
-    public ProductoDetailDTO getProducto(@PathParam("idProveedor") Long id)
+    public ProductoDetailDTO getProducto(@PathParam("id") Long id)
     {
       return new ProductoDetailDTO(productoLogic.getProducto(id));
     }
@@ -157,10 +157,11 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}")
-    public ProductoDetailDTO updateProducto(@PathParam("productoId") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
+    public ProductoEntity updateProducto(@PathParam("productoId") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
          
-        productoLogic.updateProducto(producto.toEntity());
-        return producto;
+        ProductoEntity productoE = producto.toEntity();
+        productoLogic.updateProducto(productoE);
+        return productoE;
     }
     
     /**
