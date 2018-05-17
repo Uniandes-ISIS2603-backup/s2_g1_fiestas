@@ -244,6 +244,4 @@ public class ClienteLogic
         updateCliente(cliente);
         blogLogic.deleteBlog(blogsId);
     }
-
-    
 }
