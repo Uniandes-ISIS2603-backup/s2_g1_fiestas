@@ -185,31 +185,7 @@
                         </div>
                     </nav>                  
                 </div>      
-
-            </div>
-                               
-            <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">
-                
-                <div class="vertical-menu">
-                  <b><a ui-sref ="proveedorDetail()">Mi Perfil</a>
-                  <a ui-sref ="proveedorDetail()">Mis Productos</a>
-                  <a ui-sref ="proveedorDetail()">Mis Contratos</a>
-                  <a ui-sref ="proveedorDetail()">Mis Bonos</a></b>
-                 
-                </div>
-                            
-            </div>
-
-            <div ng-if="isAuthenticated() && currentRol === 'Cliente'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
-                <div class="vertical-menu">
-                    <b> <a ui-sref="clienteDetail({clienteId: currentId})">Mi perfil</a>
-                    <a ui-sref="clientesList">Mis Eventos</a>
-                    <a>Mis Blogs</a></b>
-                </div>
-            </div>            
-
             </div>           
-
             
             <div ui-view="mainView">    </div>            
             <br>
