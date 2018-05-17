@@ -27,6 +27,7 @@
         'tematicasModule',
         'contratoModule',
         'loginModule',
+        'signinModule',
         'mainModule'
     ]);
     // Resuelve problemas de las promesas

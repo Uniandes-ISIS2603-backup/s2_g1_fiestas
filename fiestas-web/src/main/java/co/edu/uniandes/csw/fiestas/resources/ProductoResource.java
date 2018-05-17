@@ -212,12 +212,14 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}/valoraciones")
-    public void getValoraciones(@PathParam("id") Long id)
+    public List<ValoracionDTO> getValoraciones(@PathParam("id") Long id)
     {
         
-        productoLogic.getProducto(id).getValoraciones();
+        List<ValoracionEntity> xd = productoLogic.getValoraciones(id);
+        List<ValoracionDTO> xd2 = new ArrayList<>();
+        for (ValoracionEntity valoracionEntity : xd) {
+            xd2.add(new ValoracionDTO(valoracionEntity));
+        }
+        return xd2;
     }
-    
-    
-    
 }

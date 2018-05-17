@@ -30,6 +30,7 @@
             }).state('productosDetail', {
                 url: '/{productoId:int}/detail',
                 parent: 'productos',
+                param:{productoId : null},
                 views: {
                     'listView': {
                         templateUrl: basePath + 'productos.list.html'
@@ -44,6 +45,7 @@
             }).state('productosCreate', {
                 url: '/create',
                 parent: 'productos',
+                params:{productoId : null, proveedorId : null},
                 views: {
                     'detailView': {
                         templateUrl: basePath + '/new/productos.new.html',
