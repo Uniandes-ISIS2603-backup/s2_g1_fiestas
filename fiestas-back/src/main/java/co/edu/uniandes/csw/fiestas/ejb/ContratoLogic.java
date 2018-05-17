@@ -221,4 +221,6 @@ public class ContratoLogic {
         persistence.update(cE);
         
     }
+    
+    
 }

@@ -143,6 +143,7 @@ public class ContratoResource {
             throw new BusinessLogicException("No existe el contrato a eliminar.");
         logic.deleteContrato(id);
     }
+
    
-}
+} 
     
