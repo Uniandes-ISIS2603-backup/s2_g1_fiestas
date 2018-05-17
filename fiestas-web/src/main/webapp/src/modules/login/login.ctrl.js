@@ -1,4 +1,4 @@
-(function (ng) {
+ (function (ng) {
     var mod = ng.module("loginModule");
     mod.constant("usuarioContext", "api/usuarios");
     mod.controller('loginCtrl', ['$scope', '$http', '$state', '$rootScope', 'usuarioContext',

@@ -1,8 +1,9 @@
 (function (ng) {
     var mod = ng.module("contratoModule");
-    mod.constant("contratoContext", "api/contratos");
+    mod.constant("contratoContextE", "contratos");
+    mod.constant("eventoContext", "api/eventos");
     mod.controller('contratoDetailCtrl', ['$scope', '$http', 'contratoContext', '$state', '$filter',
-        function ($scope, $http, contratoContext, $state, $filter) {
+        function ($scope, $http, contratoContextE, $state, $filter) {
             /**
              * @ngdoc controller
              * @name contratos.controller:contratoDetailCtrl
@@ -31,7 +32,8 @@
                  * @param {String} URL Dirección donde se encuentra el recurso
                  * del contrato o API donde se puede consultar.
                  */
-                $http.get(contratoContext).then(function (response) {
+                $http.get(contratoContextE).then(function (response) {
+                    
                     $scope.contratosRecords = response.data;
                     $scope.currentContrato = $filter('filter')($scope.contratosRecords, {id: $state.params.contratoId}, true)[0];
                     $scope.horariosRecords=response.data.horarios;
