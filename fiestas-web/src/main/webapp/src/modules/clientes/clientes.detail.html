@@ -2,11 +2,11 @@
     <div class="panel-body">
         <div id="detail-Client" class="row content">
             <div ng-if="isAuthenticated() && currentRol === 'Cliente'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
-                <ul class="nav bd-sidenav"><li>               
-                    <li><a class="nav-link" ui-sref="clienteDetail({clienteId: currentCliente.id})">Mi Perfil</a></li>
-                    <li><a class="nav-link" ui-sref="eventosList({clienteId: currentCliente.id})">Mis Eventos</a></li>
-                    <li><a class="nav-link" ui-sref="blogsList({clienteId: currentCliente.id})">Mis Blogs</a></li>
-                </ul>
+                <div class="vertical-menu">               
+                    <b><a ui-sref="clienteDetail({clienteId: currentCliente.id})">Mi Perfil</a>
+                    <a ui-sref="eventosList({clienteId: currentCliente.id})">Mis Eventos</a>
+                    <a ui-sref="blogsList({clienteId: currentCliente.id})">Mis Blogs</a></b>
+                </div>
             </div>  
             <div class="col-sm-8 text-left"> 
                 <div class="col-md-6">
