@@ -97,7 +97,8 @@
         <script src="src/modules/pagos/delete/pagos.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/pagos/new/pagos.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/pagos/update/pagos.update.ctrl.js" type="text/javascript"></script>
-
+        <script src="src/modules/pagos/pay/pagos.pay.ctrl.js" type="text/javascript"></script>
+        <script src="src/modules/pagos/cancel/pagos.cancel.ctrl.js" type="text/javascript"></script>
         <!-- Productos -->
         <script src="src/modules/productos/productos.mod.js" type="text/javascript"></script>
         <script src="src/modules/productos/productos.ctrl.js" type="text/javascript"></script>
@@ -187,10 +188,6 @@
                     </nav>                  
                 </div>      
             </div>
-
-
-
-
             <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">
                 <ul class="nav bd-sidenav"><li>               
                     <li><a class="nav-link" ui-sref="proveedoresList">Mi Perfil</a></li>
