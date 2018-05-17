@@ -1,3 +1,4 @@
+
 package co.edu.uniandes.csw.fiestas.ejb;
 
 
@@ -243,6 +244,4 @@ public class ClienteLogic
         updateCliente(cliente);
         blogLogic.deleteBlog(blogsId);
     }
-
-    
 }

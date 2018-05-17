@@ -154,12 +154,13 @@ public class ServicioLogic {
      * @param productosId Identificador de la instancia de Producto
      * 
      */
-    public void removeProducto(Long servicioId, Long productosId) {
+    public void removeProducto(Long servicioId, Long productosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de eliminar el producto asociado al servicio");
         ServicioEntity entity = getServicio(servicioId);
         ProductoEntity productosEntity = new ProductoEntity();
         productosEntity.setId(productosId);
         entity.getProductos().remove(productosEntity);
+        updateServicio(entity);
     }
 }
 

@@ -56,7 +56,7 @@
                 url: '/update/{productoId:int}',
                 parent: 'productos',
                 param: {
-                    productoId: null
+                    productoId: null, proveedorId : null
                 },
                 views: {
                     'detailView': {

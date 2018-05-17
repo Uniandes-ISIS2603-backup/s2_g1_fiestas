@@ -31,6 +31,7 @@ public class ProductoLogic
     private ProductoPersistence persistence;
     @Inject
     private ServicioLogic perSer;
+    @Inject
     private ValoracionLogic perValoracion;
     
     /**
@@ -83,7 +84,24 @@ public class ProductoLogic
      *
      * @param id El ID del producto a eliminar
      */
-    public void deleteProducto(Long id) {
+    public void deleteProducto(Long id) throws BusinessLogicException {
+        
+        ProductoEntity producto = getProducto(id);
+        ServicioEntity ser = producto.getServicio();
+        if(ser != null)
+        {
+            perSer.removeProducto(ser.getId(), id);
+        }
+        List<ValoracionEntity> valoras = producto.getValoraciones();
+        if(!valoras.isEmpty())
+        {
+            for (ValoracionEntity valora : valoras) 
+            {
+                if(valora!= null)
+                perValoracion.deleteValoracion(valora.getId());
+            }
+        }
+        
         LOGGER.log(Level.INFO, "Inicia proceso de borrar producto con id={0}", id);
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar producto con id={0}", id);

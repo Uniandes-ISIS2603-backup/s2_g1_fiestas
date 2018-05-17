@@ -7,6 +7,7 @@
 
             if (($state.params.proveedorId !== undefined) && ($state.params.proveedorId !== null)) {
                 $scope.proveedorId = $state.params.proveedorId;
+                $scope.productoId = $state.params.productoId;
                 $http.get(proveedorContext + '/' + $state.params.proveedorId + '/' + productosContext).then(function (response) {
                 $rootScope.productosRecords = response.data;
                 $rootScope.currentProducto = $filter('filter')($rootScope.productosRecords, {ID: $state.params.productoId}, true)[0];
