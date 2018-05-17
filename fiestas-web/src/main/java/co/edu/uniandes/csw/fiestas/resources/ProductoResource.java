@@ -25,6 +25,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  * <pre>Clase que implementa el recurso "productos".
@@ -216,8 +217,10 @@ public class ProductoResource
     @Path("{id: \\d+}/valoraciones")
     public List<ValoracionDTO> getValoraciones(@PathParam("id") Long id)
     {
-        
-        List<ValoracionEntity> xd = productoLogic.getValoraciones(id);
+        ProductoEntity producto = productoLogic.getProducto(id);
+        if(producto==null)
+            throw new WebApplicationException("El producto a buscar no existe", 404);
+        List<ValoracionEntity> xd = productoLogic.getValoraciones(producto);
         List<ValoracionDTO> xd2 = new ArrayList<>();
         for (ValoracionEntity valoracionEntity : xd) {
             xd2.add(new ValoracionDTO(valoracionEntity));
