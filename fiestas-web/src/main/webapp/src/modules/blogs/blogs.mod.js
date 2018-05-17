@@ -113,6 +113,25 @@
                     roles: ['admin', 'cliente','proveedor']
                 }
 
+            }).state('blogsUpdateLike', {
+                url: '/{blogsId:int}/update',
+                parent: 'blogs',
+                param: {blogsId: null},
+                views: {
+                    'listView': {
+                        templateUrl: basePath + 'blogs.list.html'
+                    },
+                    'detailView': {
+                        templateUrl: basePath+'blogs.detail.html',
+                        controller: 'blogsUpdateLikeCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'cliente','proveedor']
+                }
+
             }).state('blogsDelete', {
                 url: '/{blogsId:int}/delete',
                 parent: 'blogs',

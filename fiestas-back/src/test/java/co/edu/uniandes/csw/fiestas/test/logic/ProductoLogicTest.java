@@ -7,6 +7,7 @@ import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ProductoPersistence;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class ProductoLogicTest
     private List<ProductoEntity> data = new ArrayList<>();
     
     private List<ProveedorEntity> dataProv = new ArrayList<>();
+    private List<ValoracionEntity> dataVal = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -89,6 +91,7 @@ public class ProductoLogicTest
      */
     private void clearData() {
         em.createQuery("delete from ProductoEntity").executeUpdate();
+        em.createQuery("delete from ValoracionEntity").executeUpdate();        
         em.createQuery("delete from ProveedorEntity").executeUpdate();
     }
 
@@ -99,13 +102,21 @@ public class ProductoLogicTest
     private void insertData() {
 
         for (int i = 0; i < 3; i++) {
+            ValoracionEntity valoracion =  factory.manufacturePojo(ValoracionEntity.class);
+            em.persist(valoracion);
+            dataVal.add(valoracion);
+        }
+        for (int i = 0; i < 3; i++) {
             ProductoEntity entity = factory.manufacturePojo(ProductoEntity.class);
             ProveedorEntity proveedor = factory.manufacturePojo(ProveedorEntity.class);
+            if(i==0)
+                entity.setValoraciones(dataVal);
             em.persist(proveedor);
             em.persist(entity);
             data.add(entity);
             dataProv.add(proveedor);
         }
+        
     }
 
     /**
@@ -169,4 +180,16 @@ public class ProductoLogicTest
         Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
     }
 
+    /**
+     * Prueba para actualizar un producto
+     */
+    @Test
+    public void getValoracionesTest() {
+        ProductoEntity entity = data.get(0);
+        List<ValoracionEntity>vals=productoLogic.getValoraciones(entity);
+        Assert.assertEquals(vals.size(), dataVal.size());
+        for(ValoracionEntity val: dataVal){
+            Assert.assertTrue(vals.contains(val));
+        }
+    }
 }
