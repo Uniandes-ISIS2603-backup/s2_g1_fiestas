@@ -173,6 +173,7 @@
                                 <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
                                 <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li> 
                             
+                                <li ng-if="isAuthenticated() && currentRol != 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsListVer">Blog</a> </li> 
                                 
                             </ul>
                         </div>
@@ -194,9 +195,9 @@
 
             <div ng-if="isAuthenticated() && currentRol === 'Cliente'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
                 <ul class="nav bd-sidenav"><li>               
-                    <li><a class="nav-link" ui-sref="clienteDetail({clienteId: currentId}">Mi Perfil</a></li>
+                    <li><a class="nav-link" ui-sref="clienteDetail({clienteId: currentId})">Mi Perfil</a></li>
                     <li><a class="nav-link" ui-sref="eventosList({clienteId: currentId})">Mis Eventos</a></li>
-                    <li><a class="nav-link" ui-sref="clientesList">Mis Blogs</a></li>
+                    <li><a class="nav-link">Mis Blogs</a></li>
                 </ul>
             </div>            
             
