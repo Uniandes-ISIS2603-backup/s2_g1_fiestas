@@ -28,7 +28,9 @@
             $http.get(usuarioContext).then(function (response) {
                 $scope.users = response.data;
             });
-
+            
+            console.log($scope.users);
+            
             /**
              * @ngdoc function
              * @name autenticar

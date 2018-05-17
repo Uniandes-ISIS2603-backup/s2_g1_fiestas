@@ -9,7 +9,7 @@
             $rootScope.productoId = $state.params.productoId;
             if($state.params.proveedorId !== null && $state.params.proveedorId !== undefined )
             {
-            $http.get(productosContext).then(function (response) {
+            $http.get(proveedoresContext + '/' + $state.params.proveedorId + '/' + productosContext).then(function (response) {
                 $rootScope.productosRecords = response.data;
             });
         }
