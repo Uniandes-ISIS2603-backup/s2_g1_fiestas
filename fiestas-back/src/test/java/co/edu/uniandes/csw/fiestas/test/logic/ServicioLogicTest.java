@@ -265,7 +265,7 @@ public class ServicioLogicTest {
      * 
      */
     @Test
-    public void removeProductosTest() {
+    public void removeProductosTest() throws BusinessLogicException {
         servicioLogic.removeProducto(data.get(0).getId(), productosData.get(0).getId());
         ProductoEntity response = servicioLogic.getProducto(data.get(0).getId(), productosData.get(0).getId());
     }

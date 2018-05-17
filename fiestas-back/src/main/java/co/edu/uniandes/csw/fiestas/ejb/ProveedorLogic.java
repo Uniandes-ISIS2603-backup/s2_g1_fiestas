@@ -177,6 +177,8 @@ public class ProveedorLogic
             //      throw new BusinessLogicException("No puede actualizar un proveedor con valoración mayor a 5, valoración negativa o valoración nula");
             //  }
             calcularValoracion(entity);
+            System.out.println(entity);
+            System.out.println("\n "+entity.getLogin());
             usuarioLogic.updateUsuario(usuarioLogic.getUsuario(entity.getLogin()));
             return persistence.update(entity);
         }

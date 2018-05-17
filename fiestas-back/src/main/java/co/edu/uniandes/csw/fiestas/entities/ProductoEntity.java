@@ -24,7 +24,7 @@ public class ProductoEntity extends BaseEntity implements Serializable {
     private String incluye;
     private Integer personal;
     private String imagen;
-    private Double valoracionPromedio;
+    private Double valoracionPromedio = 5.0;
 
     @PodamExclude
     @ManyToOne

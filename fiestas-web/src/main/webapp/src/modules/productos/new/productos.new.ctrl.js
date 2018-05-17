@@ -40,8 +40,9 @@
                             .then(function (putResponse) {
                         console.log("PUT");
                         console.log(putResponse); 
+                        $rootScope.params.productoId = response.data.id;
                         console.log($rootScope.params);
-                        return $state.go("productosList").then(function (x) { console.log('done'); console.log(x); }).catch(function (err) { console.log(err); });
+                        return $state.go('productosList', {productoId: response.data.id}, {reload: true}).then(function (x) { console.log('done'); console.log(x); }).catch(function (err) { console.log(err); });
                     });
                 });   
             };

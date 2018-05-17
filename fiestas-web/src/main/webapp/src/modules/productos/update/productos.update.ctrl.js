@@ -47,6 +47,8 @@
             });
             
             console.log($scope);
+            console.log($scope.data);
+            console.log(idProducto);
             
 
             /**
@@ -60,9 +62,10 @@
             $scope.updateProducto = function () {
                 $http.put("api/productos" + "/" + idProducto, $scope.data).then(function (response) {
                     //Producto created successfully
-                    $state.go('productosList', {productoId: response.data.id}, {reload: true});
+                    $state.go('productosList', {productoId: idProducto}, {reload: true});
                 });
-            };;
+            };
+            console.log($scope.data);;
         }
     ]);
 }
