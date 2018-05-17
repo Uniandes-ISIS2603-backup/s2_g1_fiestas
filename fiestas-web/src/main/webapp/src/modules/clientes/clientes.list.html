@@ -10,18 +10,18 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    
+
             </thead>
             <tbody>
                 <tr ng-repeat="cliente in clientesRecords">
                     <td id="{{$index}}-id">{{cliente.id}}</td>
                     <td id="{{$index}}-name"><a ui-sref="clienteDetail({clienteId: cliente.id})">{{cliente.nombre}}</a></td>
                     <td id="{{$index}}-actions">
-                                    <a id="{{$index}}-edit" class="btn btn-default btn-sm" ui-sref="clienteUpdate({clienteId: cliente.id})"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ui-sref="clienteDelete({clienteId: cliente.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a id="{{$index}}-edit" class="btn btn-default btn-sm" ui-sref="clienteUpdate({clienteId: cliente.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ui-sref="clienteDelete({clienteId: cliente.id})"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
-                
+
             </tbody>
         </table>
     </div>

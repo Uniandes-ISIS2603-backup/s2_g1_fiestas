@@ -52,6 +52,10 @@
                         controller: 'bonosCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
                 }
             }).state('bonosList', {
                 url: '/list',
@@ -86,6 +90,10 @@
                         controller: 'bonosNewCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
                 }
             }).state("bonosUpdate",{
               url: '/{bonosId:int}/update',
@@ -97,7 +105,11 @@
                         controller: 'bonosUpdateCtrl',
                         controllerAs: 'ctrl'
                     }
-                }  
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
+                }
             }).state("bonosDelete",{
               url: '/{bonosId:int}/delete',
                 parent: 'bonos',
@@ -108,7 +120,11 @@
                         controller: 'bonosDeleteCtrl',
                         controllerAs: 'ctrl'
                     }
-                }  
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
+                }
             });
         }
     ]);

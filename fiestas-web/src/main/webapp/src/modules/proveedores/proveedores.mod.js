@@ -20,7 +20,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','proveedor']
+                    roles: ['Admin','Proveedor']
                 }
             }).state('proveedoresList', {
                 url: '/list',
