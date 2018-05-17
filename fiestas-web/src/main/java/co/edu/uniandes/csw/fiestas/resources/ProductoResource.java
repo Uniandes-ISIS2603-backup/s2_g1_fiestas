@@ -129,10 +129,10 @@ public class ProductoResource
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
-        
-        productoLogic.createProducto(producto.toEntity());
-        return producto;
+    public ProductoEntity createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
+        ProductoEntity productoE = producto.toEntity();
+        productoLogic.createProducto(productoE);
+        return productoE;
     }
     
     /**

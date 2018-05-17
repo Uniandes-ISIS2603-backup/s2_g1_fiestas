@@ -6,6 +6,7 @@
         function ($scope, $http, productosContext, proveedoresContext, $state, $rootScope) {
             $rootScope.proveedorId = $state.params.proveedorId;
             $scope.proveedorId = $state.params.proveedorId;
+            $rootScope.productoId = $state.params.productoId;
             if($state.params.proveedorId !== null && $state.params.proveedorId !== undefined )
             {
             $http.get(proveedoresContext + '/' + $state.params.proveedorId + '/' + productosContext).then(function (response) {

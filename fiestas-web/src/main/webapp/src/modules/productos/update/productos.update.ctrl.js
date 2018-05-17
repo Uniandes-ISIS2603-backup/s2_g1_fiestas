@@ -1,7 +1,5 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "api/productos");
-    mod.constant("booksContext", "api/books");
     mod.controller('productoUpdateCtrl', ['$scope', '$http', 'productosContext', '$state', 'booksContext', '$rootScope', '$filter',
         /**
          * @ngdoc controller
@@ -26,20 +24,21 @@
             $rootScope.edit = true;
 
             var idProducto = $state.params.productoId;
+            var idProveedor = $state.params.proveedorId;
 
             //Consulto el autor a editar.
-            $http.get(productosContext + '/' + idProducto).then(function (response) {
+            $http.get("api/proveedores" + '/' + idProveedor + "/" + "productos" + "/" + idProducto).then(function (response) {
                 var producto = response.data;
-                $scope.productoName = producto.name;
-                $scope.productoDescripcion = producto.description;
-                $scope.productoPersonal = producto.personal;
-                $scope.productoIncluye = producto.incluye;
-                $scope.produtoPrecio = producto.precio;
+                $scope.name = producto.name;
+                $scope.descripcion = producto.description;
+                $scope.personal = producto.personal;
+                $scope.incluidos = producto.incluye;
+                $scope.precio = producto.precio;
             });
 
             /**
              * @ngdoc function
-             * @name createProducto
+             * @name updateProducto
              * @methodOf productos.controller:productoUpdateCtrl
              * @description
              * Crea un nuevo autor con los libros nuevos y la información del

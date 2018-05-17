@@ -151,9 +151,7 @@ public class ProveedorResource {
     @POST
     public ProveedorDetailDTO createProveedor(ProveedorDetailDTO proveedor) throws BusinessLogicException
     {
-        
         return new ProveedorDetailDTO(proveedorLogic.createProveedor(proveedor.toEntity()));
-        
     }
     
     /**

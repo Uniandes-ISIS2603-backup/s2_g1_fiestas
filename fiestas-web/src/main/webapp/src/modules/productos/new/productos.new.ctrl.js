@@ -32,14 +32,24 @@
              * Esta función utiliza el protocolo HTTP para crear la producto.
              * @param {Object} producto Objeto con la nueva de la producto.
              */
-            $scope.createProducto = function () {
+            $scope.createProducto = function (evt) {
+                
+                console.log(evt);
+                evt.preventDefault();
                      
                 $http.post("api/productos" , $scope.data).then(function (response) {
-                    $http.put("api/proveedores" + '/' + $rootScope.params.proveedorId + '/' + "productos" + '/' + response.data.ID, $scope.data).then(function (response) {
-                    $state.go('productosList', {productoId: response.data.ID}, {reload: true});
-                });
-            });   
-          };
+                    console.log("POST!");
+                    console.log(response);
+                    
+                    $http.put("api/proveedores" + '/' + $rootScope.params.proveedorId + '/' + "productos" + '/' + response.data.id, $scope.data)
+                            .then(function (putResponse) {
+                        console.log("PUT");
+                        console.log(putResponse); 
+                        console.log($rootScope.params);
+                        return $state.go("productosList").then(function (x) { console.log('done'); console.log(x); }).catch(function (err) { console.log(err); });
+                    });
+                });   
+            };
         }
     ]);
 }
