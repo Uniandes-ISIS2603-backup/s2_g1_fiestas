@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
+import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,4 +82,15 @@ public class ProductoPersistence
         List<ProductoEntity> results = q.getResultList();
         return results;
     }
+    
+    public List<ValoracionEntity> findValoracionesPorPrducto(long idProducto)
+      {
+        Query q = em.createNativeQuery("select valoraciones_id from productoEntity_valoracionEntity where productoEntity_id="+idProducto);
+        List<Long>lista=q.getResultList();
+        List<ValoracionEntity> listVal = new ArrayList<>();
+        for(long id: lista){
+            listVal.add(em.find(ValoracionEntity.class, id));
+        }
+        return listVal;
+      }
 }
