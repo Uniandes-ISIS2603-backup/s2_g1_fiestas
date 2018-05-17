@@ -56,9 +56,10 @@
                  */
                 $rootScope.isAuthenticated = function () {
 
-                    if (sessionStorage.getItem("username") != null) {
+                    if (sessionStorage.getItem("username") !== null) {
                         $rootScope.currentUser = sessionStorage.getItem("name");
                         $rootScope.currentRol = sessionStorage.getItem("rol");
+                        $rootScope.currentToken = sessionStorage.getItem("token");
                         return true;
                     } else {
                         return false;
