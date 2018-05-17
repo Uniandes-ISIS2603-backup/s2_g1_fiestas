@@ -119,8 +119,9 @@ public class ProveedorLogic
             throw new BusinessLogicException("No puede crear un proveedor con valoración mayor a 5, valoración negativa o valoración nula");
         }
         calcularValoracion(entity);
-        usuarioLogic.createUsuario(crearUsuario(entity));
-        return persistence.create(entity);
+        ProveedorEntity proveedorCreado = persistence.create(entity);
+        usuarioLogic.createUsuario(crearUsuario(proveedorCreado));
+        return proveedorCreado;
     }
     
     public UsuarioEntity crearUsuario(ProveedorEntity entity)
