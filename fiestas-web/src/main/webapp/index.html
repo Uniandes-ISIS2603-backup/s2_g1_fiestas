@@ -104,6 +104,7 @@
         <script src="src/modules/productos/productos.mod.js" type="text/javascript"></script>
         <script src="src/modules/productos/productos.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/productos/productos.detail.ctrl.js" type="text/javascript"></script>
+        <script src="src/modules/productos/productos.all.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/productos/delete/productos.delete.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/productos/new/productos.new.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/productos/update/productos.update.ctrl.js" type="text/javascript"></script>
@@ -172,7 +173,7 @@
                                 <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
                                 <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
                                 <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
-                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosAll">Productos</a> </li>                   
                                 <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li>                                                             
                             </ul>
                             
@@ -181,18 +182,34 @@
                                 <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                                                               
                             </ul>
                             
-                            <ul ng-if="isAuthenticated() && currentRol !== 'Cliente'" class="nav navbar-right">
-                                <div class="shoppingCart-custom ">
-                                    <button type="button" class="btn btn-default btn-sm">
-                                        <a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito de Compras</a>
-                                    </button>
-                                </div>
-                            </ul>
-                            
                         </div>
                     </nav>                  
                 </div>      
+
+            </div>
+                               
+            <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">
+                
+                <div class="vertical-menu">
+                  <b><a ui-sref ="proveedorDetail()">Mi Perfil</a>
+                  <a ui-sref ="proveedorDetail()">Mis Productos</a>
+                  <a ui-sref ="proveedorDetail()">Mis Contratos</a>
+                  <a ui-sref ="proveedorDetail()">Mis Bonos</a></b>
+                 
+                </div>
+                            
+            </div>
+
+            <div ng-if="isAuthenticated() && currentRol === 'Cliente'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
+                <div class="vertical-menu">
+                    <b> <a ui-sref="clienteDetail({clienteId: currentId})">Mi perfil</a>
+                    <a ui-sref="clientesList">Mis Eventos</a>
+                    <a>Mis Blogs</a></b>
+                </div>
+            </div>            
+
             </div>           
+
             
             <div ui-view="mainView">    </div>            
             <br>
