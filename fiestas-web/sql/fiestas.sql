@@ -64,9 +64,9 @@ insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,c
 insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10002,'Bautizo Juan','08/04/2018','Bautizo en la Capilla San Nicolas','Juan Jose','Carrera 89 90-86',15,10012,10096);
 insert into EventoEntity(id,nombre,fecha,descripcion,celebrado,lugar,invitados,cliente_id,tematica_id) values(10003,'Grado Maria','08/04/2018','Se gradua de derecho en la Javeriana','Maria Perez','Carrera 46 18-86',45,10013,10098);
 
-insert into ContratoEntity(id, estado, tyc, valor, horario_id,evento_id) values(10001, 'Por pagar', 'Sin términos ni condiciones', 2000000000, 10001,10001);
-insert into ContratoEntity(id, estado, tyc, valor, horario_id,evento_id) values(10002, 'Pagada la primera cuota', 'Si el cliente cancela despues de 2 semanas de haber contratado el servicio deberá pagar el 100% del costo', 345000000, 10002,10001);
-insert into ContratoEntity(id, estado, tyc, valor, horario_id,evento_id) values(10003, 'Pagado', 'Sin términos ni condiciones', 20000000, 10003,10002);
+insert into ContratoEntity(id, estado, tyc, valor, proveedor_id,horario_id,evento_id) values(10001, 'Por pagar', 'Sin términos ni condiciones', 2000000000, 10011,10001,10001);
+insert into ContratoEntity(id, estado, tyc, valor, proveedor_id, horario_id,evento_id) values(10002, 'Pagada la primera cuota', 'Si el cliente cancela despues de 2 semanas de haber contratado el servicio deberá pagar el 100% del costo', 345000000, 10011, 10002,10001);
+insert into ContratoEntity(id, estado, tyc, valor, proveedor_id,horario_id,evento_id) values(10003, 'Pagado', 'Sin términos ni condiciones', 20000000, 10011,10003,10002);
 
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10001,0,'Rechazado','PSE',100000,10001);
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10002,1,'Confirmado','Tarjeta de Credito',250000,10001);
