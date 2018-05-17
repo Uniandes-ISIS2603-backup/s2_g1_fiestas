@@ -53,6 +53,10 @@
                         controller: 'servicioCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: false,
+                    roles: []
                 }
             }).state('serviciosList', {
                 url: '/list',
