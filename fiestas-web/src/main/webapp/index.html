@@ -145,7 +145,7 @@
                         <li><a ui-sref="signin"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
                     </ul>
                     <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-                        <li class="nameUser">Hola, {{currentUser}} {{currentRol}}</li>
+                        <li class="nameUser">Hola, {{currentUser}}</li>
                         <li><a ui-sref="logout">Logout</a></li>
                     </ul>
                 </div>
@@ -163,19 +163,23 @@
                                 <a ui-sref="main" style="font-family: Fjalla One; font-size: 20px" class="navbar-brand"  >KULTEM</a>
                                    
                             </div>
-                            <ul>
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
-                                <li ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li> 
-                            
-                                <li ng-if="isAuthenticated() && currentRol != 'Admin'" class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsListVer">Blog</a> </li> 
-                                
+
+                            <ul ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav">
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="valoracionesList">Valoraciones</a>  </li>                      
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                         
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="bonosList">Bonos</a>   </li>                   
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="productosList">Productos</a> </li>                   
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="tematicasList">Temáticas</a></li>                                                             
                             </ul>
+                            
+                            <ul ng-if="!isAuthenticated()" class="nav navbar-nav">                
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                                          
+                                <li class="nav navbar-nav" style="font-family: Fjalla One; font-size: 20px"><a ui-sref="blogsList">Blog</a> </li>                                                               
+                            </ul>
+                            
                         </div>
                     </nav>                  
                 </div>      

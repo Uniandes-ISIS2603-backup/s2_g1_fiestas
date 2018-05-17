@@ -25,12 +25,14 @@ insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direc
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10012, 'Sofía Arias','https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg' ,'1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','sofia', 'chao1234');
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10013, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya', 'chao12345');
 
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10001,'Hamburguesería Mc Donalds','Proveedor',1,'mcdonalds','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10002,'Iluminación de Diana','Proveedor',2,'dianas','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10003,'Decoración Pepitos','Proveedor',3,'pepitos','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10004,'Nicolás Hernández','Cliente',4,'nicos','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10005,'Sofía Arias','Cliente',5,'sofia','asd123');
-insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10006,'Cristian Amaya','Cliente',6,'cm.amaya','asd123');
+
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10001,'Hamburguesería Mc Donalds','Proveedor',10011,'mcdonals','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10002,'Iluminación de Diana','Proveedor',10012,'dianas','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10003,'Decoración Pepitos','Proveedor',10013,'pepitos','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10004,'Nicolás Hernández','Cliente',10011,'nicos','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10005,'Sofía Arias','Cliente',10012,'sofia','asd123');
+insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10006,'Cristian Amaya','Cliente',10013,'cm.amaya','asd123');
+
 insert into UsuarioEntity(id,nombre,rol,token,login,contrasena) values(10007,'David Nino','Admin',6,'dnino','asd123');
 
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10001, '04/22/2018','jihrfu9i3', 15, '05/22/2018', 'Día de san valentin', 10011);

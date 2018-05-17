@@ -130,7 +130,7 @@ public class ProveedorLogic
         nuevoUsuario.setLogin(entity.getLogin());
         nuevoUsuario.setRol("Proveedor");
         nuevoUsuario.setNombre(entity.getNombre());
-        nuevoUsuario.setToken(entity.getId() + 10000);
+        nuevoUsuario.setToken(entity.getId());
         return nuevoUsuario;
     }
     
