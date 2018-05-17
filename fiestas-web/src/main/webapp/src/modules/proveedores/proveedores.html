@@ -3,7 +3,7 @@
     <div class="row">
         <div ui-view="detailView"></div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="currentRol === 'Admin'">
         <div ui-view="listView"></div>
     </div>
 </div>
