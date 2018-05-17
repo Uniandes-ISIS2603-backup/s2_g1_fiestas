@@ -85,8 +85,7 @@
                     },
                     'detailView': {
                         templateUrl: basePath + 'productos.detail.html',
-                        controller: 'productosAllCtrl',
-                        controllerAs: 'ctrl'
+                        controller: 'productosAllCtrl'
                     }
                 }
             });
