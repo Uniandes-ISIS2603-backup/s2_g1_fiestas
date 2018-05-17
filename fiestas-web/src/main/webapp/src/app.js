@@ -27,7 +27,10 @@
         'tematicasModule',
         'contratoModule',
         'loginModule',
-        'mainModule'
+        'signinModule',
+        'horarioModule',
+        'mainModule' 
+        
     ]);
     // Resuelve problemas de las promesas
     app.config(['$qProvider', function ($qProvider) {
@@ -55,6 +58,7 @@
 
                     if (sessionStorage.getItem("username") != null) {
                         $rootScope.currentUser = sessionStorage.getItem("name");
+                        $rootScope.currentRol = sessionStorage.getItem("rol");
                         return true;
                     } else {
                         return false;

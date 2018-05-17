@@ -3,12 +3,12 @@
     mod.constant("pagoContext", "pagos");
     mod.constant("eventosContext", "eventos");
     mod.constant("clientesContext", "api/clientes");
-    mod.controller('pagoDeleteCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','clientesContext',
+    mod.controller('pagoPayCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagoContext','clientesContext',
         /**
          * @ngdoc controller
-         * @name pagos.controller:pagoDeleteCtrl
+         * @name pagos.controller:pagoPayCtrl
          * @description
-         * Definición del controlador auxiliar para eliminar Pagos. 
+         * Definición del controlador auxiliar para pagar un Pagos. 
          * @param {Object} $scope Referencia injectada al Scope definida para este
          * controlador, el scope es el objeto que contiene las variables o 
          * funciones que se definen en este controlador y que son utilizadas 
@@ -29,14 +29,14 @@
             var idCliente = $state.params.clienteId;
             /**
              * @ngdoc function
-             * @name deletePago
-             * @methodOf pagos.controller:pagoDeleteCtrl
+             * @name payPago
+             * @methodOf pagos.controller:pagoPayCtrl
              * @description
-             * Esta función utiliza el protocolo HTTP para eliminar un pago.
+             * Esta función utiliza el protocolo HTTP para pagar un pago.
              * @param {String} id El ID del pago a eliminar.
              */
-            $scope.deletePago = function () {
-                $http.delete(clientesContext + '/' + idCliente + '/' +eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago, {}).then(function (response) {
+            $scope.payPago = function () {
+                $http.get(clientesContext + '/' + idCliente + '/' +eventosContext + '/' + idEvento + '/' + pagoContext + '/' + idPago +'/pay', {}).then(function (response) {
                     $state.go('pagosList', {pagoId: response.data.id}, {reload: true});
                 });
             };

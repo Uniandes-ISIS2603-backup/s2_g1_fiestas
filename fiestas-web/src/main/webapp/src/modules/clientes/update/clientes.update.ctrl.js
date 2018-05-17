@@ -58,7 +58,15 @@
                 $http.put(clientesContext + "/" + idCliente, $scope.data).then(function (response) {
                     
                     //Cliente created successfully
-                    $state.go('clientesList', {clienteId: response.data.id}, {reload: true});
+                    if( $rootScope.currentRol === 'Admin')
+                    {
+                        $state.go('clientesList', {clienteId: response.data.id}, {reload: true});
+                    }
+                    else( $rootScope.currentRol === 'Cliente')
+                    {
+                        $state.go('clienteDetail', {clienteId: response.data.id}, {reload: true});
+                    }
+                    
                 });
             };
         }

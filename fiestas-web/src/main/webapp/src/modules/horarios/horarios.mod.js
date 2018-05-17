@@ -14,11 +14,11 @@
  * ```
  * | ESTADO          | URL                        | VISTAS                 |
  * |-----------------|----------------------------|------------------------|
- * | horarios           | /horarios                     | mainView:              |
- * |                 |                            | horarios.html             |
+ * | horarios        | /horarios                  | mainView:              |
+ * |                 |                            | horarios.html          |
  * |                 |                            |                        |
- * | horariosList       | /list                      | listView:              |
- * |                 |                            | horarios.list.html        |
+ * | horariosList    | /list                      | listView:              |
+ * |                 |                            | horarios.list.html     |
  * |                 |                            |                        |
  * |-----------------|----------------------------|------------------------|
  *```

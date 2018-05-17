@@ -130,7 +130,7 @@ public class ProveedorLogic
         nuevoUsuario.setLogin(entity.getLogin());
         nuevoUsuario.setRol("Proveedor");
         nuevoUsuario.setNombre(entity.getNombre());
-        nuevoUsuario.setToken(entity.getId() + 10000);
+        nuevoUsuario.setToken(entity.getId());
         return nuevoUsuario;
     }
 
@@ -605,14 +605,20 @@ public class ProveedorLogic
         List<ProductoEntity> productos = entity.getProductos();
         
         double valoracionProveedor = 0;
-        
-        for(ProductoEntity producto : productos)
-        {
-            valoracionProveedor += producto.getValoracionPromedio();
-        }
-        
         if(!productos.isEmpty())
         {
+        for(ProductoEntity producto : productos)
+        {
+            if(producto != null)
+            {
+                if(producto.getValoracionPromedio()!= null)
+                {
+                    valoracionProveedor += producto.getValoracionPromedio();
+                }
+            }
+        }
+        
+        
             valoracionProveedor = valoracionProveedor/productos.size();
         }
         else

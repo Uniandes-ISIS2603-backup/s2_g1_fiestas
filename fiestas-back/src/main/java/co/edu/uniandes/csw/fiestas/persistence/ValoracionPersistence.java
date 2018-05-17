@@ -34,17 +34,6 @@ public class ValoracionPersistence {
         return q.getResultList();
       }
       
-       public List<ValoracionEntity> findValoracionesPorProveedor(long idProveedor)
-      {
-        Query q = em.createNativeQuery("select valoraciones_id from productoEntity_valoracionEntity where productoEntity_id="+idProveedor);
-        List<Long>lista=q.getResultList();
-        List<ValoracionEntity> listVal = new ArrayList<>();
-        for(long id: lista){
-            listVal.add(em.find(ValoracionEntity.class, id));
-        }
-        return listVal;
-      }
-      
       public ValoracionEntity create (ValoracionEntity entity)
       {
         em.persist(entity);

@@ -12,26 +12,27 @@
  * un estado definido (estado de mostrar bloges), el controlador y la vista 
  * correspondiente. Los estados definidos en este modulo son:
  * ```
- * | ESTADO           | URL                        | VISTAS                 |
- * |------------------|----------------------------|------------------------|
- * | blogs          | /blogs                   | mainView:              |
+ * | ESTADO           | URL                        | VISTAS               |
+ * |------------------|----------------------------|----------------------|
+ * | blogs            | /blogs                     | mainView:            |
  * |                  |                            | blogs.html           |
- * |                  |                            |                        |
- * | blogsList      | /list                      | listView:              |
+ * |                  |                            |                      |
+ * | blogsList        | /list                      | listView:            |
  * |                  |                            | blogs.list.html      |
- * |                  |                            |                        |
- * | blogDetail     | /{blogId:int}/detail     | listView:              |
+ * |                  |                            |                      |
+ * | blogDetail       | /{blogId:int}/detail       | listView:            |
  * |                  |                            | blogs.list.html      |
- * |                  |                            | detailView:            |
+ * |                  |                            | detailView:          |
  * |                  |                            | blogs.detail.html    |
- * | blogsCreate    | /create                    | detailView: (/new)     |
+ * | blogsCreate      | /create                    | detailView: (/new)   |
  * |                  |                            | /blogs.new.html      |
- * | blogUpdate     | /update/{blogId:int}     | detailView: (/new)     |
+ * | blogUpdate       | /update/{blogId:int}       | detailView: (/new)   |
  * |                  |                            | /blogs.new.html      |
- * | blogDelete     | /delete/{blogId:int}     | detailView: (/delete)  |
+ * | blogDelete       | /delete/{blogId:int}       | detailView: (/delete)|
  * |                  |                            | /blog.delete.html    |
- * |------------------|----------------------------|------------------------|
+ * |------------------|----------------------------|----------------------|
  *```
+ *
  */
 (function (ng) {
 
@@ -52,6 +53,10 @@
                         controller: 'blogsCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: false,
+                    roles: []
                 }
             }).state('blogsList', {
                 url: '/list',
@@ -86,6 +91,10 @@
                         controller: 'blogsNewCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'cliente','proveedor']
                 }
 
             }).state('blogsUpdate', {
@@ -98,6 +107,29 @@
                         controller: 'blogsUpdateCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'cliente','proveedor']
+                }
+
+            }).state('blogsUpdateLike', {
+                url: '/{blogsId:int}/update',
+                parent: 'blogs',
+                param: {blogsId: null},
+                views: {
+                    'listView': {
+                        templateUrl: basePath + 'blogs.list.html'
+                    },
+                    'detailView': {
+                        templateUrl: basePath+'blogs.detail.html',
+                        controller: 'blogsUpdateLikeCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'cliente','proveedor']
                 }
 
             }).state('blogsDelete', {
@@ -110,6 +142,10 @@
                         controller: 'blogsDeleteCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin', 'cliente','proveedor']
                 }
 
             });

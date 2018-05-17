@@ -493,7 +493,7 @@ public class ProveedorResource {
     @Path("{proveedorId: \\d+}/productos/{productosId: \\d+}")
     public ProductoDetailDTO addProducto(@PathParam("proveedorId") Long proveedorId, @PathParam("productosId") Long productoId) throws BusinessLogicException
     {
-        return new ProductoDetailDTO(proveedorLogic.addProducto(productoId, proveedorId));
+        return new ProductoDetailDTO(proveedorLogic.addProducto(proveedorId, productoId));
     }
     
     /**

@@ -17,6 +17,10 @@
                         controller: 'proveedorCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','proveedor']
                 }
             }).state('proveedoresList', {
                 url: '/list',
@@ -39,6 +43,10 @@
                         controller: 'proveedorDetailCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['admin','proveedor']
                 }
 
             }).state('proveedoresCreate', {

@@ -1,18 +1,13 @@
 <div ng-if="!isAuthenticated()" class="container">
     <form class="form-signin">
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()">{{alert.msg}} </alert>
-        <h1 class="form-signin-heading text-muted">Sign In</h1>
+        <img src="resources/images/ballons.png" alt="Kultem" class="img-responsive logo"/>
+        <h1 class="form-signin-heading text-muted">Log In</h1>
         <input type="text" class="form-control" placeholder="Username" required="" autofocus="" ng-model="data.login">
         <input type="password" class="form-control" placeholder="Password" required="" ng-model="data.contrasena">
-        <select class="form-control" name="singleSelect" id="singleSelect" ng-model="data.rol" required="true">
-            <option value="">--- Please select rol ---</option> <!-- not selected / blank option -->
-            <option value="admin">Administrator</option>
-            <option value="cliente">Cliente</option>
-           <option value="proveedor">Proveedor</option>
-        </select>
         <br>
         <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="autenticar()">
-            Sign In
+            Log In
         </button>
         <a class="btn btn-lg btn-primary btn-block" ui-sref="main">Cancel</a>
     </form>
