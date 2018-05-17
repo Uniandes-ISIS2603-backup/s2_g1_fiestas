@@ -44,8 +44,9 @@
                 <div class ="container-fluid">
                     <h2>Temáticas</h2>
                     <div class="row">
+                        <label>Search: <input ng-model="searchText"></label>
                         <div class="col-sm-4" 
-                            data-ng-repeat="tematica in tematicasRecords |filter:search| pagination: curPage * pageSize | limitTo: pageSize">
+                            data-ng-repeat="tematica in tematicasRecords |filter:search">
                             <div class="panel-group">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">{{tematica.descripcion}}</div>

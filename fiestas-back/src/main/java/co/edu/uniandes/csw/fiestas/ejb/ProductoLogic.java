@@ -89,7 +89,9 @@ public class ProductoLogic
         ProductoEntity producto = getProducto(id);
         ServicioEntity ser = producto.getServicio();
         if(ser != null)
-        perSer.deleteServicio(producto.getServicio().getId());
+        {
+            perSer.removeProducto(ser.getId(), id);
+        }
         List<ValoracionEntity> valoras = producto.getValoraciones();
         if(!valoras.isEmpty())
         {
