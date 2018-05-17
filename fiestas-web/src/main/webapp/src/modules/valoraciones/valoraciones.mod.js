@@ -43,6 +43,9 @@
             $stateProvider.state('valoraciones', {
                 url: '/valoraciones',
                 abstract: true,
+                 param: {
+                    productoId: null
+                },
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'valoraciones.html',
@@ -53,6 +56,9 @@
             }).state('valoracionesList', {
                 url: '/list',
                 parent: 'valoraciones',
+                 params: {
+                    productoId: null
+                },
                 views: {
                     'listView': {
                         templateUrl: basePath + 'valoraciones.list.html'
@@ -68,7 +74,8 @@
                 views: {
                     'listView': {
                         templateUrl: basePath + '/new/valoraciones.new.html',
-                        controller: 'valoracionNewCtrl'
+                        controller: 'valoracionNewCtrl',
+                        controllerAs: 'ctrl'
                     }
                 }
             }).state('valoracionUpdate', {

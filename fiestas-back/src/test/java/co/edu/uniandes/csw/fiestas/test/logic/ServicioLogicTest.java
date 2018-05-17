@@ -246,9 +246,10 @@ public class ServicioLogicTest {
      * @throws javax.transaction.RollbackException
      * @throws javax.transaction.HeuristicMixedException
      * @throws javax.transaction.HeuristicRollbackException
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
    @Test
-    public void addProductoTest() throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+    public void addProductoTest() throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException, BusinessLogicException{
         ServicioEntity servicio = data.get(0);
         ProductoEntity producto = factory.manufacturePojo(ProductoEntity.class);
 //        producto.setServicios(data);
@@ -263,9 +264,10 @@ public class ServicioLogicTest {
      * Prueba para desasociar un Producto existente de un Servicio existente
      *
      * 
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
     @Test
-    public void removeProductosTest() {
+    public void removeProductosTest() throws BusinessLogicException {
         servicioLogic.removeProducto(data.get(0).getId(), productosData.get(0).getId());
         ProductoEntity response = servicioLogic.getProducto(data.get(0).getId(), productosData.get(0).getId());
     }

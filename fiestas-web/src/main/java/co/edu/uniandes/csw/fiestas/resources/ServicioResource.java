@@ -322,7 +322,7 @@ public class ServicioResource {
      */
     @GET
     @Path("{servicioId: \\d+}/productos/{productosId: \\d+}")
-    public ProductoDetailDTO getProducto(@PathParam("servicioId") Long servicioId, @PathParam("productosId") Long productosId)
+    public ProductoDetailDTO getProducto(@PathParam("servicioId") Long servicioId, @PathParam("productosId") Long productosId) throws BusinessLogicException
     {
             return new ProductoDetailDTO(logic.getProducto(servicioId, productosId));
         

@@ -82,6 +82,6 @@ insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) val
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10097, 10078);
 
 
-insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id values (10076, 10022);
-insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id values (10077, 10023);
-insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id values (10078, 10024);
+insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id) values (10076, 10022);
+insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id) values (10077, 10023);
+insert into PRODUCTOENTITY_VALORACIONENTITY (productoentity_id, valoraciones_id) values (10078, 10024);

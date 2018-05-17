@@ -2,7 +2,7 @@
     var mod = ng.module("valoracionModule");
     mod.constant("valoracionContext", "api/valoraciones");
     mod.constant("productosContext", "api/productos");
-    mod.controller('valoracionesCtrl', ['$scope', '$http','valoracionContext','productosContext', '$state', '$filter','$rootScope',
+    mod.controller('valoracionesCtrl', ['$scope', '$http', 'productosContext', '$state', '$filter','$rootScope',
          /**
          * @ngdoc controller
          * @name valoracions.controller:valoracionCtrl
@@ -19,11 +19,15 @@
          * @param {Object} valoracionesContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Valoraciones en el Backend.
          */
-       function ($scope, $http, valoracionContext, productosContext, $state, $filter, $rootScope) {
+       function ($scope, $http, productosContext, $state, $filter, $rootScope) {
+            console.log("api/" + productosContext + '/' + $state.params.productoId + '/'+ 'valoraciones');
                 //if (($state.params.productoId !== undefined) && ($state.params.productoId !== null)) 
                 $scope.productoId = $state.params.productoId;
-                $http.get(productosContext + '/' + $state.params.productoId + '/' + valoracionContext).then(function (response) {
+                
+                $http.get("api/" + productosContext + '/' + $state.params.productoId + '/'+ 'valoraciones').then(function (response) {
+                    
                 $rootScope.valoracionesRecords = response.data;
+                $scope.valoracionesRecords = response.data;
                 $rootScope.currentValoracion = $filter('filter')($rootScope.valoracionesRecords, {id: $state.params.valoracionId}, true)[0];
             
             });
