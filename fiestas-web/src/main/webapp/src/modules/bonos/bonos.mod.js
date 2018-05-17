@@ -14,22 +14,22 @@
  * ```
  * | ESTADO           | URL                        | VISTAS                 |
  * |------------------|----------------------------|------------------------|
- * | blogs          | /blogs                   | mainView:              |
- * |                  |                            | blogs.html           |
+ * | blogs            | /blogs                     | mainView:              |
+ * |                  |                            | blogs.html             |
  * |                  |                            |                        |
- * | blogsList      | /list                      | listView:              |
- * |                  |                            | blogs.list.html      |
+ * | blogsList        |  /list                     | listView:              |
+ * |                  |                            | blogs.list.html        |
  * |                  |                            |                        |
- * | blogDetail     | /{blogId:int}/detail     | listView:              |
- * |                  |                            | blogs.list.html      |
+ * | blogDetail       | /{blogId:int}/detail     | listView:                |
+ * |                  |                            | blogs.list.html        |
  * |                  |                            | detailView:            |
- * |                  |                            | blogs.detail.html    |
- * | blogsCreate    | /create                    | detailView: (/new)     |
- * |                  |                            | /blogs.new.html      |
- * | blogUpdate     | /update/{blogId:int}     | detailView: (/new)     |
- * |                  |                            | /blogs.new.html      |
- * | blogDelete     | /delete/{blogId:int}     | detailView: (/delete)  |
- * |                  |                            | /blog.delete.html    |
+ * |                  |                            | blogs.detail.html      |
+ * | blogsCreate    | /create                    | detailView: (/new)       |
+ * |                  |                            | /blogs.new.html        |
+ * | blogUpdate     | /update/{blogId:int}     | detailView: (/new)         |
+ * |                  |                            | /blogs.new.html        |
+ * | blogDelete     | /delete/{blogId:int}     | detailView: (/delete)      |
+ * |                  |                            | /blog.delete.html      |
  * |------------------|----------------------------|------------------------|
  *```
  */
