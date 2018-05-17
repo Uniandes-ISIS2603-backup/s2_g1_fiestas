@@ -38,7 +38,32 @@
             $http.get(blogsContext).then(function (response) {
                 $scope.blogsRecords = response.data;
             });
+            
+            $scope.addLike = function()
+            {
+                $scope.data = {};
+            
+                $rootScope.edit=true;
+
+                $scope.selectedItems = [];
+
+                $scope.availableItems = [];
+
+                var idBlog = $state.params.blogsId;
+
+                //Consulto el evento a editar.
+                $http.get(blogsContext + '/' + idBlog).then(function (response) {
+                    var blog = response.data;
+                    $scope.data.cuerpo = blog.cuerpo;
+                    $scope.data.likes = blog.likes+1;
+                    $scope.data.titulo = blog.titulo;
+                    $http.put(blogsContext + "/" + idBlog, $scope.data)})
+                        //Evento created successfully
+                        $state.go('blogsDetail', {blogsId: idBlog}, {reload: true});
+            
+            }
         }
+        
     ]);
 }
 )(window.angular);

@@ -1,6 +1,14 @@
 <div class="panel panel-default"> 
     <div class="panel-body">
         <div class="row">
+            <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
+                <ul class="nav bd-sidenav"><li>               
+                    <li><a class="nav-link" ui-sref="proveedorDetail({proveedorId: currentProveedor.id})">Mi Perfil</a></li>
+                    <li><a class="nav-link" ui-sref="productosList({proveedorId: currentProveedor.id})">Mis Productos</a></li>
+                    <li><a class="nav-link" ui-sref="contratosList({proveedorId: currentProveedor.id})">Mis Contratos</a></li>
+                    <li><a class="nav-link" ui-sref="bonosList({proveedorId: currentProveedor.id})">Mis Bonos</a></li>
+                </ul>
+            </div> 
             <div class="col-md-3">
                 <div class="thumb">
                 <img class="img-responsive" ng-src="{{currentProveedor.imagen}}"/>
@@ -39,21 +47,30 @@
                     <dd>{{currentProveedor.penalizado}}</dd>
                     
                     <hr>
-                    <ul class="nav nav-pills">
+                    <ul ng-if="isAuthenticated() && currentRol === 'Admin' "class="nav nav-pills">
                         <li role="presentation" class="active"> <a  ui-sref="productosList({proveedorId: currentProveedor.id})">Productos</a></li>
                     </ul>
   
                 
                     <hr>
-                    <ul class="nav nav-pills">
+                    <ul ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav nav-pills">
                       <li role="presentation" class="active"> <a ui-sref="contratosList({provedorId: currentProveedor.id})">Contratos</a></li>
                     </ul>
                 
-             </dl>
-            </div>
+                </dl>
+                
+                <div ng-if="currentRol === 'Proveedor'"class="col-md-6">
+
+                <a class="btn btn-default btn-sm" ui-sref="proveedorUpdate({proveedorId: currentProveedor.id})">Editar perfil</a>
+
+                </div>
+            
+            </div>            
+            
         </div>
         <div class="panel-body">
             <div class="row">
+                <div class="col-md-3"></div>
                 <div class="col-md-9">
                     <div ui-view="childrenView"></div>
                 </div>
