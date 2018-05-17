@@ -3,7 +3,7 @@
     mod.constant("clientesContext", "api/clientes");
     mod.constant("eventosContext", "eventos");
     mod.constant("pagosContext", "pagos");
-    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagosContext', '$rootScope','clientesContext',
+    mod.controller('eventoUpdateCtrl', ['$scope', '$http', 'eventosContext', '$state', 'pagosContext', '$rootScope', 'clientesContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoUpdateCtrl
@@ -23,7 +23,7 @@
          * @param {Object} clientesContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Clientes en el Backend
          */
-        function ($scope, $http, eventosContext, $state, pagosContext, $rootScope,clientesContext) {
+        function ($scope, $http, eventosContext, $state, pagosContext, $rootScope, clientesContext) {
             $rootScope.edit = true;
 
             $scope.data = {};
@@ -32,8 +32,13 @@
             var idEvento = $state.params.eventoId;
             var idCliente = $state.params.clienteId;
 
+            $scope.selectedItems = [];
+
+            $scope.availableItems = [];
+
+
             //Consulto el evento a editar.
-            $http.get(clientesContext+ '/' + idCliente + '/' +eventosContext + '/' + idEvento).then(function (response) {
+            $http.get(clientesContext + '/' + idCliente + '/' + eventosContext + '/' + idEvento).then(function (response) {
                 var evento = response.data;
                 $scope.data.celebrado = evento.celebrado;
                 $scope.data.fecha = new Date(evento.fecha);
@@ -46,6 +51,15 @@
                 $scope.data.tematica = evento.tematica;
             });
 
+            $http.get('api/tematicas').then(function (response) {
+                $scope.tematicas = response.data;
+            });
+
+            $http.get('api/productos').then(function (response) {
+                $scope.availableItems = response.data;
+            });
+
+
             /**
              * @ngdoc function
              * @name updateEvento
@@ -55,10 +69,10 @@
              * $scope.
              */
             $scope.updateEvento = function () {
-                $http.put(clientesContext+ '/' + idCliente + '/' +eventosContext + "/" + idEvento, $scope.data).then(function (response) {
+                $http.put(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + idEvento, $scope.data).then(function (response) {
                     //Evento created successfully
                     for (i = 0; i < $scope.pagos.length; i++) {
-                        $http.post(clientesContext+ '/' + idCliente + '/' +eventosContext + "/" + response.data.id + "/" + pagosContext, $scope.pagos[i]).then(function (response) {
+                        $http.post(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + response.data.id + "/" + pagosContext, $scope.pagos[i]).then(function (response) {
                         });
                     }
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});

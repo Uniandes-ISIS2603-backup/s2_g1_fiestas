@@ -2,7 +2,7 @@
     var mod = ng.module("eventoModule");
     mod.constant("eventoContext", "eventos");
     mod.constant("clientesContext", "clientes");
-    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$rootScope','clientesContext',
+    mod.controller('eventoNewCtrl', ['$scope', '$http', 'eventoContext', '$state', '$rootScope', 'clientesContext',
         /**
          * @ngdoc controller
          * @name eventos.controller:eventoNewCtrl
@@ -22,12 +22,18 @@
          * @param {Object} clientesContext Constante injectada que contiene la ruta
          * donde se encuentra el API de Clientes en el Backend
          */
-        function ($scope, $http, eventoContext, $state, $rootScope,clientesContext) {
+        function ($scope, $http, eventoContext, $state, $rootScope, clientesContext) {
             $rootScope.edit = false;
-            
+
             $scope.data = {};
+
+            $http.get('api/tematicas').then(function (response) {
+                $scope.tematicas = response.data;
+            });
             
-             /**
+            $scope.selectedTematica = [];
+
+            /**
              * @ngdoc function
              * @name createEvento
              * @methodOf eventos.controller:eventoNewCtrl
@@ -36,7 +42,14 @@
              * @param {Object} autor Objeto con el nuevo evento.
              */
             $scope.createEvento = function () {
-                $http.post(clientesContext + '/' + $state.params.clienteId + '/' +eventoContext, $scope.data).then(function (response) {
+                console.log($scope.selectedTematica)
+                for (i = 0; i < $scope.tematicas.length; i++) {
+                    if ($scope.tematicas[i].descripcion === $scope.selectedTematica) {
+                        $scope.data.tematica = $scope.tematicas[i];
+                        break;
+                    }
+                }
+                $http.post(clientesContext + '/' + $state.params.clienteId + '/' + eventoContext, $scope.data).then(function (response) {
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});
                 });
             };
