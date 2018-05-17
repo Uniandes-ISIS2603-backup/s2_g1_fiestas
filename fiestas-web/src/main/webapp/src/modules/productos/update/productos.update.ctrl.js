@@ -1,8 +1,6 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "api/productos");
-    mod.constant("booksContext", "api/books");
-    mod.controller('productoUpdateCtrl', ['$scope', '$http', 'productosContext', '$state', 'booksContext', '$rootScope', '$filter',
+    mod.controller('productoUpdateCtrl', ['$scope', '$http', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name productos.controller:productoUpdateCtrl
@@ -22,36 +20,52 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, productosContext, $state,  $rootScope, $filter) {
+        function ($scope, $http, $state,  $rootScope) {
             $rootScope.edit = true;
 
+            
+            $scope.data = {};
+            
+            $scope.selectedItems = [];
+
+            $scope.availableItems = [];
+            
             var idProducto = $state.params.productoId;
 
-            //Consulto el autor a editar.
-            $http.get(productosContext + '/' + idProducto).then(function (response) {
+            //Consulto el producto a editar.
+            
+            console.log($scope);
+            
+            $http.get("api/productos" + "/" + idProducto).then(function (response) {
                 var producto = response.data;
-                $scope.productoName = producto.name;
-                $scope.productoDescripcion = producto.description;
-                $scope.productoPersonal = producto.personal;
-                $scope.productoIncluye = producto.incluye;
-                $scope.produtoPrecio = producto.precio;
+                $scope.data.name = producto.name;
+                $scope.data.descripcion = producto.descripcion;
+                $scope.data.personal = producto.personal;
+                $scope.data.incluidos = producto.incluidos;
+                $scope.data.precio = producto.precio;
+                $scope.data.imagen = producto.imagen;
             });
+            
+            console.log($scope);
+            console.log($scope.data);
+            console.log(idProducto);
+            
 
             /**
              * @ngdoc function
-             * @name createProducto
+             * @name updateProducto
              * @methodOf productos.controller:productoUpdateCtrl
              * @description
-             * Crea un nuevo autor con los libros nuevos y la información del
+             * Crea un nuevo producto con los libros nuevos y la información del
              * $scope.
              */
             $scope.updateProducto = function () {
-                $http.put(productosContext + "/" + idProducto, $scope.data).then(function (response) {
-                    
+                $http.put("api/productos" + "/" + idProducto, $scope.data).then(function (response) {
                     //Producto created successfully
-                    $state.go('productosList', {productoId: response.data.id}, {reload: true});
+                    $state.go('productosList', {productoId: idProducto}, {reload: true});
                 });
-            };;
+            };
+            console.log($scope.data);;
         }
     ]);
 }

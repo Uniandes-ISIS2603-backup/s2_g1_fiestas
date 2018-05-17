@@ -99,7 +99,7 @@ public ProductoDetailDTO()
         {
         proveedor = null;
         }
-    }
+        }
 
 
 /*

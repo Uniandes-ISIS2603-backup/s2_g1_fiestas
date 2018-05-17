@@ -1,8 +1,9 @@
 (function (ng) {
     var mod = ng.module("clienteModule");
     mod.constant("clientesContext", "api/clientes");
-
-    mod.controller('clienteUpdateCtrl', ['$scope', '$http', 'clientesContext', '$state', '$rootScope',
+    mod.constant("eventosContext", "eventos");
+    mod.constant("pagosContext", "pagos");
+    mod.controller('clienteUpdateCtrl', ['$scope', '$http', 'clientesContext', '$state', '$rootScope', 'eventosContext', 'pagosContext',
         /**
          * @ngdoc controller
          * @name clientes.controller:clienteUpdateCtrl
@@ -22,7 +23,7 @@
          * @param {Object} $filter Dependencia injectada para hacer filtros sobre
          * arreglos.
          */
-        function ($scope, $http, clientesContext, $state, $rootScope) {
+        function ($scope, $http, clientesContext, $state, $rootScope, eventosContext, pagosContext) {
             $rootScope.edit = true;
 
             $scope.data = {};
@@ -45,7 +46,16 @@
                 $scope.data.login = cliente.login;
                 $scope.data.telefono = cliente.telefono;
             });
-            
+
+            //Consulto el autor a editar.
+            $http.get(clientesContext + '/' + idCliente + '/' + eventosContext).then(function (response) {
+                var eventos = response.data;
+                $scope.eventos = eventos;
+                $scope.data.eventos = eventos;
+            });
+
+
+
             /**
              * @ngdoc function
              * @name createCliente
@@ -56,17 +66,27 @@
              */
             $scope.updateCliente = function () {
                 $http.put(clientesContext + "/" + idCliente, $scope.data).then(function (response) {
-                    
+                    for (i = 0; i < $scope.eventos.length; i++) {
+                        $scope.pagos = $scope.eventos[i].pagos;
+                        console.log($scope.pagos);
+                        $http.post(clientesContext + '/' + idCliente + '/' + eventosContext, $scope.eventos[i]).then(function (response) {  
+                            for (j = 0; j < $scope.pagos.length; j++) {
+                                $http.post(clientesContext + '/' + idCliente + '/' + eventosContext + '/' + response.data.id +  '/' + pagosContext, $scope.pagos[j]).then(function (response) {
+
+                                });
+                            }
+                        });
+                    }
                     //Cliente created successfully
-                    if( $rootScope.currentRol === 'Admin')
+                    if ($rootScope.currentRol === 'Admin')
                     {
                         $state.go('clientesList', {clienteId: response.data.id}, {reload: true});
-                    }
-                    else( $rootScope.currentRol === 'Cliente')
+                    } else
+                        ($rootScope.currentRol === 'Cliente')
                     {
                         $state.go('clienteDetail', {clienteId: response.data.id}, {reload: true});
                     }
-                    
+
                 });
             };
         }

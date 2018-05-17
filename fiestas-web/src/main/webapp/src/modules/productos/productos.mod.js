@@ -18,6 +18,10 @@
                         controller: 'productosCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: false,
+                   roles: ['Admin','Proveedor','Cliente']
                 }
             }).state('productosList', {
                 url: '/list',
@@ -56,13 +60,17 @@
                 url: '/update/{productoId:int}',
                 parent: 'productos',
                 param: {
-                    productoId: null
+                    productoId: null, proveedorId : null
                 },
                 views: {
                     'detailView': {
                         templateUrl: basePath + '/new/productos.new.html',
                         controller: 'productoUpdateCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
                 }
             }).state('productoDelete', {
                 url: '/delete/{productoId:int}',
@@ -75,6 +83,27 @@
                         templateUrl: basePath + '/delete/productos.delete.html',
                         controller: 'productoDeleteCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
+                }
+            }).state('productoAll', {
+                url: '/{productoId:int}/detail',
+                parent: 'productos',
+                views: {
+                    'listView': {
+                        templateUrl: basePath + 'productos.list.html'
+                    },
+                    'detailView': {
+                        templateUrl: basePath + 'productos.detail.html',
+                        controller: 'productosAllCtrl',
+                        controllerAs: 'ctrl'
+                    }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
                 }
             });
         }

@@ -38,7 +38,7 @@
             $http.get(blogsContext).then(function (response) {
                 $scope.blogsRecords = response.data;
             });
-            
+           
             $scope.addLike = function (idBlog) {
                 
                 //Consulto el evento a editar.

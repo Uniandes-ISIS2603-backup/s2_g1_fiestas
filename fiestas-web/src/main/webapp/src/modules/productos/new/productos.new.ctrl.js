@@ -1,7 +1,5 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.constant("productosContext", "productos");
-    mod.constant("proveedoresContext", "api/proveedores");
     mod.controller('productosNewCtrl', ['$scope', '$http', 'proveedoresContext', 'productosContext', '$state', '$rootScope',
         /**
          * @ngdoc controller
@@ -35,11 +33,19 @@
             $scope.createProducto = function () {
                      
                 $http.post("api/productos" , $scope.data).then(function (response) {
-                    $http.put("api/proveedores" + '/' + $rootScope.params.proveedorId + '/' + "productos" + '/' + response.data.ID, $scope.data).then(function (response) {
-                    $state.go('productosList', {productoId: response.data.ID}, {reload: true});
-                });
-            });   
-          };
+                    console.log("POST!");
+                    console.log(response);
+                    
+                    $http.put("api/proveedores" + '/' + $rootScope.params.proveedorId + '/' + "productos" + '/' + response.data.id, $scope.data)
+                            .then(function (putResponse) {
+                        console.log("PUT");
+                        console.log(putResponse); 
+                        $rootScope.params.productoId = response.data.id;
+                        console.log($rootScope.params);
+                        return $state.go('productosList', {productoId: response.data.id}, {reload: true}).then(function (x) { console.log('done'); console.log(x); }).catch(function (err) { console.log(err); });
+                    });
+                });   
+            };
         }
     ]);
 }
