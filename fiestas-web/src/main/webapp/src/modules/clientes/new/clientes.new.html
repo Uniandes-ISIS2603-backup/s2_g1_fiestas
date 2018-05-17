@@ -68,7 +68,7 @@
                             <input ng-if="!edit" ng-show="cliente.$valid" ng-click="createCliente()" value="Crear" class="btn btn-success"/>
                             <input ng-if="edit" ng-show="cliente.$valid" ng-click="updateCliente()" value="Guardar" class="btn btn-success"/>
                             <a ng-if="currentRol === 'Admin'" class="btn btn-info" ui-sref="clientesList">Cancelar</a>
-                            <a ng-if="currentRol === 'Cliente'" class="btn btn-info" ui-sref="clienteDetail({clienteId: cliente.id})">Cancelar</a>
+                            <a ng-if="currentRol === 'Cliente'" class="btn btn-info" ui-sref="clienteDetail({clienteId: currentToken})">Cancelar</a>
                         </div>
                     </div>
                 </form>
