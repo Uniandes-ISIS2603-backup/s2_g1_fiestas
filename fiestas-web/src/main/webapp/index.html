@@ -146,7 +146,7 @@
                         <li><a ui-sref="signin"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
                     </ul>
                     <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-                        <li class="nameUser">Hola, {{currentUser}}</li>
+                        <li class="nameUser">Hola, {{currentUser}} {{currentRol}}</li>
                         <li><a ui-sref="logout">Logout</a></li>
                     </ul>
                 </div>
@@ -159,9 +159,9 @@
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
                              <div class="navbar-header">
-                                <a style="font-family: Fjalla One; font-size: 20px" class="navbar-brand"  >KULTEM</a>
+                                <a ui-sref="main" style="font-family: Fjalla One; font-size: 20px" class="navbar-brand"  >KULTEM</a>
                             </div>
-                            <ul class="nav navbar-nav">
+                            <ul ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav navbar-nav">
                                 <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="clientesList">Clientes</a></li>                          
                                 <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="proveedoresList">Proveedores</a>  </li>                    
                                 <li style="font-family: Fjalla One; font-size: 20px"><a ui-sref="serviciosList">Servicios</a>  </li>                     
@@ -176,8 +176,28 @@
                     </nav>                  
                 </div>      
             </div>
+            
+            <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">
+                <ul class="nav bd-sidenav"><li>               
+                    <li><a class="nav-link" ui-sref="proveedoresList">Mi Perfil</a></li>
+                    <li><a class="nav-link" ui-sref="proveedoresList">Mis Productos</a></li>
+                    <li><a class="nav-link" ui-sref="proveedoresList">Mis Contratos</a></li>
+                    <li><a class="nav-link" ui-sref="proveedoresList">Mis Bonos</a></li>
+                </ul>                
+            </div>
+
+            <div ng-if="isAuthenticated() && currentRol === 'Cliente'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
+                <ul class="nav bd-sidenav"><li>               
+                    <li><a class="nav-link" ui-sref="clientesList">Mi Perfil</a></li>
+                    <li><a class="nav-link" ui-sref="clientesList">Mis Eventos</a></li>
+                    <li><a class="nav-link" ui-sref="clientesList">Mis Blogs</a></li>
+                </ul>
+            </div>            
+            
             <div ui-view="mainView">    </div>            
-        </div>     
+        </div>
+        
+        
         <br>
         <br>
         <div class="navbar navbar-default navbar-fixed-bottom">
