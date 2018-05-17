@@ -40,41 +40,16 @@
                             <label for="eventoDescripcion" class="col-sm-2">Descripcion:</label>
                             <textarea id="eventoDescripcion" required ng-model="data.descripcion" class="col-sm-6"></textarea>
                         </div>
-                   </div>
-                <div class ="container-fluid">
-                    <h2>Temáticas</h2>
-                    <div class="row">
-                        <label>Search: <input ng-model="searchText"></label>
-                        <div class="col-sm-4" 
-                            data-ng-repeat="tematica in tematicasRecords |filter:search">
-                            <div class="panel-group">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">{{tematica.descripcion}}</div>
-                                    <div class="panel-body">
-                                        <h2>Productos</h2>
-                                            <div class="row">
-                                                <div class="col-sm-4" 
-                                                data-ng-repeat="producto in productosRecords |filter:search| pagination: curPage * pageSize | limitTo: pageSize">
-                                                <div class="panel-group">
-                                                    <div class="panel panel-primary">
-                                                        <div class="panel-heading">{{producto.ID}}</div>
-                                                        <div class="panel-body">
-                                                             <div class="thumb">
-                                                                <a ui-sref="productosDetail({productoId: producto.ID, proveedorId: proveedorId })"><img class="img-responsive" ng-src="{{currentProducto.imagen}}"/>}}</a>
-                                                             </div>
-                                                        </div>
-                                                        <div class="panel-footer"></div>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="panel-footer">Footer</div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label for="eventoTematica" class="col-sm-2">Tematica:</label>
+                            <select class="form-control" id="eventoTematica" ng-model="selectedTematica">
+                                <option ng-repeat="tematica in tematicas">{{tematica.nombre}}</option>
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <move-lists ng-if="edit" selected="selectedItems" available="availableItems"></move-lists>
                     <div class="form-group row">
                         <div class="form-group col-sm-4" ng-if="!evento.$valid">
                             <div class="alert alert-warning" >

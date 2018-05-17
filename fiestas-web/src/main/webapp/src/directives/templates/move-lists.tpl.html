@@ -1,13 +1,13 @@
 <div class="col-md-12">
     <div class="col-md-12 text-center">
         <fieldset>
-        <legend>Author's books</legend>
+        <legend>Productos</legend>
         </fieldset>    
     </div>
     <div class="col-md-5">
         <fieldset>
-            <legend>Selected</legend>
-            <select class="form-control" multiple ng-options="rc.name for rc in selected track by rc.id" ng-model="selectedMarked"></select>
+            <legend>Seleccionados</legend>
+            <select class="form-control" multiple ng-options="rc.descripcion for rc in selected track by rc.ID" ng-model="selectedMarked"></select>
         </fieldset>
     </div>
     <div class="col-md-2">
@@ -18,8 +18,8 @@
     </div>
     <div class="col-md-5">
         <fieldset>
-            <legend>Available</legend>
-            <select class="form-control" multiple ng-options="rc.name for rc in available track by rc.id" ng-model="availableMarked"></select>
+            <legend>Disponibles</legend>
+            <select class="form-control" multiple ng-options="rc.descripcion for rc in available track by rc.ID" ng-model="availableMarked"></select>
         </fieldset>
     </div>
 </div>
