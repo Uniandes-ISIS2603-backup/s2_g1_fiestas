@@ -21,6 +21,10 @@
                         controller: 'tematicasCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin']
                 }
             }).state('tematicasList', {
                 url: '/list',
@@ -53,6 +57,10 @@
                         templateUrl: basePath + '/new/tematicas.new.html',
                         controller: 'tematicasNewCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin']
                 }
             }).state('tematicasUpdate', {
                 url: '/update/{tematicaId:int}',
@@ -65,6 +73,10 @@
                         templateUrl: basePath + '/new/tematicas.new.html',
                         controller: 'tematicasUpdateCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin']
                 }
             }).state('tematicasDelete', {
                 url: '/delete/{tematicaId:int}',
@@ -77,6 +89,10 @@
                         templateUrl: basePath + '/delete/tematicas.delete.html',
                         controller: 'tematicasDeleteCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin']
                 }
             });
         }

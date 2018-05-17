@@ -20,7 +20,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                    roles: ['Admin','Cliente']
                 }
             }).state('clientesList', {
                 url: '/list',
@@ -46,7 +46,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                    roles: ['Admin','Cliente']
                 }
 
             }).state('clientesCreate', {
@@ -60,7 +60,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin', 'Cliente']
                 }
             }).state('clienteUpdate', {
                 url: '/update/{clienteId:int}',
@@ -76,7 +76,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'assistant']
+                    roles: ['Admin', 'Cliente']
                 }
             }).state('clienteDelete', {
                 url: '/delete/{clienteId:int}',
@@ -92,7 +92,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin','Cliente']
                 }
             });
         }

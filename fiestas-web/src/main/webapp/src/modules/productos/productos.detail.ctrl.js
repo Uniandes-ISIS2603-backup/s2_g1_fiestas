@@ -8,6 +8,7 @@
 
             if (($state.params.proveedorId !== undefined) && ($state.params.proveedorId !== null)) {
                 $scope.proveedorId = $state.params.proveedorId;
+                $scope.productoId = $state.params.productoId;
                 $http.get(proveedorContext + '/' + $state.params.proveedorId + '/' + productosContext).then(function (response) {
                    console.log(response.data);
                     $rootScope.productosRecords = response.data;

@@ -1,9 +1,11 @@
+
 package co.edu.uniandes.csw.fiestas.ejb;
 
 
 import co.edu.uniandes.csw.fiestas.entities.BlogEntity;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ClientePersistence;
@@ -101,8 +103,9 @@ public class ClienteLogic
         {
             throw new BusinessLogicException("No puede crear un cliente sin contraseña");
         }
-        usuarioLogic.createUsuario(crearUsuario(entity));
-        return persistence.create(entity);
+        ClienteEntity clienteCreado = persistence.create(entity);
+        usuarioLogic.createUsuario(crearUsuario(clienteCreado));
+        return clienteCreado;
     }
     
     public UsuarioEntity crearUsuario(ClienteEntity entity)
@@ -241,6 +244,4 @@ public class ClienteLogic
         updateCliente(cliente);
         blogLogic.deleteBlog(blogsId);
     }
-
-    
 }

@@ -14,22 +14,22 @@
  * ```
  * | ESTADO           | URL                        | VISTAS                 |
  * |------------------|----------------------------|------------------------|
- * | blogs          | /blogs                   | mainView:              |
- * |                  |                            | blogs.html           |
+ * | blogs            | /blogs                     | mainView:              |
+ * |                  |                            | blogs.html             |
  * |                  |                            |                        |
- * | blogsList      | /list                      | listView:              |
- * |                  |                            | blogs.list.html      |
+ * | blogsList        |  /list                     | listView:              |
+ * |                  |                            | blogs.list.html        |
  * |                  |                            |                        |
- * | blogDetail     | /{blogId:int}/detail     | listView:              |
- * |                  |                            | blogs.list.html      |
+ * | blogDetail       | /{blogId:int}/detail     | listView:                |
+ * |                  |                            | blogs.list.html        |
  * |                  |                            | detailView:            |
- * |                  |                            | blogs.detail.html    |
- * | blogsCreate    | /create                    | detailView: (/new)     |
- * |                  |                            | /blogs.new.html      |
- * | blogUpdate     | /update/{blogId:int}     | detailView: (/new)     |
- * |                  |                            | /blogs.new.html      |
- * | blogDelete     | /delete/{blogId:int}     | detailView: (/delete)  |
- * |                  |                            | /blog.delete.html    |
+ * |                  |                            | blogs.detail.html      |
+ * | blogsCreate    | /create                    | detailView: (/new)       |
+ * |                  |                            | /blogs.new.html        |
+ * | blogUpdate     | /update/{blogId:int}     | detailView: (/new)         |
+ * |                  |                            | /blogs.new.html        |
+ * | blogDelete     | /delete/{blogId:int}     | detailView: (/delete)      |
+ * |                  |                            | /blog.delete.html      |
  * |------------------|----------------------------|------------------------|
  *```
  */
@@ -52,6 +52,10 @@
                         controller: 'bonosCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
                 }
             }).state('bonosList', {
                 url: '/list',
@@ -86,6 +90,10 @@
                         controller: 'bonosNewCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
                 }
             }).state("bonosUpdate",{
               url: '/{bonosId:int}/update',
@@ -97,7 +105,11 @@
                         controller: 'bonosUpdateCtrl',
                         controllerAs: 'ctrl'
                     }
-                }  
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
+                }
             }).state("bonosDelete",{
               url: '/{bonosId:int}/delete',
                 parent: 'bonos',
@@ -108,7 +120,11 @@
                         controller: 'bonosDeleteCtrl',
                         controllerAs: 'ctrl'
                     }
-                }  
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor']
+                }
             });
         }
     ]);

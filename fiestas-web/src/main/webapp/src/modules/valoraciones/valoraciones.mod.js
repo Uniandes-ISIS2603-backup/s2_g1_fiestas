@@ -52,6 +52,10 @@
                         controller: 'valoracionesCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: false,
+                   roles: []
                 }
             }).state('valoracionesList', {
                 url: '/list',
@@ -78,6 +82,10 @@
                         controllerAs: 'ctrl'
                     }
                 }
+                ,data: {
+                    requireLogin: true,
+                   roles: ['Admin','Cliente']
+                }
             }).state('valoracionUpdate', {
                 url: '/update/{valoracionId:int}',
                 parent: 'valoraciones',
@@ -89,10 +97,9 @@
                         templateUrl: basePath + '/new/valoraciones.new.html',
                         controller: 'valoracionUpdateCtrl'
                     }
-                },
-                data: {
+                },data: {
                     requireLogin: true,
-                    roles: ['admin', 'assistant']
+                   roles: ['Admin','Cliente']
                 }
             }).state('valoracionDelete', {
                 url: '/delete/{valoracionId:int}',
@@ -105,10 +112,9 @@
                         templateUrl: basePath + '/delete/valoraciones.delete.html',
                         controller: 'valoracionDeleteCtrl'
                     }
-                },
-                data: {
+                },data: {
                     requireLogin: true,
-                    roles: ['admin']
+                   roles: ['Admin','Cliente']
                 }
             });
         }

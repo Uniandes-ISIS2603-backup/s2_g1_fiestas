@@ -20,7 +20,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','proveedor']
+                    roles: ['Admin','Proveedor']
                 }
             }).state('proveedoresList', {
                 url: '/list',
@@ -46,7 +46,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','proveedor']
+                    roles: ['Admin','Proveedor']
                 }
 
             }).state('proveedoresCreate', {
@@ -60,7 +60,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin']
                 }
             }).state('proveedorUpdate', {
                 url: '/update/{proveedorId:int}',
@@ -76,7 +76,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'assistant']
+                    roles: ['Admin', 'Proveedor']
                 }
             }).state('proveedorDelete', {
                 url: '/delete/{proveedorId:int}',
@@ -92,7 +92,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin','Proveedor']
                 }
             });
         }
