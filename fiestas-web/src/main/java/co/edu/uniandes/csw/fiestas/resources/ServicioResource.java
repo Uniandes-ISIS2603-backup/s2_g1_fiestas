@@ -293,7 +293,7 @@ public class ServicioResource {
      */
     @DELETE
     @Path("{servicioId: \\d+}/productos/{productoId: \\d+}")
-    public void removeProducto(@PathParam("pservicioId") Long servicioId, @PathParam("productoId") Long productoId)
+    public void removeProducto(@PathParam("pservicioId") Long servicioId, @PathParam("productoId") Long productoId) throws BusinessLogicException
     {
         logic.removeProducto(servicioId, productoId);
         
