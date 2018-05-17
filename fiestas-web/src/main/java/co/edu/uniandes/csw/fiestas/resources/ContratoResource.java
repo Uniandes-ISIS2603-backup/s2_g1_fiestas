@@ -143,14 +143,7 @@ public class ContratoResource {
             throw new BusinessLogicException("No existe el contrato a eliminar.");
         logic.deleteContrato(id);
     }
-    
-     public List<ContratoDetailDTO> getContratos() {
-        return listEntity2DTO(logic.getContratos());
-    }
-     
-    public List<ContratoDetailDTO> getContratos() {
-        return listEntity2DTO(logic.getContratos());
-    }
+
    
 } 
     

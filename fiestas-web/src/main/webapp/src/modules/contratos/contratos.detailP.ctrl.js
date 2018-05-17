@@ -2,8 +2,9 @@
     var mod = ng.module("contratoModule");
     mod.constant("contratoContext", "contratos");
     mod.constant("proveedorContext", "api/proveedores")
-    mod.controller('contratoDetailCtrl', ['$scope', '$http', 'contratoContext', '$state', '$filter',
-        function ($scope, $http, contratoContext, $state, $filter) {
+    mod.constant("eventoContext", "api/eventos");
+    mod.controller('contratoDetailCtrl', ['$scope', '$http', 'contratoContext', 'proveedorContext', 'eventoContext' , '$state', '$filter',
+        function ($scope, $http, contratoContext,  $state, $filter) {
             /**
              * @ngdoc controller
              * @name contratos.controller:contratoDetailCtrl
@@ -33,10 +34,17 @@
                  * del contrato o API donde se puede consultar.
                  */
                 $http.get(contratoContext).then(function (response) {
+                    if (($state.params.proveedorId !== undefined) && ($state.params.proveedorId !== null))
+                    {$scope.proveedorId = $state.params.proveedorId;
                     
+                    $http.get(proveedorContext + '/' + $state.params.proveedorId + '/' + productosContext).then(function (response)
+                    {
                     $scope.contratosRecords = response.data;
                     $scope.currentContrato = $filter('filter')($scope.contratosRecords, {id: $state.params.contratoId}, true)[0];
                     $scope.horariosRecords=response.data.horarios;
+                    }
+                    
+                    }
                     
                 });
             }

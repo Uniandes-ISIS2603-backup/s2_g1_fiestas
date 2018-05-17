@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("contratoModule");
     mod.constant("contratoContextE", "contratos");
-    mod.constant("eventoContext", "api/eventos");
+    
     mod.controller('contratoDetailCtrl', ['$scope', '$http', 'contratoContext', '$state', '$filter',
         function ($scope, $http, contratoContextE, $state, $filter) {
             /**
