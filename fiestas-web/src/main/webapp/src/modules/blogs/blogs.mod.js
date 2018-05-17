@@ -110,7 +110,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'cliente','proveedor']
+                    roles: ['Admin', 'Cliente','Proveedor']
                 }
 
             }).state('blogsUpdateLike', {
@@ -129,7 +129,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'cliente','proveedor']
+                    roles: ['Admin', 'Cliente','Proveedor']
                 }
 
             }).state('blogsDelete', {
@@ -145,7 +145,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'cliente','proveedor']
+                   roles: ['Admin', 'Cliente','Proveedor']
                 }
 
             });

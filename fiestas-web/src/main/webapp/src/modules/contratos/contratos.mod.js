@@ -15,22 +15,22 @@
  * ```
  * | ESTADO           | URL                        | VISTAS                 |
  * |------------------|----------------------------|------------------------|
- * | contratos          | /contratos                   | mainView:              |
- * |                  |                            | contratos.html           |
+ * | contratos        | /contratos                 | mainView:              |
+ * |                  |                            | contratos.html         |
  * |                  |                            |                        |
- * | contratosList      | /list                      | listView:              |
- * |                  |                            | contratos.list.html      |
+ * | contratosList    | /list                      | listView:              |
+ * |                  |                            | contratos.list.html    |
  * |                  |                            |                        |
- * | contratoDetail     | /{contratoId:int}/detail     | listView:              |
- * |                  |                            | contratos.list.html      |
+ * | contratoDetail   | /{contratoId:int}/detail   | listView:              |
+ * |                  |                            | contratos.list.html    |
  * |                  |                            | detailView:            |
- * |                  |                            | contratos.detail.html    |
- * | contratosCreate    | /create                    | detailView: (/new)     |
- * |                  |                            | /contratos.new.html      |
- * | contratoUpdate     | /update/{contratoId:int}     | detailView: (/new)     |
- * |                  |                            | /contratos.new.html      |
- * | contratoDelete     | /delete/{contratoId:int}     | detailView: (/delete)  |
- * |                  |                            | /contrato.delete.html    |
+ * |                  |                            | contratos.detail.html  |
+ * | contratosCreate  | /create                    | detailView: (/new)     |
+ * |                  |                            | /contratos.new.html    |
+ * | contratoUpdate   | /update/{contratoId:int}   | detailView: (/new)     |
+ * |                  |                            | /contratos.new.html    |
+ * | contratoDelete   | /delete/{contratoId:int}   | detailView: (/delete)  |
+ * |                  |                            | /contrato.delete.html  |
  * |------------------|----------------------------|------------------------|
  *```
  */
@@ -52,6 +52,10 @@
                         controller: 'contratoCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor','Cliente']
                 }
             }).state('contratosList', {
                 url: '/list',
@@ -83,6 +87,10 @@
                         templateUrl: basePath + '/new/contratos.new.html',
                         controller: 'contratoNewCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor','Cliente']
                 }
             }).state('contratoUpdate', {
                 url: '/update/{contratoId:int}',
@@ -95,6 +103,10 @@
                         templateUrl: basePath + '/new/contratos.new.html',
                         controller: 'contratoUpdateCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor','Cliente']
                 }
             }).state('contratoDelete', {
                 url: '/delete/{contratoId:int}',
@@ -107,6 +119,10 @@
                         templateUrl: basePath + '/delete/contratos.delete.html',
                         controller: 'contratoDeleteCtrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor','Cliente']
                 }
             });
         }]);

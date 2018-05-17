@@ -55,7 +55,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                    roles: ['Admin','Cliente']
                 }
             }).state('eventosList', {
                 url: '/list',
@@ -92,7 +92,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                    roles: ['Admin','Cliente']
                 }
             }).state('eventoUpdate', {
                 url: '/update/{eventoId:int}',
@@ -124,7 +124,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                    roles: ['Admin','Cliente']
                 }
             });
         }]);

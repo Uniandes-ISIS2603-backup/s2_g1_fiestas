@@ -91,7 +91,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin']
                 }
             }).state('servicioUpdate', {
                 url: '/update/{servicioId:int}',
@@ -107,7 +107,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin', 'assistant']
+                    roles: ['Admin']
                 }
             }).state('servicioDelete', {
                 url: '/delete/{servicioId:int}',
@@ -123,7 +123,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                    roles: ['Admin']
                 }
             });
         }
