@@ -75,6 +75,9 @@ public class ProductoPersistence
         em.remove(entity);
     }
     
+    
+    
+    
     public List<ProductoEntity> findByProveedor(Long proveedorid)
     {
         TypedQuery<ProductoEntity> q = em.createQuery("select p from ProductoEntity p where (p.proveedor.id = :proveedorid)", ProductoEntity.class);

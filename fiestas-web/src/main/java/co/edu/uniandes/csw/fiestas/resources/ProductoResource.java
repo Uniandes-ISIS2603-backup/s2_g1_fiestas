@@ -76,7 +76,7 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}")
-    public ProductoDetailDTO getProducto(@PathParam("idProveedor") Long id)
+    public ProductoDetailDTO getProducto(@PathParam("id") Long id)
     {
       return new ProductoDetailDTO(productoLogic.getProducto(id));
     }
@@ -130,10 +130,10 @@ public class ProductoResource
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public ProductoDetailDTO createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
-        
-        productoLogic.createProducto(producto.toEntity());
-        return producto;
+    public ProductoEntity createProducto(ProductoDetailDTO producto) throws BusinessLogicException{
+        ProductoEntity productoE = producto.toEntity();
+        productoLogic.createProducto(productoE);
+        return productoE;
     }
     
     /**
@@ -158,10 +158,11 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}")
-    public ProductoDetailDTO updateProducto(@PathParam("productoId") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
+    public ProductoEntity updateProducto(@PathParam("productoId") Long id, ProductoDetailDTO producto) throws BusinessLogicException{
          
-        productoLogic.updateProducto(producto.toEntity());
-        return producto;
+        ProductoEntity productoE = producto.toEntity();
+        productoLogic.updateProducto(productoE);
+        return productoE;
     }
     
     /**
@@ -180,11 +181,12 @@ public class ProductoResource
      */
     @DELETE
     @Produces("application/json")
-    @Consumes("application/json")
     @Path("{id: \\d+}")
-    public void deleteProducto(@PathParam("id") Long id)
+    public ProductoEntity deleteProducto(@PathParam("id") Long id) throws BusinessLogicException
     {
+        ProductoEntity producto = productoLogic.getProducto(id);
         productoLogic.deleteProducto(id);
+        return producto;
     }   
     
     
