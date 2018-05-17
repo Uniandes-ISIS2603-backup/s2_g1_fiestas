@@ -31,7 +31,7 @@ import javax.ws.rs.WebApplicationException;
  * </pre>
  * @author mc.gonzalez15  
  */
-@Path("contratos")
+@Path("proveedores/{idProveedor: \\d+}/contratos")
 @Produces("application/json")
 
 public class ContratoResource {
