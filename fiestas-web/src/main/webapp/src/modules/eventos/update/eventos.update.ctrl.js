@@ -49,6 +49,7 @@
                 $scope.pagos = evento.pagos;
                 $scope.data.cliente = evento.cliente;
                 $scope.data.tematica = evento.tematica;
+                $scope.selectedTematica= evento.tematica.nombre;
             });
 
             $http.get('api/tematicas').then(function (response) {
@@ -69,6 +70,12 @@
              * $scope.
              */
             $scope.updateEvento = function () {
+                for (i = 0; i < $scope.tematicas.length; i++) {
+                    if ($scope.tematicas[i].nombre === $scope.selectedTematica) {
+                        $scope.data.tematica = $scope.tematicas[i];
+                        break;
+                    }
+                }
                 $http.put(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + idEvento, $scope.data).then(function (response) {
                     //Evento created successfully
                     for (i = 0; i < $scope.pagos.length; i++) {

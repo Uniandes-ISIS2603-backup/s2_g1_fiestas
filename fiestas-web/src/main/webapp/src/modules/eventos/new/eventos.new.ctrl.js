@@ -42,9 +42,8 @@
              * @param {Object} autor Objeto con el nuevo evento.
              */
             $scope.createEvento = function () {
-                console.log($scope.selectedTematica)
                 for (i = 0; i < $scope.tematicas.length; i++) {
-                    if ($scope.tematicas[i].descripcion === $scope.selectedTematica) {
+                    if ($scope.tematicas[i].nombre === $scope.selectedTematica) {
                         $scope.data.tematica = $scope.tematicas[i];
                         break;
                     }
