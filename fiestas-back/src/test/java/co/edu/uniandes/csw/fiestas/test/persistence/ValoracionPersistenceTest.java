@@ -213,21 +213,5 @@ public class ValoracionPersistenceTest {
         Assert.assertEquals(newEntity.getCalificacion(), resp.getCalificacion());
     }
     
-    /**
-     * Prueba para obtener valoraciones de un proveedor.
-     *
-     *
-     */
-    @Test
-    public void getValoracionesPorProveedorTest() {
-        ProductoEntity pE = pData.get(0);
-        List<ValoracionEntity>listaVal= valoracionPersistence.findValoracionesPorProveedor(pE.getId());
-        Assert.assertEquals(listaVal.size(),data.size());
-        for(ValoracionEntity val : data)
-        {
-            Assert.assertTrue(listaVal.contains(val));
-        }
-    }
-    
 }
 

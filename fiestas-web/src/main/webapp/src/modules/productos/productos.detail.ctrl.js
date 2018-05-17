@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("productosModule");
     mod.constant("productosContext", "productos");
-    mod.constant("proveedorContext", "api/proveedores")
+    mod.constant("proveedorContext", "api/proveedores");
     mod.controller('productosDetailCtrl', ['$scope', '$http', 'productosContext','proveedoresContext', '$state', '$filter','$rootScope',
         function ($scope, $http, productosContext, proveedorContext, $state, $filter, $rootScope) {
 

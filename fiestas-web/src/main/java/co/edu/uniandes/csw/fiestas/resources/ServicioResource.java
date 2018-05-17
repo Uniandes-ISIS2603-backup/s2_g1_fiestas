@@ -1,14 +1,16 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package co.edu.uniandes.csw.fiestas.resources;
 
+import co.edu.uniandes.csw.fiestas.dtos.ProductoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ProveedorDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ServicioDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.ValoracionDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.ServicioLogic;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ProveedorEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
@@ -48,14 +50,14 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class ServicioResource {
-
+    
     public ServicioResource() {
         //constructor vacio
     }
-
+    
     @Inject
     private ServicioLogic logic;
-
+    
     /**
      * <h1>POST /servicio : Crear un servicio.</h1>
      *
@@ -90,7 +92,7 @@ public class ServicioResource {
         logic.createServicio(servicio.toEntity());
         return servicio;
     }
-
+    
     /**
      * <h1>GET /servicios : Obtener todos los servicios.</h1>
      *
@@ -108,7 +110,7 @@ public class ServicioResource {
     public List<ServicioDetailDTO> getServicios() {
         return listEntity2DTO(logic.getServicios());
     }
-
+    
     /**
      * Convierte una lista de ServicioiEntity a una lista de ServicioDetailDTO.
      *
@@ -123,7 +125,7 @@ public class ServicioResource {
         }
         return list;
     }
-
+    
     /**
      * <h1>GET /servicios/{id} : Obtener servicio por id.</h1>
      *
@@ -152,7 +154,7 @@ public class ServicioResource {
         }
         return new ServicioDetailDTO(e);
     }
-
+    
     /**
      * <h1>PUT /servicio/{id} : Actualizar servicio por id.</h1>
      *
@@ -187,7 +189,7 @@ public class ServicioResource {
         }
         return new ServicioDetailDTO(logic.updateServicio(entidad));
     }
-
+    
     /**
      * <h1>DELETE /servicio/{id} : Elimina un servicio por id.</h1>
      *
@@ -215,4 +217,130 @@ public class ServicioResource {
         }
         logic.deleteServicio(id);
     }
+    
+    
+    
+    //Productos
+    /**
+     * <h1>GET /{servicioId}/productos/ : Obtener todos los productos de un
+     * servicio.</h1>
+     *
+     * <pre>Busca y devuelve todos los productos de un servicio.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve todos los productos del servicio.</code>
+     * </pre>
+     *
+     * @param servicioId Identificador del servicio que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSONArray {@link ProductoDetailDTO} - Los productos encontrados
+     * en el servicio. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    @Path("{servicioId: \\d+}/productos")
+    public List<ProductoDetailDTO> getProductos(@PathParam("servicioId") Long servicioId)
+    {
+        return productosListEntity2DTO(logic.listProductos(servicioId));
+    }
+    
+    /**
+     * <h1>POST /{servicioId}/productos/{productosId} : Guarda un producto
+     * dentro del servicio.</h1>
+     *
+     * <pre> Guarda un producto dentro de un servicio con la informacion que
+     * recibe el la URL. Se devuelve el producto que se guarda en el servicio.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó el nuevo producto .
+     * </code>
+     * </pre>
+     *
+     * @param servicioId Identificador del servicio que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @param productoId Identificador del producto que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link ProductoDetailDTO} - El producto guardado en el
+     * servicio.
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException si
+     * hay errores de logica
+     */
+    @PUT
+    @Path("{servicioId: \\d+}/productos/{productosId: \\d+}")
+    public ProductoDetailDTO addProducto(@PathParam("servicioId") Long servicioId, @PathParam("productosId") Long productoId) throws BusinessLogicException
+    {
+        return new ProductoDetailDTO(logic.addProducto(servicioId, productoId));
+    }
+    
+    /**
+     * <h1>DELETE /{servicioId}/productos/{productosId} : Elimina un producto
+     * dentro del servicio.</h1>
+     *
+     * <pre> Elimina la referencia del producto asociado al ID dentro del servicio
+     * con la informacion que recibe el la URL.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Se eliminó la referencia del producto.
+     * </code>
+     * </pre>
+     *
+     * @param servicioId Identificador del servicio que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @param productoId Identificador del producto que se desea guardar. Este
+     * debe ser una cadena de dígitos.
+     */
+    @DELETE
+    @Path("{servicioId: \\d+}/productos/{productoId: \\d+}")
+    public void removeProducto(@PathParam("pservicioId") Long servicioId, @PathParam("productoId") Long productoId)
+    {
+        logic.removeProducto(servicioId, productoId);
+        
+    }
+    
+    /**
+     * <h1>GET /{servicioId}/productos/{productosId} : Obtener producto por id
+     * del servicio por id.</h1>
+     *
+     * <pre>Busca el producto con el id asociado dentro del servicio con id asociado.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Devuelve el producto correspondiente al id.
+     * </code>
+     * <code style="color: #c7254e; background-color: #f9f2f4;">
+     * 404 Not Found No existe un producto con el id dado dentro del servicio.
+     * </code>
+     * </pre>
+     *
+     * @param servicioId Identificador del servicio que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @param productosId Identificador del producto que se esta buscando. Este
+     * debe ser una cadena de dígitos.
+     * @return JSON {@link ProductoDetailDTO} - El producto buscado
+     */
+    @GET
+    @Path("{servicioId: \\d+}/productos/{productosId: \\d+}")
+    public ProductoDetailDTO getProducto(@PathParam("servicioId") Long servicioId, @PathParam("productosId") Long productosId)
+    {
+            return new ProductoDetailDTO(logic.getProducto(servicioId, productosId));
+        
+    }
+    
+    /**
+     * Convierte una lista de ProductoEntity a una lista de ProductoDetailDTO.
+     *
+     * @param entityList Lista de ProductoEntity a convertir.
+     * @return Lista de ProductoDetailDTO convertida.
+     *
+     */
+    private List<ProductoDetailDTO> productosListEntity2DTO(List<ProductoEntity> entityList) {
+        List<ProductoDetailDTO> list = new ArrayList<>();
+        for (ProductoEntity entity : entityList) {
+            list.add(new ProductoDetailDTO(entity));
+        }
+        return list;
+    }
+
 }

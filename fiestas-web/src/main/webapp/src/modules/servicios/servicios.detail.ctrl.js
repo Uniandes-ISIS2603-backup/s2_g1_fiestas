@@ -1,7 +1,8 @@
 (function (ng) {
     var mod = ng.module("servicioModule");
     mod.constant("servicioContext", "api/servicios");
-    mod.controller('servicioDetailCtrl', ['$scope', '$http', 'servicioContext', '$state', '$filter',
+    mod.constant("productosContext", "api/servicio");
+    mod.controller('servicioDetailCtrl', ['$scope', '$http', 'servicioContext', 'productosContext', '$state', '$filter', '$rootScope',
         /**
          * @ngdoc controller
          * @name servicios.controller:servicioDetailCtrl
@@ -19,24 +20,16 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, servicioContext, $state, $filter) {
-                if (($state.params.servicioId !== undefined) && ($state.params.servicioId !== null)) {
-                 /** 
-                 * @ngdoc function
-                 * @name getServicioID
-                 * @methodOf servicios.controller:servicioDetailCtrl
-                 * @description
-                 * Esta función utiliza el protocolo HTTP para obtener el recurso 
-                 * donde se encuentra el servicio por ID en formato JSON.
-                 * @param {String} URL Dirección donde se encuentra el recurso
-                 * del servicio o API donde se puede consultar.
-                 */
-                $http.get(servicioContext).then(function (response) {
-                    $scope.serviciosRecords = response.data;
-                    $scope.currentServicio = $filter('filter')($scope.serviciosRecords, {id: $state.params.servicioId}, true)[0];
+        function ($scope, $http, servicioContext, productosContext, $state, $filter, $rootScope) {
+            console.log($state.params.productoId);
+            if (($state.params.productoId !== undefined) && ($state.params.productoId !== null)) {
+                $scope.productoId = $state.params.productoId;
+                $http.get(productosContext + '/' + $state.params.productoId + '/' + servicioContext).then(function (response) {
+                    $rootScope.serviciosRecords = response.data;
+                    $rootScope.currentServicio = $filter('filter')($rootScope.serviciosRecords, {ID: $state.params.servicioId}, true)[0];
                 });
             }
         }
     ]);
 }
-)(window.angular);
+        )(window.angular);
