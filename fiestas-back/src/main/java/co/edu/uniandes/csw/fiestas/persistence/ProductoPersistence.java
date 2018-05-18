@@ -88,7 +88,7 @@ public class ProductoPersistence
     
     public List<ValoracionEntity> findValoracionesPorPrducto(long idProducto)
       {
-        Query q = em.createNativeQuery("select valoraciones_id from productoEntity_valoracionEntity where productoEntity_id="+idProducto);
+        Query q = em.createNativeQuery("select id from ValoracionEntity where producto_id="+idProducto);
         List<Long>lista=q.getResultList();
         List<ValoracionEntity> listVal = new ArrayList<>();
         for(long id: lista){
