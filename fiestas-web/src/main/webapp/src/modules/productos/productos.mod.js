@@ -90,11 +90,7 @@
                 }
             }).state('productoAll', {
                 url: '/{productoId:int}/detail',
-                parent: 'productos',
                 views: {
-                    'listView': {
-                        templateUrl: basePath + 'productos.list.html'
-                    },
                     'detailView': {
                         templateUrl: basePath + 'productos.detail.html',
                         controller: 'productosAllCtrl',

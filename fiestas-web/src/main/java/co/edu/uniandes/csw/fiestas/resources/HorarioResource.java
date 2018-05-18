@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.fiestas.resources;
-import co.edu.uniandes.csw.fiestas.dtos.ContratoDTO;
 import co.edu.uniandes.csw.fiestas.dtos.HorarioDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.HorarioLogic;
 import co.edu.uniandes.csw.fiestas.entities.HorarioEntity;

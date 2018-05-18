@@ -26,6 +26,7 @@ public class ServicioEntity extends BaseEntity implements Serializable {
     private String nombre;
     private String descripcion;
     private String tipo;
+    private String imagen;
 
     /**
      * Obtiene el atributo nombre
@@ -67,6 +68,20 @@ public class ServicioEntity extends BaseEntity implements Serializable {
 
     public void setProductos(List<ProductoEntity> productos) {
         this.productos = productos;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
 }

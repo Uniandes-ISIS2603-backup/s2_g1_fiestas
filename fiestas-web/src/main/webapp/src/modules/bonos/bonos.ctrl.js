@@ -1,4 +1,4 @@
-(function (ng) {
+(function (ng) { 
     var mod = ng.module("bonosModule");
     mod.constant("bonosContext", "api/bonos");
     mod.controller('bonosCtrl', ['$scope', '$http', 'bonosContext',
@@ -41,4 +41,4 @@
         }
     ]);
 }
-)(window.angular);
+        )(window.angular);
