@@ -35,16 +35,6 @@
                         controller: 'mainCtrl'
                     }
                 }
-            }).$stateProvider.state('contactanos', {
-                url: '/contacto',
-                data: {
-                    requireLogin: false
-                },
-                views: {
-                    'mainView': {
-                        templateUrl: basePath + 'contactanos.html'
-                    }
-                }
             });
         }
     ]);
