@@ -16,7 +16,7 @@ body
 }
 
 .mainHeader {
-    padding: 20px;
+   
     background-color:  whitesmoke;
 }
 
@@ -26,9 +26,12 @@ body
 }
 
 .mainTitle {
-    font-variant: small-caps;
-    color: whitesmoke;
-    font-family: 'Century Gothic',sans-serif;
+    color:#000;
+    font-family: 'Anton';
+    
+
+
+        
 }
 
 .subTitle{
@@ -36,11 +39,33 @@ body
     color: whitesmoke;
 }
 
-.separator{
-    font-size: 30px;
-    font-family: 'Roboto', sans-serif;
-    color: white;
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
+
+.vertical-menu {
+    width: 200px; 
+}
+
+.vertical-menu a {
+    background-color: #eee; 
+    color: black;
+    display: block; 
+    padding: 12px; 
+   
+}
+
+.vertical-menu a:hover {
+    background-color: #245569; 
+    color: black;
+    text-decoration: none;
+}
+
+
 
 
 

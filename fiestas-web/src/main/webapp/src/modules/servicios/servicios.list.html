@@ -1,29 +1,28 @@
 <div class="container-fluid">
-    <div class="col-md-4">
-        <table class="table table-hover">
-            <thead>
-                <tr> 
-                    <th>Nombre</th>
-                    
-            </thead>
-            <tbody>
-                <tr ng-repeat="servicio in serviciosRecords">
-                    <td id="{{$index}}-name"><a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.nombre}}</a></td>
-                    <td id="{{$index}}-actions">
-                        <a id="{{$index}}-edit" class="btn btn-default btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioUpdate({servicioId: servicio.id})"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioDelete({servicioId: servicio.id})"><span class="glyphicon glyphicon-trash"></span></a>
-                    </td>
-                </tr>
-                
-            </tbody>
-        </table>
-        <body>
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                            <a class="btn btn-info" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Servicio</a>
-                        </div>
-                    </div>
-        </body>
+    <div class="row">
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <a class="btn btn-info" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioCreate"><span class="glyphicon glyphicon-plus-sign"></span> Crear Servicio</a>
+            </div>
+        </div>
+        
+        <br>
+        
+        <div class="col-md-2" ng-repeat="servicio in serviciosRecords">
+
+            <a ui-sref="servicioDetail({servicioId: servicio.id})">                    
+                <img class="img-responsive" ng-src='{{servicio.imagen}}' alt="{{servicio.nombre}}" />                  
+            </a>
+            
+            <center>
+                <h5 class = "center">{{servicio.nombre}}</h5>
+                <div id="{{$index}}-actions">
+                    <a id="{{$index}}-edit" class="btn btn-default btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioUpdate({servicioId: servicio.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioDelete({servicioId: servicio.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+            </center>
+        </div>       
+
     </div>
 </div>
-
