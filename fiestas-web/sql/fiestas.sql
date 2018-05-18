@@ -85,3 +85,4 @@ insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)
 insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10092, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1, 10112,10022, 'https://lock-clock.com/sites/default/files/games/18839768_451712511831072_8751551293307569149_o.jpg');
 insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10093, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1, 10113,10022, 'https://diginights.com/uploads/images/event/2018/03/31/2018-03-31-bad-taste-party-bierhuebeli/flyer_image-default-1.jpg');
 
+

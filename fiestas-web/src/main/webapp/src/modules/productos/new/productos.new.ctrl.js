@@ -43,7 +43,7 @@
                         console.log(putResponse); 
                         $rootScope.productoId = response.data.id;
                         console.log($state);    
-                        $state.go('productosList', {productoId: response.data.id}, {reload: true});
+                        $state.go('valoracionesList', {productoId: response.data.id}, {reload: true});
                     });
                 });   
             };

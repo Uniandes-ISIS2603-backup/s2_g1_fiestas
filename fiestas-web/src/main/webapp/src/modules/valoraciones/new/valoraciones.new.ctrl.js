@@ -25,7 +25,7 @@
             $rootScope.edit = false;
             
             $scope.data = {};
-            
+            var idProducto = $state.params.productoId;
             /**
              * @ngdoc function
              * @name createEditorial
@@ -37,7 +37,7 @@
             
             $scope.createValoracion = function () {
                 $http.post(valoracionContext, $scope.data).then(function (response) {
-                    $state.go('valoracionesList', {valoracionId: response.data.id}, {reload: true});
+                    $state.go('valoracionesList', {productoId: idProducto}, {reload: true});
                 });
             };
         }

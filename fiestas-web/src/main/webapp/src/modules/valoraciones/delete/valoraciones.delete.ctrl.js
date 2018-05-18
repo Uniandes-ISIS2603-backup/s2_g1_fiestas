@@ -19,6 +19,7 @@
          */
         function ($scope, $http, valoracionesContext, $state) {
             var idValoracion = $state.params.valoracionId;
+            var idProducto = $state.params.productoId;
             /**
              * @ngdoc function
              * @name deleteValoracion
@@ -29,7 +30,7 @@
              */
             $scope.deleteValoracion = function () {
                 $http.delete(valoracionesContext + '/' + idValoracion, {}).then(function (response) {
-                    $state.go('valoracionesList', {valoracionId: response.data.id}, {reload: true});
+                    $state.go('valoracionesList', {productoId: idProducto}, {reload: true});
                 });
             };
         }
