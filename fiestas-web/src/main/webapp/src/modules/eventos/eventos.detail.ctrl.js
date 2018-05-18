@@ -38,8 +38,10 @@
                     $scope.eventosRecords = response.data;
                     $scope.currentEvento = $filter('filter')($scope.eventosRecords, {id: $state.params.eventoId}, true)[0];
                     $scope.pagosRecords=response.data.pagos;
-                    $scope.contratosRecords=response.data.contratos;
-                    
+                    $http.get(clientesContext+ '/' + $state.params.clienteId + '/' +eventoContext+ '/'+$state.params.eventoId+'/contratos').then(function (response) {
+                         $scope.contratosRecords=response.data;
+                         console.log(response.data)
+                    });
                 });
             }
         }
