@@ -40,12 +40,12 @@
              */
             if($rootScope.currentToken !== null)
             {
-            $http.get("api/proveedores" + '/' + $rootScope.currentToken + '/' + "contratos").then(function (response) {
-                $scope.contratosRecords = response.data;
-               
-            });
-        }
+                $http.get("api/proveedores" + '/' + $rootScope.currentToken + '/' + "contratos").then(function (response) {
+                    $scope.contratosRecords = response.data;
+                    
+                });
+            }
         }
     ]);
 }
-)(window.angular);
+        )(window.angular);
