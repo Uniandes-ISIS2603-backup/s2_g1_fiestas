@@ -2,14 +2,12 @@
     <div class="panel-body">
         <div class="row">
             <div ng-if="isAuthenticated() && currentRol === 'Proveedor'" class="col-6 col-md-3 col-xl-2 bd-sidebar">                
-
                 <div class="vertical-menu">               
                     <b><a  ui-sref="proveedorDetail({proveedorId: currentProveedor.id})">Mi Perfil</a>
                     <a  ui-sref="productosList({proveedorId: currentProveedor.id})">Mis Productos</a>
                     <a  ui-sref="contratosList({proveedorId: currentProveedor.id})">Mis Contratos</a>
-                    <a  ui-sref="bonosListPro({proveedorId: currentProveedor.id})">Mis Bonos</a> </b>
+                    <a  ui-sref="bonosList({proveedorId: currentProveedor.id})">Mis Bonos</a> </b>
                 </div>
-
             </div> 
             <div class="col-md-3">
                 <div class="thumb">
@@ -50,7 +48,7 @@
                     
                     <hr>
                     <ul ng-if="isAuthenticated() && currentRol === 'Admin' "class="nav nav-pills">
-                        <li role="presentation" class="active"> <a  ui-sref="productosListProv({proveedorId: currentProveedor.id})">Productos</a></li>
+                        <li role="presentation" class="active"> <a  ui-sref="productosList({proveedorId: currentProveedor.id})">Productos</a></li>
                     </ul>
   
                 
