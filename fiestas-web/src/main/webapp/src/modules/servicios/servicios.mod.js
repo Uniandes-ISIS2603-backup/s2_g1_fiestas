@@ -111,7 +111,7 @@
                 }
             }).state('servicioDelete', {
                 url: '/delete/{servicioId:int}',
-                parent: 'servicio',
+                parent: 'servicios',
                 param: {
                     servicioId: null
                 },

@@ -75,6 +75,9 @@
             }).state('valoracionCreate', {
                 url: '/create',
                 parent: 'valoraciones',
+                param: {
+                    productoId: null
+                },
                 views: {
                     'listView': {
                         templateUrl: basePath + '/new/valoraciones.new.html',
@@ -89,8 +92,9 @@
             }).state('valoracionUpdate', {
                 url: '/update/{valoracionId:int}',
                 parent: 'valoraciones',
-                param: {
-                    valoracionId: null
+                params: {
+                    valoracionId: null,
+                    productoId: null
                 },
                 views: {
                     'listView': {

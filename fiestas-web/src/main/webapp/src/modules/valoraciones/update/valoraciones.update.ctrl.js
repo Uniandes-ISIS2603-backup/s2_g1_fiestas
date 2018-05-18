@@ -33,6 +33,7 @@
             $scope.availableItems = [];
 
             var idValoracion = $state.params.valoracionId;
+            var idProducto = $state.params.productoId;
 
             //Consulto el autor a editar.
             $http.get(valoracionesContext + '/' + idValoracion).then(function (response) {
@@ -53,7 +54,7 @@
                 $http.put(valoracionesContext + "/" + idValoracion, $scope.data).then(function (response) {
                     //Valoracion created successfully
                     console.log($scope.data)
-                    $state.go('valoracionesList', {valoracionId: response.data.id}, {reload: true});
+                    $state.go('valoracionesList', {productoId: idProducto}, {reload: true});
                 });
             };
         }
