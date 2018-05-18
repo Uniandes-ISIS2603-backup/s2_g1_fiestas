@@ -58,7 +58,7 @@
                     </ul>
                     
                     <hr>
-                    <ul class="nav nav-pills">
+                    <ul ng-if="isAuthenticated() && currentRol === 'Admin'" class="nav nav-pills">
                       <li role="presentation" class="active"> <a ui-sref="bonosListPro({proveedorId: currentProveedor.id})">Bonos</a></li>
                     </ul>
                 
