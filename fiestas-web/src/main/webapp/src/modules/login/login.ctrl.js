@@ -29,8 +29,6 @@
                 $scope.users = response.data;
             });
             
-            console.log($scope.users);
-            
             /**
              * @ngdoc function
              * @name autenticar
@@ -47,7 +45,6 @@
                         if ($scope.users[item].login === response.data.login && $scope.users[item].contrasena === response.data.contrasena) {
                             flag = true;
                             $scope.user = $scope.users[item];
-                            console.log($scope.user);
                             if ($scope.user.rol === "Cliente") {
                                 $state.go('clienteDetail', {clienteId: $scope.user.token}, {reload: true});
                             } else if ($scope.user.rol === "Proveedor") {
