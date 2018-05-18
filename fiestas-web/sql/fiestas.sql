@@ -26,9 +26,9 @@ insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direc
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10113, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya', 'asd123');
 
 
-insert into ServicioEntity(id, nombre, descripcion, tipo) values(10019,'Carrito de perros calientes', 'Servicio de perritos calientes con personal incluido por 5 horas','Comida');
-insert into ServicioEntity(id, nombre, descripcion, tipo) values(10020,'Show de magia para niños','Mago profesional con 10 años de experiencia y experto en hacer reir','Entretenimiento');
-insert into ServicioEntity(id, nombre, descripcion, tipo) values(10021,'Orquesta la 104', 'Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos', 'Entretenimiento');
+insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10019,'Carrito de perros calientes', 'Servicio de perritos calientes con personal incluido por 5 horas','Comida','https://i.pinimg.com/originals/c5/a4/77/c5a4777de2f5cb36ae1282a1381e7492.gif');
+insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10020,'Show de magia para niños','Mago profesional con 10 años de experiencia y experto en hacer reir','Entretenimiento', 'https://cdn-pro.elsalvador.com/wp-content/uploads/2017/02/07030819/1465484281202.jpg');
+insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10021,'Orquesta la 104', 'Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos', 'Entretenimiento', 'http://leitersblues.com/wp-content/uploads/2015/06/orquesta-1280x640.jpg');
 
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10076,'Comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros',4,'https://mesadedulces.org/wp-content/uploads/2017/09/mesa-dulce1-1024x682.jpg', 10011,0,10019);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10077,'Audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6,'http://elcorreo.ae/sites/default/files/images/trabajo/dj-editing-benefits.jpg', 10012,0,10020);
@@ -77,8 +77,7 @@ insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(1
 insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10027,2, 'Pesimo servicio', 10078);
 
 
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10091, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10111,10022);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10092, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10093, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
-
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001, 'https://blogmedia.evbstatic.com/wp-content/uploads/bloguk/shutterstock_199419065-730x487.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1, 10012,10002, 'https://lock-clock.com/sites/default/files/games/18839768_451712511831072_8751551293307569149_o.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1, 10013,10003, 'https://diginights.com/uploads/images/event/2018/03/31/2018-03-31-bad-taste-party-bierhuebeli/flyer_image-default-1.jpg');
 
