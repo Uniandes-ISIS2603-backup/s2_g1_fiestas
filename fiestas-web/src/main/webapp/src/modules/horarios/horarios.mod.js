@@ -43,6 +43,10 @@
                     'childrenView': {
                         templateUrl: basePath + 'horarios.html',
                     }
+                },
+                data: {
+                    requireLogin: true,
+                   roles: ['Admin','Proveedor','Cliente']
                 }
             }).state('horariosList', {
                 url: '/list',

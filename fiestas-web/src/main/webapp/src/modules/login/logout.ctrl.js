@@ -18,7 +18,10 @@
                 sessionStorage.clear();
             } else {
                 $state.go('main', {}, {reload: true});
+                            console.log($rootScope);
+
             }
+            
         }
     ]);
 }

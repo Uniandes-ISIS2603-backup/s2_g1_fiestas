@@ -34,15 +34,15 @@
  *```
  */
 (function (ng) {
-
+    
     var mod = ng.module("bonosModule", ['ui.router']);
-
+    
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-
+            
             var basePath = 'src/modules/bonos/';
-
+            
             $urlRouterProvider.otherwise("/bonosList");
-
+            
             $stateProvider.state('bonos', {
                 url: '/bonos',
                 abstract: true,
@@ -52,6 +52,10 @@
                         controller: 'bonosCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['Admin','Proveedor']
                 }
             }).state('bonosList', {
                 url: '/list',
@@ -59,6 +63,18 @@
                 views: {
                     'listView': {
                         templateUrl: basePath + 'bonos.list.html'
+                    }
+                }
+            }).state('bonosListPro', {
+                url: '/listP',
+                parent: 'bonos',
+                parent: 'proveedorDetail',
+                param: {proveedorId: null},
+                views: {
+                    'childrenView': {
+                        templateUrl: basePath + 'bonos.list.html',
+                        controller: 'bonosListProCtrl',
+                        controllerAs: 'ctrl'
                     }
                 }
             }).state('bonosDetail', {
@@ -75,9 +91,9 @@
                         controllerAs: 'ctrl'
                     }
                 }
-
+                
             }).state("bonosCreate",{
-              url: '/create',
+                url: '/create',
                 parent: 'bonos',
                 param: {bonosId: null},
                 views: {
@@ -86,9 +102,13 @@
                         controller: 'bonosNewCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['Admin','Proveedor']
                 }
             }).state("bonosUpdate",{
-              url: '/{bonosId:int}/update',
+                url: '/{bonosId:int}/update',
                 parent: 'bonos',
                 param: {bonosId: null},
                 views: {
@@ -97,9 +117,13 @@
                         controller: 'bonosUpdateCtrl',
                         controllerAs: 'ctrl'
                     }
-                }  
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['Admin','Proveedor']
+                }
             }).state("bonosDelete",{
-              url: '/{bonosId:int}/delete',
+                url: '/{bonosId:int}/delete',
                 parent: 'bonos',
                 param: {bonosId: null},
                 views: {
@@ -108,7 +132,11 @@
                         controller: 'bonosDeleteCtrl',
                         controllerAs: 'ctrl'
                     }
-                }  
+                },
+                data: {
+                    requireLogin: true,
+                    roles: ['Admin','Proveedor']
+                }
             });
         }
     ]);

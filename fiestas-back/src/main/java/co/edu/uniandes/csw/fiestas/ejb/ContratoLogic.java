@@ -72,7 +72,7 @@ public class ContratoLogic {
             throw new BusinessLogicException("El valor del contrato no puede ser menor a cero");
         }
         
-        if(entity.getTyc().isEmpty() || entity.getTyc().equals(" "))
+        if(entity.getTyc().equals(" ") || entity.getTyc().isEmpty())
         {
             throw new BusinessLogicException("Los términos y condiciones del contrato no pueden estar vacíos.");
         }

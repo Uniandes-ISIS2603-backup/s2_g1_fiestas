@@ -56,7 +56,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                   roles: ['Admin','Cliente']
                 }
             }).state('pagosList', {
                 url: '/list',
@@ -94,7 +94,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                    roles: ['Admin','Cliente']
                 }
             }).state('pagoUpdate', {
                 url: '/update/{pagoId:int}',
@@ -110,7 +110,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                   roles: ['Admin','Cliente']
                 }
             }).state('pagoDelete', {
                 url: '/delete/{pagoId:int}',
@@ -126,7 +126,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin']
+                   roles: ['Admin','Cliente']
                 }
             }).state('pagoPay', {
                 url: '/pay/{pagoId:int}',
@@ -142,7 +142,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                   roles: ['Admin','Cliente']
                 }
             }).state('pagoCancel', {
                 url: '/cancel/{pagoId:int}',
@@ -158,7 +158,7 @@
                 },
                 data: {
                     requireLogin: true,
-                    roles: ['admin','cliente']
+                   roles: ['Admin','Cliente']
                 }
             });
         }]);

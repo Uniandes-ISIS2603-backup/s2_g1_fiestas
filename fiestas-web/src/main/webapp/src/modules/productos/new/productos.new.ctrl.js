@@ -1,6 +1,6 @@
 (function (ng) {
     var mod = ng.module("productosModule");
-    mod.controller('productosNewCtrl', ['$scope', '$http', 'proveedoresContext', 'productosContext', '$state', '$rootScope',
+    mod.controller('productosNewCtrl', ['$scope', '$http', '$state', '$rootScope',
         /**
          * @ngdoc controller
          * @name productos.controller:productosNewCtrl
@@ -18,10 +18,11 @@
          * @param {Object} $rootScope Referencia injectada al Scope definida para
          * toda la aplicación.
          */
-        function ($scope, $http, productosContext, $state, $rootScope) {
+        function ($scope, $http, $state, $rootScope) {
             $rootScope.edit = false;
             $scope.data = {};
-
+            
+            console.log("PRE-POST!");
             /**
              * @ngdoc function
              * @name createProducto
@@ -36,13 +37,13 @@
                     console.log("POST!");
                     console.log(response);
                     
-                    $http.put("api/proveedores" + '/' + $rootScope.params.proveedorId + '/' + "productos" + '/' + response.data.id, $scope.data)
+                    $http.put("api/proveedores" + '/' + $rootScope.proveedorId + '/' + "productos" + '/' + response.data.id, $scope.data)
                             .then(function (putResponse) {
                         console.log("PUT");
                         console.log(putResponse); 
-                        $rootScope.params.productoId = response.data.id;
-                        console.log($rootScope.params);
-                        return $state.go('productosList', {productoId: response.data.id}, {reload: true}).then(function (x) { console.log('done'); console.log(x); }).catch(function (err) { console.log(err); });
+                        $rootScope.productoId = response.data.id;
+                        console.log($state);    
+                        $state.go('productosList', {productoId: response.data.id}, {reload: true});
                     });
                 });   
             };

@@ -43,16 +43,26 @@
             $stateProvider.state('valoraciones', {
                 url: '/valoraciones',
                 abstract: true,
+                 param: {
+                    productoId: null
+                },
                 views: {
                     'mainView': {
                         templateUrl: basePath + 'valoraciones.html',
                         controller: 'valoracionesCtrl',
                         controllerAs: 'ctrl'
                     }
+                },
+                data: {
+                    requireLogin: false,
+                   roles: []
                 }
             }).state('valoracionesList', {
                 url: '/list',
                 parent: 'valoraciones',
+                 params: {
+                    productoId: null
+                },
                 views: {
                     'listView': {
                         templateUrl: basePath + 'valoraciones.list.html'
@@ -68,8 +78,13 @@
                 views: {
                     'listView': {
                         templateUrl: basePath + '/new/valoraciones.new.html',
-                        controller: 'valoracionNewCtrl'
+                        controller: 'valoracionNewCtrl',
+                        controllerAs: 'ctrl'
                     }
+                }
+                ,data: {
+                    requireLogin: true,
+                   roles: ['Admin','Cliente']
                 }
             }).state('valoracionUpdate', {
                 url: '/update/{valoracionId:int}',
@@ -82,10 +97,9 @@
                         templateUrl: basePath + '/new/valoraciones.new.html',
                         controller: 'valoracionUpdateCtrl'
                     }
-                },
-                data: {
+                },data: {
                     requireLogin: true,
-                    roles: ['admin', 'assistant']
+                   roles: ['Admin','Cliente']
                 }
             }).state('valoracionDelete', {
                 url: '/delete/{valoracionId:int}',
@@ -98,10 +112,9 @@
                         templateUrl: basePath + '/delete/valoraciones.delete.html',
                         controller: 'valoracionDeleteCtrl'
                     }
-                },
-                data: {
+                },data: {
                     requireLogin: true,
-                    roles: ['admin']
+                   roles: ['Admin','Cliente']
                 }
             });
         }

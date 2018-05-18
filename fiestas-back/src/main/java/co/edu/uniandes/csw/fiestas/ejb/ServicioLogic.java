@@ -7,11 +7,9 @@ package co.edu.uniandes.csw.fiestas.ejb;
 
 import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
-import co.edu.uniandes.csw.fiestas.entities.ValoracionEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.ServicioPersistence;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -106,7 +104,7 @@ public class ServicioLogic {
      * 
      */
     public List<ProductoEntity> listProductos(Long servicioId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la lista de productos asocida a un servicio.");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la lista de productos asociada a un servicio.");
         return getServicio(servicioId).getProductos();
     }
     
@@ -116,17 +114,19 @@ public class ServicioLogic {
      * @param servicioId Identificador de la instancia de Servicio
      * @param productosId Identificador de la instancia de Producto
      * @return La entidad del Producto asociada al servicio
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      */
-    public ProductoEntity getProducto(Long servicioId, Long productosId) {
+    public ProductoEntity getProducto(Long servicioId, Long productosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el producto con el id dado asociado al servicio");
         List<ProductoEntity> list = getServicio(servicioId).getProductos();
-        ProductoEntity productosEntity = new ProductoEntity();
-        productosEntity.setId(productosId);
-        int index = list.indexOf(productosEntity);
+        ProductoEntity productoEntity = new ProductoEntity();
+        productoEntity.setId(productosId);
+        int index = list.indexOf(productoEntity);
         if (index >= 0) {
             return list.get(index);
         }
-        return null;
+        throw new BusinessLogicException("El producto no está asociado al servicio");
+      
     }
     
     
@@ -136,9 +136,10 @@ public class ServicioLogic {
      * @param servicioId Identificador de la instancia de Servicio
      * @param productoId Identificador de la instancia de Producto
      * @return Instancia de ProductoEntity que fue asociada a Servicio
+     * @throws co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException
      * 
      */
-    public ProductoEntity addProducto(Long servicioId, Long productoId) {
+    public ProductoEntity addProducto(Long servicioId, Long productoId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de agregar un producto al servicio");
         ServicioEntity servicioEntity = getServicio(servicioId);
         ProductoEntity productoEntity = new ProductoEntity();
