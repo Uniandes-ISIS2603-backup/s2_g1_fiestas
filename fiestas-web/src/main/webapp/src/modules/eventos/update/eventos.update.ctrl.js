@@ -49,7 +49,7 @@
                 $scope.pagos = evento.pagos;
                 $scope.data.cliente = evento.cliente;
                 $scope.data.tematica = evento.tematica;
-                $scope.selectedTematica= evento.tematica.nombre;
+                $scope.selectedTematica = evento.tematica.nombre;
             });
 
             $http.get('api/tematicas').then(function (response) {
@@ -58,6 +58,10 @@
 
             $http.get('api/productos').then(function (response) {
                 $scope.availableItems = response.data;
+            });
+
+            $http.get(clientesContext + '/' + $state.params.clienteId + '/' + eventosContext + '/' + $state.params.eventoId + '/contratos').then(function (response) {
+                $scope.contratos = response.data;
             });
 
 
@@ -78,8 +82,16 @@
                 }
                 $http.put(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + idEvento, $scope.data).then(function (response) {
                     //Evento created successfully
+                    if ($scope.contratos.length >= 0) {
+                        $http.put(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + response.data.id +  "/contratos", $scope.contratos).then(function (response) {
+                        });
+                    }
                     for (i = 0; i < $scope.pagos.length; i++) {
                         $http.post(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + response.data.id + "/" + pagosContext, $scope.pagos[i]).then(function (response) {
+                        });
+                    }
+                    if ($scope.selectedItems.length >= 0) {
+                        $http.put(clientesContext + '/' + idCliente + '/' + eventosContext + "/" + response.data.id + "/productos", $scope.selectedItems).then(function (response) {
                         });
                     }
                     $state.go('eventosList', {eventoId: response.data.id}, {reload: true});

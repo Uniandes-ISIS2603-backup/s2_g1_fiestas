@@ -2682,6 +2682,95 @@
 						"description": "UPDATE evento fallido, por numero de invitados negativo"
 					},
 					"response": []
+				},
+				{
+					"name": "Prueba GET All Contratos from Eventos ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/contratos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"10011",
+								"eventos",
+								"10001",
+								"contratos"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba POST Productos for Eventos ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd68566a-1b9e-43d6-ae52-f08310a8431a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"ID\": 10076,\n        \"descripcion\": \"Cena para 30 personas, con entrada, plato fuerte y postre\",\n        \"imagen\": \"https://mesadedulces.org/wp-content/uploads/2017/09/mesa-dulce1-1024x682.jpg\",\n        \"incluidos\": \"Incluye meseros\",\n        \"personal\": 4,\n        \"precio\": 80000,\n        \"valoracionPromedio\": 0,\n        \"proveedor\": {\n            \"contrasena\": \"asd123\",\n            \"correo\": \"mcdonalds@mcdonalds.com\",\n            \"direccion\": \"cll.2 #20-32\",\n            \"documento\": \"1012345678\",\n            \"id\": 10011,\n            \"imagen\": \"https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png\",\n            \"login\": \"mcdonalds\",\n            \"nombre\": \"Hamburguesería Mc Donalds\",\n            \"penalizado\": false,\n            \"telefono\": 3212121212\n        },\n        \"servicio\": {\n            \"descripcion\": \"Mago profesional con 10 años de experiencia y experto en hacer reir\",\n            \"id\": 10020,\n            \"nombre\": \"Show de magia para niños\",\n            \"tipo\": \"Entretenimiento\"\n        }\n    },\n    {\n        \"ID\": 10077,\n        \"descripcion\": \"DJ para boda\",\n        \"imagen\": \"http://elcorreo.ae/sites/default/files/images/trabajo/dj-editing-benefits.jpg\",\n        \"incluidos\": \"Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica\",\n        \"personal\": 6,\n        \"precio\": 300000,\n        \"valoracionPromedio\": 0,\n        \"proveedor\": {\n            \"contrasena\": \"asd123\",\n            \"correo\": \"dianagalan@yahoo.es\",\n            \"direccion\": \"cll.2 #20-33\",\n            \"documento\": \"1012345679\",\n            \"id\": 10012,\n            \"imagen\": \"http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270\",\n            \"login\": \"dianas\",\n            \"nombre\": \"Iluminación de Diana\",\n            \"penalizado\": false,\n            \"telefono\": 3212121213\n        },\n        \"servicio\": {\n            \"descripcion\": \"Mago profesional con 10 años de experiencia y experto en hacer reir\",\n            \"id\": 10020,\n            \"nombre\": \"Show de magia para niños\",\n            \"tipo\": \"Entretenimiento\"\n        }\n    },\n    {\n        \"ID\": 10078,\n        \"descripcion\": \"Recreadores para mantener activa a la gente\",\n        \"imagen\": \"http://doblescantanteschile.cl/wp-content/uploads/2016/10/IMG-20161021-WA0014.jpg\",\n        \"incluidos\": \"Incluye lo que necesiten los recreadores\",\n        \"personal\": 2,\n        \"precio\": 200000,\n        \"valoracionPromedio\": 0,\n        \"proveedor\": {\n            \"contrasena\": \"asd123\",\n            \"correo\": \"mcdonalds@mcdonalds.com\",\n            \"direccion\": \"cll.2 #20-32\",\n            \"documento\": \"1012345678\",\n            \"id\": 10011,\n            \"imagen\": \"https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png\",\n            \"login\": \"mcdonalds\",\n            \"nombre\": \"Hamburguesería Mc Donalds\",\n            \"penalizado\": false,\n            \"telefono\": 3212121212\n        },\n        \"servicio\": {\n            \"descripcion\": \"Mago profesional con 10 años de experiencia y experto en hacer reir\",\n            \"id\": 10020,\n            \"nombre\": \"Show de magia para niños\",\n            \"tipo\": \"Entretenimiento\"\n        }\n    }\n]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/clientes/10011/eventos/10001/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"clientes",
+								"10011",
+								"eventos",
+								"10001",
+								"productos"
+							]
+						},
+						"description": "GET fiestas"
+					},
+					"response": []
 				}
 			]
 		},
@@ -4221,6 +4310,49 @@
 								"api",
 								"usuarios",
 								"dnino"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post usuario con 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "898e00f4-bf7d-4b51-bdd7-a77c1fe05893",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"contrasena\": \"asd123\",\n        \"login\": \"mcdonals\",\n        \"rol\": \"proveedor\"\n}\n    "
+						},
+						"url": {
+							"raw": "http://localhost:8080/fiestas-web/api/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fiestas-web",
+								"api",
+								"usuarios",
+								""
 							]
 						}
 					},

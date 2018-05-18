@@ -21,13 +21,31 @@
                     <dd>{{currentEvento.lugar}}</dd>
                     <hr>
                     <dt class="bold">Tematica</dt>
-                    <dd>{{currentEvento.tematica.nombre}}</dd>                      
+                    <dd>{{currentEvento.tematica.nombre}}</dd> 
+                    <hr>
+                    <dt class="bold">Contratos</dt>
+                    <hr>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Estado</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="contrato in contratosRecords">
+                                <td id="{{$index}}-proveedor">{{contrato.proveedor.nombre}}</td>
+                                <td id="{{$index}}-estado">{{contrato.estado}}</td>
+                                <td id="{{$index}}-valor">{{contrato.valor| currency:"COP": 0}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </dl>
                 <ul class="nav nav-pills">
                     <li role="presentation" class="active"> <a  ui-sref="pagosList({eventoId: currentEvento.id})">Pagos</a></li>
                 </ul>
             </div>
-
         </div>
         <div class="panel-body">
             <div class="row">

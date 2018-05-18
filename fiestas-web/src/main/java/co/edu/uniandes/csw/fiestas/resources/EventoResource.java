@@ -2,9 +2,11 @@ package co.edu.uniandes.csw.fiestas.resources;
 
 import co.edu.uniandes.csw.fiestas.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.fiestas.dtos.EventoDetailDTO;
+import co.edu.uniandes.csw.fiestas.dtos.ProductoDetailDTO;
 import co.edu.uniandes.csw.fiestas.ejb.EventoLogic;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import java.util.ArrayList;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import java.util.List;
@@ -392,5 +394,37 @@ public class EventoResource {
             throw new WebApplicationException("El recurso /eventos/" + eventosId + "/pagos no existe.", 404);
         }
         return PagoResource.class;
+    }
+
+    /**
+     * <h1>PUT clientes/{idCliente: \\d+}/eventos/{eventosId}/productos: Crea nuevos contratos
+     * en un evento.</h1>
+     * <pre> Crea nuevos contratos asociadas a una instancia de Evento de un cliente.
+     *
+     * Codigos de respuesta:
+     * <code style="color: mediumseagreen; background-color: #eaffe0;">
+     * 200 OK Guardó los contratos del evento.
+     * </code>
+     * </pre>
+     *
+     * @param idCliente Identificador del cliente, dueño del evento
+     * @param eventosId Identificador del evento que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @param productos JSONArray {@link ProductoDetailDTO} El arreglo de
+     * productos nuevos para la evento.
+     * @return JSON {@link ContratoDetailDTO} - El arreglo de contratos guardado
+     * en la evento.
+     * @throws BusinessLogicException{@link co.edu.uniandes.csw.fiestas.mappers.BusinessLogicExceptionMapper}
+     * -Error de lógica que se genera cuando no se encuentra la evento o el
+     * contrato.
+     */
+    @PUT
+    @Path("{eventosId: \\d+}/productos")
+    public List<ContratoDetailDTO> createNewContratos(@PathParam("idCliente") Long idCliente, @PathParam("eventosId") Long eventosId, List<ProductoDetailDTO> productos)throws BusinessLogicException  {
+        List<ProductoEntity> list = new ArrayList<>();
+        for (ProductoDetailDTO dto : productos) {
+            list.add(dto.toEntity());
+        }
+        return contratosListEntity2DTO(eventoLogic.createNewContratos(idCliente, eventosId, list));
     }
 }
