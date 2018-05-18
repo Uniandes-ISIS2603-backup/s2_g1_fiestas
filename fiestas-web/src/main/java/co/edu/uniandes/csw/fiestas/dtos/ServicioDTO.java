@@ -5,7 +5,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
 
 /**
  * ServicioDTO Objeto tranferencia para el servicio.
- * 
+ *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
  *   {
@@ -16,7 +16,7 @@ import co.edu.uniandes.csw.fiestas.entities.ServicioEntity;
  *   }
  * </pre>
  * Por ejemplo, un servicio se representa asi:<br>
- * 
+ *
  * <pre>
  *   {
  *      "id": 542,
@@ -34,6 +34,8 @@ public class ServicioDTO {
     private String nombre;
     private String descripcion;
     private String tipo;
+    private String imagen;
+    
     
     /**
      * Constructor por defecto
@@ -43,7 +45,7 @@ public class ServicioDTO {
         //constructor vacio
     }
     
-     /**
+    /**
      * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
      * la entidad que viene de argumento)
      *
@@ -54,7 +56,9 @@ public class ServicioDTO {
         this.nombre=servicio.getNombre();
         this.descripcion = servicio.getDescripcion();
         this.tipo = servicio.getTipo();
-
+        this.imagen = servicio.getImagen();
+        
+        
     }
     
     /**
@@ -63,7 +67,7 @@ public class ServicioDTO {
     public long getId() {
         return id;
     }
-
+    
     /**
      * @return El nombre del servicio.
      */
@@ -77,7 +81,7 @@ public class ServicioDTO {
     public String getDescripcion() {
         return descripcion;
     }
-
+    
     /**
      * @return El tipo de servicio.
      */
@@ -85,7 +89,7 @@ public class ServicioDTO {
         return tipo;
     }
     
-     /**
+    /**
      * @param id El nuevo id.
      */
     public void setId(long id) {
@@ -98,22 +102,22 @@ public class ServicioDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
     /**
-    * @param descripcion La nueva descripcion.
-    */
+     * @param descripcion La nueva descripcion.
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
     
     /**
-    * @param tipo El nuevo tipo del servicio.
-    */
+     * @param tipo El nuevo tipo del servicio.
+     */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
     
-       /**
+    /**
      * Convertir DTO a Entity
      *
      * @return Un Entity con los valores del DTO
@@ -124,6 +128,22 @@ public class ServicioDTO {
         entity.setId(this.id);
         entity.setDescripcion(this.descripcion);
         entity.setTipo(this.tipo);
+        entity.setImagen(getImagen());
+        
         return entity;
+    }
+    
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+    
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

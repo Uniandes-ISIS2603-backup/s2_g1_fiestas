@@ -698,7 +698,7 @@ public class ProveedorResource {
      */
     @GET
     @Path("{proveedoresId: \\d+}/bonos/{bonoId: \\d+}")
-    public BonoDTO getBonoC(@PathParam("proveedoresId") Long proveedoresId, @PathParam("eventosId") Long bonoId)
+    public BonoDTO getBonoC(@PathParam("proveedoresId") Long proveedoresId, @PathParam("bonoId") Long bonoId)
     {
         ProveedorEntity proveedor = proveedorLogic.getProveedor(proveedoresId);
         if(proveedor == null)
