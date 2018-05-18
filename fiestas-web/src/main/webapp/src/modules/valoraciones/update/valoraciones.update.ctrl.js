@@ -53,7 +53,6 @@
             $scope.updateValoracion = function () {
                 $http.put(valoracionesContext + "/" + idValoracion, $scope.data).then(function (response) {
                     //Valoracion created successfully
-                    console.log($scope.data)
                     $state.go('valoracionesList', {productoId: idProducto}, {reload: true});
                 });
             };
