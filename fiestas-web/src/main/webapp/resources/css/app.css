@@ -26,9 +26,13 @@ body
 }
 
 .mainTitle {
-    font-variant: small-caps;
-    color: whitesmoke;
-    font-family: 'Century Gothic',sans-serif;
+    color:#000;
+    font-family: 'Anton',sans-serif;
+    font-size: 60px;
+    height: 100%;
+    margin-top: 55px;
+
+        
 }
 
 .subTitle{
@@ -40,6 +44,13 @@ body
     font-size: 30px;
     font-family: 'Roboto', sans-serif;
     color: white;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 

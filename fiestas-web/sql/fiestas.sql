@@ -25,7 +25,6 @@ insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direc
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10112, 'Sofía Arias','https://static.iris.net.co/semana/upload/images/2015/10/23/447377_20029_1.jpg' ,'1012345682', 3112121213, 's.arias@uniandes.edu.co', 'cll.94 # 7-12','sofia', 'asd123');
 insert into ClienteEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena) values(10113, 'Cristian Amaya','https://files.merca20.com/uploads/2013/08/shutterstock_130105307.jpg' ,'1012345683', 3112121214, 'cm.amaya11@uniandes.edu.co', 'cll.95 #10-1','cm.amaya', 'asd123');
 
-
 insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10019,'Alimentación', 'Todos los productos alimenticios y servicios de comida durante los eventos','Comida', 'https://www.zingermanscatering.com/wp-content/uploads/2018/03/carter_ZINGCATER_GREYLINE_1217_0217-e1520459898740.jpg');
 insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10020,'Iluminación','Los implementos necesarios para iluminar de acuerdo a la temática','Estética','https://i.pinimg.com/originals/31/83/55/31835572a22beadd84875ecc49140c9d.jpg');
 insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10021,'Decoración', 'Decoración de los espacios designados a los eventos de acuerdo a la temática y gusto del cliente', 'Estética','https://i.pinimg.com/originals/67/47/cd/6747cda5a08b03d6e38c82b53417d15e.jpg');
@@ -34,6 +33,7 @@ insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10023,'
 insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10024,'Música', 'Instrumentos musicales, DJs y equipos musicales', 'Entretenimiento','https://i.pinimg.com/originals/26/57/b4/2657b4dce7ff049e72fc9d52b80c1813.jpg');
 insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10025,'Baile', 'Coreografías y servicios de baile', 'Entretenimiento','http://2.bp.blogspot.com/-WmW5UDPBphs/UvA7F1f6thI/AAAAAAAAAA8/KSCGJn5-NyQ/s1600/i-2sfqHDr-L.jpg');
 insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10026,'Otros', 'Todos los servicios que no entren en las categorías anteriores', 'Otro','https://i.pinimg.com/originals/e1/41/6b/e1416b7e8d87282363b1f4b8e6f3a51b.jpg');
+
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10076,'Comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros',4,'https://mesadedulces.org/wp-content/uploads/2017/09/mesa-dulce1-1024x682.jpg', 10011,0,10019);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10077,'Audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6,'http://elcorreo.ae/sites/default/files/images/trabajo/dj-editing-benefits.jpg', 10012,0,10020);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10078,'Recreaciones para boda',200000, 'Recreadores para mantener activa a la gente','Incluye lo que necesiten los recreadores',2,'http://doblescantanteschile.cl/wp-content/uploads/2016/10/IMG-20161021-WA0014.jpg', 10011,0,10020);
@@ -81,8 +81,7 @@ insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(1
 insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10027,2, 'Pesimo servicio', 10078);
 
 
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10091, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10111,10022);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10092, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10093, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
-
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001, 'https://blogmedia.evbstatic.com/wp-content/uploads/bloguk/shutterstock_199419065-730x487.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1, 10012,10002, 'https://lock-clock.com/sites/default/files/games/18839768_451712511831072_8751551293307569149_o.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1, 10013,10003, 'https://diginights.com/uploads/images/event/2018/03/31/2018-03-31-bad-taste-party-bierhuebeli/flyer_image-default-1.jpg');
 

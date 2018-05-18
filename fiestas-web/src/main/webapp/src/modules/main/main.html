@@ -4,16 +4,18 @@
             <carousel interval="myInterval">
                 <slide ng-repeat="slide in slides" active="slide.active">
                     <img style="align-self: center; width: 100%" ng-src="{{slide.image}}" >
-                    <div class="carousel-caption">
-                        <h4>{{slide.title}}</h4>
-                        <h5>{{slide.text}}</h5>
+                    <div class="carousel-caption" style = "font-family: Roboto">
+                        <h3>{{slide.title}}</h3>
+                        <h4>{{slide.text}}</h4>
                     </div>
                 </slide>
             </carousel>
         </div>
 
-        <div  class="row">
-            <p> Fiestas </p>
-        </div>
+     
     </div> 
+    <div class="container-fluid ">
+
+        <div  style= "margin-top: 10px; margin-left: 820px; font-family: Roboto"><button type="button" class="btn btn-primary center" style = "background-color: #245569; border-color: #000" ui-sref="signin" > ¡Empieza a planear tu fiesta! </button></div>   
+    </div>
 </div>
