@@ -14,12 +14,14 @@
             <a ui-sref="servicioDetail({servicioId: servicio.id})">                    
                 <img class="img-responsive" ng-src='{{servicio.imagen}}' alt="{{servicio.nombre}}" />                  
             </a>
-            <h5 class = "center">{{servicio.nombre}}</h5>
-
-            <div id="{{$index}}-actions">
-                <a id="{{$index}}-edit" class="btn btn-default btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioUpdate({servicioId: servicio.id})"><span class="glyphicon glyphicon-edit"></span></a>
-                <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioDelete({servicioId: servicio.id})"><span class="glyphicon glyphicon-trash"></span></a>
-            </div>
+            
+            <center>
+                <h5 class = "center">{{servicio.nombre}}</h5>
+                <div id="{{$index}}-actions">
+                    <a id="{{$index}}-edit" class="btn btn-default btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioUpdate({servicioId: servicio.id})"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioDelete({servicioId: servicio.id})"><span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+            </center>
         </div>       
 
     </div>
