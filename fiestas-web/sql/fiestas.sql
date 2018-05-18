@@ -77,7 +77,7 @@ insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(1
 insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10027,2, 'Pesimo servicio', 10078);
 
 
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001, 'https://blogmedia.evbstatic.com/wp-content/uploads/bloguk/shutterstock_199419065-730x487.jpg');
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1, 10012,10002, 'https://lock-clock.com/sites/default/files/games/18839768_451712511831072_8751551293307569149_o.jpg');
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1, 10013,10003, 'https://diginights.com/uploads/images/event/2018/03/31/2018-03-31-bad-taste-party-bierhuebeli/flyer_image-default-1.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10071, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10111,10021, 'https://blogmedia.evbstatic.com/wp-content/uploads/bloguk/shutterstock_199419065-730x487.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10072, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1, 10112,10022, 'https://lock-clock.com/sites/default/files/games/18839768_451712511831072_8751551293307569149_o.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10073, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1, 10111,10023, 'https://diginights.com/uploads/images/event/2018/03/31/2018-03-31-bad-taste-party-bierhuebeli/flyer_image-default-1.jpg');
 
