@@ -53,9 +53,6 @@
                         $scope.algo = blog.likes;
                         console.log($rootScope);
                     });
-                    
-                    //$state.continue('blogsDetail', {blogsId: idBlog}, {reload: true});
-                    //$state.continue('blogsList', {reload: true});
                 })
             }
         },
