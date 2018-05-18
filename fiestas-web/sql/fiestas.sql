@@ -1,7 +1,6 @@
 
 delete from TEMATICAENTITY_PRODUCTOENTITY;
 delete from CONTRATOENTITY_PRODUCTOENTITY;
-delete from PRODUCTOENTITY_VALORACIONENTITY;
 delete from BonoEntity;
 delete from BlogEntity;
 delete from PagoEntity;
@@ -16,7 +15,9 @@ delete from EventoEntity;
 delete from TematicaEntity;
 delete from ProveedorEntity;
 delete from ClienteEntity;
+
 delete from UsuarioEntity;
+
 
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10011, 'Hamburguesería Mc Donalds','https://pbs.twimg.com/profile_images/646210794535956481/UXp3jGpm_400x400.png' , '1012345678', 3212121212, 'mcdonalds@mcdonalds.com', 'cll.2 #20-32','mcdonalds','asd123', 0);
 insert into ProveedorEntity(id, nombre, imagen, documento, telefono, correo, direccion, login, contrasena, penalizado) values(10012, 'Iluminación de Diana','http://i2.wp.com/recursosaempresas.com/wp-content/uploads/2015/11/salon-fiestas.jpg?resize=600%2C270' ,'1012345679', 3212121213, 'dianagalan@yahoo.es', 'cll.2 #20-33','dianas','asd123', 0);
@@ -42,9 +43,9 @@ insert into ServicioEntity(id, nombre, descripcion, tipo) values(10019,'Carrito 
 insert into ServicioEntity(id, nombre, descripcion, tipo) values(10020,'Show de magia para niños','Mago profesional con 10 años de experiencia y experto en hacer reir','Entretenimiento');
 insert into ServicioEntity(id, nombre, descripcion, tipo) values(10021,'Orquesta la 104', 'Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos', 'Entretenimiento');
 
-insert into ValoracionEntity(id, calificacion, comentario) values(10022,5,'Excelente servicio');
-insert into ValoracionEntity(id, calificacion, comentario) values(10023,4,'Me encanto');
-insert into ValoracionEntity(id, calificacion, comentario) values(10024,2, 'Pesimo servicio');
+insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10022,5,'Excelente servicio', 10076);
+insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10023,4,'Me encanto', 10077);
+insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10024,2, 'Pesimo servicio', 10078);
 
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10076,'Comida para boda',80000, 'Cena para 30 personas, con entrada, plato fuerte y postre','Incluye meseros',4,'https://mesadedulces.org/wp-content/uploads/2017/09/mesa-dulce1-1024x682.jpg', 10011,0,10020);
 insert into ProductoEntity(id,nombre,precio,descripcion,incluye,personal,imagen,proveedor_id,valoracionpromedio,servicio_id) values(10077,'Audio para boda',300000, 'DJ para boda','Incluye lo que necesite el dj, más parlantes incluye varios estilos de musica',6,'http://elcorreo.ae/sites/default/files/images/trabajo/dj-editing-benefits.jpg', 10012,0,10020);
@@ -80,4 +81,5 @@ insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10095, 10076);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10096, 10077);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10097, 10078);
+
 

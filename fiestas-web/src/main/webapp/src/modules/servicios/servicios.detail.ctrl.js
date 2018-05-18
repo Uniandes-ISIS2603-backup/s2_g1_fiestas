@@ -34,6 +34,7 @@
                 $http.get(servicioContext).then(function (response) {
                     $scope.serviciosRecords = response.data;
                     $scope.currentServicio = $filter('filter')($scope.serviciosRecords, {id: $state.params.servicioId}, true)[0];
+                    $scope.productosRecords=response.data.productos;
                 });
             }
         }
