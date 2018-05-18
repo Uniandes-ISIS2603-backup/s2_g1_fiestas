@@ -9,16 +9,20 @@
             <div class="col-md-3">
                 <div class="thumb"></div>
                 <dl>     
-                    <dt>{{currentServicio.nombre}}</dt>                 
-                    
+                    <h2><dt>{{currentServicio.nombre}}</dt></h2>                 
+
                     <hr>
-                    <dt>Descripcion</dt>
+                    <h3><dt>Descripcion</dt></h3>
                     <dd>{{currentServicio.descripcion}}</dd>
+
                     
-                    <hr>
-                    <dt>Tipo</dt>
+                    <h3><dt>Tipo</dt></h3>
                     <dd>{{currentServicio.tipo}}</dd>
                 </dl>
+                
+                <ul class="nav nav-pills">
+                        <li role="presentation" class="active"> <a  ui-sref="productosList({servicioId: currentServicio.id})">Productos</a></li>
+                    </ul>
             </div>
         </div>
         <div class="row">

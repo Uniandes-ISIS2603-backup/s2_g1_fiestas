@@ -17,7 +17,7 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, serviciosContext, $state) {
+        function ($scope, $http, servicioContext, $state) {
             var idServicio = $state.params.servicioId;
             /**
              * @ngdoc function
@@ -28,7 +28,7 @@
              * @param {String} id El ID del servicio a eliminar.
              */
             $scope.deleteServicio = function () {
-                $http.delete(serviciosContext + '/' + idServicio, {}).then(function (response) {
+                $http.delete(servicioContext + '/' + idServicio, {}).then(function (response) {
                     $state.go('serviciosList', {servicioId: response.data.id}, {reload: true});
                 });
             };

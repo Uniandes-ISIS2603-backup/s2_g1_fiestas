@@ -2,22 +2,18 @@
     <div class="col-md-4">
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th>id</th>
+                <tr> 
                     <th>Nombre</th>
                     
             </thead>
             <tbody>
                 <tr ng-repeat="servicio in serviciosRecords">
-                    <td id="{{$index}}-id">{{servicio.id}}</td>
                     <td id="{{$index}}-name"><a ui-sref="servicioDetail({servicioId: servicio.id})">{{servicio.nombre}}</a></td>
                     <td id="{{$index}}-actions">
                         <a id="{{$index}}-edit" class="btn btn-default btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')"" ui-sref="servicioUpdate({servicioId: servicio.id})"><span class="glyphicon glyphicon-edit"></span></a>
                         <a id="{{$index}}-delete" class="btn btn-danger btn-sm" ng-if="isAuthenticated() && (currentRol ==='Cliente' || currentRol ==='Admin')" ui-sref="servicioDelete({servicioId: servicio.id})"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
-               
-                    
                 
             </tbody>
         </table>

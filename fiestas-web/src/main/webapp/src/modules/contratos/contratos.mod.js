@@ -46,8 +46,9 @@
             $stateProvider.state('contratos', {
                 url: '/contratos',
                 abstract: true,
+                parent: 'proveedorDetail',
                 views: {
-                    'mainView': {
+                    'childrenView': {
                         templateUrl: basePath + 'contratos.html',
                         controller: 'contratoCtrl',
                         controllerAs: 'ctrl'
