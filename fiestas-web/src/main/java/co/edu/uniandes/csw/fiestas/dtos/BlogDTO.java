@@ -48,6 +48,9 @@ public class BlogDTO {
      * Número de likes
      */
     private int likes;
+    
+    private String imagen;
+
 
     /**
      * Constructor vacío BlogDTO
@@ -69,6 +72,8 @@ public class BlogDTO {
             this.titulo = entity.getTitulo();
             this.cuerpo = entity.getCuerpo();
             this.likes = entity.getLikes();
+            this.imagen = entity.getImagen();
+
 
         }
     }
@@ -157,7 +162,23 @@ public class BlogDTO {
         entity.setTitulo(this.getTitulo());
         entity.setCuerpo(this.getCuerpo());
         entity.setLikes(this.getLikes());
+        entity.setImagen(getImagen());
+
         return entity;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
 }

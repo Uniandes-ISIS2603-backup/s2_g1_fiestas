@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("blogsModule");
     mod.constant("blogsContext", "api/blogs");
-    mod.controller('blogsDetailCtrl', ['$scope', '$http', 'blogsContext', '$state', '$filter',
+    mod.controller('blogsDetailCtrl', ['$scope', '$http', 'blogsContext', '$state', '$filter', '$rootScope',
         /**
          * @ngdoc controller
          * @name blogs.controller:blogDetailCtrl
@@ -19,7 +19,9 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, blogsContext, $state, $filter) {
+        function ($scope, $http, blogsContext, $state, $filter, $rootScope) {
+            
+            
             /**
                  * @ngdoc function
                  * @name getBlogID

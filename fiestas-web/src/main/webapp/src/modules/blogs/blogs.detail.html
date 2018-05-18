@@ -1,7 +1,10 @@
 <div class="panel panel-default"> 
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-6">
+                <div class="thumb">
+                    <img class="img-responsive" ng-src="{{currentBlogs.imagen }}"/>
+                </div>
             </div>
             <div class="col-md-3">
                 <dl>     
@@ -12,7 +15,7 @@
                     <dd>{{currentBlogs.cuerpo}}</dd>
                     <hr>
                     <dt class="bold">Likes</dt>
-                    <dd>{{currentBlogs.likes}}</dd>
+                    <dd>{{algo ? algo : currentBlogs.likes}}</dd>
                     <hr>
                     <dt class="bold">Evento</dt>
                     <dd id="{{$index}}-name"><a ui-sref="eventoDetail({eventoId: currentBlogs.evento.id})">{{currentBlogs.evento.nombre}}</a></dd>
@@ -22,6 +25,5 @@
                 </dl>
             </div>
         </div>
-
     </div>
 </div>
