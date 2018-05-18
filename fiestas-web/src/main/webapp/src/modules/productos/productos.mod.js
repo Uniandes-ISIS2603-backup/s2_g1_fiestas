@@ -88,17 +88,19 @@
                     requireLogin: true,
                    roles: ['Admin','Proveedor']
                 }
-            }).state('productoAll', {
-                url: '/{productoId:int}/detail',
+            }).state('productosAll', {
+                url: '/{productoId:int}/detailAll',
                 parent: 'productos',
+                params:[
+                    {productoId: null}, {proveedorId: null}
+                ],  
                 views: {
                     'listView': {
-                        templateUrl: basePath + 'productos.list.html'
+                        templateUrl: basePath + 'productos.listAll.html'
                     },
-                    'detailView': {
+                    'mainView': {
                         templateUrl: basePath + 'productos.detail.html',
-                        controller: 'productosAllCtrl',
-                        controllerAs: 'ctrl'
+                        controller: 'productosAllCtrl'
                     }
                 },
                 data: {
