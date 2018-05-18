@@ -6,7 +6,7 @@
                     <li><a class="nav-link" ui-sref="proveedorDetail({proveedorId: currentProveedor.id})">Mi Perfil</a></li>
                     <li><a class="nav-link" ui-sref="productosList({proveedorId: currentProveedor.id})">Mis Productos</a></li>
                     <li><a class="nav-link" ui-sref="contratosList({proveedorId: currentProveedor.id})">Mis Contratos</a></li>
-                    <li><a class="nav-link" ui-sref="bonosList({proveedorId: currentProveedor.id})">Mis Bonos</a></li>
+                    <li><a class="nav-link" ui-sref="bonosListPro({proveedorId: currentProveedor.id})">Mis Bonos</a></li>
                 </ul>
             </div> 
             <div class="col-md-3">
@@ -48,7 +48,7 @@
                     
                     <hr>
                     <ul ng-if="isAuthenticated() && currentRol === 'Admin' "class="nav nav-pills">
-                        <li role="presentation" class="active"> <a  ui-sref="productosList({proveedorId: currentProveedor.id})">Productos</a></li>
+                        <li role="presentation" class="active"> <a  ui-sref="productosListProv({proveedorId: currentProveedor.id})">Productos</a></li>
                     </ul>
   
                 
