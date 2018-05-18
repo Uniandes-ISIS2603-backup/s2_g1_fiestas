@@ -1,11 +1,16 @@
 <div class="panel panel-default"> 
     <div class="panel-body">
         <div class="row">
+            <div class="col-md-6">
+                <div class="thumb">
+                    <img class="img-responsive" ng-src="{{currentServicio.imagen }}"/>
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="thumb"></div>
                 <dl>     
                     <h2><dt>{{currentServicio.nombre}}</dt></h2>                 
-                
+
                     <hr>
                     <h3><dt>Descripcion</dt></h3>
                     <dd>{{currentServicio.descripcion}}</dd>

@@ -36,6 +36,11 @@ public class BlogEntity extends BaseEntity implements Serializable {
      * Número de likes
      */
     private int likes;
+    
+    /**
+     * Número de likes
+     */
+    private String imagen;
 
     public String getTitulo() {
         return titulo;
@@ -76,6 +81,20 @@ public class BlogEntity extends BaseEntity implements Serializable {
 
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
 }

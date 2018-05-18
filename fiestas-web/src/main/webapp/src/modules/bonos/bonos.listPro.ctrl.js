@@ -1,7 +1,7 @@
-(function (ng) { 
+(function (ng) {
     var mod = ng.module("bonosModule");
     mod.constant("bonosContext", "api/bonos");
-    mod.controller('bonosCtrl', ['$scope', '$http', 'bonosContext',
+    mod.controller('bonosListProCtrl', ['$scope', '$http', 'bonosContext', '$state',
         /**
          * @ngdoc controller
          * @name blogs.controller:blogCtrl
@@ -20,7 +20,7 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, bonosContext) {
+        function ($scope, $http, bonosContext, $state) {
             /**
              * @ngdoc function
              * @name getBlogs
@@ -35,10 +35,10 @@
              * de los bloges o API donde se puede consultar. Se utiliza el
              * contexto definido anteriormente.
              */
-            $http.get(bonosContext).then(function (response) {
+            $http.get('api/proveedores/'+$state.params.proveedorId+'/bonos').then(function (response) {
                 $scope.bonosRecords = response.data;
             });
         }
     ]);
 }
-        )(window.angular);
+)(window.angular);

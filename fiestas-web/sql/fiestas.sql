@@ -39,9 +39,9 @@ insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, prove
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10002, '04/23/2018','u934hq', 30, '05/22/2018', 'Día de la madre', 10012);
 insert into BonoEntity(id, aplicadesde, codigo, descuento, expira, motivo, proveedor_id)values(10003, '04/24/2018','54jkbsdv', 50, '05/22/2018', 'Navidad', 10013);
 
-insert into ServicioEntity(id, nombre, descripcion, tipo) values(10019,'Carrito de perros calientes', 'Servicio de perritos calientes con personal incluido por 5 horas','Comida');
-insert into ServicioEntity(id, nombre, descripcion, tipo) values(10020,'Show de magia para niños','Mago profesional con 10 años de experiencia y experto en hacer reir','Entretenimiento');
-insert into ServicioEntity(id, nombre, descripcion, tipo) values(10021,'Orquesta la 104', 'Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos', 'Entretenimiento');
+insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10019,'Carrito de perros calientes', 'Servicio de perritos calientes con personal incluido por 5 horas','Comida','https://i.pinimg.com/originals/c5/a4/77/c5a4777de2f5cb36ae1282a1381e7492.gif');
+insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10020,'Show de magia para niños','Mago profesional con 10 años de experiencia y experto en hacer reir','Entretenimiento', 'https://cdn-pro.elsalvador.com/wp-content/uploads/2017/02/07030819/1465484281202.jpg');
+insert into ServicioEntity(id, nombre, descripcion, tipo, imagen) values(10021,'Orquesta la 104', 'Orquesta profesional con amplio repertorio y la mejor trompetista de todos los tiempos', 'Entretenimiento', 'http://leitersblues.com/wp-content/uploads/2015/06/orquesta-1280x640.jpg');
 
 insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10022,5,'Excelente servicio', 10076);
 insert into ValoracionEntity(id, calificacion, comentario, producto_id) values(10023,4,'Me encanto', 10077);
@@ -74,9 +74,9 @@ insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values 
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10003,0,'Rechazado','Consignacion',350000,10002);
 insert into PagoEntity(id,realizado,estado,metodoDePago,valor,evento_id) values (10004,1,'Confirmado','Consignacion',350000,10002);
 
-insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1);
-insert into BlogEntity(id, titulo, cuerpo, likes)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1);
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10001, 'Muy buena fiesta','El servicio estuvo excelente, la pasé muy bien', 10, 10011,10001, 'https://blogmedia.evbstatic.com/wp-content/uploads/bloguk/shutterstock_199419065-730x487.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10002, 'Meh','No estuvo mala, pero no fue nada fuera de lo común.', 1, 10012,10002, 'https://lock-clock.com/sites/default/files/games/18839768_451712511831072_8751551293307569149_o.jpg');
+insert into BlogEntity(id, titulo, cuerpo, likes, cliente_id, evento_id, imagen)values(10003, 'Pésima','Fue un fiasco. La comida, la música, y la decoración.', 1, 10013,10003, 'https://diginights.com/uploads/images/event/2018/03/31/2018-03-31-bad-taste-party-bierhuebeli/flyer_image-default-1.jpg');
 
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10095, 10076);
 insert into TEMATICAENTITY_PRODUCTOENTITY (tematicaentity_id , productos_id) values (10096, 10077);
