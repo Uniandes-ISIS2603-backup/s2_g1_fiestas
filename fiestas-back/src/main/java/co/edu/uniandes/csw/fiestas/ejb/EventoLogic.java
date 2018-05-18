@@ -3,8 +3,10 @@ package co.edu.uniandes.csw.fiestas.ejb;
 import co.edu.uniandes.csw.fiestas.entities.ClienteEntity;
 import co.edu.uniandes.csw.fiestas.entities.ContratoEntity;
 import co.edu.uniandes.csw.fiestas.entities.EventoEntity;
+import co.edu.uniandes.csw.fiestas.entities.ProductoEntity;
 import co.edu.uniandes.csw.fiestas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.fiestas.persistence.EventoPersistence;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -234,6 +236,49 @@ public class EventoLogic {
      */
     public List<ContratoEntity> getContratos(Long clienteId, Long eventoId) {
         return getEvento(clienteId, eventoId).getContratos();
+    }
+
+    /**
+     * Crea contratos apartir de productos en el evento
+     *
+     * @param clienteId identificador del cliente
+     * @param eventoId El id del evento a buscar
+     * @param productos Lista de productos
+     * @return la lista de contratos del evento
+     * @throws BusinessLogicException Error de creacion de contratos
+     */
+    public List<ContratoEntity> createNewContratos(Long clienteId, Long eventoId, List<ProductoEntity> productos) throws BusinessLogicException {
+        EventoEntity actual = getEvento(clienteId, eventoId);
+        List<ContratoEntity> actuales = actual.getContratos();
+        for (ProductoEntity producto : productos) {
+            System.out.println(producto.getPrecio());
+            boolean found = false;
+            for (ContratoEntity contrato : actuales) {
+                if (contrato.getProveedor() == producto.getProveedor()) {
+                    contrato.getProductos().add(producto);
+                    int valor = contrato.getValor() + producto.getPrecio();
+                    contrato.setValor(valor);
+                    contratoLogic.updateContrato(contrato);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                ContratoEntity nuevo = new ContratoEntity();
+                nuevo.setTyc("Por definir con Proveedor");
+                nuevo.setEvento(actual);
+                nuevo.setProveedor(producto.getProveedor());
+                List<ProductoEntity> productoList= new ArrayList();
+                productoList.add(producto);
+                nuevo.setProductos(productoList);     
+                nuevo.setValor(producto.getPrecio());
+                actuales.add(nuevo);
+                contratoLogic.createContrato(nuevo);         
+            }
+        }
+        actual.setContratos(actuales);
+        persistence.update(actual);
+        return actuales;
     }
 
 }
