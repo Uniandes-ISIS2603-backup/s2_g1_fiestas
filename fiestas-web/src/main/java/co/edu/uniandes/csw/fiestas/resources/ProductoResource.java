@@ -76,9 +76,9 @@ public class ProductoResource
     @Produces("application/json")
     @Consumes("application/json")
     @Path("{id: \\d+}")
-    public ProductoDetailDTO getProducto(@PathParam("id") Long id)
+    public ProductoEntity getProducto(@PathParam("id") Long id)
     {
-      return new ProductoDetailDTO(productoLogic.getProducto(id));
+      return productoLogic.getProducto(id); 
     }
     
     /**

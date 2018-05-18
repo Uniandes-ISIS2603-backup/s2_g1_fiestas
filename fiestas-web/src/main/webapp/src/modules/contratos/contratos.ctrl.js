@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("contratoModule");
     mod.constant("contratoContext", "api/contratos");
-    mod.controller('contratoCtrl', ['$scope', '$http', 'contratoContext',
+    mod.controller('contratoCtrl', ['$scope', '$http', 'contratoContext', '$rootScope',
         
         /**
          * @ngdoc controller
@@ -21,7 +21,9 @@
          * @param {Object} $state Dependencia injectada en la que se recibe el 
          * estado actual de la navegación definida en el módulo.
          */
-        function ($scope, $http, contratoContext) {
+        function ($scope, $http, contratoContext, $rootScope) {
+            console.log($scope);
+            console.log($rootScope);
             /**
              * @ngdoc function
              * @name getAuthors
@@ -36,10 +38,13 @@
              * de los contratos o API donde se puede consultar. Se utiliza el
              * contexto definido anteriormente.
              */
-            $http.get(contratoContext).then(function (response) {
+            if($rootScope.currentToken !== null)
+            {
+            $http.get("api/proveedores" + '/' + $rootScope.currentToken + '/' + "contratos").then(function (response) {
                 $scope.contratosRecords = response.data;
                
             });
+        }
         }
     ]);
 }
